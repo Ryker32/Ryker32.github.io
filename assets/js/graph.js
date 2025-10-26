@@ -36,24 +36,34 @@
     ctx.fillRect(0,0,c.clientWidth,c.clientHeight);
 
     // edges + message pulses
-    for (let i=0;i<N;i++){
-      for (let j=i+1;j<N;j++){
-        const a = nodes[i], b = nodes[j];
-        const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-        if (d<140){
-          const alpha = 1 - d/140;
-          ctx.strokeStyle = `rgba(43,58,74,${0.6*alpha})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+for (let i=0;i<N;i++) for (let j=i+1;j<N;j++){
+  const a=nodes[i], b=nodes[j];
+  const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+  if (d<160){
+    const alpha = 1 - d/160;
 
-          // white message traveling along edge
-          const u = ( (t*0.0006 + (a.t*0.001)) % 1 );
-          const px = a.x + (b.x-a.x)*u, py = a.y + (b.y-a.y)*u;
-          ctx.fillStyle = COLORS.msg;
-          ctx.beginPath(); ctx.arc(px,py,1.5,0,Math.PI*2); ctx.fill();
-        }
-      }
-    }
+    // glow pass
+    ctx.save();
+    ctx.strokeStyle = `rgba(120,160,220,${0.35*alpha})`;
+    ctx.lineWidth = 2;
+    ctx.shadowColor = 'rgba(120,160,220,0.6)';
+    ctx.shadowBlur = 4;
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+
+    // core pass
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = `rgba(220,235,255,${0.9*alpha})`;
+    ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    ctx.restore();
+
+    // message pulse
+    const u=((t*0.0006 + a.t*0.001)%1);
+    const px=a.x+(b.x-a.x)*u, py=a.y+(b.y-a.y)*u;
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.arc(px,py,1.8,0,Math.PI*2); ctx.fill();
+  }
+}
 
     // nodes
     for (const n of nodes){
