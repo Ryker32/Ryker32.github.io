@@ -1,6 +1,8 @@
-title: Minimal theme
+title: Ryker Kollmyer
 logo: /assets/img/logo.png
-description: Minimal is a theme for GitHub Pages.
+description: Drones · Multi-Agent Systems · AI · Planes ;)
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-minimal
+sass:
+  sass_dir: assets/css
