@@ -31,7 +31,7 @@ body {
   width: 520px;
   background: var(--bg);
   border-right: 1px solid var(--edge);
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 32px;
@@ -125,11 +125,11 @@ body {
 /* Animation Canvas - Large Box */
 .sidebar-animation {
   width: 100%;
-  background: #0d1117;
-  border: 2px solid var(--edge);
+  background: #0d111700;
+  border: 1px solid var(--edge);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
   margin-bottom: 24px;
 }
 
