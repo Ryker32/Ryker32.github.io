@@ -125,11 +125,10 @@ body {
 /* Animation Canvas - Large Box */
 .sidebar-animation {
   width: 100%;
-  background: #0d111700;
-  border: 1px solid var(--edge);
+  background: transparent;
+  border: none;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
   margin-bottom: 24px;
 }
 
