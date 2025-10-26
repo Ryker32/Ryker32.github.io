@@ -1,3 +1,12 @@
+---
+---
+@import "{{ site.theme }}";
+
+:root { --bg:#0b0f14; --ink:#e6e6e6; --node:#5aa7ff; --edge:#1b232c; }
+body { background:var(--bg); color:var(--ink); }
+a { color:#9cc7ff; }
+
+
 /* --- fixed left rail --- */
 header{
   position:fixed; left:0; top:0; bottom:0;
@@ -32,6 +41,6 @@ ul.downloads {
 .downloads a { display: block; text-align: center; padding: 8px 0; }
 
 /* Optional: stack on narrow rail widths */
-@media (max-width: 360px){
+@media (max-width: 500px){
   ul.downloads { grid-template-columns: 1fr; }
 }
