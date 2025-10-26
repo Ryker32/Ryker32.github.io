@@ -28,32 +28,33 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 420px;
+  width: 520px;
   background: var(--bg);
   border-right: 1px solid var(--edge);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 32px;
   box-sizing: border-box;
 }
 
 .profile-card {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
 /* Profile Image - ID Card Style */
 .profile-image {
-  width: 240px;
-  height: 240px;
+  width: 280px;
+  height: 280px;
   overflow: hidden;
-  border-radius: 8px;
-  border: 2px solid var(--edge);
+  border-radius: 12px;
+  border: 3px solid var(--edge);
   background: #0d1117;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .profile-image img {
@@ -65,10 +66,11 @@ body {
 
 /* Name & Tagline */
 .profile-name {
-  margin: 8px 0 4px;
-  font-size: 28px;
-  font-weight: 600;
+  margin: 12px 0 4px;
+  font-size: 32px;
+  font-weight: 700;
   color: var(--ink);
+  text-align: center;
 }
 
 .profile-name a {
@@ -81,56 +83,60 @@ body {
 }
 
 .profile-tagline {
-  margin: 0 0 16px;
-  font-size: 14px;
+  margin: 0 0 20px;
+  font-size: 15px;
   color: #8b949e;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 90%;
 }
 
 /* Action Buttons - ID Card Style */
 .action-buttons {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
-  max-width: 280px;
+  max-width: 400px;
 }
 
 .btn {
   flex: 1;
-  padding: 10px 16px;
-  background: #0d1117;
-  border: 1px solid var(--edge);
-  border-radius: 6px;
+  padding: 16px 24px;
+  background: #161b22;
+  border: 2px solid var(--edge);
+  border-radius: 8px;
   color: var(--ink);
   text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   text-align: center;
   transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .btn:hover {
-  background: #161b22;
+  background: #1c2128;
   border-color: var(--node);
   color: var(--node);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(90,167,255,0.2);
 }
 
-/* Animation Canvas */
+/* Animation Canvas - Large Box */
 .sidebar-animation {
   width: 100%;
-  max-width: 320px;
-  margin-top: 20px;
-  background: var(--bg);
-  border: 1px solid var(--edge);
-  border-radius: 8px;
+  background: #0d1117;
+  border: 2px solid var(--edge);
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  margin-bottom: 24px;
 }
 
 .sidebar-animation canvas {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 320px;
 }
 
 /* Sidebar Footer */
@@ -160,10 +166,10 @@ body {
    Right Main Content
    ======================= */
 .main-content {
-  margin-left: 420px;
+  margin-left: 520px;
   flex: 1;
   padding: 48px 64px;
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 .main-content h1,
