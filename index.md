@@ -2,6 +2,7 @@
 layout: default
 ---
 
+
 <div class="hero">
   <canvas id="mas-canvas" aria-label="Multi-agent network animation"></canvas>
   <div class="overlay">
