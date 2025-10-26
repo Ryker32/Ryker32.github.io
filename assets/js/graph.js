@@ -20,7 +20,7 @@
   addEventListener('resize', resize, { passive:true });
   resize();
 
-  const N = 42;
+  const N = 20;
   const nodes = Array.from({length:N}, () => ({
     x: Math.random() * c.clientWidth,
     y: Math.random() * c.clientHeight,
