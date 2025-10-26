@@ -6,7 +6,7 @@
 
   const COLORS = {
     bg: '#0b0f14',
-    edge: 'rgba(43,58,74,0.5)',   // muted blue-gray
+    edge: 'rgba(189, 213, 237, 0.5)',   // muted blue-gray
     node: '#5aa7ff',              // blue agents
     nodeGlow: 'rgba(90,167,255,0.35)',
     msg: '#ffffff'                // white message pulses
