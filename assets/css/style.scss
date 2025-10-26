@@ -32,15 +32,6 @@ header img { display:block; margin: 0 auto; }  /* logo */
 .sidebar-hero{ flex: 1 1 auto; min-height: 260px; border:1px solid #00000000; border-radius:1px; overflow:hidden; }
 .sidebar-hero canvas{ width:100%; height:100%; display:block; }
 
-/* --- content column (offset = rail width + small gap) --- */
-.wrapper{
-  margin-left: 520px;                /* 500px rail + ~20px breathing room */
-  max-width: none;
-  padding: 24px 28px;
-  box-sizing: border-box;
-}
-section{ width: auto; }
-footer{ margin-left: 520px; }
 
 /* downloads layout */
 
