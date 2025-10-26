@@ -34,6 +34,13 @@
     // background
     ctx.fillStyle = COLORS.bg;
     ctx.fillRect(0,0,c.clientWidth,c.clientHeight);
+  function resize(){
+    c.width  = c.clientWidth  * DPR;
+    c.height = c.clientHeight * DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    window.addEventListener('resize', resize, {passive:true});
+    resize();
 
     // edges + message pulses
 for (let i=0;i<N;i++) for (let j=i+1;j<N;j++){
