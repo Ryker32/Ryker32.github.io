@@ -42,15 +42,27 @@ header img { display:block; margin: 0 auto; }  /* logo */
 section{ width: auto; }
 footer{ margin-left: 520px; }
 
-/* downloads layout */
+/* grid layout for three buttons */
 ul.downloads{
   margin: 8px 0 12px; padding: 0;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
 }
 .downloads li{ list-style: none; margin: 0; }
-.downloads a{ display:block; text-align:center; padding:8px 0; }
 
+/* kill theme sprite + apply simple button styles */
+.downloads a{
+  display:block;
+  background: none !important;     /* remove sprite */
+  border: 1px solid #1b232c;
+  border-radius: 8px;
+  padding: 10px 0;
+  text-align: center;
+  color: var(--ink);
+  text-decoration: none;
+}
+.downloads a:hover{ border-color:#2a3a4a; }
 /* mobile fallback */
+
 @media (max-width: 900px){
   header{ position: static; width:auto; border-right:none; align-items:flex-start; text-align:left; }
   header > *{ width:auto; }
