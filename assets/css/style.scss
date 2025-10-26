@@ -3,30 +3,216 @@
 @import "{{ site.theme }}";
 
 :root { --bg:#0b0f14; --ink:#e6e6e6; --node:#5aa7ff; --edge:#1b232c; }
-body { overflow-x: hidden; overflow-y: auto; background:var(--bg); color:var(--ink); }
-a { color:#9cc7ff; }
 
-
-/* --- fixed left rail --- */
-header{
-  position: fixed; left: 0; top: 0; bottom: 0;
-  width: 500px;                      /* rail width */
-  padding: 16px 18px;
-  background: #0b0f14;
-  border-right: 1px solid #1b232c;
-
-
-  /* center content in the rail */
-  display: flex; 
-  flex-direction: column; 
-  align-items: center;               /* horizontal centering */
-  text-align: center;                /* center text */
-  gap: 12px;
+/* =======================
+   Layout Structure
+   ======================= */
+body { 
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+  background: var(--bg); 
+  color: var(--ink); 
 }
 
-/* make children span full rail width cleanly */
-header > * { width: 100%; }
-header img { display:block; margin: 0 auto; }  /* logo */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =======================
+   Left Sidebar (ID Card)
+   ======================= */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 420px;
+  background: var(--bg);
+  border-right: 1px solid var(--edge);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.profile-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Profile Image - ID Card Style */
+.profile-image {
+  width: 240px;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid var(--edge);
+  background: #0d1117;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Name & Tagline */
+.profile-name {
+  margin: 8px 0 4px;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.profile-name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.profile-name a:hover {
+  color: var(--node);
+}
+
+.profile-tagline {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #8b949e;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Action Buttons - ID Card Style */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 16px;
+  background: #0d1117;
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: #161b22;
+  border-color: var(--node);
+  color: var(--node);
+}
+
+/* Animation Canvas */
+.sidebar-animation {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 20px;
+  background: var(--bg);
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sidebar-animation canvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--edge);
+  font-size: 11px;
+  color: #6e7681;
+  text-align: center;
+}
+
+.sidebar-footer a {
+  color: #8b949e;
+  text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+  color: var(--node);
+}
+
+.sidebar-footer p {
+  margin: 6px 0;
+}
+
+/* =======================
+   Right Main Content
+   ======================= */
+.main-content {
+  margin-left: 420px;
+  flex: 1;
+  padding: 48px 64px;
+  max-width: 900px;
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+  color: var(--ink);
+}
+
+.main-content a {
+  color: var(--node);
+  text-decoration: none;
+}
+
+.main-content a:hover {
+  text-decoration: underline;
+}
+
+/* =======================
+   Responsive Design
+   ======================= */
+@media screen and (max-width: 960px) {
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: relative;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--edge);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 32px 24px;
+  }
+}
+
+/* Override theme floats/positioning */
+header, section, footer {
+  position: static;
+  float: none;
+  width: auto;
+}
+
+.wrapper {
+  width: auto;
+  margin: 0;
+}
 
 /* graph card */
 .sidebar-hero{ flex: 1 1 auto; min-height: 260px; border:1px solid #00000000; border-radius:1px; overflow:hidden; }
