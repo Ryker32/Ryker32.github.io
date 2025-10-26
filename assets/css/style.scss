@@ -9,38 +9,52 @@ a { color:#9cc7ff; }
 
 /* --- fixed left rail --- */
 header{
-  position:fixed; left:0; top:0; bottom:0;
-  width:500px;               /* rail width */
-  padding:16px 18px;
-  background:#0b0f14;
-  border-right:1px solid #1b232c;
-  overflow:auto;             /* scroll inside rail if needed */
+  position: fixed; left: 0; top: 0; bottom: 0;
+  width: 500px;                      /* rail width */
+  padding: 16px 18px;
+  background: #0b0f14;
+  border-right: 1px solid #1b232c;
+  overflow: auto;
+
+  /* center content in the rail */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;               /* horizontal centering */
+  text-align: center;                /* center text */
+  gap: 12px;
 }
+
+/* make children span full rail width cleanly */
+header > * { width: 100%; }
+header img { display:block; margin: 0 auto; }  /* logo */
 
 /* graph card */
-.sidebar-hero{ flex:1 1 auto; min-height:260px; border:1px solid #1b232c; border-radius:12px; overflow:hidden; }
+.sidebar-hero{ flex: 1 1 auto; min-height: 260px; border:1px solid #1b232c; border-radius:12px; overflow:hidden; }
 .sidebar-hero canvas{ width:100%; height:100%; display:block; }
 
-/* --- content column --- */
+/* --- content column (offset = rail width + small gap) --- */
 .wrapper{
-  margin-left:360px;         /* rail width + gap */
-  max-width:none;            /* let it use remaining width */
-  padding:24px 28px;
-  box-sizing:border-box;
+  margin-left: 520px;                /* 500px rail + ~20px breathing room */
+  max-width: none;
+  padding: 24px 28px;
+  box-sizing: border-box;
 }
-section{ width:auto; }       /* cancel old fixed width */
-footer{ margin-left:360px; } /* align with content */
+section{ width: auto; }
+footer{ margin-left: 520px; }
 
-/* misc cleanups */
-/* Reset theme hacks on the download list */
-ul.downloads { 
+/* downloads layout */
+ul.downloads{
   margin: 8px 0 12px; padding: 0;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
 }
-.downloads li { list-style: none; margin: 0; width: auto; }
-.downloads a { display: block; text-align: center; padding: 8px 0; }
+.downloads li{ list-style: none; margin: 0; }
+.downloads a{ display:block; text-align:center; padding:8px 0; }
 
-/* Optional: stack on narrow rail widths */
-@media (max-width: 500px){
-  ul.downloads { grid-template-columns: 1fr; }
+/* mobile fallback */
+@media (max-width: 900px){
+  header{ position: static; width:auto; border-right:none; align-items:flex-start; text-align:left; }
+  header > *{ width:auto; }
+  .wrapper, footer{ margin-left: 0; padding: 16px; }
+  .sidebar-hero{ height: 40vh; }
+  ul.downloads{ grid-template-columns: 1fr; }
 }
