@@ -1,5 +1,5 @@
 (() => {
-  const c = document.getElementById('mas-rail');
+  const c = document.getElementById('mas-canvas');
   if (!c) return;
   const ctx = c.getContext('2d');
   const DPR = Math.min(window.devicePixelRatio || 1, 2);

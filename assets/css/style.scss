@@ -9,30 +9,6 @@
 body { background:var(--bg); color:var(--ink); }
 a { color:#9cc7ff; }
 
-/* keep the left column visible */
-header{ position:sticky; top:16px; align-self:start; }
-
-/* tall, responsive canvas card */
-.sidebar-hero{ margin:12px 0 16px;background:#0b0f14;border:1px solid #1b232c;border-radius:12px;overflow:hidden;
-  height: calc(100vh - 280px);
-  min-height: 260px;
-  max-height: 720px;
-}
-.sidebar-hero canvas{ display:block; width:100%; height:100%; }
-
-/* on narrow screens put it after content or shrink */
-@media (max-width: 800px){
-  .sidebar-hero{ height: 40vh; max-height: 420px; }
-}
-
-.left-rail{
-  position: fixed; left:0; top:0; bottom:0;
-  width: 320px;             /* adjust */
-  background:#0b0f14;
-  border-right:1px solid #1b232c;
-  overflow:hidden;
-}
-.left-rail canvas{ display:block; width:100%; height:100%; }
-
-.wrapper{ margin-left: 340px; }     /* make room for the rail */
-header{ position: static; }         /* disable sticky in this mode */
+header { position: sticky; top: 16px; align-self: start; }
+.sidebar-hero{margin: 12px 0 16px;background:#0b0f14;border:1px solid #1b232c;border-radius:12px;overflow:hidden;}
+.sidebar-hero canvas{display:block;width:100%;height:240px;}                 /* adjust to fill that empty space */
