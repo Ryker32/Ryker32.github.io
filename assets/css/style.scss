@@ -9,6 +9,6 @@
 body { background:var(--bg); color:var(--ink); }
 a { color:#9cc7ff; }
 
-header{ position:sticky; top:16px; align-self:start; }
-.sidebar-hero{margin-top:12px; background:#0b0f14;border:1px solid #1b232c; border-radius:12px; overflow:hidden;}
-.sidebar-hero canvas{ display:block; width:100%; height:220px; }
+header { position: sticky; top: 16px; align-self: start; }
+.sidebar-hero{margin: 12px 0 16px;background:#0b0f14;border:1px solid #1b232c;border-radius:12px;overflow:hidden;}
+.sidebar-hero canvas{display:block;width:100%;height:240px;}                 /* adjust to fill that empty space */
