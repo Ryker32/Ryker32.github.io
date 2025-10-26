@@ -6,7 +6,7 @@
 
   const COLORS = {
     bg: '#0b0f14',
-    edge: 'rgba(189, 213, 237, 0.5)',   // muted blue-gray
+    edge: 'rgba(203, 203, 203, 0.85)',   // muted blue-gray
     node: '#5aa7ff',              // blue agents
     nodeGlow: 'rgba(90,167,255,0.35)',
     msg: '#ffffff'                // white message pulses
@@ -46,7 +46,7 @@ for (let i=0;i<N;i++) for (let j=i+1;j<N;j++){
     ctx.save();
     ctx.strokeStyle = `rgba(120,160,220,${0.35*alpha})`;
     ctx.lineWidth = 2;
-    ctx.shadowColor = 'rgba(120,160,220,0.6)';
+    ctx.shadowColor = 'rgba(226, 232, 241, 0.6)';
     ctx.shadowBlur = 4;
     ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
 
