@@ -3,7 +3,7 @@
 @import "{{ site.theme }}";
 
 :root { --bg:#0b0f14; --ink:#e6e6e6; --node:#5aa7ff; --edge:#1b232c; }
-body { background:var(--bg); color:var(--ink); }
+body { overflow-x: hidden; overflow-y: auto; background:var(--bg); color:var(--ink); }
 a { color:#9cc7ff; }
 
 
@@ -14,7 +14,7 @@ header{
   padding: 16px 18px;
   background: #0b0f14;
   border-right: 1px solid #1b232c;
-  overflow: auto;
+
 
   /* center content in the rail */
   display: flex; 
