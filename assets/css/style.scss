@@ -12,3 +12,20 @@ a { color:#9cc7ff; }
 header { position: fixed; top: 16px; align-self: start; }
 .sidebar-hero{margin: 12px 0 16px;background:#0b0f14;border:1px solid #1b232c;border-radius:12px;overflow:hidden;}
 .sidebar-hero canvas{display:block;width:100%;height:240px;}                 /* adjust to fill that empty space */
+
+/*
+	Layout width overrides
+	- Makes the fixed left column (header/footer/downloads) wider
+	- Expands the overall wrapper so the right content area still has room
+*/
+.wrapper { width: 1200px; }
+header { width: 360px; }
+footer { width: 360px; }
+section { width: 800px; }
+ul.downloads { width: 360px; }
+.downloads li,
+.downloads li + li + li { width: 120px; }
+
+@media print, screen and (max-width: 960px) {
+	header { padding-right: 420px; }
+}
