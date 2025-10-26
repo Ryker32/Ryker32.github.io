@@ -1,38 +1,37 @@
----
----
-@import "{{ site.theme }}";
-
-:root { --bg:#0b0f14; --ink:#e6e6e6; --node:#5aa7ff; --edge:#1b232c; }
-body { background:var(--bg); color:var(--ink); }
-a { color:#9cc7ff; }
-
-/* Fixed left rail */
+/* --- fixed left rail --- */
 header{
-  position: fixed;
-  left: 0; top: 0; bottom: 0;
-  width: 500px;                 /* rail width */
-  padding: 16px 18px;
-  background: var(--bg);
-  border-right: 1px solid var(--edge);
-  overflow: hidden;
-  display: flex; flex-direction: column; gap: 12px;
+  position:fixed; left:0; top:0; bottom:0;
+  width:500px;               /* rail width */
+  padding:16px 18px;
+  background:#0b0f14;
+  border-right:1px solid #1b232c;
+  overflow:auto;             /* scroll inside rail if needed */
 }
 
-/* Graph block in rail */
-.sidebar-hero{ flex: 1 1 auto; min-height: 260px; border:1px solid var(--edge); border-radius:12px; overflow:hidden; }
+/* graph card */
+.sidebar-hero{ flex:1 1 auto; min-height:260px; border:1px solid #1b232c; border-radius:12px; overflow:hidden; }
 .sidebar-hero canvas{ width:100%; height:100%; display:block; }
 
-/* Main content shifts right of rail */
-.wrapper{ margin-left: 340px; max-width: 1000px; }
-section{ padding: 24px; }
-footer{ margin-left: 340px; }
+/* --- content column --- */
+.wrapper{
+  margin-left:360px;         /* rail width + gap */
+  max-width:none;            /* let it use remaining width */
+  padding:24px 28px;
+  box-sizing:border-box;
+}
+section{ width:auto; }       /* cancel old fixed width */
+footer{ margin-left:360px; } /* align with content */
 
-/* Remove theme’s downloads width tricks */
-ul.downloads, .downloads li{ width:auto; }
+/* misc cleanups */
+/* Reset theme hacks on the download list */
+ul.downloads { 
+  margin: 8px 0 12px; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.downloads li { list-style: none; margin: 0; width: auto; }
+.downloads a { display: block; text-align: center; padding: 8px 0; }
 
-/* Mobile: collapse rail to top */
-@media (max-width: 900px){
-  header{ position: static; width: auto; height:auto; border-right:none; }
-  .wrapper, footer{ margin-left: 0; }
-  .sidebar-hero{ height: 40vh; }
+/* Optional: stack on narrow rail widths */
+@media (max-width: 360px){
+  ul.downloads { grid-template-columns: 1fr; }
 }
