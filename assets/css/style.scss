@@ -2,7 +2,7 @@
 # Jekyll must see front matter to compile SCSS
 ---
 
-{@import "{{ site.theme }}";}
+@import "{{ site.theme }}";
 
 :root { --bg:#0b0f14; --ink:#e6e6e6; --node:#5aa7ff; --edge:#2b3a4a; }
 
