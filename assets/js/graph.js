@@ -1,7 +1,7 @@
 (() => {
-    document.querySelectorAll('.mas-canvas').forEach(init);
-    function init(c){
-        const ctx = c.getContext('2d');
+  const c = document.getElementById('mas-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
   const COLORS = {
@@ -83,5 +83,4 @@ for (let i=0;i<N;i++) for (let j=i+1;j<N;j++){
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
-  }
 })();
