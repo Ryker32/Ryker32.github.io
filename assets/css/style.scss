@@ -31,11 +31,19 @@ body {
   width: 520px;
   background: var(--bg);
   border-right: 1px solid var(--edge);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   padding: 32px;
   box-sizing: border-box;
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
 }
 
 .profile-card {
