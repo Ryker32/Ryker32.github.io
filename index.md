@@ -3,15 +3,6 @@ layout: default
 ---
 
 
-<div class="hero">
-  <canvas id="mas-canvas" aria-label="Multi-agent network animation"></canvas>
-  <div class="overlay">
-    <h1>Multi-Agent Systems</h1>
-    <p>Decentralized coordination • Perception • Control</p>
-  </div>
-</div>
-
-
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](./another-page.html).
