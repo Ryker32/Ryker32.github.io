@@ -22,7 +22,7 @@
   window.addEventListener('resize', resize, {passive:true});
   resize();
 
-  const N = 38;
+  const N = 30;
   const nodes = Array.from({length:N}, () => ({
     x: Math.random()*W(),
     y: Math.random()*H(),
