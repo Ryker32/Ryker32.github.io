@@ -4,7 +4,7 @@ layout: default
 
 <div class="portfolio-container">
   <div class="portfolio-banner">
-    <h1>Project Portfolio</h1>
+    <h1>Engineering Portfolio</h1>
   </div>
   
   <div class="portfolio-grid" id="portfolioGrid">
