@@ -62,7 +62,7 @@
         <p>Videos can also be embedded and wrapped with text.</p>
         <div class="clear-float"></div>
       `,
-      image: "/assets/img/project1.jpg",
+      image: "/assets/img/bwsicar.png",
       files: [
         { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
         { type: "video", url: "/assets/video/hybrid-vehicle-detached.mp4", name: "Hybrid Vehicle Detached" },
