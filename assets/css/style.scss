@@ -468,9 +468,9 @@ body {
       height: auto;
       min-height: 300px;
       display: block;
-      border-radius: 8px;
       border: 2px solid var(--edge);
       background: #161b22;
+      /* Note: border-radius doesn't work on iframes, wrap in container if needed */
     }
     
     .image-caption {

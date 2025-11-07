@@ -274,7 +274,7 @@
           fileItem.className = 'file-item file-item-iframe';
           const iframe = document.createElement('iframe');
           iframe.src = file.url;
-          iframe.frameBorder = '0';
+          iframe.setAttribute('frameborder', '0');
           iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
           iframe.allowFullscreen = true;
           iframe.style.width = '100%';
