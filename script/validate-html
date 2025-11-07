@@ -18,9 +18,20 @@ def validate(file)
   path = File.expand_path "../_site/#{file}", __dir__
   results = validator(file).validate_file(path)
 
-  return puts "Valid!" if results.errors.empty?
+  # Filter out known false positives
+  # pointer-events is valid CSS3 but some validators don't recognize it
+  filtered_errors = results.errors.reject do |err|
+    err_str = err.to_s.downcase
+    err_str.include?("pointer-events") && (
+      err_str.include?("doesn't exist") ||
+      err_str.include?("does not exist") ||
+      err_str.include?("unknown property")
+    )
+  end
 
-  results.errors.each { |err| puts err }
+  return puts "Valid!" if filtered_errors.empty?
+
+  filtered_errors.each { |err| puts err }
   exit 1
 end
 
