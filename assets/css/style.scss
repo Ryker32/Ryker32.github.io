@@ -306,9 +306,9 @@ body {
   background: var(--bg);
   border: 2px solid var(--edge);
   border-radius: 16px;
-  max-width: 900px;
-  width: 90%;
-  max-height: 90vh;
+  max-width: 1200px;
+  width: 95%;
+  max-height: 95vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   z-index: 1001;
@@ -362,19 +362,19 @@ body {
 }
 
 .modal-header {
-  padding: 32px 32px 24px;
+  padding: 40px 40px 28px;
   border-bottom: 1px solid var(--edge);
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: 36px;
   color: var(--ink);
   font-weight: 700;
 }
 
 .modal-body {
-  padding: 32px;
+  padding: 40px;
 }
 
 .modal-description {
@@ -382,23 +382,23 @@ body {
 }
 
 .modal-description p {
-  margin: 0 0 16px;
-  line-height: 1.7;
+  margin: 0 0 20px;
+  line-height: 1.8;
   color: #c9d1d9;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .modal-files h3 {
-  margin: 0 0 20px;
-  font-size: 20px;
+  margin: 0 0 24px;
+  font-size: 24px;
   color: var(--ink);
   font-weight: 600;
 }
 
 .files-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .file-item {
@@ -484,6 +484,32 @@ body {
   
   .portfolio-banner h1 {
     font-size: 28px;
+  }
+  
+  .modal-content {
+    max-width: 95%;
+    width: 95%;
+    padding: 24px;
+  }
+  
+  .modal-header {
+    padding: 24px 24px 20px;
+  }
+  
+  .modal-header h2 {
+    font-size: 28px;
+  }
+  
+  .modal-body {
+    padding: 24px;
+  }
+  
+  .modal-description p {
+    font-size: 16px;
+  }
+  
+  .modal-files h3 {
+    font-size: 20px;
   }
 }
 

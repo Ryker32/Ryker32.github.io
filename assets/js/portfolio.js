@@ -20,8 +20,79 @@
       files: [
         { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Detail 1" }
       ]
+    },
+    {
+      id: 3,
+      title: "Project 3",
+      description: "This is a description of Project 3. Add your project details here.",
+      image: "/assets/img/project3.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project3-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 4,
+      title: "Project 4",
+      description: "This is a description of Project 4. Add your project details here.",
+      image: "/assets/img/project4.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project4-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 5,
+      title: "Project 5",
+      description: "This is a description of Project 5. Add your project details here.",
+      image: "/assets/img/project5.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 6,
+      title: "Project 6",
+      description: "This is a description of Project 6. Add your project details here.",
+      image: "/assets/img/project6.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project6-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 7,
+      title: "Project 7",
+      description: "This is a description of Project 7. Add your project details here.",
+      image: "/assets/img/project7.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 8,
+      title: "Project 8",
+      description: "This is a description of Project 8. Add your project details here.",
+      image: "/assets/img/project8.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project8-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 9,
+      title: "Project 9",
+      description: "This is a description of Project 9. Add your project details here.",
+      image: "/assets/img/project9.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project9-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 10,
+      title: "Project 10",
+      description: "This is a description of Project 10. Add your project details here.",
+      image: "/assets/img/project10.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project10-detail1.jpg", name: "Detail 1" }
+      ]
     }
-    // Add more projects here
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
