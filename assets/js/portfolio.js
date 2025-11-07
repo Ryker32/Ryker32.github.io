@@ -1,6 +1,42 @@
 (() => {
   // Portfolio data structure
   // You can modify this to load from a JSON file or API
+  // 
+  // For article-style layouts with images and text wrapping, use descriptionHTML:
+  // 
+  // Example with images and videos:
+  // {
+  //   id: 1,
+  //   title: "My Project",
+  //   descriptionHTML: `
+  //     <div class="article-intro">
+  //       <p>This is an introductory paragraph that spans the full width.</p>
+  //       <p>You can have multiple intro paragraphs here.</p>
+  //     </div>
+  //     <div class="article-image">
+  //       <img src="/assets/img/project-image1.jpg" alt="Description" />
+  //       <div class="image-caption">Caption text here. (Photo Credit)</div>
+  //     </div>
+  //     <p>This text will wrap around the image on the left. The image floats left by default.</p>
+  //     <p>More text continues here, wrapping naturally around the image.</p>
+  //     <div class="clear-float"></div>
+  //     <div class="article-image">
+  //       <video controls>
+  //         <source src="/assets/video/demo.mp4" type="video/mp4">
+  //       </video>
+  //       <div class="image-caption">Video caption here.</div>
+  //     </div>
+  //     <p>Videos can also be embedded and wrapped with text.</p>
+  //     <div class="clear-float"></div>
+  //   `,
+  //   image: "/assets/img/project1.jpg",
+  //   files: [
+  //     { type: "image", url: "/assets/img/detail1.jpg", name: "Detail 1" },
+  //     { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
+  //     { type: "youtube", url: "https://www.youtube.com/embed/VIDEO_ID", name: "YouTube Video" }
+  //   ]
+  // }
+  //
   const portfolioData = [
     {
       id: 1,
@@ -169,17 +205,31 @@
     // Set title
     modalTitle.textContent = project.title;
 
-    // Set description
+    // Set description - supports rich HTML content
     modalDescription.innerHTML = '';
-    const descriptionParagraphs = project.description.split('\n').filter(p => p.trim());
-    if (descriptionParagraphs.length === 0) {
-      descriptionParagraphs.push(project.description || 'No description available.');
+    if (project.descriptionHTML) {
+      // If descriptionHTML is provided, use it directly (allows full HTML control)
+      modalDescription.innerHTML = project.descriptionHTML;
+    } else if (project.description) {
+      // Otherwise, parse as HTML if it contains HTML tags, or as plain text
+      const hasHTML = /<[a-z][\s\S]*>/i.test(project.description);
+      if (hasHTML) {
+        modalDescription.innerHTML = project.description;
+      } else {
+        // Plain text: split by newlines and create paragraphs
+        const descriptionParagraphs = project.description.split('\n').filter(p => p.trim());
+        if (descriptionParagraphs.length === 0) {
+          descriptionParagraphs.push(project.description || 'No description available.');
+        }
+        descriptionParagraphs.forEach(text => {
+          const p = document.createElement('p');
+          p.textContent = text;
+          modalDescription.appendChild(p);
+        });
+      }
+    } else {
+      modalDescription.innerHTML = '<p>No description available.</p>';
     }
-    descriptionParagraphs.forEach(text => {
-      const p = document.createElement('p');
-      p.textContent = text;
-      modalDescription.appendChild(p);
-    });
 
     // Clear and populate files
     filesGrid.innerHTML = '';
@@ -196,16 +246,44 @@
             this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
           };
           fileItem.appendChild(img);
+          
+          // Make image items clickable to view full size
+          fileItem.addEventListener('click', () => {
+            if (file.url) {
+              window.open(file.url, '_blank');
+            }
+          });
+        } else if (file.type === 'video') {
+          fileItem.className = 'file-item file-item-video';
+          const video = document.createElement('video');
+          video.src = file.url;
+          video.controls = true;
+          video.preload = 'metadata';
+          video.style.width = '100%';
+          video.style.height = '100%';
+          video.style.objectFit = 'cover';
+          if (file.poster) {
+            video.poster = file.poster; // Optional thumbnail image
+          }
+          fileItem.appendChild(video);
+          
+          // Don't make videos clickable (they have their own controls)
+          fileItem.style.cursor = 'default';
+        } else if (file.type === 'youtube' || file.type === 'iframe') {
+          // Support for YouTube embeds or other iframe videos
+          fileItem.className = 'file-item file-item-iframe';
+          const iframe = document.createElement('iframe');
+          iframe.src = file.url;
+          iframe.frameBorder = '0';
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          iframe.style.width = '100%';
+          iframe.style.height = '100%';
+          fileItem.appendChild(iframe);
+          fileItem.style.cursor = 'default';
         } else {
           fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
         }
-        
-        // Make file items clickable to view full size
-        fileItem.addEventListener('click', () => {
-          if (file.type === 'image' && file.url) {
-            window.open(file.url, '_blank');
-          }
-        });
         
         filesGrid.appendChild(fileItem);
       });
