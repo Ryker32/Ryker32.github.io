@@ -64,6 +64,7 @@
       `,
       image: "/assets/img/bwsicar.png",
       files: [
+        { type: "image", url: "/assets/img/bwsicar.png", name: "BWSICAR" },
         { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
         { type: "video", url: "/assets/video/hybrid-vehicle-detached.mp4", name: "Hybrid Vehicle Detached" },
         { type: "video", url: "/assets/video/hybrid-vehicle-driving.mp4", name: "Hybrid Vehicle Driving" },
