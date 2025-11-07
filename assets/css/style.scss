@@ -381,7 +381,8 @@ body {
 }
 
 .modal-thumbnail img[src=""],
-.modal-thumbnail img:not([src]) {
+.modal-thumbnail img:not([src]),
+.modal-thumbnail img[style*="display: none"] {
   display: none;
 }
 
@@ -394,7 +395,7 @@ body {
   pointer-events: none;
 }
 
-.modal-thumbnail:has(img[src]:not([src=""]))::after {
+.modal-thumbnail:has(img[src]:not([src=""]):not([style*="display: none"]))::after {
   display: none;
 }
 

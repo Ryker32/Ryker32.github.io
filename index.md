@@ -19,7 +19,7 @@ layout: default
   <div class="modal-content">
     <button class="modal-close" id="modalClose">&times;</button>
     <div class="modal-thumbnail" id="modalThumbnail">
-      <img src="" alt="Project thumbnail" id="modalThumbnailImg" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E" alt="Project thumbnail" id="modalThumbnailImg" style="display: none;" />
     </div>
     <div class="modal-title-section">
       <h2 id="modalTitle">Project Title</h2>
