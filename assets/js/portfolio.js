@@ -1,106 +1,261 @@
 (() => {
-  // Project data - you can customize this with your actual projects
-  const projects = {
-    1: {
+  // Portfolio data structure
+  // You can modify this to load from a JSON file or API
+  const portfolioData = [
+    {
+      id: 1,
       title: "Project 1",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
+      image: "/assets/img/project1.jpg",
       files: [
-        // Add image paths or file links here
-        // Example: { type: 'image', url: '/assets/img/project1-1.jpg' },
-        // Example: { type: 'file', url: '/assets/files/project1-doc.pdf', name: 'Project Documentation' }
+        { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
+        { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
       ]
     },
-    2: {
+    {
+      id: 2,
       title: "Project 2",
-      description: "This is a description of Project 2. Describe what this project does, what technologies you used, and what you learned from it.",
-      files: []
+      description: "This is a description of Project 2. Add your project details here.",
+      image: "/assets/img/project2.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Detail 1" }
+      ]
     },
-    3: {
+    {
+      id: 3,
       title: "Project 3",
-      description: "This is a description of Project 3. Add your project details, screenshots, and any relevant files here.",
-      files: []
+      description: "This is a description of Project 3. Add your project details here.",
+      image: "/assets/img/project3.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project3-detail1.jpg", name: "Detail 1" }
+      ]
     },
-    4: {
+    {
+      id: 4,
       title: "Project 4",
-      description: "This is a description of Project 4. Customize this with your actual project information.",
-      files: []
+      description: "This is a description of Project 4. Add your project details here.",
+      image: "/assets/img/project4.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project4-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 5,
+      title: "Project 5",
+      description: "This is a description of Project 5. Add your project details here.",
+      image: "/assets/img/project5.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 6,
+      title: "Project 6",
+      description: "This is a description of Project 6. Add your project details here.",
+      image: "/assets/img/project6.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project6-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 7,
+      title: "Project 7",
+      description: "This is a description of Project 7. Add your project details here.",
+      image: "/assets/img/project7.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 8,
+      title: "Project 8",
+      description: "This is a description of Project 8. Add your project details here.",
+      image: "/assets/img/project8.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project8-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 9,
+      title: "Project 9",
+      description: "This is a description of Project 9. Add your project details here.",
+      image: "/assets/img/project9.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project9-detail1.jpg", name: "Detail 1" }
+      ]
+    },
+    {
+      id: 10,
+      title: "Project 10",
+      description: "This is a description of Project 10. Add your project details here.",
+      image: "/assets/img/project10.jpg",
+      files: [
+        { type: "image", url: "/assets/img/project10-detail1.jpg", name: "Detail 1" }
+      ]
     }
-  };
+  ];
 
-  const modal = document.getElementById('project-modal');
-  const modalClose = document.getElementById('modal-close');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDescription = document.getElementById('modal-description');
-  const modalFiles = document.getElementById('modal-files');
-  const projectItems = document.querySelectorAll('.project-item');
+  const portfolioGrid = document.getElementById('portfolioGrid');
+  const projectModal = document.getElementById('projectModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalThumbnailImg = document.getElementById('modalThumbnailImg');
+  const modalThumbnail = document.getElementById('modalThumbnail');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDescription = document.getElementById('modalDescription');
+  const filesGrid = document.getElementById('filesGrid');
 
-  // Open modal with project data
-  function openModal(projectId) {
-    const project = projects[projectId];
-    if (!project) return;
+  // Initialize portfolio grid
+  function initPortfolio() {
+    if (!portfolioGrid) return;
 
-    modalTitle.textContent = project.title;
-    modalDescription.innerHTML = `<p>${project.description}</p>`;
+    portfolioData.forEach(project => {
+      const card = createProjectCard(project);
+      portfolioGrid.appendChild(card);
+    });
+  }
+
+  // Create a project card element
+  function createProjectCard(project) {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('data-project-id', project.id);
     
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'project-image';
+    
+    const img = document.createElement('img');
+    img.src = project.image || '/assets/img/logo.png'; // Fallback image
+    img.alt = project.title;
+    img.onerror = function() {
+      this.src = '/assets/img/logo.png'; // Fallback if image doesn't exist
+    };
+    
+    imageDiv.appendChild(img);
+    
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'project-title';
+    titleDiv.textContent = project.title;
+    
+    card.appendChild(imageDiv);
+    card.appendChild(titleDiv);
+    
+    card.addEventListener('click', () => openModal(project));
+    
+    return card;
+  }
+
+  // Open modal with project details
+  function openModal(project) {
+    if (!projectModal || !modalTitle || !modalDescription || !filesGrid) return;
+
+    // Set thumbnail
+    if (modalThumbnailImg && modalThumbnail) {
+      const thumbnailSrc = project.image || '';
+      if (thumbnailSrc) {
+        modalThumbnailImg.src = thumbnailSrc;
+        modalThumbnailImg.alt = project.title;
+        modalThumbnailImg.style.display = 'block';
+        modalThumbnailImg.onerror = function() {
+          this.style.display = 'none';
+        };
+        modalThumbnailImg.onload = function() {
+          this.style.display = 'block';
+        };
+      } else {
+        modalThumbnailImg.style.display = 'none';
+      }
+    }
+
+    // Set title
+    modalTitle.textContent = project.title;
+
+    // Set description
+    modalDescription.innerHTML = '';
+    const descriptionParagraphs = project.description.split('\n').filter(p => p.trim());
+    if (descriptionParagraphs.length === 0) {
+      descriptionParagraphs.push(project.description || 'No description available.');
+    }
+    descriptionParagraphs.forEach(text => {
+      const p = document.createElement('p');
+      p.textContent = text;
+      modalDescription.appendChild(p);
+    });
+
     // Clear and populate files
-    modalFiles.innerHTML = '';
+    filesGrid.innerHTML = '';
     if (project.files && project.files.length > 0) {
       project.files.forEach(file => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        
         if (file.type === 'image') {
           const img = document.createElement('img');
           img.src = file.url;
-          img.alt = file.alt || project.title;
-          modalFiles.appendChild(img);
-        } else if (file.type === 'file') {
-          const link = document.createElement('a');
-          link.href = file.url;
-          link.target = '_blank';
-          link.textContent = file.name || 'Download File';
-          modalFiles.appendChild(link);
+          img.alt = file.name || 'Project file';
+          img.onerror = function() {
+            this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
+          };
+          fileItem.appendChild(img);
+        } else {
+          fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
         }
+        
+        // Make file items clickable to view full size
+        fileItem.addEventListener('click', () => {
+          if (file.type === 'image' && file.url) {
+            window.open(file.url, '_blank');
+          }
+        });
+        
+        filesGrid.appendChild(fileItem);
       });
+    } else {
+      // Show message if no files
+      const noFilesMsg = document.createElement('div');
+      noFilesMsg.className = 'file-placeholder';
+      noFilesMsg.style.gridColumn = '1 / -1';
+      noFilesMsg.textContent = 'No files attached to this project.';
+      filesGrid.appendChild(noFilesMsg);
     }
 
     // Show modal
-    modal.classList.add('active');
+    projectModal.classList.add('active');
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
   }
 
   // Close modal
   function closeModal() {
-    modal.classList.remove('active');
+    if (!projectModal) return;
+    projectModal.classList.remove('active');
     document.body.style.overflow = ''; // Restore scrolling
   }
 
-  // Event listeners for project items
-  projectItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-      const projectId = item.getAttribute('data-project-id');
-      if (projectId) {
-        openModal(projectId);
-      }
-    });
-  });
-
-  // Close modal events
+  // Event listeners
   if (modalClose) {
     modalClose.addEventListener('click', closeModal);
   }
 
-  if (modal) {
-    // Close when clicking overlay
-    modal.addEventListener('click', (e) => {
+  if (projectModal) {
+    // Close modal when clicking overlay
+    projectModal.addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
         closeModal();
       }
     });
 
-    // Close with Escape key
+    // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
+      if (e.key === 'Escape' && projectModal.classList.contains('active')) {
         closeModal();
       }
     });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPortfolio);
+  } else {
+    initPortfolio();
   }
 })();
 
