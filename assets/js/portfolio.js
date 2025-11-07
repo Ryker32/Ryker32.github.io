@@ -65,7 +65,8 @@
       image: "/assets/img/project1.jpg",
       files: [
         { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
-        { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
+        { type: "video", url: "/assets/video/hybrid-vehicle-detached.mp4", name: "Hybrid Vehicle Detached" },
+        { type: "video", url: "/assets/video/hybrid-vehicle-driving.mp4", name: "Hybrid Vehicle Driving" },
       ]
     },
     {
@@ -281,10 +282,13 @@
           video.preload = 'metadata';
           video.style.width = '100%';
           video.style.height = '100%';
-          video.style.objectFit = 'cover';
+          video.style.objectFit = 'contain'; // Use 'contain' instead of 'cover' to show full video
           if (file.poster) {
             video.poster = file.poster; // Optional thumbnail image
           }
+          video.onerror = function() {
+            this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Video not found'}</div>`;
+          };
           fileItem.appendChild(video);
           
           // Don't make videos clickable (they have their own controls)

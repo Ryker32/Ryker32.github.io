@@ -569,8 +569,9 @@ body {
 .file-item video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; // Show full video without cropping
   display: block;
+  background: #161b22; // Background color for letterboxing
 }
 
 .file-item iframe {
