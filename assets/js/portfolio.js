@@ -31,7 +31,7 @@
   //   `,
   //   image: "/assets/img/project1.jpg",
   //   files: [
-  //     { type: "image", url: "/assets/img/detail1.jpg", name: "Detail 1" },
+  //     { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
   //     { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
   //     { type: "youtube", url: "https://www.youtube.com/embed/VIDEO_ID", name: "YouTube Video" }
   //   ]
@@ -41,11 +41,31 @@
     {
       id: 1,
       title: "Project 1",
-      description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
+      descriptionHTML: `
+        <div class="article-intro">
+          <p>This is an introductory paragraph that spans the full width.</p>
+          <p>You can have multiple intro paragraphs here.</p>
+        </div>
+        <div class="article-image">
+          <img src="/assets/img/project-image1.jpg" alt="Description" />
+          <div class="image-caption">Caption text here. (Photo Credit)</div>
+        </div>
+        <p>This text will wrap around the image on the left. The image floats left by default.</p>
+        <p>More text continues here, wrapping naturally around the image.</p>
+        <div class="clear-float"></div>
+        <div class="article-image">
+          <video controls>
+            <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
+          </video>
+          <div class="image-caption">Video caption here.</div>
+        </div>
+        <p>Videos can also be embedded and wrapped with text.</p>
+        <div class="clear-float"></div>
+      `,
       image: "/assets/img/project1.jpg",
       files: [
-        { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
-        { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
+        { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
+        { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
       ]
     },
     {
@@ -54,7 +74,7 @@
       description: "This is a description of Project 2. Add your project details here.",
       image: "/assets/img/project2.jpg",
       files: [
-        { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -63,7 +83,7 @@
       description: "This is a description of Project 3. Add your project details here.",
       image: "/assets/img/project3.jpg",
       files: [
-        { type: "image", url: "/assets/img/project3-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project3-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -72,7 +92,7 @@
       description: "This is a description of Project 4. Add your project details here.",
       image: "/assets/img/project4.jpg",
       files: [
-        { type: "image", url: "/assets/img/project4-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project4-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -81,7 +101,7 @@
       description: "This is a description of Project 5. Add your project details here.",
       image: "/assets/img/project5.jpg",
       files: [
-        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -90,7 +110,7 @@
       description: "This is a description of Project 6. Add your project details here.",
       image: "/assets/img/project6.jpg",
       files: [
-        { type: "image", url: "/assets/img/project6-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project6-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -99,7 +119,7 @@
       description: "This is a description of Project 7. Add your project details here.",
       image: "/assets/img/project7.jpg",
       files: [
-        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -108,7 +128,7 @@
       description: "This is a description of Project 8. Add your project details here.",
       image: "/assets/img/project8.jpg",
       files: [
-        { type: "image", url: "/assets/img/project8-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project8-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -117,7 +137,7 @@
       description: "This is a description of Project 9. Add your project details here.",
       image: "/assets/img/project9.jpg",
       files: [
-        { type: "image", url: "/assets/img/project9-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project9-detail1.jpg", name: "Demo 1" }
       ]
     },
     {
@@ -126,7 +146,7 @@
       description: "This is a description of Project 10. Add your project details here.",
       image: "/assets/img/project10.jpg",
       files: [
-        { type: "image", url: "/assets/img/project10-detail1.jpg", name: "Detail 1" }
+        { type: "image", url: "/assets/img/project10-detail1.jpg", name: "Demo 1" }
       ]
     }
   ];
