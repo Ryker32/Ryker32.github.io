@@ -41,7 +41,11 @@
     {
       id: 1,
       title: "Project 1",
-      thumbnailClasses: ['width-narrow', 'height-tall', 'fit-contain'],
+      thumbnailOptions: {
+        width: '100%',
+        height: '420px',
+        fit: 'cover'
+      },
       descriptionHTML: `
         <div class="article-intro">
           <p>This is an introductory paragraph that spans the full width.</p>
@@ -75,7 +79,11 @@
       id: 2,
       title: "Project 2",
       description: "This is a description of Project 2. Add your project details here.",
-      thumbnailClasses: 'width-medium height-short',
+      thumbnailOptions: {
+        width: '80%',
+        height: '320px',
+        fit: 'contain'
+      },
       image: "/assets/img/project2.jpg",
       files: [
         { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Demo 1" }
@@ -212,11 +220,28 @@
     if (modalThumbnailImg && modalThumbnail) {
       // Reset thumbnail classes to base and apply any project-specific modifiers
       modalThumbnail.className = 'modal-thumbnail';
+      modalThumbnail.style.removeProperty('--modal-thumbnail-width');
+      modalThumbnail.style.removeProperty('--modal-thumbnail-height');
+      modalThumbnail.style.removeProperty('--modal-thumbnail-fit');
+
       if (project.thumbnailClasses) {
         const modifiers = Array.isArray(project.thumbnailClasses)
           ? project.thumbnailClasses
           : String(project.thumbnailClasses).split(/\s+/).filter(Boolean);
         modifiers.forEach(cls => modalThumbnail.classList.add(cls));
+      }
+
+      if (project.thumbnailOptions) {
+        const { width, height, fit } = project.thumbnailOptions;
+        if (width) {
+          modalThumbnail.style.setProperty('--modal-thumbnail-width', width);
+        }
+        if (height) {
+          modalThumbnail.style.setProperty('--modal-thumbnail-height', height);
+        }
+        if (fit) {
+          modalThumbnail.style.setProperty('--modal-thumbnail-fit', fit);
+        }
       }
 
       const thumbnailSrc = project.image || '';

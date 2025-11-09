@@ -366,7 +366,6 @@ body {
   --modal-thumbnail-width: 100%;
   --modal-thumbnail-height: 400px;
   --modal-thumbnail-fit: cover;
-  width: 100%;
   width: var(--modal-thumbnail-width);
   height: var(--modal-thumbnail-height);
   overflow: hidden;
@@ -375,13 +374,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 .modal-thumbnail img {
-  width: var(--modal-thumbnail-width);
+  width: 100%;
   height: var(--modal-thumbnail-height);
   object-fit: var(--modal-thumbnail-fit);
   display: block;
+  max-width: 100%;
 }
 
 .modal-thumbnail img[src=""],
