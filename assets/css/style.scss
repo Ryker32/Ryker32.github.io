@@ -363,21 +363,27 @@ body {
 }
 
 .modal-thumbnail {
-  width: 100%;
-  height: 400px;
+  --modal-thumbnail-width: 100%;
+  --modal-thumbnail-height: 400px;
+  --modal-thumbnail-fit: cover;
+  width: var(--modal-thumbnail-width);
+  height: var(--modal-thumbnail-height);
   overflow: hidden;
   background: #161b22;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 .modal-thumbnail img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: var(--modal-thumbnail-height);
+  object-fit: var(--modal-thumbnail-fit);
   display: block;
+  max-width: 100%;
 }
 
 .modal-thumbnail img[src=""],
@@ -398,6 +404,21 @@ body {
   display: none;
 }
 
+/* Thumbnail size modifiers */
+.modal-thumbnail.width-narrow  { --modal-thumbnail-width: 60%; }
+.modal-thumbnail.width-medium  { --modal-thumbnail-width: 80%; }
+.modal-thumbnail.width-full    { --modal-thumbnail-width: 100%; }
+.modal-thumbnail.width-fluid   { --modal-thumbnail-width: auto; }
+
+.modal-thumbnail.height-short  { --modal-thumbnail-height: 260px; }
+.modal-thumbnail.height-medium { --modal-thumbnail-height: 400px; }
+.modal-thumbnail.height-tall   { --modal-thumbnail-height: 520px; }
+.modal-thumbnail.height-full   { --modal-thumbnail-height: 100%; }
+
+.modal-thumbnail.fit-contain   { --modal-thumbnail-fit: contain; }
+.modal-thumbnail.fit-cover     { --modal-thumbnail-fit: cover; }
+.modal-thumbnail.fit-fill      { --modal-thumbnail-fit: fill; }
+
 .modal-title-section {
   padding: 32px 40px;
   border-bottom: 1px solid var(--edge);
@@ -417,6 +438,7 @@ body {
 
 .modal-description {
   margin-bottom: 32px;
+<<<<<<< HEAD
 }
 
 .modal-description p {
@@ -424,6 +446,127 @@ body {
   line-height: 1.45;
   color: #c9d1d9;
   font-size: 17px;
+=======
+  max-width: 100%;
+  
+  /* Base paragraph styles */
+  p {
+    margin: 0 0 20px;
+    line-height: 1.8;
+    color: #c9d1d9;
+    font-size: 18px;
+    text-align: justify;
+    hyphens: auto;
+  }
+  
+  /* Article container for intro paragraphs */
+  .article-intro {
+    margin-bottom: 32px;
+    
+    p {
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Floating images with captions */
+  .article-image {
+    --article-image-width: 45%;
+    --article-image-height: auto;
+    float: left;
+    margin: 0 24px 16px 0;
+    max-width: var(--article-image-width);
+    clear: left;
+    
+    img {
+      width: 100%;
+      height: var(--article-image-height);
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--edge);
+      background: #161b22;
+      object-fit: cover;
+    }
+    
+    video {
+      width: 100%;
+      height: var(--article-image-height);
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--edge);
+      background: #161b22;
+      object-fit: cover;
+    }
+    
+    iframe {
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+      display: block;
+      border: 2px solid var(--edge);
+      background: #161b22;
+      /* Note: border-radius doesn't work on iframes, wrap in container if needed */
+    }
+    
+    .image-caption {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #8b949e;
+      font-style: italic;
+      line-height: 1.5;
+      padding: 0 4px;
+    }
+    
+    /* Right-aligned images */
+    &.float-right {
+      float: right;
+      margin: 0 0 16px 24px;
+      clear: right;
+    }
+    
+    /* Full-width images */
+    &.full-width {
+      float: none;
+      --article-image-width: 100%;
+      --article-image-height: auto;
+      margin: 24px 0;
+      clear: both;
+    }
+
+    /* Width modifiers */
+    &.width-small   { --article-image-width: 30%; }
+    &.width-medium  { --article-image-width: 45%; }
+    &.width-large   { --article-image-width: 60%; }
+    &.width-xlarge  { --article-image-width: 75%; }
+
+    /* Height modifiers */
+    &.height-auto   { --article-image-height: auto; }
+    &.height-short  { --article-image-height: 220px; }
+    &.height-medium { --article-image-height: 320px; }
+    &.height-tall   { --article-image-height: 420px; }
+    &.height-full   { --article-image-height: 100%; }
+  }
+  
+  /* Clear floats */
+  .clear-float {
+    clear: both;
+  }
+  
+  /* Headings in article */
+  h3, h4 {
+    margin: 32px 0 16px;
+    color: var(--ink);
+    font-weight: 600;
+    clear: both;
+  }
+  
+  h3 {
+    font-size: 24px;
+  }
+  
+  h4 {
+    font-size: 20px;
+  }
+>>>>>>> 80091be8e09974443448e05ce8046e75c93c4fb4
 }
 
 .modal-files h3 {
