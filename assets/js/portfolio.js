@@ -5,33 +5,8 @@
     {
       id: 1,
       title: "Project 1",
-      thumbnailOptions: {
-        width: '100%',
-        height: '420px',
-        fit: 'cover'
-      },
-      descriptionHTML: `
-        <div class="article-intro">
-          <p>This is an introductory paragraph that spans the full width.</p>
-          <p>You can have multiple intro paragraphs here.</p>
-        </div>
-        <div class="article-image">
-          <img src="/assets/img/project-image1.jpg" alt="Description" />
-          <div class="image-caption">Caption text here. (Photo Credit)</div>
-        </div>
-        <p>This text will wrap around the image on the left. The image floats left by default.</p>
-        <p>More text continues here, wrapping naturally around the image.</p>
-        <div class="clear-float"></div>
-        <div class="article-image">
-          <video controls>
-            <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
-          </video>
-          <div class="image-caption">Video caption here.</div>
-        </div>
-        <p>Videos can also be embedded and wrapped with text.</p>
-        <div class="clear-float"></div>
-      `,
-      image: "/assets/img/bwsicar.png",
+      description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
+      image: "/assets/img/project1.jpg",
       files: [
         { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
         { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
@@ -41,11 +16,6 @@
       id: 2,
       title: "Project 2",
       description: "This is a description of Project 2. Add your project details here.",
-      thumbnailOptions: {
-        width: '80%',
-        height: '320px',
-        fit: 'contain'
-      },
       image: "/assets/img/project2.jpg",
       files: [
         { type: "image", url: "/assets/img/project2-detail1.jpg", name: "Detail 1" }
@@ -180,45 +150,24 @@
 
     // Set thumbnail
     if (modalThumbnailImg && modalThumbnail) {
-      // Reset thumbnail classes to base and apply any project-specific modifiers
-      modalThumbnail.className = 'modal-thumbnail';
-      modalThumbnail.style.removeProperty('--modal-thumbnail-width');
-      modalThumbnail.style.removeProperty('--modal-thumbnail-height');
-      modalThumbnail.style.removeProperty('--modal-thumbnail-fit');
-
-      if (project.thumbnailClasses) {
-        const modifiers = Array.isArray(project.thumbnailClasses)
-          ? project.thumbnailClasses
-          : String(project.thumbnailClasses).split(/\s+/).filter(Boolean);
-        modifiers.forEach(cls => modalThumbnail.classList.add(cls));
-      }
-
-      if (project.thumbnailOptions) {
-        const { width, height, fit } = project.thumbnailOptions;
-        if (width) {
-          modalThumbnail.style.setProperty('--modal-thumbnail-width', width);
-        }
-        if (height) {
-          modalThumbnail.style.setProperty('--modal-thumbnail-height', height);
-        }
-        if (fit) {
-          modalThumbnail.style.setProperty('--modal-thumbnail-fit', fit);
-        }
-      }
-
       const thumbnailSrc = project.image || '';
       if (thumbnailSrc) {
         modalThumbnailImg.src = thumbnailSrc;
         modalThumbnailImg.alt = project.title;
         modalThumbnailImg.style.display = 'block';
+        modalThumbnail.classList.add('has-image');
         modalThumbnailImg.onerror = function() {
           this.style.display = 'none';
+          modalThumbnail.classList.remove('has-image');
         };
         modalThumbnailImg.onload = function() {
           this.style.display = 'block';
+          modalThumbnail.classList.add('has-image');
         };
       } else {
+        modalThumbnailImg.removeAttribute('src');
         modalThumbnailImg.style.display = 'none';
+        modalThumbnail.classList.remove('has-image');
       }
     }
 
