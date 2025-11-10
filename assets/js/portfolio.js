@@ -5,10 +5,6 @@
     {
       id: 1,
       title: "Project 1",
-<<<<<<< HEAD
-      description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
-      image: "/assets/img/project1.jpg",
-=======
       thumbnailOptions: {
         width: '100%',
         height: '420px',
@@ -36,7 +32,6 @@
         <div class="clear-float"></div>
       `,
       image: "/assets/img/bwsicar.png",
->>>>>>> 80091be8e09974443448e05ce8046e75c93c4fb4
       files: [
         { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
         { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
