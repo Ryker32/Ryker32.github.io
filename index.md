@@ -4,7 +4,7 @@ layout: default
 
 <div class="portfolio-container">
   <div class="portfolio-banner">
-    <h1>Engineering Portfolio</h1>
+    <h1>Project Portfolio</h1>
   </div>
   
   <div class="portfolio-grid" id="portfolioGrid">
@@ -19,7 +19,7 @@ layout: default
   <div class="modal-content">
     <button class="modal-close" id="modalClose">&times;</button>
     <div class="modal-thumbnail" id="modalThumbnail">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Project thumbnail" id="modalThumbnailImg" style="display:none" />
+      <img src="" alt="Project thumbnail" id="modalThumbnailImg" />
     </div>
     <div class="modal-title-section">
       <h2 id="modalTitle">Project Title</h2>

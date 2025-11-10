@@ -381,8 +381,7 @@ body {
 }
 
 .modal-thumbnail img[src=""],
-.modal-thumbnail img:not([src]),
-.modal-thumbnail img[style*="display: none"] {
+.modal-thumbnail img:not([src]) {
   display: none;
 }
 
@@ -395,7 +394,7 @@ body {
   pointer-events: none;
 }
 
-.modal-thumbnail:has(img[src]:not([src=""]):not([style*="display: none"]))::after {
+.modal-thumbnail:has(img[src]:not([src=""]))::after {
   display: none;
 }
 
@@ -418,107 +417,13 @@ body {
 
 .modal-description {
   margin-bottom: 32px;
-  max-width: 100%;
-  
-  /* Base paragraph styles */
-  p {
-    margin: 0 0 20px;
-    line-height: 1.8;
-    color: #c9d1d9;
-    font-size: 18px;
-    text-align: justify;
-    hyphens: auto;
-  }
-  
-  /* Article container for intro paragraphs */
-  .article-intro {
-    margin-bottom: 32px;
-    
-    p {
-      margin-bottom: 20px;
-    }
-  }
-  
-  /* Floating images with captions */
-  .article-image {
-    float: left;
-    margin: 0 24px 16px 0;
-    max-width: 45%;
-    clear: left;
-    
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
-      border: 2px solid var(--edge);
-      background: #161b22;
-    }
-    
-    video {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
-      border: 2px solid var(--edge);
-      background: #161b22;
-    }
-    
-    iframe {
-      width: 100%;
-      height: auto;
-      min-height: 300px;
-      display: block;
-      border: 2px solid var(--edge);
-      background: #161b22;
-      /* Note: border-radius doesn't work on iframes, wrap in container if needed */
-    }
-    
-    .image-caption {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #8b949e;
-      font-style: italic;
-      line-height: 1.5;
-      padding: 0 4px;
-    }
-    
-    /* Right-aligned images */
-    &.float-right {
-      float: right;
-      margin: 0 0 16px 24px;
-      clear: right;
-    }
-    
-    /* Full-width images */
-    &.full-width {
-      float: none;
-      max-width: 100%;
-      margin: 24px 0;
-      clear: both;
-    }
-  }
-  
-  /* Clear floats */
-  .clear-float {
-    clear: both;
-  }
-  
-  /* Headings in article */
-  h3, h4 {
-    margin: 32px 0 16px;
-    color: var(--ink);
-    font-weight: 600;
-    clear: both;
-  }
-  
-  h3 {
-    font-size: 24px;
-  }
-  
-  h4 {
-    font-size: 20px;
-  }
+}
+
+.modal-description p {
+  margin: 0 0 14px;
+  line-height: 1.45;
+  color: #c9d1d9;
+  font-size: 17px;
 }
 
 .modal-files h3 {
@@ -543,14 +448,6 @@ body {
   background: #161b22;
   cursor: pointer;
   transition: all 0.2s;
-  
-  &.file-item-video {
-    aspect-ratio: 16 / 9; // Videos typically use 16:9 aspect ratio
-  }
-  
-  &.file-item-iframe {
-    aspect-ratio: 16 / 9; // Iframe embeds typically use 16:9
-  }
 }
 
 .file-item:hover {
@@ -563,21 +460,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-}
-
-.file-item video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; // Show full video without cropping
-  display: block;
-  background: #161b22; // Background color for letterboxing
-}
-
-.file-item iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
   display: block;
 }
 
@@ -665,18 +547,6 @@ body {
   
   .modal-description p {
     font-size: 16px;
-  }
-  
-  .modal-description .article-image {
-    max-width: 100%;
-    float: none;
-    margin: 20px 0;
-    clear: both;
-    
-    &.float-right {
-      float: none;
-      margin: 20px 0;
-    }
   }
   
   .modal-files h3 {
