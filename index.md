@@ -19,7 +19,7 @@ layout: default
   <div class="modal-content">
     <button class="modal-close" id="modalClose">&times;</button>
     <div class="modal-thumbnail" id="modalThumbnail">
-      <img src="" alt="Project thumbnail" id="modalThumbnailImg" />
+      <img src="{{ '/assets/img/logo.png' | relative_url }}" data-placeholder="{{ '/assets/img/logo.png' | relative_url }}" alt="Project thumbnail" id="modalThumbnailImg" />
     </div>
     <div class="modal-title-section">
       <h2 id="modalTitle">Project Title</h2>

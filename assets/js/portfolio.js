@@ -150,6 +150,7 @@
 
     // Set thumbnail
     if (modalThumbnailImg && modalThumbnail) {
+      const placeholderSrc = modalThumbnailImg.dataset?.placeholder || modalThumbnailImg.getAttribute('src') || '';
       const thumbnailSrc = project.image || '';
       if (thumbnailSrc) {
         modalThumbnailImg.src = thumbnailSrc;
@@ -157,16 +158,27 @@
         modalThumbnailImg.style.display = 'block';
         modalThumbnail.classList.add('has-image');
         modalThumbnailImg.onerror = function() {
-          this.style.display = 'none';
-          modalThumbnail.classList.remove('has-image');
+          if (placeholderSrc) {
+            this.src = placeholderSrc;
+            modalThumbnail.classList.remove('has-image');
+            this.style.display = 'block';
+          } else {
+            this.style.display = 'none';
+            modalThumbnail.classList.remove('has-image');
+          }
         };
         modalThumbnailImg.onload = function() {
           this.style.display = 'block';
           modalThumbnail.classList.add('has-image');
         };
       } else {
-        modalThumbnailImg.removeAttribute('src');
-        modalThumbnailImg.style.display = 'none';
+        if (placeholderSrc) {
+          modalThumbnailImg.src = placeholderSrc;
+          modalThumbnailImg.style.display = 'block';
+        } else {
+          modalThumbnailImg.removeAttribute('src');
+          modalThumbnailImg.style.display = 'none';
+        }
         modalThumbnail.classList.remove('has-image');
       }
     }
