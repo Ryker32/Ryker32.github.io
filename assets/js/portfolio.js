@@ -6,6 +6,19 @@
       id: 1,
       title: "Project 1",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
+      descriptionHtml: `
+        <p>This is an introductory paragraph that spans the full width. You can have multiple intro paragraphs here.</p>
+        <figure class="project-figure project-figure--left">
+          <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
+          <figcaption>Caption text here. (Photo Credit)</figcaption>
+        </figure>
+        <p>This text will wrap around the image on the left. The image floats left by default. More text continues here, wrapping naturally around the image.</p>
+        <figure class="project-figure project-figure--right">
+          <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
+          <figcaption>Secondary image with additional context.</figcaption>
+        </figure>
+        <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
+      `,
       image: "/assets/img/project1.jpg",
       files: [
         { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
@@ -188,15 +201,17 @@
 
     // Set description
     modalDescription.innerHTML = '';
-    const descriptionParagraphs = project.description.split('\n').filter(p => p.trim());
-    if (descriptionParagraphs.length === 0) {
-      descriptionParagraphs.push(project.description || 'No description available.');
+    if (project.descriptionHtml) {
+      modalDescription.innerHTML = project.descriptionHtml;
+    } else {
+      const descriptionText = project.description || 'No description available.';
+      const descriptionParagraphs = descriptionText.split('\n').filter(p => p.trim());
+      descriptionParagraphs.forEach(text => {
+        const p = document.createElement('p');
+        p.textContent = text;
+        modalDescription.appendChild(p);
+      });
     }
-    descriptionParagraphs.forEach(text => {
-      const p = document.createElement('p');
-      p.textContent = text;
-      modalDescription.appendChild(p);
-    });
 
     // Clear and populate files
     filesGrid.innerHTML = '';
