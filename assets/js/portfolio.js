@@ -19,9 +19,9 @@
         </figure>
         <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
       `,
-      image: "/assets/img/project1.jpg",
+      image: "/assets/img/bwsicar.png",
       files: [
-        { type: "image", url: "/assets/img/project1-detail1.jpg", name: "Detail 1" },
+        { type: "image", url: "/assets/img/bwsicar.png", name: "Thumbnail" },
         { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
       ]
     },
