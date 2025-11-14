@@ -88,10 +88,12 @@
   const portfolioData = [
     {
       id: 1,
-      title: "Project 1",
+      title: "Hybrid/Modular UAV-UGV Research",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
-        <p>This is an introductory paragraph that spans the full width. You can have multiple intro paragraphs here.</p>
+        <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
+        This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
+        </p>
         <figure class="project-figure project-figure--left">
           <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
           <figcaption>Caption text here. (Photo Credit)</figcaption>
