@@ -95,10 +95,10 @@
         This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
         </p>
         <figure class="project-figure project-figure--left">
-          <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
+          <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Fully Custom Landing Gear">
           <figcaption>Caption text here. (Photo Credit)</figcaption>
         </figure>
-        <p>This text will wrap around the image on the left. The image floats left by default. More text continues here, wrapping naturally around the image.</p>
+        <p>I realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
         <figure class="project-figure project-figure--right">
           <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
           <figcaption>Secondary image with additional context.</figcaption>
@@ -119,7 +119,7 @@
         </div>
         <div class="clear-float"></div>
       `,
-      image: "/assets/img/bwsicar.png",
+      image: "/assets/img/bwsicars/bwsicar.png",
       files: []
     },
     {
