@@ -99,7 +99,7 @@
           <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Landing Gear">
           <figcaption>Landing gear modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
-        <h3 style="white-space:normal;word-break:break-word;">Landing Gear Modification</h3>
+        <h3>Landing Gear Modification</h3>
         <p>I realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
         <figure class="project-figure project-figure--right">
           <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
