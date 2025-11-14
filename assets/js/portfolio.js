@@ -52,7 +52,27 @@
   //   ]
   // }
   //
-  // For interactive CAD files:
+  // For interactive CAD files, you have two options:
+  //
+  // OPTION 1: Fusion 360 Native Embed (Recommended - easiest)
+  // 1. In Fusion 360, open your design
+  // 2. Click "Share" > "Share Public Link" or "Get link"
+  // 3. Copy the share link (looks like: https://a360.co/XXXXX)
+  // 4. Use an iframe in your descriptionHtml:
+  //    <h3>CAD</h3>
+  //    <div class="article-image fusion-360-embed">
+  //      <iframe 
+  //        src="https://a360.co/XXXXX" 
+  //        allowfullscreen="true" 
+  //        webkitallowfullscreen="true" 
+  //        mozallowfullscreen="true" 
+  //        frameborder="0">
+  //      </iframe>
+  //      <div class="image-caption">Interactive Fusion 360 model. Click and drag to rotate, scroll to zoom.</div>
+  //    </div>
+  //    <div class="clear-float"></div>
+  //
+  // OPTION 2: model-viewer (for offline/self-hosted models)
   // 1. Export your Fusion 360 model to glTF (.gltf) or GLB (.glb) format
   //    - Fusion 360: File > Export > glTF (if available)
   //    - Or: File > Export > 3MF, then convert using online converter
@@ -72,6 +92,20 @@
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
         <p>This is an introductory paragraph that spans the full width. You can have multiple intro paragraphs here.</p>
+        
+        <h3>CAD</h3>
+        <div class="article-image fusion-360-embed">
+          <iframe 
+            src="https://a360.co/45sUzAD" 
+            allowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            mozallowfullscreen="true" 
+            frameborder="0">
+          </iframe>
+          <div class="image-caption">Interactive Fusion 360 model. Click and drag to rotate, scroll to zoom.</div>
+        </div>
+        <div class="clear-float"></div>
+        
         <figure class="project-figure project-figure--left">
           <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
           <figcaption>Caption text here. (Photo Credit)</figcaption>

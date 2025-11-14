@@ -469,11 +469,27 @@ body {
     
     iframe {
       width: 100%;
-      height: auto;
+      height: var(--article-image-height);
       min-height: 300px;
       display: block;
+      border-radius: 8px;
       border: 2px solid var(--edge);
       background: #161b22;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    /* Fusion 360 embed container - use with full-width class */
+    &.fusion-360-embed {
+      --article-image-width: 100%;
+      --article-image-height: 500px;
+      float: none;
+      margin: 24px 0;
+      clear: both;
+      
+      iframe {
+        height: 500px;
+        min-height: 500px;
+      }
     }
     
     /* Interactive 3D model viewer (model-viewer web component) */
@@ -735,6 +751,11 @@ body {
   .modal-description .article-image model-viewer {
     height: 400px;
     min-height: 300px;
+  }
+  
+  .modal-description .article-image.fusion-360-embed iframe {
+    height: 400px;
+    min-height: 400px;
   }
 }
 
