@@ -92,7 +92,17 @@
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
         <p>This is an introductory paragraph that spans the full width. You can have multiple intro paragraphs here.</p>
-        
+        <figure class="project-figure project-figure--left">
+          <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
+          <figcaption>Caption text here. (Photo Credit)</figcaption>
+        </figure>
+        <p>This text will wrap around the image on the left. The image floats left by default. More text continues here, wrapping naturally around the image.</p>
+        <figure class="project-figure project-figure--right">
+          <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
+          <figcaption>Secondary image with additional context.</figcaption>
+        </figure>
+        <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
+
         <h3>CAD</h3>
         <div class="article-image fusion-360-embed">
           <iframe 
@@ -106,22 +116,9 @@
         </div>
         <div class="clear-float"></div>
         
-        <figure class="project-figure project-figure--left">
-          <img src="/assets/img/project1-detail1.jpg" alt="Prototype detail">
-          <figcaption>Caption text here. (Photo Credit)</figcaption>
-        </figure>
-        <p>This text will wrap around the image on the left. The image floats left by default. More text continues here, wrapping naturally around the image.</p>
-        <figure class="project-figure project-figure--right">
-          <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
-          <figcaption>Secondary image with additional context.</figcaption>
-        </figure>
-        <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
       `,
       image: "/assets/img/bwsicar.png",
-      files: [
-        { type: "image", url: "/assets/img/bwsicar.png", name: "Thumbnail" },
-        { type: "image", url: "/assets/img/project1-detail2.jpg", name: "Detail 2" }
-      ]
+      files: []
     },
     {
       id: 2,
@@ -213,6 +210,7 @@
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
+  const modalFiles = document.getElementById('modalFiles');
   const filesGrid = document.getElementById('filesGrid');
 
   // Initialize portfolio grid
@@ -311,41 +309,40 @@
       });
     }
 
-    // Clear and populate files
-    filesGrid.innerHTML = '';
-    if (project.files && project.files.length > 0) {
-      project.files.forEach(file => {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        
-        if (file.type === 'image') {
-          const img = document.createElement('img');
-          img.src = file.url;
-          img.alt = file.name || 'Project file';
-          img.onerror = function() {
-            this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
-          };
-          fileItem.appendChild(img);
-        } else {
-          fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
-        }
-        
-        // Make file items clickable to view full size
-        fileItem.addEventListener('click', () => {
-          if (file.type === 'image' && file.url) {
-            window.open(file.url, '_blank');
+    // Clear and populate files - hide section if no files
+    if (modalFiles) {
+      filesGrid.innerHTML = '';
+      if (project.files && project.files.length > 0) {
+        modalFiles.style.display = 'block';
+        project.files.forEach(file => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          
+          if (file.type === 'image') {
+            const img = document.createElement('img');
+            img.src = file.url;
+            img.alt = file.name || 'Project file';
+            img.onerror = function() {
+              this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
+            };
+            fileItem.appendChild(img);
+          } else {
+            fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
           }
+          
+          // Make file items clickable to view full size
+          fileItem.addEventListener('click', () => {
+            if (file.type === 'image' && file.url) {
+              window.open(file.url, '_blank');
+            }
+          });
+          
+          filesGrid.appendChild(fileItem);
         });
-        
-        filesGrid.appendChild(fileItem);
-      });
-    } else {
-      // Show message if no files
-      const noFilesMsg = document.createElement('div');
-      noFilesMsg.className = 'file-placeholder';
-      noFilesMsg.style.gridColumn = '1 / -1';
-      noFilesMsg.textContent = 'No files attached to this project.';
-      filesGrid.appendChild(noFilesMsg);
+      } else {
+        // Hide the entire files section if no files
+        modalFiles.style.display = 'none';
+      }
     }
 
     // Show modal
