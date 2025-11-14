@@ -599,9 +599,22 @@ body {
     width: 100%;
     height: auto;
     border-radius: 12px 12px 0 0;
-    object-fit: cover; /* Fill the container, may crop edges */
+    object-fit: contain; /* Default: preserve aspect ratio, no cropping */
     margin: 0;
     padding: 0;
+  }
+  
+  /* Per-figure object-fit control via classes */
+  &.object-contain img {
+    object-fit: contain; /* Preserve aspect ratio, may have empty space */
+  }
+  
+  &.object-cover img {
+    object-fit: cover; /* Fill container, maintain aspect ratio, may crop */
+  }
+  
+  &.object-fill img {
+    object-fit: fill; /* Fill container exactly, may distort image */
   }
   
   /* When height is set on figure, use flexbox to properly size image and caption */
@@ -616,9 +629,6 @@ body {
       min-height: 0;
       width: 100%;
       height: 100%;
-      /* Use 'fill' to match container dimensions exactly (may distort image) */
-      /* Use 'cover' to maintain aspect ratio (may crop image) */
-      object-fit: fill; /* Change to 'fill' if you want exact dimensions */
       object-position: center; /* Center the image when cropping */
     }
     
