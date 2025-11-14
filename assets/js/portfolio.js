@@ -94,9 +94,9 @@
         <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
         This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
         </p>
-        <figure class="project-figure project-figure--left" style="height: 400px; max-height: 400px; width: 200px; max-width: 200px;">
+        <figure class="project-figure project-figure--left" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
           <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Landing Gear">
-          <figcaption>3-D Printed landing gear modeled in Fusion 360 CAD. (Photo Credit: Ryker Kollmyer)</figcaption>
+          <figcaption>Landing gear modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
         <p>I realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
         <figure class="project-figure project-figure--right">
