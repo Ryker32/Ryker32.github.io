@@ -1,6 +1,70 @@
 (() => {
   // Portfolio data structure
   // You can modify this to load from a JSON file or API
+  // 
+  // For article-style layouts with images and text wrapping, use descriptionHtml:
+  // 
+  // Example with images, videos, and interactive CAD:
+  // {
+  //   id: 1,
+  //   title: "My Project",
+  //   descriptionHtml: `
+  //     <div class="article-intro">
+  //       <p>This is an introductory paragraph that spans the full width.</p>
+  //       <p>You can have multiple intro paragraphs here.</p>
+  //     </div>
+  //     <div class="article-image">
+  //       <img src="/assets/img/project-image1.jpg" alt="Description" />
+  //       <div class="image-caption">Caption text here. (Photo Credit)</div>
+  //     </div>
+  //     <p>This text will wrap around the image on the left. The image floats left by default.</p>
+  //     <p>More text continues here, wrapping naturally around the image.</p>
+  //     <div class="clear-float"></div>
+  //     <h3>CAD</h3>
+  //     <div class="article-image width-large height-tall">
+  //       <model-viewer 
+  //         src="/assets/models/cad-model.glb" 
+  //         alt="3D CAD Model"
+  //         camera-controls 
+  //         auto-rotate 
+  //         ar
+  //         shadow-intensity="1"
+  //         exposure="1">
+  //       </model-viewer>
+  //       <div class="image-caption">Interactive 3D CAD model. Drag to rotate, scroll to zoom.</div>
+  //     </div>
+  //     <p>You can embed interactive 3D CAD files using model-viewer. Convert your CAD files to glTF/GLB format.</p>
+  //     <div class="clear-float"></div>
+  //     <div class="article-image">
+  //       <video controls>
+  //         <source src="/assets/video/demo.mp4" type="video/mp4">
+  //       </video>
+  //       <div class="image-caption">Video caption here.</div>
+  //     </div>
+  //     <p>Videos can also be embedded and wrapped with text.</p>
+  //     <div class="clear-float"></div>
+  //   `,
+  //   image: "/assets/img/project1.jpg",
+  //   files: [
+  //     { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
+  //     { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
+  //     { type: "youtube", url: "https://www.youtube.com/embed/VIDEO_ID", name: "YouTube Video" }
+  //   ]
+  // }
+  //
+  // For interactive CAD files:
+  // 1. Export your Fusion 360 model to glTF (.gltf) or GLB (.glb) format
+  //    - Fusion 360: File > Export > glTF (if available)
+  //    - Or: File > Export > 3MF, then convert using online converter
+  //    - Online converters: https://products.aspose.app/3d/conversion
+  // 2. Place the .glb or .gltf file in your assets folder (e.g., /assets/models/)
+  // 3. Use <model-viewer> tag in your descriptionHtml with:
+  //    - src: path to your .glb/.gltf file
+  //    - camera-controls: enables mouse/touch controls
+  //    - auto-rotate: automatically rotates the model
+  //    - ar: enables AR viewing on mobile devices
+  //    - Other attributes: exposure, shadow-intensity, etc.
+  //
   const portfolioData = [
     {
       id: 1,
@@ -290,4 +354,3 @@
     initPortfolio();
   }
 })();
-

@@ -417,6 +417,135 @@ body {
 
 .modal-description {
   margin-bottom: 32px;
+  max-width: 100%;
+  
+  /* Base paragraph styles */
+  p {
+    margin: 0 0 20px;
+    line-height: 1.8;
+    color: #c9d1d9;
+    font-size: 18px;
+    text-align: justify;
+    hyphens: auto;
+  }
+  
+  /* Article container for intro paragraphs */
+  .article-intro {
+    margin-bottom: 32px;
+    
+    p {
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Floating images with captions */
+  .article-image {
+    --article-image-width: 45%;
+    --article-image-height: auto;
+    float: left;
+    margin: 0 24px 16px 0;
+    max-width: var(--article-image-width);
+    clear: left;
+    
+    img {
+      width: 100%;
+      height: var(--article-image-height);
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--edge);
+      background: #161b22;
+      object-fit: cover;
+    }
+    
+    video {
+      width: 100%;
+      height: var(--article-image-height);
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--edge);
+      background: #161b22;
+      object-fit: cover;
+    }
+    
+    iframe {
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+      display: block;
+      border: 2px solid var(--edge);
+      background: #161b22;
+    }
+    
+    /* Interactive 3D model viewer (model-viewer web component) */
+    model-viewer {
+      width: 100%;
+      height: var(--article-image-height);
+      min-height: 300px;
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--edge);
+      background: #161b22;
+    }
+    
+    .image-caption {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #8b949e;
+      font-style: italic;
+      line-height: 1.5;
+      padding: 0 4px;
+    }
+    
+    /* Right-aligned images */
+    &.float-right {
+      float: right;
+      margin: 0 0 16px 24px;
+      clear: right;
+    }
+    
+    /* Full-width images */
+    &.full-width {
+      float: none;
+      --article-image-width: 100%;
+      --article-image-height: auto;
+      margin: 24px 0;
+      clear: both;
+    }
+
+    /* Width modifiers */
+    &.width-small   { --article-image-width: 30%; }
+    &.width-medium  { --article-image-width: 45%; }
+    &.width-large   { --article-image-width: 60%; }
+    &.width-xlarge  { --article-image-width: 75%; }
+
+    /* Height modifiers */
+    &.height-auto   { --article-image-height: auto; }
+    &.height-short  { --article-image-height: 220px; }
+    &.height-medium { --article-image-height: 320px; }
+    &.height-tall   { --article-image-height: 420px; }
+    &.height-full   { --article-image-height: 100%; }
+  }
+  
+  /* Clear floats */
+  .clear-float {
+    clear: both;
+  }
+  
+  /* Headings in article */
+  h3, h4 {
+    margin: 32px 0 16px;
+    color: var(--ink);
+    font-weight: 600;
+    clear: both;
+  }
+  
+  h3 {
+    font-size: 24px;
+  }
+  
+  h4 {
+    font-size: 20px;
+  }
 }
 
 .modal-description p {
@@ -595,11 +724,17 @@ body {
 
   .modal-description figure,
   .project-figure--left,
-  .project-figure--right {
+  .project-figure--right,
+  .modal-description .article-image {
     float: none;
     margin: 0 0 20px;
     max-width: 100%;
     width: 100%;
+  }
+  
+  .modal-description .article-image model-viewer {
+    height: 400px;
+    min-height: 300px;
   }
 }
 
