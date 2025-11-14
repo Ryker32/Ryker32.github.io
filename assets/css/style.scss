@@ -611,6 +611,14 @@ body {
   clear: both;
 }
 
+.modal-files {
+  margin-top: 40px;
+  
+  &[hidden] {
+    display: none !important;
+  }
+}
+
 .modal-files h3 {
   margin: 0 0 24px;
   font-size: 24px;

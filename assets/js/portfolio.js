@@ -102,7 +102,8 @@
           <figcaption>Secondary image with additional context.</figcaption>
         </figure>
         <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
-
+        <div class="clear-float"></div>
+        
         <h3>CAD</h3>
         <div class="article-image fusion-360-embed">
           <iframe 
@@ -115,7 +116,6 @@
           <div class="image-caption">Interactive Fusion 360 model. Click and drag to rotate, scroll to zoom.</div>
         </div>
         <div class="clear-float"></div>
-        
       `,
       image: "/assets/img/bwsicar.png",
       files: []
@@ -312,8 +312,11 @@
     // Clear and populate files - hide section if no files
     if (modalFiles) {
       filesGrid.innerHTML = '';
-      if (project.files && project.files.length > 0) {
+      // Check if files exist and array is not empty
+      const hasFiles = project.files && Array.isArray(project.files) && project.files.length > 0;
+      if (hasFiles) {
         modalFiles.style.display = 'block';
+        modalFiles.removeAttribute('hidden');
         project.files.forEach(file => {
           const fileItem = document.createElement('div');
           fileItem.className = 'file-item';
@@ -342,6 +345,7 @@
       } else {
         // Hide the entire files section if no files
         modalFiles.style.display = 'none';
+        modalFiles.setAttribute('hidden', 'true');
       }
     }
 
