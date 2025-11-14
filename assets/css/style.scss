@@ -618,7 +618,7 @@ body {
       height: 100%;
       /* Use 'fill' to match container dimensions exactly (may distort image) */
       /* Use 'cover' to maintain aspect ratio (may crop image) */
-      object-fit: cover; /* Change to 'fill' if you want exact dimensions */
+      object-fit: fill; /* Change to 'fill' if you want exact dimensions */
       object-position: center; /* Center the image when cropping */
     }
     
