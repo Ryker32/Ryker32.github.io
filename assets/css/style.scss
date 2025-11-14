@@ -577,10 +577,10 @@ body {
   border: 1px solid var(--edge);
   border-radius: 12px;
   overflow: hidden;
-  display: inline-flex;
-  flex-direction: column;
+  display: inline-block; /* Use inline-block to work with floats and text wrapping */
   max-width: 420px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  vertical-align: top; /* Align to top for better text wrapping */
   
   /* Respect width and height set in style attribute */
   &[style*="width"] {
@@ -595,8 +595,11 @@ body {
     object-fit: contain; /* Preserve aspect ratio, fit within container */
   }
   
-  /* When height is set on figure, make image area flexible to fit */
+  /* When height is set on figure, use flexbox to properly size image and caption */
   &[style*="height"] {
+    display: inline-flex;
+    flex-direction: column;
+    
     img {
       flex: 1 1 0;
       min-height: 0;
@@ -604,10 +607,10 @@ body {
       height: 100%;
       object-fit: contain;
     }
-  }
-  
-  figcaption {
-    flex-shrink: 0; /* Caption always takes its natural height */
+    
+    figcaption {
+      flex-shrink: 0;
+    }
   }
 }
 
