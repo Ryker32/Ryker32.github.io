@@ -492,6 +492,25 @@ body {
       }
     }
     
+    /* PDF embed container */
+    &.pdf-embed {
+      --article-image-width: 100%;
+      --article-image-height: 600px;
+      float: none;
+      margin: 24px 0;
+      clear: both;
+      
+      iframe, embed, object {
+        width: 100%;
+        height: 600px;
+        min-height: 600px;
+        border: 2px solid var(--edge);
+        border-radius: 8px;
+        background: #161b22;
+      }
+    }
+    
+    
     /* Interactive 3D model viewer (model-viewer web component) */
     model-viewer {
       width: 100%;
@@ -848,6 +867,7 @@ body {
     height: 400px;
     min-height: 400px;
   }
+  
 }
 
 /* Override theme floats/positioning */

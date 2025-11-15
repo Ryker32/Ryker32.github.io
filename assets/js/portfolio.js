@@ -91,6 +91,31 @@
       title: "Hybrid/Modular UAV-UGV Research",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
+        <h3>IEEE-URTC</h3>
+          <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
+            <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
+              <figure class="project-figure">
+                <img src="/assets/img/bwsicars/ugv-carrying-uav.jpg" alt="UGV Carrying UAV">
+                <figcaption>UGV Carrying UAV</figcaption>
+              </figure>
+              <figure class="project-figure">
+                <img src="/assets/img/bwsicars/separate-uav-ugv.jpg" alt="Separate UAV and UGV">
+                <figcaption>Separate UAV and UGV</figcaption>
+              </figure>
+            </div>
+            <div style="flex: 1 1 55%;">
+              <iframe 
+                src="/assets/img/bwsicars/poster.pdf" 
+                type="application/pdf"
+                style="width: 100%; height: 600px; min-height: 600px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
+                frameborder="0">
+              </iframe>
+            </div>
+          </div>
+        <div class="clear-float"></div>
+
+
+        <hr>
         <h3 class="clear-both">Context</h3>
         <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
         This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
@@ -107,6 +132,8 @@
         <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
         <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
         <div class="clear-float"></div>
+
+        <hr>
         
         <h3>CAD</h3>
         <div class="article-image fusion-360-embed">
