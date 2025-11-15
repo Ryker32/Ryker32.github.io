@@ -552,7 +552,8 @@ body {
     margin: 32px 0 16px;
     color: var(--ink);
     font-weight: 600;
-    clear: both;
+    /* Don't clear floats by default - allows text to wrap around figures */
+    /* Add .clear-both class if you need to clear floats for specific headings */
   }
   
   h3 {
@@ -561,6 +562,11 @@ body {
   
   h4 {
     font-size: 20px;
+  }
+  
+  /* Optional: class to clear floats when needed */
+  h3.clear-both, h4.clear-both {
+    clear: both;
   }
 }
 

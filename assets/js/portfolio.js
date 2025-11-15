@@ -91,7 +91,7 @@
       title: "Hybrid/Modular UAV-UGV Research",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
-        <h3>Context</h3>
+        <h3 class="clear-both">Context</h3>
         <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
         This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
         </p>
@@ -99,7 +99,7 @@
           <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Landing Gear">
           <figcaption>Landing gear modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
-        <h3>Landing Gear Modification</h3>
+        <h3 class="clear-both">Landing Gear Modification</h3>
         <p>I realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
         <figure class="project-figure project-figure--right">
           <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
