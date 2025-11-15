@@ -547,6 +547,18 @@ body {
     clear: both;
   }
   
+  /* Section divider */
+  hr, .section-divider {
+    border: none;
+    border-top: 2px solid var(--edge);
+    margin: 48px 0;
+    clear: both;
+  }
+  
+  hr.section-divider {
+    margin: 48px 0;
+  }
+  
   /* Headings in article */
   h3, h4 {
     margin: 0 0 16px;
