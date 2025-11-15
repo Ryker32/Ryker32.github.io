@@ -600,8 +600,8 @@ body {
   max-width: 420px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   vertical-align: top; /* Align to top for better text wrapping */
-  padding: 2px; /* Remove any default padding */
-  box-sizing: border-box; /* Include border in width/height calculations */
+  padding: 8px; /* Padding inside the figure container around image and caption */
+  box-sizing: border-box; /* Include border and padding in width/height calculations */
   
   /* Respect width and height set in style attribute - inline styles take precedence */
   &[style*="width"] {
@@ -668,12 +668,12 @@ body {
 
 .project-figure--left {
   float: left;
-  margin: 4px 32px 20px 0; /* Increased right margin for more spacing from text */
+  margin: 4px 32px 20px 0; /* Right margin creates space between figure border and wrapping text */
 }
 
 .project-figure--right {
   float: right;
-  margin: 4px 0 20px 32px; /* Increased left margin for more spacing from text */
+  margin: 4px 0 20px 32px; /* Left margin creates space between figure border and wrapping text */
 }
 
 .modal-description::after {
