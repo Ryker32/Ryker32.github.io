@@ -99,13 +99,13 @@
           <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Landing Gear">
           <figcaption>Landing gear modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
-        <h3>Landing Gear Modification</h3>
-        <p>I realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
-        <figure class="project-figure project-figure--right">
-          <img src="/assets/img/project1-detail2.jpg" alt="Live demo">
-          <figcaption>Secondary image with additional context.</figcaption>
+        <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/bwsicars/custombattery.jpg" alt="Custom Battery">
+          <figcaption>Battery Holder modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
-        <p>Use additional paragraphs to provide deeper technical insight. Swap these examples with your own images, diagrams, GIFs, or videos.</p>
+        <h3>Landing Gear & Battery Holder Modification</h3>
+        <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
+        <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
         <div class="clear-float"></div>
         
         <h3>CAD</h3>
