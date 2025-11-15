@@ -654,6 +654,16 @@ body {
     padding: 0;
   }
   
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px 12px 0 0;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+  }
+  
   /* Per-figure object-fit control via classes */
   &.object-contain img {
     object-fit: contain; /* Preserve aspect ratio, may have empty space */
