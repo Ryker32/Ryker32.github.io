@@ -668,12 +668,12 @@ body {
 
 .project-figure--left {
   float: left;
-  margin: 4px 32px 20px 0; /* Right margin creates space between figure border and wrapping text */
+  margin: 4px 40px 20px 0 !important; /* Right margin creates space between figure border and wrapping text */
 }
 
 .project-figure--right {
   float: right;
-  margin: 4px 0 20px 32px; /* Left margin creates space between figure border and wrapping text */
+  margin: 4px 0 20px 40px !important; /* Left margin creates space between figure border and wrapping text */
 }
 
 .modal-description::after {
