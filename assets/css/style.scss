@@ -549,11 +549,23 @@ body {
   
   /* Headings in article */
   h3, h4 {
-    margin: 32px 0 16px;
+    margin: 0 0 16px;
     color: var(--ink);
     font-weight: 600;
-    /* Don't clear floats by default - allows text to wrap around figures */
+    display: inline-block; /* Allow headings to wrap next to floated figures */
+    max-width: 100%; /* Prevent overflow */
+    vertical-align: top; /* Align to top when next to float */
     /* Add .clear-both class if you need to clear floats for specific headings */
+  }
+  
+  /* Add top margin only when h3 is not next to a float (first in container or after cleared element) */
+  .modal-description > h3:first-child,
+  .modal-description > h4:first-child,
+  .modal-description .clear-float + h3,
+  .modal-description .clear-float + h4,
+  .modal-description h3.clear-both + h3,
+  .modal-description h3.clear-both + h4 {
+    margin-top: 32px;
   }
   
   h3 {
@@ -567,6 +579,7 @@ body {
   /* Optional: class to clear floats when needed */
   h3.clear-both, h4.clear-both {
     clear: both;
+    display: block; /* Force block display when clearing */
   }
 }
 
