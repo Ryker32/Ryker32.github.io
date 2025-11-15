@@ -668,12 +668,12 @@ body {
 
 .project-figure--left {
   float: left;
-  margin: 4px 24px 20px 0;
+  margin: 4px 32px 20px 0; /* Increased right margin for more spacing from text */
 }
 
 .project-figure--right {
   float: right;
-  margin: 4px 0 20px 24px;
+  margin: 4px 0 20px 32px; /* Increased left margin for more spacing from text */
 }
 
 .modal-description::after {
