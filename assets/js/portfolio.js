@@ -95,8 +95,10 @@
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
             <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
               <figure class="project-figure">
-                <img src="/assets/img/bwsicars/ugv-carrying-uav.jpg" alt="UGV Carrying UAV">
-                <figcaption>UGV Carrying UAV</figcaption>
+                <video autoplay muted loop playsinline style="width: 100%; display: block; border-radius: 12px 12px 0 0;">
+                  <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
+                </video>
+                <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
                 <img src="/assets/img/bwsicars/separate-uav-ugv.jpg" alt="Separate UAV and UGV">
