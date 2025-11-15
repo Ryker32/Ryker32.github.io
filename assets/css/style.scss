@@ -600,8 +600,8 @@ body {
   max-width: 420px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   vertical-align: top; /* Align to top for better text wrapping */
-  padding: 8px; /* Padding inside the figure container around image and caption */
-  box-sizing: border-box; /* Include border and padding in width/height calculations */
+  padding: 0; /* No padding - image and caption fill the figure */
+  box-sizing: border-box; /* Include border in width/height calculations */
   
   /* Respect width and height set in style attribute - inline styles take precedence */
   &[style*="width"] {
