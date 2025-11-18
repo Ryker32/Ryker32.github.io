@@ -101,8 +101,8 @@
                 <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
-                <img src="/assets/img/bwsicars/separate-uav-ugv.jpg" alt="Separate UAV and UGV">
-                <figcaption>Separate UAV and UGV</figcaption>
+                <img src="/assets/img/video/hybrid-vehicle-flight.mp4" alt="Hybrid Vehicle Flight">
+                <figcaption>Hybrid Vehicle Flight</figcaption>
               </figure>
             </div>
             <div style="flex: 1 1 55%;">
