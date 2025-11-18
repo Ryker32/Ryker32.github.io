@@ -101,7 +101,9 @@
                 <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
-                <img src="/assets/video/hybrid-vehicle-flight.mp4" alt="Hybrid Vehicle Flight">
+                <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                  <source src="/assets/video/hybrid-vehicle-flight.mp4" type="video/mp4">
+                </video>
                 <figcaption>Hybrid Vehicle Flight</figcaption>
               </figure>
             </div>
