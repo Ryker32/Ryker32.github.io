@@ -193,13 +193,13 @@
         We placed first in the competition during the final challenge by over a minute after spending weeks optimizing the code to be more efficient and accurate.
         Several parts were made in CAD such as the Pi enclosure, landing gear, and battery holder.
         </p>
-        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: center;">
+        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/bwsi/solderingdrone.jpg" alt="Soldering">
             <figcaption>Soldering the electronics.</figcaption>
           </figure>
-          <figure class="project-figure object-cover" style="height:100%; width:100%; flex:0 0 300px;">
-            <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
               <source src="/assets/video/droneflights.mp4" type="video/mp4">
             </video>
             <figcaption>Flying UAV</figcaption>
