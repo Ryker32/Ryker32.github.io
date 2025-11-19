@@ -284,6 +284,7 @@
     const img = document.createElement('img');
     img.src = project.image || '/assets/img/logo.png'; // Fallback image
     img.alt = project.title;
+    img.loading = 'lazy'; // Lazy load portfolio thumbnails
     img.onerror = function() {
       this.src = '/assets/img/logo.png'; // Fallback if image doesn't exist
     };
@@ -348,6 +349,21 @@
     modalDescription.innerHTML = '';
     if (project.descriptionHtml) {
       modalDescription.innerHTML = project.descriptionHtml;
+      // Add lazy loading to images in modal content
+      const modalImages = modalDescription.querySelectorAll('img');
+      modalImages.forEach(img => {
+        if (!img.hasAttribute('loading')) {
+          img.loading = 'lazy';
+        }
+      });
+      // Restore iframe sources that were paused
+      const modalIframes = modalDescription.querySelectorAll('iframe[data-src]');
+      modalIframes.forEach(iframe => {
+        if (iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+          delete iframe.dataset.src;
+        }
+      });
     } else {
       const descriptionText = project.description || 'No description available.';
       const descriptionParagraphs = descriptionText.split('\n').filter(p => p.trim());
@@ -406,6 +422,22 @@
   // Close modal
   function closeModal() {
     if (!projectModal) return;
+    
+    // Pause all videos in the modal to free resources
+    const modalVideos = projectModal.querySelectorAll('video');
+    modalVideos.forEach(video => {
+      video.pause();
+      video.currentTime = 0; // Reset to beginning
+    });
+    
+    // Pause any iframes (like Fusion 360 embeds) by removing src temporarily
+    const modalIframes = projectModal.querySelectorAll('iframe');
+    modalIframes.forEach(iframe => {
+      const src = iframe.src;
+      iframe.dataset.src = src; // Store src for later
+      iframe.src = ''; // Stop loading
+    });
+    
     projectModal.classList.remove('active');
     document.body.style.overflow = ''; // Restore scrolling
   }

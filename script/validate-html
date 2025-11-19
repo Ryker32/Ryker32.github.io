@@ -18,10 +18,10 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
   path = File.expand_path "../_site/#{file}", __dir__
   extension = File.extname(file)
   is_css = extension == ".css"
-  
+
   retries = 0
   last_error = nil
-  
+
   while retries <= max_retries
     begin
       # Add delay before CSS validation to avoid rate limits
@@ -33,10 +33,10 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
         # Small initial delay for CSS to space out requests
         sleep 1
       end
-      
+
       results = validator(file).validate_file(path)
       last_error = nil
-      
+
       # Check if the result itself indicates a rate limit error
       error_messages = results.errors.map(&:to_s).join(" ").downcase
       if error_messages.include?("429") || error_messages.include?("too many requests") || error_messages.include?("rate limit")
@@ -61,11 +61,11 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
 
       filtered_errors.each { |err| puts err }
       exit 1
-      
+
     rescue => e
       last_error = e
       error_msg = e.message.downcase
-      
+
       # Check if it's a rate limit error
       if error_msg.include?("429") || error_msg.include?("too many requests") || error_msg.include?("rate limit")
         retries += 1
@@ -84,7 +84,7 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
       end
     end
   end
-  
+
   # If we get here, we've exhausted retries
   if is_css
     puts "Warning: CSS validation skipped due to persistent rate limiting."
