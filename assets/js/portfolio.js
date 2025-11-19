@@ -162,7 +162,6 @@
       date: "6/2025 - Present",
       description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
       descriptionHtml: `
-        <h3 class="clear-both">Context</h3>
         <h3>Description</h3>
         <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
         This is programmed in Arduino and uses API keys and the home wifi for a constant connection, it can also recieve constant radio data from the local weather station for constant updates.
@@ -186,7 +185,6 @@
       date: "7/2025 - 8/2025",
       description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
       descriptionHtml: `
-        <h3 class="clear-both">Context</h3>
         <h3>Description</h3>
         <p>This was the UAV racing course done through The Beaver Works Summer Institute (BWSI).
         In this team competition, I took the roles of piloting the drone, integrating electronics, and some OpenCV code for line following and detection.
@@ -200,11 +198,11 @@
             <img src="/assets/img/bwsi/solderingdrone.jpg" alt="Soldering">
             <figcaption>Soldering the electronics.</figcaption>
           </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px; margin: 0 auto;">
-            <video autoplay muted loop playsinline controls style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <figure class="project-figure">
+            <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
               <source src="/assets/video/droneflights.mp4" type="video/mp4">
             </video>
-            <figcaption>Drone flight demonstration.</figcaption>
+            <figcaption>Flying UAV</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
