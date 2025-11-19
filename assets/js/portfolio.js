@@ -221,6 +221,14 @@
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <h3>Description</h3>
+
+      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/video/dodamoving.mp4" type="video/mp4">
+        </video>
+        <figcaption>Robot Grabbing and Moving Around/figcaption>
+      </figure>
+      <h3>Landing Gear & Battery Holder Modification</h3>
       <p> I competed in this hackathon hosted by Y-Combinator and Metorial AI to embed an LLM into a custom LeRobot/KiwiBot robot.
       The robot can do tasks such as picking up objects placed in front of it, be teleoperated, and navigate to a location.
       The LLM allows the robot to have "feelings" and interact with the environment based on its observations; this is important
@@ -230,17 +238,7 @@
       This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
-      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
-          <source src="/assets/video/dodamoving.mp4" type="video/mp4">
-        </video>
-        <figcaption>Robot Grabbing and Moving Around/figcaption>
-      </figure>
-      <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <img src="/assets/img/bwsicars/custombattery.jpg" alt="Custom Battery">
-        <figcaption>Battery Holder modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
-      </figure>
-      <h3>Landing Gear & Battery Holder Modification</h3>
+
       <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
       <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
       <div class="clear-float"></div>
