@@ -23,6 +23,7 @@ layout: default
     </div>
     <div class="modal-title-section">
       <h2 id="modalTitle">Project Title</h2>
+      <div class="modal-date" id="modalDate"></div>
     </div>
     <div class="modal-body">
       <div class="modal-description" id="modalDescription">

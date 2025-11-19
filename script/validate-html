@@ -42,7 +42,7 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
       if error_messages.include?("429") || error_messages.include?("too many requests") || error_messages.include?("rate limit")
         raise "Rate limit error detected in validation response"
       end
-      
+
       # Filter out known false positives
       # pointer-events is valid CSS3 but some validators don't recognize it
       filtered_errors = results.errors.reject do |err|

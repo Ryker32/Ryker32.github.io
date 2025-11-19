@@ -89,6 +89,7 @@
     {
       id: 1,
       title: "Hybrid/Modular UAV-UGV Research",
+      date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
         <h3>IEEE-URTC</h3>
@@ -158,6 +159,7 @@
     {
       id: 2,
       title: "Windsurfing & Sailing Interface",
+      date: "6/2025 - Present",
       description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
       descriptionHtml: `
         <h3 class="clear-both">Context</h3>
@@ -180,12 +182,30 @@
     },
     {
       id: 3,
-      title: "Project 3",
-      description: "This is a description of Project 3. Add your project details here.",
-      image: "/assets/img/project3.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project3-detail1.jpg", name: "Detail 1" }
-      ]
+      title: "MIT-BWSI Autonomous UAV Racing",
+      date: "7/2025 - 8/2025",
+      description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
+      descriptionHtml: `
+        <h3 class="clear-both">Context</h3>
+        <h3>Description</h3>
+        <p>This was the UAV racing course done through The Beaver Works Summer Institute (BWSI).
+        In this team competition, I took the roles of piloting the drone, integrating electronics, and some OpenCV code for line following and detection.
+        Our drone uses MAVLink for communication with the ground station and a Pixhawk 4 for flight control and a Holybro X500 drone body. OpenCV was used to detect line and Aruco tags
+        so that the drone can avoid obstacles and follow the course. A Raspberry Pi 5 was used to run the OpenCV code.
+        We placed first in the competition during the final challenge by over a minute after spending weeks optimizing the code to be more efficient and accurate.
+        Several parts were made in CAD such as the Pi enclosure, landing gear, and battery holder.
+        </p>
+        <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
+          <figcaption>Drone parts layed out for visualization.</figcaption>
+        </figure>
+        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/bwsi/solderingdrone.jpg" alt="Soldering">
+          <figcaption>Soldering the electronics.</figcaption>
+        </figure>
+     `,
+      image: "/assets/img/bwsi/frontdrone.jpg",
+      files: []
     },
     {
       id: 4,
@@ -258,6 +278,7 @@
   const modalThumbnailImg = document.getElementById('modalThumbnailImg');
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
+  const modalDate = document.getElementById('modalDate');
   const modalDescription = document.getElementById('modalDescription');
   const modalFiles = document.getElementById('modalFiles');
   const filesGrid = document.getElementById('filesGrid');
@@ -344,6 +365,16 @@
 
     // Set title
     modalTitle.textContent = project.title;
+
+    // Set date (if provided)
+    if (modalDate) {
+      if (project.date) {
+        modalDate.textContent = project.date;
+        modalDate.style.display = 'block';
+      } else {
+        modalDate.style.display = 'none';
+      }
+    }
 
     // Set description
     modalDescription.innerHTML = '';

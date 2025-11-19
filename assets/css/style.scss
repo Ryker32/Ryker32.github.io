@@ -411,6 +411,15 @@ body {
   font-weight: 700;
 }
 
+.modal-date {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #8b949e;
+  font-weight: 400;
+  font-style: italic;
+  display: none; /* Hidden by default, shown when date is provided */
+}
+
 .modal-body {
   padding: 40px;
 }
@@ -848,6 +857,11 @@ body {
   
   .modal-title-section h2 {
     font-size: 28px;
+  }
+
+  .modal-date {
+    font-size: 14px;
+    margin-top: 6px;
   }
   
   .modal-description p {
