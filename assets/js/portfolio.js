@@ -220,15 +220,13 @@
       date: "11/3/2025",
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
-      <h3>Description</h3>
-
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/video/dodamoving.mp4" type="video/mp4">
         </video>
         <figcaption>Robot Grabbing and Moving Around/figcaption>
       </figure>
-      <h3>Landing Gear & Battery Holder Modification</h3>
+      <h3>Description</h3>
       <p> I competed in this hackathon hosted by Y-Combinator and Metorial AI to embed an LLM into a custom LeRobot/KiwiBot robot.
       The robot can do tasks such as picking up objects placed in front of it, be teleoperated, and navigate to a location.
       The LLM allows the robot to have "feelings" and interact with the environment based on its observations; this is important
