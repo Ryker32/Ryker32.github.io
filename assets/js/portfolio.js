@@ -245,7 +245,7 @@
       <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
       <div class="clear-float"></div>
    `,
-      image: "/assets/img/yc/both-doda.jpg",
+      image: "/assets/img/yc/dodada.png",
       files: []
     },
     {
