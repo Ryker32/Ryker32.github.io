@@ -230,11 +230,11 @@
       This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
-      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+      <figure class="project-figure project-figure--left object-cover" style="height: 600px; width: auto;">
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/video/dodamoving.mp4" type="video/mp4">
         </video>
-        <figcaption>Flying UAV</figcaption>
+        <figcaption>Robot Moving and Grabbing</figcaption>
       </figure>
       <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <img src="/assets/img/bwsicars/custombattery.jpg" alt="Custom Battery">
