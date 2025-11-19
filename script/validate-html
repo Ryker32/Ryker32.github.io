@@ -12,27 +12,91 @@ def validator(file)
   end
 end
 
-def validate(file)
+def validate_with_retry(file, max_retries: 3, base_delay: 2)
   puts "Checking #{file}..."
 
   path = File.expand_path "../_site/#{file}", __dir__
-  results = validator(file).validate_file(path)
+  extension = File.extname(file)
+  is_css = extension == ".css"
+  
+  retries = 0
+  last_error = nil
+  
+  while retries <= max_retries
+    begin
+      # Add delay before CSS validation to avoid rate limits
+      if is_css && retries > 0
+        delay = base_delay * (2 ** retries) # Exponential backoff
+        puts "Waiting #{delay} seconds before retry..."
+        sleep delay
+      elsif is_css && retries == 0
+        # Small initial delay for CSS to space out requests
+        sleep 1
+      end
+      
+      results = validator(file).validate_file(path)
+      last_error = nil
+      
+      # Check if the result itself indicates a rate limit error
+      error_messages = results.errors.map(&:to_s).join(" ").downcase
+      if error_messages.include?("429") || error_messages.include?("too many requests") || error_messages.include?("rate limit")
+        raise "Rate limit error detected in validation response"
+      end
+      
+      # Filter out known false positives
+      # pointer-events is valid CSS3 but some validators don't recognize it
+      filtered_errors = results.errors.reject do |err|
+        err_str = err.to_s.downcase
+        err_str.include?("pointer-events") && (
+          err_str.include?("doesn't exist") ||
+          err_str.include?("does not exist") ||
+          err_str.include?("unknown property")
+        )
+      end
 
-  # Filter out known false positives
-  # pointer-events is valid CSS3 but some validators don't recognize it
-  filtered_errors = results.errors.reject do |err|
-    err_str = err.to_s.downcase
-    err_str.include?("pointer-events") && (
-      err_str.include?("doesn't exist") ||
-      err_str.include?("does not exist") ||
-      err_str.include?("unknown property")
-    )
+      if filtered_errors.empty?
+        puts "Valid!"
+        return true
+      end
+
+      filtered_errors.each { |err| puts err }
+      exit 1
+      
+    rescue => e
+      last_error = e
+      error_msg = e.message.downcase
+      
+      # Check if it's a rate limit error
+      if error_msg.include?("429") || error_msg.include?("too many requests") || error_msg.include?("rate limit")
+        retries += 1
+        if retries <= max_retries
+          puts "Rate limit encountered. Retrying (#{retries}/#{max_retries})..."
+          next
+        else
+          puts "Warning: CSS validation failed due to rate limiting after #{max_retries} retries."
+          puts "Skipping CSS validation to avoid blocking CI. Please check CSS manually."
+          return true if is_css # Skip CSS validation on rate limit, but don't fail CI
+        end
+      else
+        # For other errors, fail immediately
+        puts "Validation error: #{e.message}"
+        raise
+      end
+    end
   end
+  
+  # If we get here, we've exhausted retries
+  if is_css
+    puts "Warning: CSS validation skipped due to persistent rate limiting."
+    return true # Don't fail CI for CSS rate limits
+  else
+    puts "Validation failed: #{last_error.message}"
+    exit 1
+  end
+end
 
-  return puts "Valid!" if filtered_errors.empty?
-
-  filtered_errors.each { |err| puts err }
-  exit 1
+def validate(file)
+  validate_with_retry(file)
 end
 
 validate "index.html"
