@@ -198,7 +198,7 @@
             <img src="/assets/img/bwsi/solderingdrone.jpg" alt="Soldering">
             <figcaption>Soldering the electronics.</figcaption>
           </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <figure class="project-figure object-cover" style="height: auto; width: 100%; flex: 0 0 300px;">
             <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
               <source src="/assets/video/droneflights.mp4" type="video/mp4">
             </video>
