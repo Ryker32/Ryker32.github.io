@@ -411,8 +411,32 @@ body {
   font-weight: 700;
 }
 
+.modal-meta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.modal-keypoints {
+  font-size: 16px;
+  color: #c9d1d9;
+  font-weight: 500;
+  flex: 1 1 auto;
+  display: none;
+}
+
 .modal-date {
-  margin-top: 8px;
+  font-size: 16px;
+  color: #8b949e;
+  font-weight: 400;
+  font-style: italic;
+  display: none; /* Hidden by default, shown when date is provided */
+}
+
+.modal-meta .modal-date {
   font-size: 16px;
   color: #8b949e;
   font-weight: 400;
@@ -649,10 +673,6 @@ body {
     /* Inline width from style attribute will be applied */
   }
   
-  &[style*="height"] {
-    /* Inline height from style attribute will be applied */
-  }
-  
   img {
     display: block;
     width: 100%;
@@ -859,9 +879,19 @@ body {
     font-size: 28px;
   }
 
-  .modal-date {
+  .modal-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .modal-keypoints {
+    font-size: 15px;
+  }
+
+  .modal-meta .modal-date {
     font-size: 14px;
-    margin-top: 6px;
+    margin-top: 0;
   }
   
   .modal-description p {

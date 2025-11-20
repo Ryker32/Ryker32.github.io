@@ -90,6 +90,7 @@
       id: 1,
       title: "Hybrid/Modular UAV-UGV Research",
       date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
+      keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
         <h3>IEEE-URTC</h3>
@@ -160,6 +161,7 @@
       id: 2,
       title: "Windsurfing & Sailing Interface",
       date: "6/2025 - Present",
+      keyPoints: "ESP32 interface · Arduino firmware · 50+ units sold",
       description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
       descriptionHtml: `
         <h3>Description</h3>
@@ -183,6 +185,7 @@
       id: 3,
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
+      keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
       description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
       descriptionHtml: `
         <h3>Description</h3>
@@ -218,13 +221,14 @@
       id: 4,
       title: "Y-Combinator Agent Jam '25 Hackathon",
       date: "11/3/2025",
+      keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/video/dodamoving.mp4" type="video/mp4">
         </video>
-        <figcaption>Robot Grabbing and Moving Around/figcaption>
+        <figcaption>Robot grabbing and moving objects.</figcaption>
       </figure>
       <h3>Description</h3>
       <p> I competed in this hackathon hosted by Y-Combinator and Metorial AI to embed an LLM into a custom LeRobot/KiwiBot robot.
@@ -236,9 +240,6 @@
       This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
-
-      <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
-      <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/yc/dodada.png",
@@ -306,6 +307,8 @@
   const modalThumbnailImg = document.getElementById('modalThumbnailImg');
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
+  const modalMeta = document.getElementById('modalMeta');
+  const modalKeyPoints = document.getElementById('modalKeyPoints');
   const modalDate = document.getElementById('modalDate');
   const modalDescription = document.getElementById('modalDescription');
   const modalFiles = document.getElementById('modalFiles');
@@ -394,13 +397,34 @@
     // Set title
     modalTitle.textContent = project.title;
 
+    const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
+    const hasDate = project.date && project.date.trim() !== '';
+
+    // Set key points
+    if (modalKeyPoints) {
+      if (hasKeyPoints) {
+        modalKeyPoints.textContent = project.keyPoints;
+        modalKeyPoints.style.display = 'block';
+      } else {
+        modalKeyPoints.style.display = 'none';
+      }
+    }
+
     // Set date (if provided)
     if (modalDate) {
-      if (project.date) {
+      if (hasDate) {
         modalDate.textContent = project.date;
         modalDate.style.display = 'block';
       } else {
         modalDate.style.display = 'none';
+      }
+    }
+
+    if (modalMeta) {
+      if (hasKeyPoints || hasDate) {
+        modalMeta.style.display = 'flex';
+      } else {
+        modalMeta.style.display = 'none';
       }
     }
 
