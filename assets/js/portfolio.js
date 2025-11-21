@@ -247,12 +247,36 @@
     },
     {
       id: 5,
-      title: "Project 5",
-      description: "This is a description of Project 5. Add your project details here.",
-      image: "/assets/img/project5.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Detail 1" }
-      ]
+      title: "Co-inventor of LifeFlo",
+      date: "November 2024 - Present",
+      keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
+      description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
+      descriptionHtml: `
+        <h3>Description</h3>
+        <p>
+        </p>
+        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
+            <figcaption>Drone parts layed out for visualization.</figcaption>
+          </figure>
+        </div>
+        <div class="clear-float"></div>
+     `,
+      image: "/assets/img/lifeflo/lifeflopic.png",
+      files: []
     },
     {
       id: 6,
