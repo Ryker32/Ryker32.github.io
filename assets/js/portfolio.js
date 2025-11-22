@@ -324,6 +324,16 @@
         </figure>
       </div>
       <hr>
+      <h3>Failure Analysis</h3>
+      <p>
+      After early hot-fire tests (~43 s average runtime) the engine began to fail prematurely, with unstable combustion and flooding. We logged chamber pressure, mass flow rate, and injector temperatures, then built a simplified thermal-expansion model of the regen channels.
+      <p>
+      Comparing CFD results and test data, we found that as the engine heated up, the thin cooling tubes expanded more than the chamber wall, increasing their flow area and over-injecting fuel into the chamber. That mixture shift explained both the pressure traces and the visible flame behavior.
+      </p>
+      <p>
+      Using this result, I resized the channels and adjusted the flow split in simulation to maintain stable mixture ratio over the expected temperature range. We documented the failure, analysis, and redesign process in an informal LaTeX report as practice for future research write-ups.
+      </p>
+      <hr>
       <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
