@@ -247,21 +247,73 @@
     },
     {
       id: 5,
-      title: "Project 5",
-      description: "This is a description of Project 5. Add your project details here.",
-      image: "/assets/img/project5.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project5-detail1.jpg", name: "Detail 1" }
-      ]
+      title: "Co-inventor of LifeFlo",
+      date: "November 2024 - Present",
+      keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
+      description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
+      descriptionHtml: `
+        <h3>Description</h3>
+        <p>
+        LifeFlo is a women's health app made in FlutterFlow/Firebase. It allows users to learn about their menstrual cycle, track their symptoms, and receive personalized recommendations for their health using a monitored GPT wrapper. 
+        The app was co-invented with Veda Hiremath and Gabe Balzer and is currently pending a provisional patent No. 63/873,509. The app is available on the Google Play Store and can be downloaded for free.
+        </p>
+        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
+            <figcaption>Soldering the electronics.</figcaption>
+          </figure>
+          <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
+            <figcaption>Drone parts layed out for visualization.</figcaption>
+          </figure>
+        </div>
+        <div class="clear-float"></div>
+     `,
+      image: "/assets/img/lifeflo/lifeflopic.png",
+      files: []
     },
     {
       id: 6,
-      title: "Project 6",
-      description: "This is a description of Project 6. Add your project details here.",
-      image: "/assets/img/project6.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project6-detail1.jpg", name: "Detail 1" }
-      ]
+      title: "LOX-Propane Rocket Engine",
+      date: "December 2023 - January 2025",
+      keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
+      description: "",
+      descriptionHtml: `
+      <h3>Description</h3>
+      <p>
+      LifeFlo is a women's health app made in FlutterFlow/Firebase. It allows users to learn about their menstrual cycle, track their symptoms, and receive personalized recommendations for their health using a monitored GPT wrapper. 
+      The app was co-invented with Veda Hiremath and Gabe Balzer and is currently pending a provisional patent No. 63/873,509. The app is available on the Google Play Store and can be downloaded for free.
+      </p>
+      <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
+        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
+          <figcaption>Soldering the electronics.</figcaption>
+        </figure>
+        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+          <figcaption>Soldering the electronics.</figcaption>
+        </figure>
+        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
+          <figcaption>Soldering the electronics.</figcaption>
+        </figure>
+        <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
+          <figcaption>Drone parts layed out for visualization.</figcaption>
+        </figure>
+      </div>
+      <div class="clear-float"></div>
+   `,
+      image: "/assets/img/rocket/rocketicon.png",
+      files: []
     },
     {
       id: 7,
