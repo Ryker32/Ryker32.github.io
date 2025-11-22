@@ -318,10 +318,6 @@
           <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
           <figcaption>Soldering the electronics.</figcaption>
         </figure>
-        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
-        </figure>
       </div>
       <hr>
       <h3>Failure Analysis</h3>
