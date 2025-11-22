@@ -287,14 +287,36 @@
       keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
       description: "",
       descriptionHtml: `
-      <h3>Description</h3>
+      <h3>At a glance</h3>
+      <ul>
+        <li><strong>Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)
+        <li><strong>My role:</strong> Educational lead, System architecture, CAD, regen cooling design, ANSYS Fluent CFD, test planning
+        <li><strong>Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation
+        <li><strong>Status:</strong> LOX-propane rocket engine tested; combustion sucessful and project concluded.
+      </ul>
       <p>
-      LifeFlo is a women's health app made in FlutterFlow/Firebase. It allows users to learn about their menstrual cycle, track their symptoms, and receive personalized recommendations for their health using a monitored GPT wrapper. 
-      The app was co-invented with Veda Hiremath and Gabe Balzer and is currently pending a provisional patent No. 63/873,509. The app is available on the Google Play Store and can be downloaded for free.
+      This project started with the goal to design and test a small LOX-propane rocket engine with a few friends. I had to teach younger team members how to analyze CFD sims and some minor calculus concepts. I led design, cooling analysis, and CFD in ANSYS Fluent, working from basic performance targets and a very constrained set of materials (truck muffler shell + scrap tubing). Our early hot-fire tests worked for an average of 43 seconnds but then failed due to thermal expansion in the cooling channels, which over-injected fuel into the chamber. I used simulations and mentor feedback to diagnose the failure, redesign the cooling loop, and document the process in a research-style report (not published).
+      </p>
+      <p>
+      We concluded the project with a successful combustion test and a informal research report using LaTeX in Overleaf to document the process and personal growth.
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
+      <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rockettest1.mp4" type="video/mp4">
+        </video>
+        <figcaption>First successful combustion test.</figcaption>
+      </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
+          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+          <figcaption></figcaption>
+        </figure>
+        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+          <figcaption>Soldering the electronics.</figcaption>
+        </figure>
+        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
           <figcaption>Soldering the electronics.</figcaption>
         </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
