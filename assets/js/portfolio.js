@@ -295,10 +295,7 @@
         <li><strong class="list-label">Status:</strong> LOX-propane rocket engine tested; combustion successful and project concluded.</li>
       </ul>
       <p>
-      This project started with the goal to design and test a small LOX-propane rocket engine with a few friends. I had to teach younger team members how to analyze CFD sims and some minor calculus concepts. I led design, cooling analysis, and CFD in ANSYS Fluent, working from basic performance targets and a very constrained set of materials (truck muffler shell + scrap tubing). Our early hot-fire tests worked for an average of 43 seconnds but then failed due to thermal expansion in the cooling channels, which over-injected fuel into the chamber. I used simulations and mentor feedback to diagnose the failure, redesign the cooling loop, and document the process in a research-style report (not published).
-      </p>
-      <p>
-      We concluded the project with a successful combustion test and a informal research report using LaTeX in Overleaf to document the process and personal growth.
+      This project aimed to design and hot-fire a small LOX-propane rocket engine using a constrained set of materials (truck muffler shell + scrap tubing). I led the design of the combustion chamber and regenerative cooling channels, ran CFD in ANSYS Fluent to size the flow paths, and coordinated fabrication and test. Early hot-fires reached ~43 s of stable burn, but later tests failed when thermal expansion in the cooling channels over-injected fuel into the chamber. Using simulation and mentor feedback, I diagnosed the failure, iterated the design, and wrote an informal research-style report in LaTeX documenting the process and lessons learned.      </p>
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
       <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
@@ -341,8 +338,9 @@
       </figure>
       <h3>RDE Concept Analysis - Simulation Only</h3>
       <p> 
-      This was an exploratory CFD simulation done in ANSYS Fluent of a LOX-propane RDE concept; informed our decision not to pursue a physical prototype given the detonation pressures and our limited test infrastructure.
-      </p>
+      Sized injector and chamber using simple 1-D performance estimates and heat-flux correlations.
+      Modeled regenerative cooling channels in Fusion 360; ran ANSYS Fluent to visualize flow distribution and wall heat transfer.
+      Explored a rotating-detonation-engine (RDE) variant in CFD to compare density and velocity fields with our baseline design.      </p>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/rocket/rocketicon.png",
