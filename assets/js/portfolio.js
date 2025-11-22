@@ -161,12 +161,12 @@
       id: 2,
       title: "Windsurfing & Sailing Interface",
       date: "6/2025 - Present",
-      keyPoints: "ESP32 interface · Arduino firmware · 50+ units sold",
+      keyPoints: "ESP32 interface · Arduino firmware · Selling Units",
       description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
       descriptionHtml: `
         <h3>Description</h3>
         <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
-        This is programmed in Arduino and uses API keys and the home wifi for a constant connection, it can also recieve constant radio data from the local weather station for constant updates.
+        This is programmed in Arduino and uses API keys and the home Wi-Fi for a constant connection, it can also receive constant radio data from the local weather station for constant updates.
         This was created for sailors and windsurfers at the local clubs. It has been sold for $50 per unit and costs only $15 to produce.
         </p>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
