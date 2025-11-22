@@ -307,10 +307,12 @@
         </video>
         <figcaption>First successful combustion test.</figcaption>
       </figure>
-        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-          <figcaption></figcaption>
-        </figure>
+      <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/mk2test.mp4" type="video/mp4">
+        </video>
+        <figcaption>Second successful combustion test with better optimized combustion chamber.</figcaption>
+      </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
           <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
           <figcaption>Soldering the electronics.</figcaption>
