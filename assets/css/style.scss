@@ -461,6 +461,16 @@ body {
     text-align: justify;
     hyphens: auto;
   }
+
+  ul {
+    padding-left: 24px;
+    margin: 0 0 20px;
+  }
+
+  .list-label {
+    color: #dbe5ff;
+    font-weight: 600;
+  }
   
   /* Article container for intro paragraphs */
   .article-intro {

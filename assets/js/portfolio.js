@@ -289,10 +289,10 @@
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
-        <li><strong>Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)
-        <li><strong>My role:</strong> Educational lead, System architecture, CAD, regen cooling design, ANSYS Fluent CFD, test planning
-        <li><strong>Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation
-        <li><strong>Status:</strong> LOX-propane rocket engine tested; combustion sucessful and project concluded.
+        <li><strong class="list-label">Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)</li>
+        <li><strong class="list-label">My role:</strong> Educational lead, system architecture, CAD, regen cooling design, ANSYS Fluent CFD, test planning</li>
+        <li><strong class="list-label">Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation</li>
+        <li><strong class="list-label">Status:</strong> LOX-propane rocket engine tested; combustion successful and project concluded.</li>
       </ul>
       <p>
       This project started with the goal to design and test a small LOX-propane rocket engine with a few friends. I had to teach younger team members how to analyze CFD sims and some minor calculus concepts. I led design, cooling analysis, and CFD in ANSYS Fluent, working from basic performance targets and a very constrained set of materials (truck muffler shell + scrap tubing). Our early hot-fire tests worked for an average of 43 seconnds but then failed due to thermal expansion in the cooling channels, which over-injected fuel into the chamber. I used simulations and mentor feedback to diagnose the failure, redesign the cooling loop, and document the process in a research-style report (not published).
