@@ -301,15 +301,24 @@
           <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
           <figcaption>Soldering the electronics.</figcaption>
         </figure>
-        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
-        </figure>
-        <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
-          <figcaption>Drone parts layed out for visualization.</figcaption>
-        </figure>
       </div>
+      <hr>
+      <h3>RDE Concept Analysis - Simulation Only</h3>
+      <p> 
+      This was an exploratory CFD simulation done in ANSYS Fluent of a LOX-propane RDE concept; informed our decision not to pursue a physical prototype given the detonation pressures and our limited test infrastructure.
+      </p>
+      <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
+        </video>
+        <figcaption>CFD density contours for a conceptual LOX-propane rotating detonation combustor, showing reactant injection and high-density regions along the walls.</figcaption>
+      </figure>
+      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rde-velocity.mp4" type="video/mp4">
+        </video>
+        <figcaption>CFD density contours for a conceptual LOX-propane rotating detonation combustor, showing reactant injection and high-density regions along the walls.</figcaption>
+      </figure>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/rocket/rocketicon.png",
