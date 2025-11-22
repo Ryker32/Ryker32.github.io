@@ -338,9 +338,8 @@
       </figure>
       <h3>RDE Concept Analysis - Simulation Only</h3>
       <p> 
-      Sized injector and chamber using simple 1-D performance estimates and heat-flux correlations.
-      Modeled regenerative cooling channels in Fusion 360; ran ANSYS Fluent to visualize flow distribution and wall heat transfer.
-      Explored a rotating-detonation-engine (RDE) variant in CFD to compare density and velocity fields with our baseline design.      </p>
+      As a follow-on to the LOX-propane engine, I designed a conceptual rotating-detonation combustor (RDE) in Fusion 360 and ran ANSYS Fluent CFD to study flow, density, and wall heat transfer. Using the same performance targets and cooling-channel layout as our baseline engine, I explored how an RDE variant would behave and compared its fields to the conventional design. This work stayed entirely in simulation for safety-no hardware was built. 
+      </p>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/rocket/rocketicon.png",
