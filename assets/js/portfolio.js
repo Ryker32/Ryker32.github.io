@@ -334,13 +334,13 @@
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
         </video>
-        <figcaption>CFD density contours for a conceptual LOX-propane rotating detonation combustor, showing reactant injection and high-density regions along the walls.</figcaption>
+        <figcaption>Density field for the same RDE concept, highlighting reactant injection, mixing, and high-density regions along the cooled walls (simulation only).</figcaption>
       </figure>
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rde-velocity.mp4" type="video/mp4">
         </video>
-        <figcaption>CFD density contours for a conceptual LOX-propane rotating detonation combustor, showing reactant injection and high-density regions along the walls.</figcaption>
+        <figcaption>Velocity field in a conceptual LOX-propane rotating-detonation combustor, showing high-speed detonation fronts and recirculation zones in the chamber and cooling channels (simulation only).</figcaption>
       </figure>
       <h3>RDE Concept Analysis - Simulation Only</h3>
       <p> 
