@@ -260,19 +260,19 @@
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
+            <figcaption>GPT Based Menstrual Cycle Assesment Feature.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/ffff.jpg" alt="Soldering">
+            <figcaption>Daily logging function for Menstrual Health Tracker.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
-          </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
+            <figcaption>Personal notes can also be left for logging purposes.</figcaption>
           </figure>
           <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
-            <figcaption>Drone parts layed out for visualization.</figcaption>
+            <img src="/assets/img/lifeflo/menu.jpg" alt="Deconstruction">
+            <figcaption>Sidebar menu for navigation.</figcaption>
           </figure>
         </div>
         <div class="clear-float"></div>
