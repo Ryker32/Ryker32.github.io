@@ -202,7 +202,7 @@
       The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
       The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
       </p>
-      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+      <figure class="project-figure project-figure--left object-cover" style="height: 500px; max-height: 500px; width: 500px; max-width: 500px;">
         <img src="/assets/img/reip/demoimage.png" alt="REIP Simulation Demo">
         <figcaption>Demo image of the REIP simulation environment.</figcaption>
       </figure>
