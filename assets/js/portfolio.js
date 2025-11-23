@@ -470,6 +470,9 @@
   function initPortfolio() {
     if (!portfolioGrid) return;
 
+    // Clear any existing cards to avoid duplicates if init runs again
+    portfolioGrid.innerHTML = '';
+
     portfolioData.forEach(project => {
       const card = createProjectCard(project);
       portfolioGrid.appendChild(card);
