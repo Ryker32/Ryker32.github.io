@@ -769,7 +769,8 @@ body {
     /* Ensure the figure respects the width and height from inline styles */
     box-sizing: border-box;
     
-    img {
+    img,
+    video {
       flex: 1 1 0;
       min-height: 0;
       width: 100%;
