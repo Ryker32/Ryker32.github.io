@@ -204,7 +204,7 @@
       </p>
       <div class="reip-section">
         <figure class="project-figure reip-figure">
-          <img src="/assets/img/reip/reipsquare.png" alt="REIP Simulation Demo">
+          <img src="/assets/img/reip/square.png" alt="REIP Simulation Demo">
           <figcaption>Demo image of the REIP simulation environment.</figcaption>
         </figure>
         <div class="reip-guide">
