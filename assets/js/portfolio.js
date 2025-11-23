@@ -203,7 +203,7 @@
       The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
       </p>
       <figure class="project-figure project-figure--left object-cover reip-figure">
-        <img src="/assets/img/reip/demoimage.png" alt="REIP Simulation Demo">
+        <img src="/assets/img/reip/reipsquare.png" alt="REIP Simulation Demo">
         <figcaption>Demo image of the REIP simulation environment.</figcaption>
       </figure>
       <h3>Simulation Interpretation Guide</h3>
