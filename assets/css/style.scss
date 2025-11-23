@@ -487,6 +487,10 @@ body {
     color: #dbe5ff;
     font-weight: 600;
   }
+
+  .reip-guide h3 {
+    margin-top: 0;
+  }
   
   /* Article container for intro paragraphs */
   .article-intro {
@@ -680,6 +684,19 @@ body {
   font-size: 17px;
 }
 
+.modal-description .reip-section {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.modal-description .reip-guide {
+  flex: 1 1 280px;
+  min-width: 260px;
+}
+
 .modal-description figure {
   margin: 0 0 20px;
   background: #10151d;
@@ -723,6 +740,7 @@ body {
     width: clamp(260px, 60vw, 640px);
     max-width: 640px;
     height: auto;
+    margin: 0 auto;
   }
 
   &.reip-figure img {
@@ -959,6 +977,10 @@ body {
     min-height: 400px;
   }
   
+  .modal-description .reip-section {
+    flex-direction: column;
+  }
+
   .modal-description .reip-figure {
     width: 100%;
     max-width: 100%;

@@ -202,24 +202,26 @@
       The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
       The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
       </p>
-      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 400px; max-width: 400px;">
-        <img src="/assets/img/reip/reipsquare.png" alt="REIP Simulation Demo">
-        <figcaption>Demo image of the REIP simulation environment.</figcaption>
-      </figure>
-      <h3>Simulation Interpretation Guide</h3>
-      <p>
-      <ul class="reip-list">
-        <li><strong class="list-label">t:</strong> Current time step</li>
-        <li><strong class="list-label">N:</strong> Number of agents</li>
-        <li><strong class="list-label">Dots:</strong> Agents with their individual ID number labeled</li>
-        <li><strong class="list-label">Agent with yellow "halo":</strong> Current leader with current trust metric labeled</li>
-        <li><strong class="list-label">Dashed circle around agents:</strong> Communication Radius</li>
-        <li><strong class="list-label">Green squares around agents:</strong> Visibility Radius</li>
-        <li><strong class="list-label">Black Squares:</strong> Obstacles</li>
-        <li><strong class="list-label">Blue Squares:</strong> Unexplored Spaces</li>
-        <li><strong class="list-label">Yellow Squares:</strong> Currently visible frontiers (exploration targets)</li>
-      </ul>
-      </p>
+      <div class="reip-section">
+        <figure class="project-figure reip-figure">
+          <img src="/assets/img/reip/reipsquare.png" alt="REIP Simulation Demo">
+          <figcaption>Demo image of the REIP simulation environment.</figcaption>
+        </figure>
+        <div class="reip-guide">
+          <h3>Simulation Interpretation Guide</h3>
+          <ul class="reip-list">
+            <li><strong class="list-label">t:</strong> Current time step</li>
+            <li><strong class="list-label">N:</strong> Number of agents</li>
+            <li><strong class="list-label">Dots:</strong> Agents with their individual ID number labeled</li>
+            <li><strong class="list-label">Agent with yellow "halo":</strong> Current leader with current trust metric labeled</li>
+            <li><strong class="list-label">Dashed circle around agents:</strong> Communication Radius</li>
+            <li><strong class="list-label">Green squares around agents:</strong> Visibility Radius</li>
+            <li><strong class="list-label">Black Squares:</strong> Obstacles</li>
+            <li><strong class="list-label">Blue Squares:</strong> Unexplored Spaces</li>
+            <li><strong class="list-label">Yellow Squares:</strong> Currently visible frontiers (exploration targets)</li>
+          </ul>
+        </div>
+      </div>
       <div class="clear-float"></div>
 
       `,
