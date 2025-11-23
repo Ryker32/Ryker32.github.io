@@ -29,8 +29,8 @@ layout: default
       <div class="modal-title-row">
         <h2 id="modalTitle">Project Title</h2>
         <div class="modal-title-actions">
-          <a href="#" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
-          <a href="#" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
+          <a href="javascript:void(0);" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
+          <a href="javascript:void(0);" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
         </div>
       </div>
       <div class="modal-meta" id="modalMeta">
