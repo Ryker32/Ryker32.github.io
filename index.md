@@ -13,6 +13,10 @@ layout: default
   </div>
 </div>
 
+<footer class="site-footer">
+  © 2025 Ryker Kollmyer. All rights reserved.
+</footer>
+
 <!-- Project Modal -->
 <div class="project-modal" id="projectModal">
   <div class="modal-overlay"></div>

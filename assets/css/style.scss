@@ -817,6 +817,15 @@ body {
   }
 }
 
+.site-footer {
+  margin: 48px 0;
+  padding: 24px 0;
+  font-size: 14px;
+  color: #8b949e;
+  text-align: center;
+  border-top: 1px solid var(--edge);
+}
+
 .modal-files h3 {
   margin: 0 0 24px;
   font-size: 24px;
