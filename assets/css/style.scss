@@ -689,12 +689,13 @@ body {
   gap: 24px;
   flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: flex-start;
   margin-bottom: 24px;
 }
 
 .modal-description .reip-guide {
-  flex: 1 1 280px;
-  min-width: 260px;
+  flex: 1 1 320px;
+  min-width: 280px;
 }
 
 .modal-description figure {
@@ -740,7 +741,7 @@ body {
     width: clamp(260px, 60vw, 640px);
     max-width: 640px;
     height: auto;
-    margin: 0 auto;
+    margin: 0;
   }
 
   &.reip-figure img {
