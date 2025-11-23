@@ -199,10 +199,29 @@
       <p>
       I built this custom simulation environment in Python that allows me to live monitor the behavior of the agents in the environment.
       This environment is a grid-world with a start and end point, and a number of obstacles. The drones can move around the grid-world and collect rewards.
-      The drones can also see the other drones and the environment, and can communicate with each other.
-      The drones can also be controlled by a leader-follower policy, where the leader is the drone that is currently in control of the team.
-      The leader can be elected by the team, and can be impeached by the team if they are not performing well.
+      The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
+      The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
       </p>
+      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <img src="/assets/img/reip/demoimage.png" alt="REIP Simulation Demo">
+        <figcaption>Demo image of the REIP simulation environment.</figcaption>
+      </figure>
+      <h3>Simulation Interpretation Guide</h3>
+      <p>
+      <ul class="reip-list">
+        <li><strong class="list-label">t:</strong> Current time step</li>
+        <li><strong class="list-label">N:</strong> Number of agents</li>
+        <li><strong class="list-label">Dots:</strong> Agents with their individual ID number labeled</li>
+        <li><strong class="list-label">Agent with yellow "halo":</strong> Current leader with current trust metric labeled</li>
+        <li><strong class="list-label">Dashed circle around agents:</strong> Communication Radius</li>
+        <li><strong class="list-label">Green squares around agents:</strong> Visibility Radius</li>
+        <li><strong class="list-label">Black Squares:</strong> Obstacles</li>
+        <li><strong class="list-label">Blue Squares:</strong> Unexplored Spaces</li>
+        <li><strong class="list-label">Yellow Squares:</strong> Currently visible frontiers (exploration targets)</li>
+      </ul>
+      </p>
+      <div class="clear-float"></div>
+
       `,
       image: "/assets/img/reip/reipenv.png",
       files: [
