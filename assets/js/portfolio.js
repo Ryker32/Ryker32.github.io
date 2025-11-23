@@ -174,7 +174,7 @@
       id: 2,
       title: "Resilient Election and Impeachment Policy (REIP) Research",
       date: "May 2025 - Present",
-      keyPoints: "key points????",
+      keyPoints: "Multi Agent Systems · Governance Policy · Research",
       description: "",
       descriptionHtml: `
       <h3>At a glance</h3>
@@ -182,11 +182,10 @@
         <li><strong class="list-label">Solo project</strong> with mentorship from a masters student in aerospace and multi agent systems research.</li>
         <li><strong class="list-label">My role:</strong> Conducted month long literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran hundreds of controlled experiments/ablations, and wrote a technical analysis report paper and a software system description document.</li>
         <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
-        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom "Grid-World" environment, matplotlib, LaTeX, Pandas, matplotlib for plotting/initial data analysis, Python multiprocessing (parallel rollouts / ablations).</li>
-        <li>Outcome: REIP achieves ~11% higher map coverage than a standard leader-follower baseline under adversarial conditions; ablation tests isolate the impact of trust updates, impeachment triggers, and frontier allocation terms.</li>      
-        <li>Status: Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
+        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing for parallel rollouts, Matplotlib, LaTeX, Pandas.</li>
+        <li><strong class="list-label">Outcome:</strong> REIP achieves ~11% higher map coverage than a standard leader-follower baseline under adversarial conditions; ablation tests isolate the impact of trust updates, impeachment triggers, and frontier allocation terms.</li>      
+        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
         </ul>
-
         <hr>
       <h3>Project Overview</h3>
       <p>
