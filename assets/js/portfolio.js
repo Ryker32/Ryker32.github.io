@@ -194,8 +194,17 @@
       <p>
       REIP's high-level approach blends collective trust scoring, democratic leadership rotation, and lightweight fallback autonomy so that no single failure can derail the mission. In large benchmark suites, REIP maintained comparable performance in fault-free settings while achieving an 11% improvement in final coverage over baseline policies when adversarial faults were introduced. These gains translate to faster, safer mapping and search missions under uncertainty. Detailed technical documentation is currently under review for competition, but this summary highlights the outcome: multi-agent robotics can remain resilient if governance is distributed, transparent, and accountable to the team it serves.
       </p>
+      <hr>
+      <h3>Custom Simulation Environment</h3>
+      <p>
+      I built this custom simulation environment in Python that allows me to live monitor the behavior of the agents in the environment.
+      This environment is a grid-world with a start and end point, and a number of obstacles. The drones can move around the grid-world and collect rewards.
+      The drones can also see the other drones and the environment, and can communicate with each other.
+      The drones can also be controlled by a leader-follower policy, where the leader is the drone that is currently in control of the team.
+      The leader can be elected by the team, and can be impeached by the team if they are not performing well.
+      </p>
       `,
-      image: "/assets/img/project7.jpg",
+      image: "/assets/img/reip/reipenv.png",
       files: [
         { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
       ]
