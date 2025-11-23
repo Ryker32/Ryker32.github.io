@@ -472,6 +472,17 @@ body {
     line-height: 1.7;
   }
 
+  ul.reip-list li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  ul.reip-list .list-label {
+    flex: 0 0 auto;
+  }
+
   .list-label {
     color: #dbe5ff;
     font-weight: 600;
@@ -708,6 +719,17 @@ body {
     padding: 0;
   }
   
+  &.reip-figure {
+    width: min(90%, 500px);
+    max-width: 500px;
+    height: auto;
+  }
+
+  &.reip-figure img {
+    width: 100%;
+    height: auto;
+  }
+
   /* Per-figure object-fit control via classes */
   &.object-contain img {
     object-fit: contain; /* Preserve aspect ratio, may have empty space */
@@ -937,6 +959,20 @@ body {
     min-height: 400px;
   }
   
+  .modal-description .reip-figure {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  ul.reip-list {
+    font-size: 17px;
+  }
+
+  ul.reip-list li {
+    flex-direction: column;
+    gap: 2px;
+  }
+
 }
 
 /* Override theme floats/positioning */

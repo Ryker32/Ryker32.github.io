@@ -179,10 +179,10 @@
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
-        <li><strong class="list-label">Solo project</strong> with mentorship from a masters student in aerospace and multi agent systems research.</li>
-        <li><strong class="list-label">My role:</strong> Conducted month long literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran hundreds of controlled experiments/ablations, and wrote a technical analysis report paper and a software system description document.</li>
+        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval, a masters student in aerospace and multi agent systems research.</li>
+        <li><strong class="list-label">My role:</strong> Conducted literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran controlled experiments/ablations, wrote a technical analysis report paper and a software system description document.</li>
         <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
-        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing for parallel rollouts, Matplotlib, LaTeX, Pandas.</li>
+        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
         <li><strong class="list-label">Outcome:</strong> REIP achieves ~11% higher map coverage than a standard leader-follower baseline under adversarial conditions; ablation tests isolate the impact of trust updates, impeachment triggers, and frontier allocation terms.</li>      
         <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
         </ul>
@@ -202,7 +202,7 @@
       The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
       The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
       </p>
-      <figure class="project-figure project-figure--left object-cover" style="height: 500px; max-height: 500px; width: 500px; max-width: 500px;">
+      <figure class="project-figure project-figure--left object-cover reip-figure">
         <img src="/assets/img/reip/demoimage.png" alt="REIP Simulation Demo">
         <figcaption>Demo image of the REIP simulation environment.</figcaption>
       </figure>
