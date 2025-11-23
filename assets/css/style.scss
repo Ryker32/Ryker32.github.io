@@ -412,6 +412,12 @@ body {
   flex-wrap: wrap;
 }
 
+.modal-title-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .modal-title-section h2 {
   margin: 0;
   font-size: 36px;
@@ -419,7 +425,7 @@ body {
   font-weight: 700;
 }
 
-.modal-repo-link {
+.modal-action-link {
   font-size: 14px;
   font-weight: 600;
   color: #dbe5ff;
@@ -431,7 +437,7 @@ body {
   display: none;
 }
 
-.modal-repo-link:hover {
+.modal-action-link:hover {
   background: rgba(219,229,255,0.1);
   border-color: rgba(219,229,255,0.8);
 }
@@ -970,11 +976,16 @@ body {
     gap: 10px;
   }
 
+  .modal-title-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .modal-title-section h2 {
     font-size: 28px;
   }
 
-  .modal-repo-link {
+  .modal-action-link {
     width: 100%;
     text-align: center;
   }

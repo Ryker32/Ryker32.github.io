@@ -271,7 +271,7 @@
       title: "Y-Combinator Agent Jam '25 Hackathon",
       date: "11/3/2025",
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
-      repoUrl: "https://github.com/Ryker32/yc-agent-jam",
+      repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
@@ -300,7 +300,7 @@
       title: "Co-inventor of LifeFlo",
       date: "November 2024 - Present",
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
-      repoUrl: "https://github.com/Ryker32/lifeflo",
+      appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
       description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
       descriptionHtml: `
         <h3>Description</h3>
@@ -464,6 +464,7 @@
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
   const modalRepoLink = document.getElementById('modalRepoLink');
+  const modalAppLink = document.getElementById('modalAppLink');
   const modalMeta = document.getElementById('modalMeta');
   const modalKeyPoints = document.getElementById('modalKeyPoints');
   const modalDate = document.getElementById('modalDate');
@@ -560,6 +561,7 @@
     const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
     const hasDate = project.date && project.date.trim() !== '';
     const hasRepo = project.repoUrl && project.repoUrl.trim() !== '';
+    const hasApp = project.appUrl && project.appUrl.trim() !== '';
 
     // Set key points
     if (modalKeyPoints) {
@@ -587,6 +589,15 @@
         modalRepoLink.style.display = 'inline-flex';
       } else {
         modalRepoLink.style.display = 'none';
+      }
+    }
+
+    if (modalAppLink) {
+      if (hasApp) {
+        modalAppLink.href = project.appUrl;
+        modalAppLink.style.display = 'inline-flex';
+      } else {
+        modalAppLink.style.display = 'none';
       }
     }
 
