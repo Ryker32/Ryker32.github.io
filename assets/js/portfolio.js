@@ -179,12 +179,15 @@
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
-        <li><strong class="list-label">Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)</li>
-        <li><strong class="list-label">My role:</strong> Concept + system architecture, CAD, regen cooling design, CFD, test planning, failure analysis</li>
-        <li><strong class="list-label">Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation</li>
-        <li><strong class="list-label">Status:</strong> Engine designed, built, and hot-fire tested; diagnosed failure, redesigned cooling loop, and documented in a LaTeX report</li>
-      </ul>
-      <hr>
+        <li><strong class="list-label">Solo project</strong> with mentorship from a masters student in aerospace and multi agent systems research.</li>
+        <li><strong class="list-label">My role:</strong> Conducted month long literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran hundreds of controlled experiments/ablations, and wrote a technical analysis report paper and a software system description document.</li>
+        <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
+        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom "Grid-World" environment, matplotlib, LaTeX, Pandas, matplotlib for plotting/initial data analysis, Python multiprocessing (parallel rollouts / ablations).</li>
+        <li>Outcome: REIP achieves ~11% higher map coverage than a standard leader-follower baseline under adversarial conditions; ablation tests isolate the impact of trust updates, impeachment triggers, and frontier allocation terms.</li>      
+        <li>Status: Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
+        </ul>
+
+        <hr>
       <h3>Project Overview</h3>
       <p>
       Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2025. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader–follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
