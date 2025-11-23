@@ -91,6 +91,7 @@
       title: "Hybrid/Modular UAV-UGV Research",
       date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
       keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
+      repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
       <H3>At a glance</H3>
@@ -233,6 +234,7 @@
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
       keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
+      repoUrl: "https://github.com/amzoeee/line_follower_v2",
       description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
       descriptionHtml: `
         <h3>Description</h3>
@@ -269,6 +271,7 @@
       title: "Y-Combinator Agent Jam '25 Hackathon",
       date: "11/3/2025",
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
+      repoUrl: "https://github.com/Ryker32/yc-agent-jam",
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
@@ -297,6 +300,7 @@
       title: "Co-inventor of LifeFlo",
       date: "November 2024 - Present",
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
+      repoUrl: "https://github.com/Ryker32/lifeflo",
       description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
       descriptionHtml: `
         <h3>Description</h3>
@@ -459,6 +463,7 @@
   const modalThumbnailImg = document.getElementById('modalThumbnailImg');
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
+  const modalRepoLink = document.getElementById('modalRepoLink');
   const modalMeta = document.getElementById('modalMeta');
   const modalKeyPoints = document.getElementById('modalKeyPoints');
   const modalDate = document.getElementById('modalDate');
@@ -554,6 +559,7 @@
 
     const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
     const hasDate = project.date && project.date.trim() !== '';
+    const hasRepo = project.repoUrl && project.repoUrl.trim() !== '';
 
     // Set key points
     if (modalKeyPoints) {
@@ -572,6 +578,15 @@
         modalDate.style.display = 'block';
       } else {
         modalDate.style.display = 'none';
+      }
+    }
+
+    if (modalRepoLink) {
+      if (hasRepo) {
+        modalRepoLink.href = project.repoUrl;
+        modalRepoLink.style.display = 'inline-flex';
+      } else {
+        modalRepoLink.style.display = 'none';
       }
     }
 

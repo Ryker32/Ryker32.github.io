@@ -404,11 +404,36 @@ body {
   background: var(--bg);
 }
 
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .modal-title-section h2 {
   margin: 0;
   font-size: 36px;
   color: var(--ink);
   font-weight: 700;
+}
+
+.modal-repo-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #dbe5ff;
+  text-decoration: none;
+  border: 1px solid rgba(219,229,255,0.5);
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: none;
+}
+
+.modal-repo-link:hover {
+  background: rgba(219,229,255,0.1);
+  border-color: rgba(219,229,255,0.8);
 }
 
 .modal-meta {
@@ -941,8 +966,17 @@ body {
     padding: 24px 24px 20px;
   }
   
+  .modal-title-row {
+    gap: 10px;
+  }
+
   .modal-title-section h2 {
     font-size: 28px;
+  }
+
+  .modal-repo-link {
+    width: 100%;
+    text-align: center;
   }
 
   .modal-meta {

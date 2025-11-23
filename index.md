@@ -26,7 +26,10 @@ layout: default
       <img src="{{ '/assets/img/logo.png' | relative_url }}" data-placeholder="{{ '/assets/img/logo.png' | relative_url }}" alt="Project thumbnail" id="modalThumbnailImg" />
     </div>
     <div class="modal-title-section">
-      <h2 id="modalTitle">Project Title</h2>
+      <div class="modal-title-row">
+        <h2 id="modalTitle">Project Title</h2>
+        <a href="#" class="modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
+      </div>
       <div class="modal-meta" id="modalMeta">
         <div class="modal-keypoints" id="modalKeyPoints"></div>
         <div class="modal-date" id="modalDate"></div>
