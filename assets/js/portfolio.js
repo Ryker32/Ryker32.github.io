@@ -171,7 +171,7 @@
       files: []
     },
     {
-      id: 2,
+      id: 7,
       title: "Windsurfing & Sailing Interface",
       date: "6/2025 - Present",
       keyPoints: "ESP32 interface · Arduino firmware · Selling Units",
@@ -307,6 +307,8 @@
         <li><strong class="list-label">Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation</li>
         <li><strong class="list-label">Status:</strong> Engine designed, built, and hot-fire tested; diagnosed failure, redesigned cooling loop, and documented in a LaTeX report</li>
       </ul>
+      <hr>
+      <h3>Project Overview</h3>
       <p>
       This project aimed to design and hot-fire a small LOX-propane rocket engine using a constrained set of materials (truck muffler shell + scrap tubing). I led the design of the combustion chamber and regenerative cooling channels, ran CFD in ANSYS Fluent to size the flow paths, and coordinated fabrication and test. Early hot-fires reached ~43 s of stable burn, but later tests failed when thermal expansion in the cooling channels over-injected fuel into the chamber. Using simulation and mentor feedback, I diagnosed the failure, iterated the design, and wrote an informal research-style report in LaTeX documenting the process and lessons learned.      </p>
       </p>
@@ -365,9 +367,27 @@
       files: []
     },
     {
-      id: 7,
-      title: "Project 7",
-      description: "This is a description of Project 7. Add your project details here.",
+      id: 2,
+      title: "Resilient Election and Impeachment Policy (REIP) Research",
+      date: "May 2025 - Present",
+      keyPoints: "key points????",
+      description: "",
+      descriptionHtml: `
+      <h3>At a glance</h3>
+      <ul>
+        <li><strong class="list-label">Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)</li>
+        <li><strong class="list-label">My role:</strong> Concept + system architecture, CAD, regen cooling design, CFD, test planning, failure analysis</li>
+        <li><strong class="list-label">Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation</li>
+        <li><strong class="list-label">Status:</strong> Engine designed, built, and hot-fire tested; diagnosed failure, redesigned cooling loop, and documented in a LaTeX report</li>
+      </ul>
+      <hr>
+      <h3>Project Overview</h3>
+      <p>
+      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2025. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader–follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+      </p>
+      <p>
+      REIP's high-level approach blends collective trust scoring, democratic leadership rotation, and lightweight fallback autonomy so that no single failure can derail the mission. In large benchmark suites, REIP maintained comparable performance in fault-free settings while achieving an 11% improvement in final coverage over baseline policies when adversarial faults were introduced. These gains translate to faster, safer mapping and search missions under uncertainty. Detailed technical documentation is currently under review for competition, but this summary highlights the outcome: multi-agent robotics can remain resilient if governance is distributed, transparent, and accountable to the team it serves.
+      </p>
       image: "/assets/img/project7.jpg",
       files: [
         { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
