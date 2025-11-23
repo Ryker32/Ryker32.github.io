@@ -226,9 +226,7 @@
 
       `,
       image: "/assets/img/reip/reipenv.png",
-      files: [
-        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
-      ]
+      files: []
     },
     {
       id: 3,
@@ -362,12 +360,12 @@
         <figcaption>Second successful combustion test with better optimized combustion chamber.</figcaption>
       </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
+          <img src="/assets/img/rocket/buildingrocket.jpg" alt="Soldering">
+          <figcaption>Building version two of the rocket engine.</figcaption>
         </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
+          <img src="/assets/img/rocket/mk3picture.jpg" alt="Soldering">
+          <figcaption>Firing up the third version of the rocket engine.</figcaption>
         </figure>
       </div>
       <hr>
