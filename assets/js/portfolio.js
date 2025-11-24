@@ -113,13 +113,13 @@
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
             <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
               <figure class="project-figure">
-                <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
                 </video>
                 <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
-                <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-flight.mp4" type="video/mp4">
                 </video>
                 <figcaption>Hybrid Vehicle Flight</figcaption>
@@ -251,7 +251,7 @@
             <figcaption>Soldering the electronics.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: auto; flex: 0 0 300px;">
-            <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
               <source src="/assets/video/droneflights.mp4" type="video/mp4">
             </video>
             <figcaption>Flying UAV</figcaption>
@@ -275,7 +275,7 @@
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/video/dodamoving.mp4" type="video/mp4">
         </video>
         <figcaption>Robot grabbing and moving objects.</figcaption>
@@ -352,13 +352,13 @@
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
       <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rockettest1.mp4" type="video/mp4">
         </video>
         <figcaption>First successful combustion test.</figcaption>
       </figure>
       <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/mk2test.mp4" type="video/mp4">
         </video>
         <figcaption>Second successful combustion test with better optimized combustion chamber.</figcaption>
@@ -384,13 +384,13 @@
       </p>
       <hr>
       <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
         </video>
         <figcaption>Density field for the same RDE concept, highlighting reactant injection, mixing, and high-density regions along the cooled walls (simulation only).</figcaption>
       </figure>
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
           <source src="/assets/img/rocket/rde-velocity.mp4" type="video/mp4">
         </video>
         <figcaption>Velocity field in a conceptual LOX-propane rotating-detonation combustor, showing high-speed detonation fronts and recirculation zones in the chamber and cooling channels (simulation only).</figcaption>
@@ -620,6 +620,36 @@
           img.loading = 'lazy';
         }
       });
+      // Lazy load videos only when they're visible in viewport
+      const modalVideos = modalDescription.querySelectorAll('video[data-lazy-video]');
+      if (modalVideos.length > 0 && 'IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const video = entry.target;
+              // Load and play video when it becomes visible
+              video.load(); // Start loading the video
+              video.play().catch(err => {
+                // Autoplay may be blocked, that's okay
+                console.debug('Video autoplay prevented:', err);
+              });
+              videoObserver.unobserve(video); // Stop observing once loaded
+            }
+          });
+        }, {
+          rootMargin: '50px' // Start loading 50px before video enters viewport
+        });
+        
+        modalVideos.forEach(video => {
+          videoObserver.observe(video);
+        });
+      } else if (modalVideos.length > 0) {
+        // Fallback for browsers without IntersectionObserver
+        modalVideos.forEach(video => {
+          video.load();
+          video.play().catch(err => console.debug('Video autoplay prevented:', err));
+        });
+      }
       // Restore iframe sources that were paused
       const modalIframes = modalDescription.querySelectorAll('iframe[data-src]');
       modalIframes.forEach(iframe => {
