@@ -4,7 +4,7 @@ layout: default
 
 <div class="portfolio-container">
   <div class="portfolio-banner">
-    <h1>Project Portfolio</h1>
+    <h1>Engineering Portfolio</h1>
   </div>
   
   <div class="portfolio-grid" id="portfolioGrid">
@@ -12,6 +12,10 @@ layout: default
     <!-- Edit assets/js/portfolio.js to add your projects -->
   </div>
 </div>
+
+<footer class="site-footer">
+  © 2025 Ryker Kollmyer. All rights reserved.
+</footer>
 
 <!-- Project Modal -->
 <div class="project-modal" id="projectModal">
@@ -22,7 +26,13 @@ layout: default
       <img src="{{ '/assets/img/logo.png' | relative_url }}" data-placeholder="{{ '/assets/img/logo.png' | relative_url }}" alt="Project thumbnail" id="modalThumbnailImg" />
     </div>
     <div class="modal-title-section">
-      <h2 id="modalTitle">Project Title</h2>
+      <div class="modal-title-row">
+        <h2 id="modalTitle">Project Title</h2>
+        <div class="modal-title-actions">
+          <a href="javascript:void(0);" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
+          <a href="javascript:void(0);" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
+        </div>
+      </div>
       <div class="modal-meta" id="modalMeta">
         <div class="modal-keypoints" id="modalKeyPoints"></div>
         <div class="modal-date" id="modalDate"></div>

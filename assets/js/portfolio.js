@@ -91,8 +91,24 @@
       title: "Hybrid/Modular UAV-UGV Research",
       date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
       keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
+      repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
       description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
       descriptionHtml: `
+      <H3>At a glance</H3>
+      <ul>
+        <li><strong class="list-label">Team:</strong> 5 high-school students (Research project organized by Ryker Kollmyer)</li>
+        <li><strong class="list-label">Mentors:</strong> Two Cambridge-area researchers from the BWSI network</li>
+        <li><strong class="list-label">Goal:</strong> Design a hybrid UAV-UGV system where a quadcopter ferries a small rover over terrain it can't traverse (tall grass, stairs, rubble), then re-docks and extracts it</li>
+        <li><strong class="list-label">My role:</strong> Research project organizer, Hardware, and data analysis lead, landing gear & battery mount design, CAD, materials, integration planning, and documentation</li>
+        <li><strong class="list-label">Stack:</strong> Fusion 360, ROS2, PX4, ANSYS (for basic analysis), Python, 3D printing, carbon-fiber tubing.</li>
+        <li><strong class="list-label">Outcome:</strong> Working prototype demonstrated at Beaver Works Summer Institute (BWSI) in the Zesiger Center MIT; presented as a peer-reviewed poster at the IEEE MIT Undergraduate Research and Technology Conference (URTC).</li>
+        </ul>
+        <hr>
+        <h3>Project Overview</h3>
+        <p>We extended the BWSI UAV course by proposing an external research project: a “drone on wheels” that combines a quadcopter (UAV) with a ground vehicle (UGV). The UAV carries the UGV over terrain the rover can't handle, releases it to drive a precision course, then re-attaches and extracts it (using Aruco tags).</p>
+        <p>I co-designed a modular attachment system where the landing gear doubles as rails for the UGV, plus a new battery mount that keeps the vehicle mechanically stable in flight while still allowing quick separation and re-docking.</p>
+        <p>We tested the hybrid platform in the <strong class="list-label">MIT AeroAstro lab</strong> and on foam, concrete, grass, mulch, sand, and dirt, measuring linear and angular velocity to quantify when a UAV “ride” is necessary for small UGVs. Control and telemetry were handled with <strong class="list-label">ROS2</strong> + <strong class="list-label">PX4</strong>.</p>
+        <hr>
         <h3>IEEE-URTC</h3>
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
             <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
@@ -119,8 +135,6 @@
             </div>
           </div>
         <div class="clear-float"></div>
-
-
         <hr>
         <h3 class="clear-both">Context</h3>
         <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
@@ -159,26 +173,60 @@
     },
     {
       id: 2,
-      title: "Windsurfing & Sailing Interface",
-      date: "6/2025 - Present",
-      keyPoints: "ESP32 interface · Arduino firmware · 50+ units sold",
-      description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
+      title: "Resilient Election and Impeachment Policy (REIP) Research",
+      date: "May 2025 - Present",
+      keyPoints: "Multi Agent Systems · Governance Policy · Research",
+      description: "",
       descriptionHtml: `
-        <h3>Description</h3>
-        <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
-        This is programmed in Arduino and uses API keys and the home wifi for a constant connection, it can also recieve constant radio data from the local weather station for constant updates.
-        This was created for sailors and windsurfers at the local clubs. It has been sold for $50 per unit and costs only $15 to produce.
-        </p>
-        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-          <img src="/assets/img/windsurfing/windsurfing.png" alt="Interface">
-          <figcaption>Interface with marine units.</figcaption>
+      <h3>At a glance</h3>
+      <ul>
+        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval, a masters student in aerospace and multi agent systems research.</li>
+        <li><strong class="list-label">My role:</strong> Conducted literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran controlled experiments/ablations, wrote a technical analysis report paper and a software system description document.</li>
+        <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
+        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
+        <li><strong class="list-label">Outcome:</strong> REIP achieves ~11% higher map coverage than a standard leader-follower baseline under adversarial conditions; ablation tests isolate the impact of trust updates, impeachment triggers, and frontier allocation terms.</li>      
+        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
+        </ul>
+        <hr>
+      <h3>Project Overview</h3>
+      <p>
+      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2025. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader–follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+      </p>
+      <p>
+      REIP's high-level approach blends collective trust scoring, democratic leadership rotation, and lightweight fallback autonomy so that no single failure can derail the mission. In large benchmark suites, REIP maintained comparable performance in fault-free settings while achieving an 11% improvement in final coverage over baseline policies when adversarial faults were introduced. These gains translate to faster, safer mapping and search missions under uncertainty. Detailed technical documentation is currently under review for competition, but this summary highlights the outcome: multi-agent robotics can remain resilient if governance is distributed, transparent, and accountable to the team it serves.
+      </p>
+      <hr>
+      <h3>Custom Simulation Environment</h3>
+      <p>
+      I built this custom simulation environment in Python that allows me to live monitor the behavior of the agents in the environment.
+      This environment is a grid-world with a start and end point, and a number of obstacles. The drones can move around the grid-world and collect rewards.
+      The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
+      The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
+      </p>
+      <div class="reip-section">
+        <figure class="project-figure" style="height: 550px; max-height: 550px; width: 500px; max-width: 500px;">
+          <img src="/assets/img/reip/square.png" alt="REIP Simulation Demo">
+          <figcaption>Demo image of the REIP simulation environment.</figcaption>
         </figure>
-        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-          <img src="/assets/img/windsurfing/wires.jpg" alt="Custom Battery">
-          <figcaption>Custom wiring for the microcontroller.</figcaption>
-        </figure>
+        <div class="reip-guide">
+          <h3>Simulation Interpretation Guide</h3>
+          <ul class="reip-list">
+            <li><strong class="list-label">t:</strong> Current time step</li>
+            <li><strong class="list-label">N:</strong> Number of agents</li>
+            <li><strong class="list-label">Dots:</strong> Agents with their individual ID number labeled</li>
+            <li><strong class="list-label">Agent with yellow "halo":</strong> Current leader with current trust metric labeled</li>
+            <li><strong class="list-label">Dashed circle around agents:</strong> Communication Radius</li>
+            <li><strong class="list-label">Green squares around agents:</strong> Visibility Radius</li>
+            <li><strong class="list-label">Black Squares:</strong> Obstacles</li>
+            <li><strong class="list-label">Blue Squares:</strong> Unexplored Spaces</li>
+            <li><strong class="list-label">Yellow Squares:</strong> Currently visible frontiers (exploration targets)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="clear-float"></div>
+
       `,
-      image: "/assets/img/windsurfing/windsurfing.png",
+      image: "/assets/img/reip/reipenv.png",
       files: []
     },
     {
@@ -186,6 +234,7 @@
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
       keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
+      repoUrl: "https://github.com/amzoeee/line_follower_v2",
       description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
       descriptionHtml: `
         <h3>Description</h3>
@@ -222,6 +271,7 @@
       title: "Y-Combinator Agent Jam '25 Hackathon",
       date: "11/3/2025",
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
+      repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
       description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
@@ -250,6 +300,7 @@
       title: "Co-inventor of LifeFlo",
       date: "November 2024 - Present",
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
+      appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
       description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
       descriptionHtml: `
         <h3>Description</h3>
@@ -260,19 +311,19 @@
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
+            <figcaption>GPT Based Menstrual Cycle Assesment Feature.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+            <img src="/assets/img/lifeflo/ffff.jpg" alt="Soldering">
+            <figcaption>Daily logging function for Menstrual Health Tracker.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
             <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
-          </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
-            <figcaption>Soldering the electronics.</figcaption>
+            <figcaption>Personal notes can also be left for logging purposes.</figcaption>
           </figure>
           <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
-            <figcaption>Drone parts layed out for visualization.</figcaption>
+            <img src="/assets/img/lifeflo/menu.jpg" alt="Deconstruction">
+            <figcaption>Sidebar menu for navigation.</figcaption>
           </figure>
         </div>
         <div class="clear-float"></div>
@@ -287,31 +338,67 @@
       keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
       description: "",
       descriptionHtml: `
-      <h3>Description</h3>
+      <h3>At a glance</h3>
+      <ul>
+        <li><strong class="list-label">Team:</strong> 4 high-school students (project lead: Ryker Kollmyer)</li>
+        <li><strong class="list-label">My role:</strong> Concept + system architecture, CAD, regen cooling design, CFD, test planning, failure analysis</li>
+        <li><strong class="list-label">Key tools:</strong> Fusion 360, ANSYS Fluent, Python, Arduino, pressure/flow instrumentation</li>
+        <li><strong class="list-label">Status:</strong> Engine designed, built, and hot-fire tested; diagnosed failure, redesigned cooling loop, and documented in a LaTeX report</li>
+      </ul>
+      <hr>
+      <h3>Project Overview</h3>
       <p>
-      I led a team of five to design, simulate, and build a LOX-propane rocket engine out of cheap metal and scrap tubing.
-      We used ANSYS Fluent to lightly simulate the engine's performane and ensure it was safe to use.
-      We got our engine inspected by a Blue Origin engineer and got strong guidance for improving the design.
-      We went through seven d
+      This project aimed to design and hot-fire a small LOX-propane rocket engine using a constrained set of materials (truck muffler shell + scrap tubing). I led the design of the combustion chamber and regenerative cooling channels, ran CFD in ANSYS Fluent to size the flow paths, and coordinated fabrication and test. Early hot-fires reached ~43 s of stable burn, but later tests failed when thermal expansion in the cooling channels over-injected fuel into the chamber. Using simulation and mentor feedback, I diagnosed the failure, iterated the design, and wrote an informal research-style report in LaTeX documenting the process and lessons learned.      </p>
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
+      <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rockettest1.mp4" type="video/mp4">
+        </video>
+        <figcaption>First successful combustion test.</figcaption>
+      </figure>
+      <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/mk2test.mp4" type="video/mp4">
+        </video>
+        <figcaption>Second successful combustion test with better optimized combustion chamber.</figcaption>
+      </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
+          <img src="/assets/img/rocket/buildingrocket.jpg" alt="Soldering">
+          <figcaption>Building version two of the rocket engine.</figcaption>
         </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
-        </figure>
-        <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/lifeflo/menu.jpg" alt="Soldering">
-          <figcaption>Soldering the electronics.</figcaption>
-        </figure>
-        <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
-          <figcaption>Drone parts layed out for visualization.</figcaption>
+          <img src="/assets/img/rocket/mk3picture.jpg" alt="Soldering">
+          <figcaption>Firing up the third version of the rocket engine.</figcaption>
         </figure>
       </div>
+      <hr>
+      <h3>Failure Analysis</h3>
+      <p>
+      After early hot-fire tests (~43 s average runtime) the engine began to fail prematurely, with unstable combustion and flooding. We logged chamber pressure, mass flow rate, and injector temperatures, then built a simplified thermal-expansion model of the regen channels.
+      <p>
+      Comparing CFD results and test data, we found that as the engine heated up, the thin cooling tubes expanded more than the chamber wall, increasing their flow area and over-injecting fuel into the chamber. That mixture shift explained both the pressure traces and the visible flame behavior.
+      </p>
+      <p>
+      Using this result, I resized the channels and adjusted the flow split in simulation to maintain stable mixture ratio over the expected temperature range. We documented the failure, analysis, and redesign process in an informal LaTeX report as practice for future research write-ups.
+      </p>
+      <hr>
+      <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
+        </video>
+        <figcaption>Density field for the same RDE concept, highlighting reactant injection, mixing, and high-density regions along the cooled walls (simulation only).</figcaption>
+      </figure>
+      <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/rocket/rde-velocity.mp4" type="video/mp4">
+        </video>
+        <figcaption>Velocity field in a conceptual LOX-propane rotating-detonation combustor, showing high-speed detonation fronts and recirculation zones in the chamber and cooling channels (simulation only).</figcaption>
+      </figure>
+      <h3>RDE Concept Analysis - Simulation Only</h3>
+      <p> 
+      As a follow-on to the LOX-propane engine, I designed a conceptual rotating-detonation combustor (RDE) in Fusion 360 and ran ANSYS Fluent CFD to study flow, density, and wall heat transfer. Using the same performance targets and cooling-channel layout as our baseline engine, I explored how an RDE variant would behave and compared its fields to the conventional design. This work stayed entirely in simulation for safety-no hardware was built. 
+      </p>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/rocket/rocketicon.png",
@@ -319,12 +406,27 @@
     },
     {
       id: 7,
-      title: "Project 7",
-      description: "This is a description of Project 7. Add your project details here.",
-      image: "/assets/img/project7.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project7-detail1.jpg", name: "Detail 1" }
-      ]
+      title: "Windsurfing & Sailing Interface",
+      date: "6/2025 - Present",
+      keyPoints: "ESP32 interface · Arduino firmware · Selling Units",
+      description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
+      descriptionHtml: `
+        <h3>Description</h3>
+        <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
+        This is programmed in Arduino and uses API keys and the home Wi-Fi for a constant connection, it can also receive constant radio data from the local weather station for constant updates.
+        This was created for sailors and windsurfers at the local clubs. It has been sold for $50 per unit and costs only $15 to produce.
+        </p>
+        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/windsurfing/windsurfing.png" alt="Interface">
+          <figcaption>Interface with marine units.</figcaption>
+        </figure>
+        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/windsurfing/wires.jpg" alt="Custom Battery">
+          <figcaption>Custom wiring for the microcontroller.</figcaption>
+        </figure>
+      `,
+      image: "/assets/img/windsurfing/windsurfing.png",
+      files: []
     },
     {
       id: 8,
@@ -361,6 +463,8 @@
   const modalThumbnailImg = document.getElementById('modalThumbnailImg');
   const modalThumbnail = document.getElementById('modalThumbnail');
   const modalTitle = document.getElementById('modalTitle');
+  const modalRepoLink = document.getElementById('modalRepoLink');
+  const modalAppLink = document.getElementById('modalAppLink');
   const modalMeta = document.getElementById('modalMeta');
   const modalKeyPoints = document.getElementById('modalKeyPoints');
   const modalDate = document.getElementById('modalDate');
@@ -371,6 +475,9 @@
   // Initialize portfolio grid
   function initPortfolio() {
     if (!portfolioGrid) return;
+
+    // Clear any existing cards to avoid duplicates if init runs again
+    portfolioGrid.innerHTML = '';
 
     portfolioData.forEach(project => {
       const card = createProjectCard(project);
@@ -453,6 +560,8 @@
 
     const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
     const hasDate = project.date && project.date.trim() !== '';
+    const hasRepo = project.repoUrl && project.repoUrl.trim() !== '';
+    const hasApp = project.appUrl && project.appUrl.trim() !== '';
 
     // Set key points
     if (modalKeyPoints) {
@@ -471,6 +580,24 @@
         modalDate.style.display = 'block';
       } else {
         modalDate.style.display = 'none';
+      }
+    }
+
+    if (modalRepoLink) {
+      if (hasRepo) {
+        modalRepoLink.href = project.repoUrl;
+        modalRepoLink.style.display = 'inline-flex';
+      } else {
+        modalRepoLink.style.display = 'none';
+      }
+    }
+
+    if (modalAppLink) {
+      if (hasApp) {
+        modalAppLink.href = project.appUrl;
+        modalAppLink.style.display = 'inline-flex';
+      } else {
+        modalAppLink.style.display = 'none';
       }
     }
 

@@ -404,11 +404,42 @@ body {
   background: var(--bg);
 }
 
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.modal-title-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .modal-title-section h2 {
   margin: 0;
   font-size: 36px;
   color: var(--ink);
   font-weight: 700;
+}
+
+.modal-action-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #dbe5ff;
+  text-decoration: none;
+  border: 1px solid rgba(219,229,255,0.5);
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: none;
+}
+
+.modal-action-link:hover {
+  background: rgba(219,229,255,0.1);
+  border-color: rgba(219,229,255,0.8);
 }
 
 .modal-meta {
@@ -460,6 +491,36 @@ body {
     font-size: 18px;
     text-align: justify;
     hyphens: auto;
+  }
+
+  ul {
+    padding-left: 24px;
+    margin: 0 0 20px;
+  }
+
+  ul.reip-list {
+    font-size: 19px;
+    line-height: 1.7;
+  }
+
+  ul.reip-list li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  ul.reip-list .list-label {
+    flex: 0 0 auto;
+  }
+
+  .list-label {
+    color: #dbe5ff;
+    font-weight: 600;
+  }
+
+  .reip-guide h3 {
+    margin-top: 0;
   }
   
   /* Article container for intro paragraphs */
@@ -654,6 +715,20 @@ body {
   font-size: 17px;
 }
 
+.modal-description .reip-section {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.modal-description .reip-guide {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
 .modal-description figure {
   margin: 0 0 20px;
   background: #10151d;
@@ -693,6 +768,18 @@ body {
     padding: 0;
   }
   
+  &.reip-figure {
+    width: clamp(260px, 60vw, 640px);
+    max-width: 640px;
+    height: auto;
+    margin: 0;
+  }
+
+  &.reip-figure img {
+    width: 100%;
+    height: auto;
+  }
+
   /* Per-figure object-fit control via classes */
   &.object-contain img {
     object-fit: contain; /* Preserve aspect ratio, may have empty space */
@@ -713,7 +800,8 @@ body {
     /* Ensure the figure respects the width and height from inline styles */
     box-sizing: border-box;
     
-    img {
+    img,
+    video {
       flex: 1 1 0;
       min-height: 0;
       width: 100%;
@@ -758,6 +846,15 @@ body {
   &[hidden] {
     display: none !important;
   }
+}
+
+.site-footer {
+  margin: 48px 0;
+  padding: 24px 0;
+  font-size: 14px;
+  color: #8b949e;
+  text-align: center;
+  border-top: 1px solid var(--edge);
 }
 
 .modal-files h3 {
@@ -875,8 +972,22 @@ body {
     padding: 24px 24px 20px;
   }
   
+  .modal-title-row {
+    gap: 10px;
+  }
+
+  .modal-title-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .modal-title-section h2 {
     font-size: 28px;
+  }
+
+  .modal-action-link {
+    width: 100%;
+    text-align: center;
   }
 
   .modal-meta {
@@ -922,6 +1033,24 @@ body {
     min-height: 400px;
   }
   
+  .modal-description .reip-section {
+    flex-direction: column;
+  }
+
+  .modal-description .reip-figure {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  ul.reip-list {
+    font-size: 17px;
+  }
+
+  ul.reip-list li {
+    flex-direction: column;
+    gap: 2px;
+  }
+
 }
 
 /* Override theme floats/positioning */
