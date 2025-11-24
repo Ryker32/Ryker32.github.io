@@ -289,8 +289,10 @@
       descriptionHtml: `
       <h3>Description</h3>
       <p>
-      LifeFlo is a women's health app made in FlutterFlow/Firebase. It allows users to learn about their menstrual cycle, track their symptoms, and receive personalized recommendations for their health using a monitored GPT wrapper. 
-      The app was co-invented with Veda Hiremath and Gabe Balzer and is currently pending a provisional patent No. 63/873,509. The app is available on the Google Play Store and can be downloaded for free.
+      I led a team of five to design, simulate, and build a LOX-propane rocket engine out of cheap metal and scrap tubing.
+      We used ANSYS Fluent to lightly simulate the engine's performane and ensure it was safe to use.
+      We got our engine inspected by a Blue Origin engineer and got strong guidance for improving the design.
+      We went through seven d
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
