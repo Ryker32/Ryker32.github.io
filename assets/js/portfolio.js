@@ -620,89 +620,34 @@
           img.loading = 'lazy';
         }
       });
-      // Lazy load videos - click-to-play by default to prevent loading until user wants it
+      // Lazy load videos only when they're visible in viewport
       const modalVideos = modalDescription.querySelectorAll('video[data-lazy-video]');
-      
-      const setupVideoClickToPlay = (video) => {
-        // Ensure parent is positioned for overlay
-        if (getComputedStyle(video.parentElement).position === 'static') {
-          video.parentElement.style.position = 'relative';
-        }
-        
-        video.style.cursor = 'pointer';
-        video.style.backgroundColor = '#161b22';
-        
-        // Create play overlay
-        const playOverlay = document.createElement('div');
-        playOverlay.className = 'video-play-overlay';
-        playOverlay.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: white; padding: 16px 32px; border-radius: 12px; cursor: pointer; z-index: 10; font-size: 18px; font-weight: 600; border: 2px solid rgba(255,255,255,0.3); transition: all 0.2s; pointer-events: auto;';
-        playOverlay.innerHTML = '▶ Play Video';
-        playOverlay.addEventListener('mouseenter', () => {
-          playOverlay.style.background = 'rgba(0,0,0,0.9)';
-          playOverlay.style.borderColor = 'rgba(255,255,255,0.5)';
-        });
-        playOverlay.addEventListener('mouseleave', () => {
-          playOverlay.style.background = 'rgba(0,0,0,0.8)';
-          playOverlay.style.borderColor = 'rgba(255,255,255,0.3)';
-        });
-        
-        video.parentElement.appendChild(playOverlay);
-        
-        const playHandler = () => {
-          // Only load video when user clicks
-          if (!video.dataset.loaded) {
-            video.dataset.loaded = 'true';
-            video.load(); // Start loading only now
-          }
-          video.play().then(() => {
-            if (playOverlay.parentElement) {
-              playOverlay.remove();
-            }
-            video.removeEventListener('click', playHandler);
-          }).catch(err => {
-            console.debug('Video play failed:', err);
-          });
-        };
-        
-        video.addEventListener('click', playHandler);
-        playOverlay.addEventListener('click', (e) => {
-          e.stopPropagation();
-          playHandler();
-        });
-      };
-      
-      // Use Intersection Observer to auto-play when visible (but still click-to-load)
       if (modalVideos.length > 0 && 'IntersectionObserver' in window) {
         const videoObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            const video = entry.target;
-            if (entry.isIntersecting && entry.intersectionRatio > 0.7) {
-              // Video is mostly visible - if already loaded, try to play
-              if (video.dataset.loaded && video.paused) {
-                video.play().catch(() => {
-                  // Autoplay blocked - that's fine, user can click
-                });
-              }
-            } else if (!entry.isIntersecting) {
-              // Pause video when it leaves viewport to save bandwidth
-              if (!video.paused) {
-                video.pause();
-              }
+            if (entry.isIntersecting) {
+              const video = entry.target;
+              // Load and play video when it becomes visible
+              video.load(); // Start loading the video
+              video.play().catch(err => {
+                // Autoplay may be blocked, that's okay
+                console.debug('Video autoplay prevented:', err);
+              });
+              videoObserver.unobserve(video); // Stop observing once loaded
             }
           });
         }, {
-          rootMargin: '0px',
-          threshold: [0.7] // Require 70% visibility
+          rootMargin: '50px' // Start loading 50px before video enters viewport
         });
         
         modalVideos.forEach(video => {
-          setupVideoClickToPlay(video);
           videoObserver.observe(video);
         });
       } else if (modalVideos.length > 0) {
         // Fallback for browsers without IntersectionObserver
         modalVideos.forEach(video => {
-          setupVideoClickToPlay(video);
+          video.load();
+          video.play().catch(err => console.debug('Video autoplay prevented:', err));
         });
       }
       // Restore iframe sources that were paused
