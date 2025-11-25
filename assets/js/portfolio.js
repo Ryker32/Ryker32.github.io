@@ -99,8 +99,8 @@
         <li><strong class="list-label">Team:</strong> 5 high-school students (Research project organized by Ryker Kollmyer)</li>
         <li><strong class="list-label">Mentors:</strong> Two Cambridge-area researchers from the BWSI network</li>
         <li><strong class="list-label">Goal:</strong> Design a hybrid UAV-UGV system where a quadcopter ferries a small rover over terrain it can't traverse (tall grass, stairs, rubble), then re-docks and extracts it</li>
-        <li><strong class="list-label">My role:</strong> Research project organizer, Hardware, and data analysis lead, landing gear & battery mount design, CAD, materials, integration planning, and documentation</li>
-        <li><strong class="list-label">Stack:</strong> Fusion 360, ROS2, PX4, ANSYS (for basic analysis), Python, 3D printing, carbon-fiber tubing.</li>
+        <li><strong class="list-label">My role:</strong> Research project organizer, hardware, data analysis, CAD, materials sourcing, and documentation</li>
+        <li><strong class="list-label">Stack:</strong> Fusion 360, ROS2, PX4, Python, 3D printing.</li>
         <li><strong class="list-label">Outcome:</strong> Working prototype demonstrated at Beaver Works Summer Institute (BWSI) in the Zesiger Center MIT; presented as a peer-reviewed poster at the IEEE MIT Undergraduate Research and Technology Conference (URTC).</li>
         </ul>
         <hr>
