@@ -182,9 +182,9 @@ function initHero3D() {
   const group = new THREE.Group();
   scene.add(group);
 
-  const PARTICLE_COUNT = prefersMotion ? 2600 : 1200;
-  const LINK_DISTANCE = prefersMotion ? 0.65 : 0.55;
-  const MAX_CONNECTIONS = prefersMotion ? 5 : 3;
+  const PARTICLE_COUNT = prefersMotion ? 300 : 150;
+  const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
+  const MAX_CONNECTIONS = prefersMotion ? 4 : 2;
 
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const offsets = new Float32Array(PARTICLE_COUNT);
