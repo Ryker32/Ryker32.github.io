@@ -63,7 +63,7 @@ body {
 .glass-nav {
   pointer-events: auto;
   width: min(760px, 100%);
-  background: rgba(8, 12, 23, 0.04);
+  background: rgba(8, 12, 23, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-right-color: rgba(150, 180, 255, 0.12);
   border-bottom-color: rgba(8, 10, 18, 0.35);
@@ -81,28 +81,26 @@ body {
   --glass-filter-id: url(#glass-filter-nav);
 }
 
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .glass-nav {
-    backdrop-filter: var(--glass-filter-id) saturate(1.8);
-    -webkit-backdrop-filter: var(--glass-filter-id) saturate(1.8);
-  }
+.glass-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  filter: var(--glass-filter-id);
+  mix-blend-mode: lighten;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: -1;
 }
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass-nav {
-    backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
-    -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
-  }
-
-  .glass-nav::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    filter: var(--glass-filter-id);
-    pointer-events: none;
-    z-index: -1;
-  }
+.glass-nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
+  pointer-events: none;
+  z-index: -2;
 }
 
 .glass-nav::after {
