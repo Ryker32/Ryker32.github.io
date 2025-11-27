@@ -81,13 +81,14 @@ body {
   --glass-filter-id: url(#glass-filter-nav);
 }
 
-@supports (backdrop-filter: url(#test)) {
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .glass-nav {
     backdrop-filter: var(--glass-filter-id) saturate(1.8);
+    -webkit-backdrop-filter: var(--glass-filter-id) saturate(1.8);
   }
 }
 
-@supports not (backdrop-filter: url(#test)) {
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-nav {
     backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
     -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.05);
