@@ -665,16 +665,10 @@
     const overview = document.createElement('div');
     overview.className = 'project-card__overview';
 
-    const summary = document.createElement('p');
-    summary.className = 'project-card__summary';
-    summary.textContent = project.description || 'Detailed case study below.';
-    overview.appendChild(summary);
-
     const atGlanceHeading = document.createElement('h4');
     atGlanceHeading.className = 'project-card__glanceHeading';
     atGlanceHeading.textContent = 'At a glance';
     overview.appendChild(atGlanceHeading);
-
     const highlights = document.createElement('ul');
     highlights.className = 'project-card__list';
     const highlightItems = Array.isArray(project.highlights)
@@ -690,34 +684,17 @@
       overview.appendChild(highlights);
     }
 
-    const actions = document.createElement('div');
-    actions.className = 'project-card__actions';
+    body.appendChild(titleRow);
+    body.appendChild(overview);
 
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'project-card__toggle';
-    toggle.innerHTML = 'Open case study <span class="project-card__toggleIcon" aria-hidden="true"></span>';
-
-    toggle.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      evt.stopPropagation();
-      openModal(project);
-    });
+    article.appendChild(media);
+    article.appendChild(body);
 
     article.addEventListener('click', (evt) => {
       if (evt.target.closest('a, button')) return;
       evt.preventDefault();
       openModal(project);
     });
-
-    actions.appendChild(toggle);
-
-    body.appendChild(titleRow);
-    body.appendChild(overview);
-    body.appendChild(actions);
-
-    article.appendChild(media);
-    article.appendChild(body);
 
     return article;
   }
