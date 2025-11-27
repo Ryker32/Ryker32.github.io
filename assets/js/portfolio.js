@@ -658,13 +658,18 @@
     summary.textContent = project.description || 'Detailed case study below.';
     overview.appendChild(summary);
 
+    const atGlanceHeading = document.createElement('h4');
+    atGlanceHeading.className = 'project-card__glanceHeading';
+    atGlanceHeading.textContent = 'At a glance';
+    overview.appendChild(atGlanceHeading);
+
     const highlights = document.createElement('ul');
     highlights.className = 'project-card__list';
     const highlightItems = Array.isArray(project.highlights)
       ? project.highlights
       : (project.keyPoints || '').split('·').map(item => item.trim()).filter(Boolean);
 
-    highlightItems.slice(0, 6).forEach(text => {
+    highlightItems.slice(0, 3).forEach(text => {
       const li = document.createElement('li');
       li.textContent = text;
       highlights.appendChild(li);
