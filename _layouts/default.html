@@ -38,56 +38,11 @@
         </button>
       </header>
     </div>
-    <div class="page-container">
-      <!-- Left Sidebar: ID Card Style -->
-      <aside class="sidebar" id="about">
-        <div class="profile-card">
-          <!-- Name & Title -->
-          <h1 class="profile-name">
-            <a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a>
-          </h1>
-          <!-- Profile Image -->
-          {% if site.logo %}
-          <div class="profile-image">
-            <img src="{{site.logo | relative_url}}" alt="{{ site.title | default: site.github.repository_name }}" />
-          </div>
-          {% endif %}
-          
-          
-          
-          <p class="profile-tagline">{{ site.description | default: site.github.project_tagline }}</p>
-          
-          <!-- Action Buttons -->
-          {% if site.show_downloads %}
-          <div class="action-buttons">
-            <a href="{{ site.github.owner_url }}" class="btn btn-github">GitHub Profile</a>
-            <a href="{{ site.github.zip_url }}" class="btn btn-download">Download CV</a>
-          </div>
-          {% endif %}
-          
-          <!-- Animation Canvas -->
-          <div class="sidebar-animation">
-            <canvas id="mas-canvas" aria-label="Multi-agent network animation"></canvas>
-          </div>
-        </div>
-        
-        <!-- Footer in sidebar -->
-        <footer class="sidebar-footer">
-          {% if site.github.is_project_page %}
-          <p class="maintain">This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-          {% endif %}
-          <p class="credits"><small>Hosted on GitHub Pages</small></p>
-        </footer>
-      </aside>
-      
-      <!-- Right Main Content Area -->
-      <main class="main-content">
-        {{ content }}
-      </main>
-    </div>
-    
+    <main class="site-main">
+      {{ content }}
+    </main>
+
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
-    <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
     <svg class="glass-filter-defs" aria-hidden="true">
       <defs>
         <filter id="glass-filter-nav" x="-30%" y="-70%" width="160%" height="240%" color-interpolation-filters="sRGB">

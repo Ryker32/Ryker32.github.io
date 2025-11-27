@@ -92,7 +92,13 @@
       date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
       keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
       repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
-      description: "This is a description of Project 1. You can add detailed information about your project here, including technologies used, challenges faced, and outcomes achieved.",
+      description: "Built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain, re-docks in flight, and ships data back over ROS2 + PX4.",
+      badge: "URTC Poster",
+      highlights: [
+        "Custom dock + battery rails keep the UGV stable in flight",
+        "Flight controller + rover share ROS2/PX4 telemetry for hand-offs",
+        "Demoed live at MIT URTC & Beaver Works Summer Institute"
+      ],
       descriptionHtml: `
       <H3>At a glance</H3>
       <ul>
@@ -176,7 +182,13 @@
       title: "Resilient Election and Impeachment Policy (REIP) Research",
       date: "May 2025 - Present",
       keyPoints: "Multi Agent Systems · Governance Policy · Research",
-      description: "",
+      description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
+      badge: "REIP",
+      highlights: [
+        "Trust-scored elections keep swarm coverage near 99%",
+        "Custom Python grid world with YAML-configured benchmarks",
+        "Documented for Washington State Science & Engineering Fair"
+      ],
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
@@ -235,7 +247,13 @@
       date: "7/2025 - 8/2025",
       keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
       repoUrl: "https://github.com/amzoeee/line_follower_v2",
-      description: "This was done through BWSI and MIT's Autonomous UAV Racing competition.",
+      description: "Led sensing + electronics for the MIT BWSI UAV racing team, integrating OpenCV line tracking on a Pi 5 with PX4 autopilot to win by over a minute.",
+      badge: "BWSI Winner",
+      highlights: [
+        "Custom MAVLink + OpenCV stack on Raspberry Pi 5",
+        "Manufactured enclosures + landing gear to stabilize payloads",
+        "Piloted winning final run at MIT’s Zesiger Center"
+      ],
       descriptionHtml: `
         <h3>Description</h3>
         <p>This was the UAV racing course done through The Beaver Works Summer Institute (BWSI).
@@ -272,7 +290,13 @@
       date: "11/3/2025",
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
       repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
-      description: "This was a hackathon done through Y-Combinator's Agent Jam '25.",
+      description: "Built a safety-aware teleop stack for a KiwiBot/LeRobot platform at YC Agent Jam ’25, blending HuggingFace LLM cues with real-time manipulation.",
+      badge: "YC Agent Jam",
+      highlights: [
+        "LLM watches for hazards & triggers alerts in teleop mode",
+        "Robot grips color-coded objects via custom HF training loop",
+        "Wrapped in CLI agent experience pitched to YC mentors"
+      ],
       descriptionHtml: `
       <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
         <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: 100%; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
@@ -301,7 +325,13 @@
       date: "November 2024 - Present",
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
       appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
-      description: "LifeFlo app published on Google Play Store co-invented with Veda Hiremath and Gabe Balzer",
+      description: "Co-invented LifeFlo, a monitored GPT + FlutterFlow women’s health app that’s live on Google Play and covered by US provisional patent 63/873,509.",
+      badge: "Patent Pending",
+      highlights: [
+        "GPT-based menstrual insights with human-in-the-loop review",
+        "Firebase backend w/ logging + push-ready symptom tracking",
+        "Play Store release with full UX + content system"
+      ],
       descriptionHtml: `
         <h3>Description</h3>
         <p>
@@ -336,7 +366,13 @@
       title: "LOX-Propane Rocket Engine",
       date: "December 2023 - January 2025",
       keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
-      description: "",
+      description: "Led design/build/test of a regen-cooled LOX/propane engine made from scrap materials, then diagnosed failures with ANSYS CFD and iterated the cooling loop.",
+      badge: "Hot-fire",
+      highlights: [
+        "Regen cooling sized in ANSYS Fluent",
+        "Hot-fired multiple builds with instrumented pressure data",
+        "Documented failure analysis + redesign in LaTeX report"
+      ],
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
@@ -409,7 +445,13 @@
       title: "Windsurfing & Sailing Interface",
       date: "6/2025 - Present",
       keyPoints: "ESP32 interface · Arduino firmware · Selling Units",
-      description: "Small scale project to create a simple interface for local windsurfers and sailors to use.",
+      description: "Shipping ESP32-based windsurf dashboards that pull marine weather APIs + local radio data into a rugged TFT interface sold to local clubs.",
+      badge: "Product",
+      highlights: [
+        "ESP32 firmware w/ Wi-Fi + radio ingest",
+        "Weather + tide data rendered on TFT UI",
+        "Sold units at $50 with $15 BOM"
+      ],
       descriptionHtml: `
         <h3>Description</h3>
         <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
@@ -458,25 +500,12 @@
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
-  const projectModal = document.getElementById('projectModal');
-  const modalClose = document.getElementById('modalClose');
-  const modalThumbnailImg = document.getElementById('modalThumbnailImg');
-  const modalThumbnail = document.getElementById('modalThumbnail');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalRepoLink = document.getElementById('modalRepoLink');
-  const modalAppLink = document.getElementById('modalAppLink');
-  const modalMeta = document.getElementById('modalMeta');
-  const modalKeyPoints = document.getElementById('modalKeyPoints');
-  const modalDate = document.getElementById('modalDate');
-  const modalDescription = document.getElementById('modalDescription');
-  const modalFiles = document.getElementById('modalFiles');
-  const filesGrid = document.getElementById('filesGrid');
+  const openState = { card: null };
 
   // Initialize portfolio grid
   function initPortfolio() {
     if (!portfolioGrid) return;
 
-    // Clear any existing cards to avoid duplicates if init runs again
     portfolioGrid.innerHTML = '';
 
     portfolioData.forEach(project => {
@@ -542,275 +571,236 @@
     }
   }
 
-  // Create a project card element
   function createProjectCard(project) {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.setAttribute('data-project-id', project.id);
-    
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'project-image';
-    
-    const img = document.createElement('img');
-    img.src = project.image || '/assets/img/logo.png'; // Fallback image
-    img.alt = project.title;
-    img.loading = 'lazy'; // Lazy load portfolio thumbnails
-    img.onerror = function() {
-      this.src = '/assets/img/logo.png'; // Fallback if image doesn't exist
+    const article = document.createElement('article');
+    article.className = 'project-card';
+    article.setAttribute('data-project-id', project.id);
+
+    const media = document.createElement('div');
+    media.className = 'project-card__media';
+
+    const thumbnail = document.createElement('img');
+    thumbnail.src = project.image || '/assets/img/logo.png';
+    thumbnail.alt = `${project.title} preview`;
+    thumbnail.loading = 'lazy';
+    thumbnail.onerror = function() {
+      this.src = '/assets/img/logo.png';
     };
-    
-    imageDiv.appendChild(img);
-    
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'project-title';
-    titleDiv.textContent = project.title;
-    
-    card.appendChild(imageDiv);
-    card.appendChild(titleDiv);
-    
-    card.addEventListener('click', () => openModal(project));
-    
-    return card;
+    media.appendChild(thumbnail);
+
+    if (project.badge) {
+      const badge = document.createElement('span');
+      badge.className = 'project-card__badge';
+      badge.textContent = project.badge;
+      media.appendChild(badge);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'project-card__body';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'project-card__titleRow';
+
+    const titleGroup = document.createElement('div');
+    titleGroup.className = 'project-card__titleGroup';
+
+    const title = document.createElement('h3');
+    title.textContent = project.title;
+    titleGroup.appendChild(title);
+
+    if (project.keyPoints) {
+      const subtitle = document.createElement('p');
+      subtitle.textContent = project.keyPoints;
+      titleGroup.appendChild(subtitle);
+    }
+
+    if (project.date) {
+      const meta = document.createElement('p');
+      meta.className = 'project-card__meta';
+      meta.textContent = project.date;
+      titleGroup.appendChild(meta);
+    }
+
+    titleRow.appendChild(titleGroup);
+
+    const links = document.createElement('div');
+    links.className = 'project-card__links';
+
+    if (project.repoUrl) {
+      const repo = document.createElement('a');
+      repo.className = 'pill-link pill-link--ghost';
+      repo.href = project.repoUrl;
+      repo.target = '_blank';
+      repo.rel = 'noopener';
+      repo.textContent = 'View repo';
+      links.appendChild(repo);
+    }
+
+    if (project.appUrl) {
+      const app = document.createElement('a');
+      app.className = 'pill-link';
+      app.href = project.appUrl;
+      app.target = '_blank';
+      app.rel = 'noopener';
+      app.textContent = 'Open app';
+      links.appendChild(app);
+    }
+
+    if (links.children.length) {
+      titleRow.appendChild(links);
+    }
+
+    const summary = document.createElement('p');
+    summary.className = 'project-card__summary';
+    summary.textContent = project.description || 'Detailed case study below.';
+
+    const highlights = document.createElement('ul');
+    highlights.className = 'project-card__list';
+    const highlightItems = Array.isArray(project.highlights)
+      ? project.highlights
+      : (project.keyPoints || '').split('·').map(item => item.trim()).filter(Boolean);
+
+    highlightItems.slice(0, 6).forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      highlights.appendChild(li);
+    });
+
+    const actions = document.createElement('div');
+    actions.className = 'project-card__actions';
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'project-card__toggle';
+    toggle.textContent = 'Open case study';
+
+    const details = document.createElement('div');
+    details.className = 'project-card__details';
+    details.hidden = true;
+
+    toggle.addEventListener('click', () => {
+      const isExpanded = article.classList.contains('expanded');
+      if (isExpanded) {
+        collapseCard(article);
+        return;
+      }
+
+      if (openState.card && openState.card !== article) {
+        collapseCard(openState.card);
+      }
+
+      article.classList.add('expanded');
+      toggle.textContent = 'Hide case study';
+      details.hidden = false;
+      details.style.display = 'block';
+      if (!details.dataset.hydrated) {
+        hydrateDetails(details, project);
+        details.dataset.hydrated = 'true';
+      }
+      openState.card = article;
+    });
+
+    actions.appendChild(toggle);
+
+    body.appendChild(titleRow);
+    body.appendChild(summary);
+    if (highlights.children.length) {
+      body.appendChild(highlights);
+    }
+    body.appendChild(actions);
+    body.appendChild(details);
+
+    article.appendChild(media);
+    article.appendChild(body);
+
+    return article;
   }
 
-  // Open modal with project details
-  function openModal(project) {
-    if (!projectModal || !modalTitle || !modalDescription || !filesGrid) return;
-
-    // Set thumbnail
-    if (modalThumbnailImg && modalThumbnail) {
-      const placeholderSrc = modalThumbnailImg.dataset?.placeholder || modalThumbnailImg.getAttribute('src') || '';
-      const thumbnailSrc = project.image || '';
-      if (thumbnailSrc) {
-        modalThumbnailImg.src = thumbnailSrc;
-        modalThumbnailImg.alt = project.title;
-        modalThumbnailImg.style.display = 'block';
-        modalThumbnail.classList.add('has-image');
-        modalThumbnailImg.onerror = function() {
-          if (placeholderSrc) {
-            this.src = placeholderSrc;
-            modalThumbnail.classList.remove('has-image');
-            this.style.display = 'block';
-          } else {
-            this.style.display = 'none';
-            modalThumbnail.classList.remove('has-image');
-          }
-        };
-        modalThumbnailImg.onload = function() {
-          this.style.display = 'block';
-          modalThumbnail.classList.add('has-image');
-        };
-      } else {
-        if (placeholderSrc) {
-          modalThumbnailImg.src = placeholderSrc;
-          modalThumbnailImg.style.display = 'block';
-        } else {
-          modalThumbnailImg.removeAttribute('src');
-          modalThumbnailImg.style.display = 'none';
-        }
-        modalThumbnail.classList.remove('has-image');
-      }
+  function collapseCard(article) {
+    article.classList.remove('expanded');
+    const details = article.querySelector('.project-card__details');
+    const toggle = article.querySelector('.project-card__toggle');
+    if (toggle) {
+      toggle.textContent = 'Open case study';
     }
-
-    // Set title
-    modalTitle.textContent = project.title;
-
-    const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
-    const hasDate = project.date && project.date.trim() !== '';
-    const hasRepo = project.repoUrl && project.repoUrl.trim() !== '';
-    const hasApp = project.appUrl && project.appUrl.trim() !== '';
-
-    // Set key points
-    if (modalKeyPoints) {
-      if (hasKeyPoints) {
-        modalKeyPoints.textContent = project.keyPoints;
-        modalKeyPoints.style.display = 'block';
-      } else {
-        modalKeyPoints.style.display = 'none';
-      }
+    if (details) {
+      details.style.display = 'none';
+      details.hidden = true;
+      pauseMedia(details);
     }
-
-    // Set date (if provided)
-    if (modalDate) {
-      if (hasDate) {
-        modalDate.textContent = project.date;
-        modalDate.style.display = 'block';
-      } else {
-        modalDate.style.display = 'none';
-      }
+    if (openState.card === article) {
+      openState.card = null;
     }
+  }
 
-    if (modalRepoLink) {
-      if (hasRepo) {
-        modalRepoLink.href = project.repoUrl;
-        modalRepoLink.style.display = 'inline-flex';
-      } else {
-        modalRepoLink.style.display = 'none';
-      }
-    }
-
-    if (modalAppLink) {
-      if (hasApp) {
-        modalAppLink.href = project.appUrl;
-        modalAppLink.style.display = 'inline-flex';
-      } else {
-        modalAppLink.style.display = 'none';
-      }
-    }
-
-    if (modalMeta) {
-      if (hasKeyPoints || hasDate) {
-        modalMeta.style.display = 'flex';
-      } else {
-        modalMeta.style.display = 'none';
-      }
-    }
-
-    // Set description
-    modalDescription.innerHTML = '';
+  function hydrateDetails(details, project) {
     if (project.descriptionHtml) {
-      modalDescription.innerHTML = project.descriptionHtml;
-      // Add lazy loading to images in modal content
-      const modalImages = modalDescription.querySelectorAll('img');
-      modalImages.forEach(img => {
-        if (!img.hasAttribute('loading')) {
-          img.loading = 'lazy';
-        }
-      });
-      // Lazy load videos only when they're visible in viewport
-      const modalVideos = modalDescription.querySelectorAll('video[data-lazy-video]');
-      if (modalVideos.length > 0 && 'IntersectionObserver' in window) {
-        const videoObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const video = entry.target;
-              // Load and play video when it becomes visible
-              video.load(); // Start loading the video
-              video.play().catch(err => {
-                // Autoplay may be blocked, that's okay
-                console.debug('Video autoplay prevented:', err);
-              });
-              videoObserver.unobserve(video); // Stop observing once loaded
-            }
-          });
-        }, {
-          rootMargin: '50px' // Start loading 50px before video enters viewport
-        });
-        
-        modalVideos.forEach(video => {
-          videoObserver.observe(video);
-        });
-      } else if (modalVideos.length > 0) {
-        // Fallback for browsers without IntersectionObserver
-        modalVideos.forEach(video => {
-          video.load();
-          video.play().catch(err => console.debug('Video autoplay prevented:', err));
-        });
-      }
-      // Restore iframe sources that were paused
-      const modalIframes = modalDescription.querySelectorAll('iframe[data-src]');
-      modalIframes.forEach(iframe => {
-        if (iframe.dataset.src) {
-          iframe.src = iframe.dataset.src;
-          delete iframe.dataset.src;
-        }
-      });
+      details.innerHTML = project.descriptionHtml;
     } else {
-      const descriptionText = project.description || 'No description available.';
-      const descriptionParagraphs = descriptionText.split('\n').filter(p => p.trim());
-      descriptionParagraphs.forEach(text => {
-        const p = document.createElement('p');
-        p.textContent = text;
-        modalDescription.appendChild(p);
-      });
+      const fallback = document.createElement('p');
+      fallback.textContent = project.description || 'Detailed write-up coming soon.';
+      details.appendChild(fallback);
     }
 
-    // Clear and populate files - hide section if no files
-    if (modalFiles) {
-      filesGrid.innerHTML = '';
-      // Check if files exist and array is not empty
-      const hasFiles = project.files && Array.isArray(project.files) && project.files.length > 0;
-      if (hasFiles) {
-        modalFiles.style.display = 'block';
-        modalFiles.removeAttribute('hidden');
-        project.files.forEach(file => {
-          const fileItem = document.createElement('div');
-          fileItem.className = 'file-item';
-          
-          if (file.type === 'image') {
-            const img = document.createElement('img');
-            img.src = file.url;
-            img.alt = file.name || 'Project file';
-            img.onerror = function() {
-              this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
-            };
-            fileItem.appendChild(img);
-          } else {
-            fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
+    const modalImages = details.querySelectorAll('img');
+    modalImages.forEach(img => {
+      if (!img.hasAttribute('loading')) {
+        img.loading = 'lazy';
+      }
+    });
+
+    const modalVideos = details.querySelectorAll('video[data-lazy-video]');
+    if (modalVideos.length > 0 && 'IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const video = entry.target;
+            video.load();
+            video.play().catch(() => {});
+            observer.unobserve(video);
           }
-          
-          // Make file items clickable to view full size
-          fileItem.addEventListener('click', () => {
-            if (file.type === 'image' && file.url) {
-              window.open(file.url, '_blank');
-            }
-          });
-          
-          filesGrid.appendChild(fileItem);
         });
-      } else {
-        // Hide the entire files section if no files
-        modalFiles.style.display = 'none';
-        modalFiles.setAttribute('hidden', 'true');
-      }
+      }, { rootMargin: '50px' });
+
+      modalVideos.forEach(video => videoObserver.observe(video));
     }
 
-    // Show modal
-    projectModal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    if (project.files && project.files.length) {
+      const filesSection = document.createElement('section');
+      filesSection.className = 'project-card__files';
+      const heading = document.createElement('h4');
+      heading.textContent = 'Project files';
+      filesSection.appendChild(heading);
+
+      const grid = document.createElement('div');
+      grid.className = 'project-card__filesGrid';
+
+      project.files.forEach(file => {
+        const wrapper = document.createElement('div');
+        if (file.type === 'image') {
+          const img = document.createElement('img');
+          img.src = file.url;
+          img.alt = file.name || 'Project asset';
+          img.loading = 'lazy';
+          img.onerror = function() {
+            wrapper.textContent = file.name || 'Image not found';
+          };
+          wrapper.appendChild(img);
+        } else {
+          wrapper.textContent = file.name || 'File';
+        }
+        grid.appendChild(wrapper);
+      });
+
+      filesSection.appendChild(grid);
+      details.appendChild(filesSection);
+    }
   }
 
-  // Close modal
-  function closeModal() {
-    if (!projectModal) return;
-    
-    // Pause all videos in the modal to free resources
-    const modalVideos = projectModal.querySelectorAll('video');
-    modalVideos.forEach(video => {
+  function pauseMedia(container) {
+    container.querySelectorAll('video').forEach(video => {
       video.pause();
-      video.currentTime = 0; // Reset to beginning
-    });
-    
-    // Pause any iframes (like Fusion 360 embeds) by removing src temporarily
-    const modalIframes = projectModal.querySelectorAll('iframe');
-    modalIframes.forEach(iframe => {
-      const src = iframe.src;
-      iframe.dataset.src = src; // Store src for later
-      iframe.src = ''; // Stop loading
-    });
-    
-    projectModal.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scrolling
-  }
-
-  // Event listeners
-  if (modalClose) {
-    modalClose.addEventListener('click', closeModal);
-  }
-
-  if (projectModal) {
-    // Close modal when clicking overlay
-    projectModal.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal-overlay')) {
-        closeModal();
-      }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && projectModal.classList.contains('active')) {
-        closeModal();
-      }
+      video.currentTime = 0;
     });
   }
 
