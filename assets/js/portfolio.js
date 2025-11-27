@@ -252,7 +252,7 @@
       highlights: [
         "Custom MAVLink + OpenCV stack on Raspberry Pi 5",
         "Manufactured enclosures + landing gear to stabilize payloads",
-        "Piloted winning final run at MIT’s Zesiger Center"
+        "Won first place in an obstacle course in 52 seconds"
       ],
       descriptionHtml: `
         <h3>Description</h3>

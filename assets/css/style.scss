@@ -31,15 +31,15 @@ body[data-theme='dark'] {
 }
 
 body[data-theme='light'] {
-  --bg: #fdfdff;
-  --ink: #07020d;
+  --bg: #f6f0e4;
+  --ink: #3b3a3f;
   --node: #176087;
-  --edge: #dfe5f2;
-  --card-panel-bg: rgba(255, 255, 255, 0.95);
-  --card-panel-bg-alt: rgba(219, 207, 176, 0.3);
+  --edge: #ddd2c1;
+  --card-panel-bg: rgba(255, 255, 255, 0.92);
+  --card-panel-bg-alt: rgba(219, 207, 176, 0.8);
   --accent:#176087;
-  --accent-soft: rgba(23, 96, 135, 0.16);
-  --accent-strong: rgba(23, 96, 135, 0.65);
+  --accent-soft: rgba(23, 96, 135, 0.18);
+  --accent-strong: rgba(23, 96, 135, 0.55);
   --heading-ink:#707078;
   --section-alt:#dbcfb0;
 }
