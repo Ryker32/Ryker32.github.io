@@ -45,10 +45,6 @@ layout: default
           <dd>Robotics, MAS, CAD</dd>
         </div>
         <div>
-          <dt>Location</dt>
-          <dd>Olympia, WA</dd>
-        </div>
-        <div>
           <dt>Currently</dt>
           <dd>REIP research + UAV programs</dd>
         </div>
