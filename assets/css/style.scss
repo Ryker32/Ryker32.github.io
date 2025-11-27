@@ -94,6 +94,7 @@ body {
   position: relative;
   isolation: auto;
   gap: 24px;
+  z-index: 1;
 }
 
 .glass-surface--svg {
@@ -110,13 +111,14 @@ body {
     0px 16px 56px rgba(17, 17, 26, 0.05) inset;
 }
 
-@supports (backdrop-filter: url(#test)) {
+@supports ((backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))) {
   .glass-surface--svg {
     backdrop-filter: var(--filter-id, url(#glass-filter)) saturate(var(--glass-saturation, 1));
+    -webkit-backdrop-filter: var(--filter-id, url(#glass-filter)) saturate(var(--glass-saturation, 1));
   }
 }
 
-@supports not (backdrop-filter: url(#test)) {
+@supports not ((backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))) {
   .glass-surface--svg {
     backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1));
     -webkit-backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1));
@@ -128,7 +130,7 @@ body {
     inset: 0;
     filter: var(--filter-id, url(#glass-filter));
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     border-radius: inherit;
   }
 }
