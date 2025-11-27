@@ -42,8 +42,8 @@ layout: default
         </div>
       </dl>
       <div class="profile-panel__actions">
-        <a href="{{ site.github.owner_url }}" class="pill-link" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="{{ site.github.owner_url }}" class="pill-link" target="_blank" rel="noopener" data-cursor-target>GitHub</a>
+        <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target>LinkedIn</a>
       </div>
     </div>
   </aside>

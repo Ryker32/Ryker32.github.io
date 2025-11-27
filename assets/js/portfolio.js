@@ -523,6 +523,7 @@
 
     portfolioData.forEach(project => {
       const card = createProjectCard(project);
+      card.setAttribute('data-cursor-target', 'true');
       portfolioGrid.appendChild(card);
     });
   }

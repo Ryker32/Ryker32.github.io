@@ -96,8 +96,7 @@
   };
 
   const bindTargets = () => {
-    const selectors = 'a, button, .project-card, .pill-link, .glass-nav__links a, .glass-nav__toggle';
-    document.querySelectorAll(selectors).forEach((el) => {
+    document.querySelectorAll('[data-cursor-target]').forEach((el) => {
       if (el.dataset.cursorBound) return;
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => handleEnter(el));
