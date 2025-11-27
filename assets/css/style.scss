@@ -97,7 +97,7 @@ body {
 }
 
 .glass-surface--svg {
-  background: light-dark(hsl(0 0% 100% / var(--glass-frost, 0)), hsl(0 0% 0% / var(--glass-frost, 0)));
+  background: light-dark(hsla(0, 0%, 100%, var(--glass-frost, 0)), hsla(0, 0%, 0%, var(--glass-frost, 0)));
   isolation: auto;
   box-shadow:
     0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
