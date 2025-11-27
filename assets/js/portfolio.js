@@ -696,7 +696,7 @@
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'project-card__toggle';
-    setToggleLabel(toggle, false);
+    toggle.innerHTML = 'Open case study <span class="project-card__toggleIcon" aria-hidden="true"></span>';
 
     toggle.addEventListener('click', (evt) => {
       evt.preventDefault();
