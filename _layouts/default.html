@@ -86,23 +86,23 @@
           <feImage id="glass-nav-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
           <feGaussianBlur in="map" stdDeviation="1.2" result="map-soft" />
 
-          <feDisplacementMap in="SourceGraphic" in2="map-soft" scale="8" xChannelSelector="R" yChannelSelector="G" result="disp-base" />
+          <feDisplacementMap id="glass-nav-base-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-base" />
 
-          <feDisplacementMap in="SourceGraphic" in2="map-soft" scale="16" xChannelSelector="R" yChannelSelector="G" result="disp-red" />
+          <feDisplacementMap id="glass-nav-red-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-red" />
           <feColorMatrix in="disp-red" type="matrix"
             values="1 0 0 0 0
                     0 0 0 0 0
                     0 0 0 0 0
                     0 0 0 1 0" result="red" />
 
-          <feDisplacementMap in="SourceGraphic" in2="map-soft" scale="20" xChannelSelector="R" yChannelSelector="G" result="disp-green" />
+          <feDisplacementMap id="glass-nav-green-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-green" />
           <feColorMatrix in="disp-green" type="matrix"
             values="0 0 0 0 0
                     0 1 0 0 0
                     0 0 0 0 0
                     0 0 0 1 0" result="green" />
 
-          <feDisplacementMap in="SourceGraphic" in2="map-soft" scale="24" xChannelSelector="R" yChannelSelector="G" result="disp-blue" />
+          <feDisplacementMap id="glass-nav-blue-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-blue" />
           <feColorMatrix in="disp-blue" type="matrix"
             values="0 0 0 0 0
                     0 0 0 0 0
@@ -111,8 +111,8 @@
 
           <feBlend in="red" in2="green" mode="screen" result="rg" />
           <feBlend in="rg" in2="blue" mode="screen" result="rgb" />
-          <feBlend in="rgb" in2="disp-base" mode="lighten" />
-          <feGaussianBlur in="disp-base" stdDeviation="0.9" />
+          <feBlend in="rgb" in2="disp-base" mode="lighten" result="output" />
+          <feGaussianBlur id="glass-nav-gaussian" in="output" stdDeviation="0.8" />
         </filter>
       </defs>
     </svg>
