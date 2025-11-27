@@ -66,6 +66,7 @@ body {
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   position: relative;
+  overflow: hidden;
 }
 
 .glass-nav::after {
@@ -75,6 +76,42 @@ body {
   border-radius: inherit;
   background: radial-gradient(circle at 30% -50%, rgba(255, 255, 255, 0.4), transparent 55%);
   pointer-events: none;
+}
+
+.glass-nav::before {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -40%;
+  width: 60%;
+  height: 260%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  filter: blur(28px);
+  opacity: 0;
+  transform: translateX(-80%) skewX(-15deg);
+  animation: glassNavSweep 8s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes glassNavSweep {
+  0% {
+    transform: translateX(-90%) skewX(-15deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(120%) skewX(-15deg);
+    opacity: 0;
+  }
 }
 
 .glass-nav__links {
