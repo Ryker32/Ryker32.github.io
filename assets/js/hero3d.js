@@ -1,5 +1,24 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
+function getThemeMode() {
+  return document.body?.dataset?.theme === 'light' ? 'light' : 'dark';
+}
+
+function getHeroPalette(mode = getThemeMode()) {
+  if (mode === 'light') {
+    return {
+      near: [0.12, 0.22, 0.36],
+      far: [0.32, 0.48, 0.68],
+      line: [0.22, 0.33, 0.46]
+    };
+  }
+  return {
+    near: [0.35, 0.65, 1.0],
+    far: [1.0, 0.55, 0.9],
+    line: [0.55, 0.8, 1.0]
+  };
+}
+
 const sharedVertexTransform = /* glsl */ `
   uniform float uTime;
   attribute float aOffset;
@@ -136,13 +155,15 @@ ${sharedVertexTransform}
 `;
 
 const fragmentShader = /* glsl */ `
+  uniform vec3 uColorNear;
+  uniform vec3 uColorFar;
   varying float vDepth;
   void main() {
     vec2 uv = gl_PointCoord - 0.5;
     float dist = dot(uv, uv);
     if (dist > 0.25) discard;
     float alpha = smoothstep(0.25, 0.0, dist);
-    vec3 base = mix(vec3(0.35, 0.65, 1.0), vec3(1.0, 0.55, 0.9), vDepth);
+    vec3 base = mix(uColorNear, uColorFar, vDepth);
     gl_FragColor = vec4(base, alpha * (0.25 + vDepth * 0.75));
   }
 `;
@@ -188,6 +209,7 @@ function initHero3D() {
 
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const offsets = new Float32Array(PARTICLE_COUNT);
+  const palette = getHeroPalette();
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const radius = 1.2 + Math.random() * 1.5;
@@ -237,7 +259,9 @@ function initHero3D() {
   geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
 
   const uniforms = {
-    uTime: { value: 0 }
+    uTime: { value: 0 },
+    uColorNear: { value: new THREE.Color().fromArray(palette.near) },
+    uColorFar: { value: new THREE.Color().fromArray(palette.far) }
   };
 
   const material = new THREE.ShaderMaterial({
@@ -252,15 +276,17 @@ function initHero3D() {
   const points = new THREE.Points(geometry, material);
   group.add(points);
 
+  let lineMaterial = null;
+
   if (linkPositions.length > 0) {
     const linkGeometry = new THREE.BufferGeometry();
     linkGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linkPositions), 3));
     linkGeometry.setAttribute('aOffset', new THREE.BufferAttribute(new Float32Array(linkOffsets), 1));
 
-    const lineMaterial = new THREE.ShaderMaterial({
+    lineMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: uniforms.uTime,
-        uLineColor: { value: new THREE.Color(0.55, 0.8, 1.0) }
+        uLineColor: { value: new THREE.Color().fromArray(palette.line) }
       },
       vertexShader: lineVertexShader,
       fragmentShader: lineFragmentShader,
@@ -272,6 +298,20 @@ function initHero3D() {
     const links = new THREE.LineSegments(linkGeometry, lineMaterial);
     group.add(links);
   }
+
+  function applyThemePalette(mode = getThemeMode()) {
+    const next = getHeroPalette(mode);
+    uniforms.uColorNear.value.setRGB(next.near[0], next.near[1], next.near[2]);
+    uniforms.uColorFar.value.setRGB(next.far[0], next.far[1], next.far[2]);
+    if (lineMaterial) {
+      lineMaterial.uniforms.uLineColor.value.setRGB(next.line[0], next.line[1], next.line[2]);
+    }
+  }
+
+  applyThemePalette();
+
+  const themeObserver = new MutationObserver(() => applyThemePalette());
+  themeObserver.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
 
   const pointer = new THREE.Vector2(0, 0);
   window.addEventListener('pointermove', (event) => {

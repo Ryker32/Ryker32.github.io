@@ -313,6 +313,7 @@ body[data-theme='light'] .hero__canvas {
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   box-shadow: 0 30px 120px rgba(3, 10, 24, 0.55);
   background: var(--card-panel-bg);
+  color: var(--ink);
 }
 
 .hero__content > * {
@@ -328,7 +329,7 @@ body[data-theme='light'] .hero__content {
   text-transform: uppercase;
   letter-spacing: 0.4em;
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
   margin: 0;
 }
 
@@ -342,7 +343,7 @@ body[data-theme='light'] .hero__content {
 .hero__lede {
   font-size: 1.15rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.85);
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
   margin: 0;
 }
 
@@ -425,6 +426,7 @@ body[data-theme='light'] .hero__content {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  color: var(--ink);
 }
 
 .profile-panel__image {
@@ -458,7 +460,7 @@ body[data-theme='light'] .hero__content {
 
 .profile-panel__summary {
   margin: 12px 0 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
   line-height: 1.6;
 }
 
@@ -478,14 +480,14 @@ body[data-theme='light'] .hero__content {
 .profile-panel__stats dt {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
   text-transform: uppercase;
   margin: 0 0 4px;
 }
 
 .profile-panel__stats dd {
   margin: 0;
-  color: #fefefe;
+  color: var(--ink);
 }
 
 .profile-panel__actions {
@@ -523,6 +525,7 @@ body[data-theme='light'] .hero__content {
   padding: clamp(24px, 4vw, 48px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 18px 50px rgba(2, 8, 20, 0.35);
+  color: var(--ink);
 }
 
 .portfolio-kicker {
@@ -541,7 +544,7 @@ body[data-theme='light'] .hero__content {
 
 .portfolio-header p {
   margin: 0;
-  color: rgba(239, 241, 255, 0.85);
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
   line-height: 1.7;
 }
 
@@ -565,6 +568,7 @@ body[data-theme='light'] .hero__content {
   gap: clamp(18px, 2.4vw, 32px);
   align-items: stretch;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  color: var(--ink);
 }
 
 .project-card:nth-of-type(even) {
@@ -631,7 +635,7 @@ body[data-theme='light'] .hero__content {
 
 .project-card__titleGroup p {
   margin: 6px 0 0;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
 }
 
 .project-card__titleGroup h3 {
@@ -642,12 +646,12 @@ body[data-theme='light'] .hero__content {
 
 .project-card__titleGroup p {
   margin: 4px 0 0;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
 }
 
 .project-card__meta {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: color-mix(in srgb, var(--ink) 65%, transparent);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -660,7 +664,7 @@ body[data-theme='light'] .hero__content {
 
 .project-card__summary {
   margin: 0;
-  color: rgba(245, 247, 255, 0.9);
+  color: color-mix(in srgb, var(--ink) 82%, transparent);
   line-height: 1.65;
   font-size: 1.05rem;
 }
@@ -694,8 +698,8 @@ body[data-theme='light'] .hero__content {
   padding: 8px 14px;
   font-size: 0.9rem;
   color: var(--accent);
-  border: 1px solid rgba(87, 199, 255, 0.35);
-  text-shadow: 0 0 8px rgba(4, 19, 34, 0.55);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  text-shadow: none;
 }
 
 .project-card__actions {
