@@ -124,7 +124,7 @@ body {
     radial-gradient(circle at 60% 80%, rgba(255, 182, 193, 0.3), transparent 60%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(150, 170, 255, 0.08));
   filter: url(#glass-filter-nav);
-  opacity: 0.9;
+  opacity: 0.65;
   pointer-events: none;
   mix-blend-mode: screen;
 }
@@ -144,11 +144,11 @@ body {
   letter-spacing: 0.08em;
   font-size: 0.95rem;
   font-weight: 500;
-  mix-blend-mode: difference;
+  color: #fdfdff;
 }
 
 .glass-nav__links a {
-  color: #f7f8ff;
+  color: inherit;
   text-decoration: none;
   padding: 6px 10px;
   border-radius: 999px;
