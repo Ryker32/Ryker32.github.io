@@ -287,6 +287,11 @@ body {
   opacity: 0.9;
 }
 
+body[data-theme='light'] .hero__canvas {
+  mix-blend-mode: multiply;
+  opacity: 1;
+}
+
 .hero__canvas canvas {
   width: 100%;
   height: 100%;
@@ -305,9 +310,18 @@ body {
   backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
   border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   box-shadow: 0 30px 120px rgba(3, 10, 24, 0.55);
-  background: rgba(3, 8, 18, 0.65);
+  background: var(--card-panel-bg);
+}
+
+.hero__content > * {
+  color: inherit;
+}
+
+body[data-theme='light'] .hero__content {
+  box-shadow: 0 24px 70px rgba(8, 15, 32, 0.18);
+  border-color: rgba(23, 96, 135, 0.25);
 }
 
 .hero__eyebrow {
