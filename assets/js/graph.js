@@ -16,9 +16,9 @@
     let width = 0;
     let height = 0;
 
-    const PARTICLE_COUNT = 900;
-    const particles = [];
-    const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    const NODE_COUNT = 70;
+    const nodes = [];
+    const pointer = { x: 0, y: 0, active: false };
 
     function resize() {
       width = canvas.clientWidth;
@@ -31,54 +31,97 @@
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
-    function createParticle() {
+    function createNode() {
       return {
-        x: (Math.random() - 0.5) * 2,
-        y: (Math.random() - 0.5) * 2,
-        z: Math.random(),
-        speed: 0.0015 + Math.random() * 0.0035,
-        hue: 190 + Math.random() * 80
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        depth: 0.4 + Math.random() * 0.6,
+        pulseOffset: Math.random() * 1000
       };
     }
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push(createParticle());
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push(createNode());
     }
 
-    const updatePointer = evt => {
+    window.addEventListener('mousemove', evt => {
       const rect = canvas.getBoundingClientRect();
-      const x = (evt.clientX - rect.left) / rect.width;
-      const y = (evt.clientY - rect.top) / rect.height;
-      pointer.targetX = (x - 0.5) * 2;
-      pointer.targetY = (y - 0.5) * 2;
-    };
+      pointer.x = evt.clientX - rect.left;
+      pointer.y = evt.clientY - rect.top;
+      pointer.active = true;
+    }, { passive: true });
 
-    window.addEventListener('mousemove', updatePointer, { passive: true });
+    window.addEventListener('mouseleave', () => {
+      pointer.active = false;
+    });
 
-    function render() {
-      ctx.fillStyle = '#050815';
+    function render(time) {
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, '#060a13');
+      gradient.addColorStop(1, '#0f1423');
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      pointer.x += (pointer.targetX - pointer.x) * 0.05;
-      pointer.y += (pointer.targetY - pointer.y) * 0.05;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          const maxDist = 240;
+          if (dist < maxDist) {
+            const alpha = (1 - dist / maxDist) * 0.6;
+            ctx.lineWidth = (a.depth + b.depth) * 0.5;
+            ctx.strokeStyle = `rgba(131, 170, 255, ${alpha})`;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
 
-      particles.forEach(p => {
-        p.z -= p.speed;
-        if (p.z <= 0) {
-          p.x = (Math.random() - 0.5) * 2;
-          p.y = (Math.random() - 0.5) * 2;
-          p.z = 1;
+            const progress = ((time * 0.0005) + a.pulseOffset * 0.001) % 1;
+            const px = a.x + (b.x - a.x) * progress;
+            const py = a.y + (b.y - a.y) * progress;
+            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+            ctx.beginPath();
+            ctx.arc(px, py, 1.4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      nodes.forEach(node => {
+        node.x += node.vx * node.depth;
+        node.y += node.vy * node.depth;
+
+        if (pointer.active) {
+          const dx = node.x - pointer.x;
+          const dy = node.y - pointer.y;
+          const dist = Math.hypot(dx, dy);
+          const influenceRadius = 260;
+          if (dist < influenceRadius) {
+            const force = (1 - dist / influenceRadius) * 0.6;
+            node.vx += (dx / dist || 0) * force * 0.02;
+            node.vy += (dy / dist || 0) * force * 0.02;
+          }
         }
 
-        const perspective = 1 / (1 + p.z * 3.5);
-        const x = width / 2 + (p.x + pointer.x * 0.6) * width * perspective * 0.5;
-        const y = height / 2 + (p.y + pointer.y * 0.6) * height * perspective * 0.5;
-        const size = Math.max(0.6, (1 - p.z) * 3.2);
-        const alpha = 0.25 + (1 - p.z) * 0.75;
+        const margin = 40;
+        if (node.x < -margin) node.x = width + margin;
+        if (node.x > width + margin) node.x = -margin;
+        if (node.y < -margin) node.y = height + margin;
+        if (node.y > height + margin) node.y = -margin;
 
+        node.vx += (Math.random() - 0.5) * 0.002;
+        node.vy += (Math.random() - 0.5) * 0.002;
+        node.vx *= 0.995;
+        node.vy *= 0.995;
+
+        ctx.fillStyle = `rgba(173, 206, 255, ${0.4 + node.depth * 0.6})`;
         ctx.beginPath();
-        ctx.fillStyle = `hsla(${p.hue}, 80%, 70%, ${alpha})`;
-        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.arc(node.x, node.y, 2 + node.depth * 2, 0, Math.PI * 2);
         ctx.fill();
       });
 
