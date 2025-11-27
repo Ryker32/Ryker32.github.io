@@ -91,50 +91,15 @@ body {
 }
 
 .glass-nav::before {
-  content: "";
-  position: absolute;
-  top: -140%;
-  left: -70%;
-  width: 120%;
-  height: 320%;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
-  filter: blur(30px);
-  opacity: 0;
-  transform: translateX(-55%) skewX(-18deg);
-  animation: glassNavSweep 11s ease-in-out infinite;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-@keyframes glassNavSweep {
-  0% {
-    transform: translateX(-90%) skewX(-15deg);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.9;
-  }
-  40% {
-    opacity: 0.4;
-  }
-  70% {
-    opacity: 0.85;
-  }
-  100% {
-    transform: translateX(120%) skewX(-15deg);
-    opacity: 0;
-  }
+  content: none;
 }
 
 .glass-nav__surface {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.26), transparent 45%),
-    radial-gradient(circle at 65% 60%, rgba(118, 171, 255, 0.24), transparent 65%);
-  filter: url(#glass-filter-nav) blur(0.3px);
-  opacity: 0.55;
+  filter: url(#glass-filter-nav) blur(0.4px);
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
 }
