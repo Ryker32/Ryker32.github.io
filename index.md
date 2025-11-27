@@ -13,14 +13,6 @@ layout: default
       Robotics researcher and systems builder focused on resilient UAV/UGV platforms, REIP governance, and UX-heavy engineering tools.
       I like shipping polished demos that mix CAD, software, and field testing.
     </p>
-    <div class="hero__actions">
-      <a class="pill-link" href="{{ site.github.owner_url }}" target="_blank" rel="noopener">
-        <span>GitHub</span>
-      </a>
-      <a class="pill-link pill-link--ghost" href="{{ site.github.zip_url }}" target="_blank" rel="noopener">
-        <span>Download CV</span>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -50,8 +42,8 @@ layout: default
         </div>
       </dl>
       <div class="profile-panel__actions">
-        <a href="mailto:rykerkollmyer@gmail.com" class="pill-link pill-link--ghost">Email me</a>
-        <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="{{ site.github.owner_url }}" class="pill-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
   </aside>
