@@ -249,11 +249,16 @@ body {
               radial-gradient(circle at 80% 30%, rgba(255, 137, 205, 0.15), transparent 60%),
               radial-gradient(circle at 50% 80%, rgba(79, 213, 255, 0.12), transparent 65%);
   opacity: 0.8;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero__canvas {
   position: absolute;
   inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero__canvas canvas {
@@ -277,6 +282,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 30px 120px rgba(3, 10, 24, 0.45);
   background: rgba(3, 8, 18, 0.45);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__content > *:not(.hero__canvas) {
+  position: relative;
+  z-index: 1;
 }
 
 .hero__eyebrow {

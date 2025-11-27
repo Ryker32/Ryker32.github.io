@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
 const vertexShader = /* glsl */ `
   uniform float uTime;

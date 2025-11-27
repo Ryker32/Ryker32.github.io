@@ -3,10 +3,10 @@ layout: default
 ---
 
 <section class="hero" id="home">
-  <div class="hero__canvas" aria-hidden="true">
-    <canvas id="heroCanvas"></canvas>
-  </div>
   <div class="hero__content">
+    <div class="hero__canvas" aria-hidden="true">
+      <canvas id="heroCanvas"></canvas>
+    </div>
     <p class="hero__eyebrow">Autonomy · Multi-agent systems · CAD</p>
     <h1>Ryker Kollmyer</h1>
     <p class="hero__lede">
