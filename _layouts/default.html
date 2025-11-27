@@ -16,8 +16,7 @@
   </head>
   <body id="top" data-theme="dark">
     <div class="glass-nav-wrapper">
-      <header class="glass-surface glass-surface--svg" style="--glass-frost:0.35; --glass-saturation:1.8;">
-        <canvas class="glass-surface__canvas" aria-hidden="true"></canvas>
+      <header class="glass-surface glass-surface--svg" data-glass data-glass-background-opacity="0.35" data-glass-saturation="1.8" data-glass-border-radius="50" data-glass-border-width="0.07" data-glass-brightness="45" data-glass-opacity="0.93" data-glass-blur="11" data-glass-displace="1.5" data-glass-distortion-scale="-180" data-glass-red-offset="0" data-glass-green-offset="10" data-glass-blue-offset="20">
         <div class="glass-surface__content">
           <a class="glass-nav__icon" href="#top" aria-label="Back to top">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
@@ -81,8 +80,6 @@
 
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha384-3yb6v7OZPA7eGRIDcH+xr3aMcMBXNIN1qNbfXDnpa9eKJeNEgnbWiwxupCSvJ0Qp" crossorigin="anonymous"></script>
-    <script src="{{ "/assets/js/glass-nav.js" | relative_url }}"></script>
-    <script src="{{ "/assets/js/glass-canvas.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/glass-filter.js" | relative_url }}"></script>
   </body>
 </html>

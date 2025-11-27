@@ -61,61 +61,76 @@ body {
 }
 
 .glass-surface {
-  pointer-events: auto;
-  border-radius: 999px;
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 24px;
-  gap: 24px;
-  width: min(760px, 100%);
-  position: relative;
+  justify-content: center;
   overflow: hidden;
-  background: light-dark(hsla(0, 0%, 100%, var(--glass-frost, 0)), hsla(0, 0%, 0%, var(--glass-frost, 0)));
-  box-shadow:
-    0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
-    0 0 10px 4px light-dark(color-mix(in oklch, black, transparent 90%), color-mix(in oklch, white, transparent 85%)) inset,
-    0 8px 24px rgba(17, 17, 26, 0.1);
+  transition: opacity 0.26s ease-out;
+  isolation: auto;
+  width: min(760px, 100%);
+  border-radius: 999px;
+  pointer-events: auto;
+}
+
+.glass-surface__filter {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: -1;
 }
 
 .glass-surface__content {
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: inherit;
+  position: relative;
   isolation: auto;
+  gap: 24px;
 }
 
-.glass-surface__canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
+.glass-surface--svg {
+  background: light-dark(hsl(0 0% 100% / var(--glass-frost, 0)), hsl(0 0% 0% / var(--glass-frost, 0)));
+  isolation: auto;
+  box-shadow:
+    0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
+    0 0 10px 4px light-dark(color-mix(in oklch, black, transparent 90%), color-mix(in oklch, white, transparent 85%)) inset,
+    0px 4px 16px rgba(17, 17, 26, 0.05),
+    0px 8px 24px rgba(17, 17, 26, 0.05),
+    0px 16px 56px rgba(17, 17, 26, 0.05),
+    0px 4px 16px rgba(17, 17, 26, 0.05) inset,
+    0px 8px 24px rgba(17, 17, 26, 0.05) inset,
+    0px 16px 56px rgba(17, 17, 26, 0.05) inset;
 }
 
-.glass-surface--svg::before,
-.glass-surface--svg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
+@supports (backdrop-filter: url(#test)) {
+  .glass-surface--svg {
+    backdrop-filter: var(--filter-id, url(#glass-filter)) saturate(var(--glass-saturation, 1));
+  }
 }
 
-.glass-surface--svg::before {
-  mix-blend-mode: lighten;
-  opacity: 0.75;
-  background:
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.35), transparent 55%),
-    radial-gradient(circle at 75% 35%, rgba(150, 200, 255, 0.25), transparent 60%),
-    radial-gradient(circle at 40% 80%, rgba(255, 120, 180, 0.2), transparent 55%);
-}
+@supports not (backdrop-filter: url(#test)) {
+  .glass-surface--svg {
+    backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1));
+    -webkit-backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1));
+  }
 
-.glass-surface--svg::after {
-  backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1.8)) brightness(1.05);
-  -webkit-backdrop-filter: blur(12px) saturate(var(--glass-saturation, 1.8)) brightness(1.05);
+  .glass-surface--svg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    filter: var(--filter-id, url(#glass-filter));
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
 }
 
 .glass-nav::after {
