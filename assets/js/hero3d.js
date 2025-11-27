@@ -1,50 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
 
-const canvas = document.getElementById('heroCanvas');
-if (!canvas) return;
-
-const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-let renderer;
-try {
-  renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: true
-  });
-} catch (error) {
-  console.error('WebGL unavailable, skipping hero animation.', error);
-  canvas.remove();
-  return;
-}
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-camera.position.set(0, 0, 6);
-
-const group = new THREE.Group();
-scene.add(group);
-
-const PARTICLE_COUNT = prefersMotion ? 24000 : 8000;
-const positions = new Float32Array(PARTICLE_COUNT * 3);
-const offsets = new Float32Array(PARTICLE_COUNT);
-
-for (let i = 0; i < PARTICLE_COUNT; i++) {
-  const radius = 1.2 + Math.random() * 1.5;
-  const theta = Math.random() * Math.PI * 2;
-  const v = Math.random() * 2 - 1;
-  const phi = Math.acos(v);
-  const sinPhi = Math.sin(phi);
-  positions[i * 3] = radius * sinPhi * Math.cos(theta);
-  positions[i * 3 + 1] = radius * Math.cos(phi);
-  positions[i * 3 + 2] = radius * sinPhi * Math.sin(theta);
-  offsets[i] = Math.random() * Math.PI * 2;
-}
-
-const geometry = new THREE.BufferGeometry();
-geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
-
 const vertexShader = /* glsl */ `
   uniform float uTime;
   attribute float aOffset;
@@ -146,86 +101,141 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-const uniforms = {
-  uTime: { value: 0 }
-};
+function initHero3D() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
 
-const material = new THREE.ShaderMaterial({
-  uniforms,
-  vertexShader,
-  fragmentShader,
-  transparent: true,
-  blending: THREE.AdditiveBlending,
-  depthWrite: false
-});
+  const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const points = new THREE.Points(geometry, material);
-group.add(points);
-
-const pointer = new THREE.Vector2(0, 0);
-window.addEventListener('pointermove', (event) => {
-  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-const cursorMedia = window.matchMedia('(pointer: fine)');
-if (!cursorMedia.matches) {
-  document.body.classList.add('is-coarse-pointer');
-}
-
-function initCursor() {
-  if (!cursorMedia.matches) return;
-  const cursor = document.createElement('div');
-  cursor.className = 'cursor-target';
-  document.body.appendChild(cursor);
-
-  document.addEventListener('pointermove', (event) => {
-    cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
-  });
-
-  const bindTargets = () => {
-    const interactiveTargets = document.querySelectorAll('a, button, .project-card, .pill-link, .glass-nav__links a, .glass-nav__toggle');
-    interactiveTargets.forEach((node) => {
-      if (node.dataset.cursorBound) return;
-      node.dataset.cursorBound = 'true';
-      node.addEventListener('mouseenter', () => cursor.classList.add('cursor-target--active'));
-      node.addEventListener('mouseleave', () => cursor.classList.remove('cursor-target--active'));
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true
     });
+  } catch (error) {
+    console.error('WebGL unavailable, skipping hero animation.', error);
+    canvas.remove();
+    return;
+  }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 0, 6);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const PARTICLE_COUNT = prefersMotion ? 24000 : 8000;
+  const positions = new Float32Array(PARTICLE_COUNT * 3);
+  const offsets = new Float32Array(PARTICLE_COUNT);
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const radius = 1.2 + Math.random() * 1.5;
+    const theta = Math.random() * Math.PI * 2;
+    const v = Math.random() * 2 - 1;
+    const phi = Math.acos(v);
+    const sinPhi = Math.sin(phi);
+    positions[i * 3] = radius * sinPhi * Math.cos(theta);
+    positions[i * 3 + 1] = radius * Math.cos(phi);
+    positions[i * 3 + 2] = radius * sinPhi * Math.sin(theta);
+    offsets[i] = Math.random() * Math.PI * 2;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
+
+  const uniforms = {
+    uTime: { value: 0 }
   };
 
-  bindTargets();
-  const targetObserver = new MutationObserver(() => bindTargets());
-  targetObserver.observe(document.body, { childList: true, subtree: true });
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader,
+    fragmentShader,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+
+  const points = new THREE.Points(geometry, material);
+  group.add(points);
+
+  const pointer = new THREE.Vector2(0, 0);
+  window.addEventListener('pointermove', (event) => {
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  const cursorMedia = window.matchMedia('(pointer: fine)');
+  if (!cursorMedia.matches) {
+    document.body.classList.add('is-coarse-pointer');
+  }
+
+  function initCursor() {
+    if (!cursorMedia.matches) return;
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor-target';
+    document.body.appendChild(cursor);
+
+    document.addEventListener('pointermove', (event) => {
+      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+    });
+
+    const bindTargets = () => {
+      const interactiveTargets = document.querySelectorAll('a, button, .project-card, .pill-link, .glass-nav__links a, .glass-nav__toggle');
+      interactiveTargets.forEach((node) => {
+        if (node.dataset.cursorBound) return;
+        node.dataset.cursorBound = 'true';
+        node.addEventListener('mouseenter', () => cursor.classList.add('cursor-target--active'));
+        node.addEventListener('mouseleave', () => cursor.classList.remove('cursor-target--active'));
+      });
+    };
+
+    bindTargets();
+    const targetObserver = new MutationObserver(() => bindTargets());
+    targetObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  initCursor();
+
+  function handleResize() {
+    const width = canvas.clientWidth || canvas.offsetWidth;
+    const height = canvas.clientHeight || canvas.offsetHeight;
+    if (width === 0 || height === 0) return;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  handleResize();
+  window.addEventListener('resize', handleResize);
+
+  let rotationX = 0;
+  let rotationY = 0;
+
+  function render(time) {
+    uniforms.uTime.value = time * 0.001;
+    const easing = prefersMotion ? 0.08 : 0;
+    rotationX += ((prefersMotion ? pointer.y * 0.7 : 0) - rotationX) * easing;
+    rotationY += ((prefersMotion ? -pointer.x * 0.7 : 0) - rotationY) * easing;
+    group.rotation.x = rotationX;
+    group.rotation.y = rotationY;
+    renderer.render(scene, camera);
+    if (prefersMotion) {
+      requestAnimationFrame(render);
+    }
+  }
+
+  requestAnimationFrame(render);
 }
 
-initCursor();
-
-function handleResize() {
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  if (width === 0 || height === 0) return;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.setSize(width, height, false);
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHero3D);
+} else {
+  initHero3D();
 }
-
-handleResize();
-window.addEventListener('resize', handleResize);
-
-let rotationX = 0;
-let rotationY = 0;
-
-function render(time) {
-  uniforms.uTime.value = time * 0.001;
-  const easing = prefersMotion ? 0.08 : 0;
-  rotationX += ((prefersMotion ? pointer.y * 0.7 : 0) - rotationX) * easing;
-  rotationY += ((prefersMotion ? -pointer.x * 0.7 : 0) - rotationY) * easing;
-  group.rotation.x = rotationX;
-  group.rotation.y = rotationY;
-  renderer.render(scene, camera);
-  if (prefersMotion) requestAnimationFrame(render);
-}
-
-requestAnimationFrame(render);
 
