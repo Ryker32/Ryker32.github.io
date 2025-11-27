@@ -319,38 +319,6 @@ function initHero3D() {
     pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
   });
 
-  const cursorMedia = window.matchMedia('(pointer: fine)');
-  if (!cursorMedia.matches) {
-    document.body.classList.add('is-coarse-pointer');
-  }
-
-  function initCursor() {
-    if (!cursorMedia.matches) return;
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor-target';
-    document.body.appendChild(cursor);
-
-    document.addEventListener('pointermove', (event) => {
-      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
-    });
-
-    const bindTargets = () => {
-      const interactiveTargets = document.querySelectorAll('a, button, .project-card, .pill-link, .glass-nav__links a, .glass-nav__toggle');
-      interactiveTargets.forEach((node) => {
-        if (node.dataset.cursorBound) return;
-        node.dataset.cursorBound = 'true';
-        node.addEventListener('mouseenter', () => cursor.classList.add('cursor-target--active'));
-        node.addEventListener('mouseleave', () => cursor.classList.remove('cursor-target--active'));
-      });
-    };
-
-    bindTargets();
-    const targetObserver = new MutationObserver(() => bindTargets());
-    targetObserver.observe(document.body, { childList: true, subtree: true });
-  }
-
-  initCursor();
-
   function handleResize() {
     const width = canvas.clientWidth || canvas.offsetWidth;
     const height = canvas.clientHeight || canvas.offsetHeight;
