@@ -635,33 +635,6 @@
 
     titleRow.appendChild(titleGroup);
 
-    const links = document.createElement('div');
-    links.className = 'project-card__links';
-
-    if (project.repoUrl) {
-      const repo = document.createElement('a');
-      repo.className = 'pill-link pill-link--ghost';
-      repo.href = project.repoUrl;
-      repo.target = '_blank';
-      repo.rel = 'noopener';
-      repo.textContent = 'View repo';
-      links.appendChild(repo);
-    }
-
-    if (project.appUrl) {
-      const app = document.createElement('a');
-      app.className = 'pill-link';
-      app.href = project.appUrl;
-      app.target = '_blank';
-      app.rel = 'noopener';
-      app.textContent = 'Open app';
-      links.appendChild(app);
-    }
-
-    if (links.children.length) {
-      titleRow.appendChild(links);
-    }
-
     const overview = document.createElement('div');
     overview.className = 'project-card__overview';
 
