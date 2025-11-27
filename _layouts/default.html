@@ -14,10 +14,30 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js" integrity="sha384-ycxtgj7aPUpK6OvsYarejYrITzqdS2Q6xoKkgnKMFoCyS5lQhW2h0OPCeInjM6qi" crossorigin="anonymous"></script>
     {% include head-custom.html %}
   </head>
-  <body>
+  <body id="top" data-theme="dark">
+    <div class="glass-nav-wrapper">
+      <header class="glass-nav" role="navigation" aria-label="Primary">
+        <a class="glass-nav__icon" href="#top" aria-label="Back to top">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 3l9 9h-3v9h-12v-9h-3z" />
+          </svg>
+        </a>
+        <nav class="glass-nav__links" aria-label="Site sections">
+          <a href="#about">about</a>
+          <a href="#portfolio">portfolio</a>
+          <a href="#contact">contact</a>
+        </nav>
+        <button type="button" class="glass-nav__toggle" id="navThemeToggle" aria-label="Toggle theme" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm0 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-5a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm-13 0a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm10.95-5.536a1 1 0 0 1 1.414 0l.001.001a1 1 0 0 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm-9.9 9.9a1 1 0 0 1 1.414 0l.001.001a1 1 0 1 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm0-9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0zm9.9 9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0z" />
+          </svg>
+          <span class="sr-only">Toggle color theme</span>
+        </button>
+      </header>
+    </div>
     <div class="page-container">
       <!-- Left Sidebar: ID Card Style -->
-      <aside class="sidebar">
+      <aside class="sidebar" id="about">
         <div class="profile-card">
           <!-- Name & Title -->
           <h1 class="profile-name">

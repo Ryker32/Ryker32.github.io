@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<div class="portfolio-container">
+<div class="portfolio-container" id="portfolio">
   <div class="portfolio-banner">
     <h1>Engineering Portfolio</h1>
   </div>
@@ -13,7 +13,7 @@ layout: default
   </div>
 </div>
 
-<footer class="site-footer">
+<footer class="site-footer" id="contact">
   © 2025 Ryker Kollmyer. All rights reserved.
 </footer>
 

@@ -485,6 +485,63 @@
     });
   }
 
+  function initThemeToggle() {
+    const toggle = document.getElementById('navThemeToggle');
+    if (!toggle) return;
+
+    const storageKey = 'ryker-preferred-theme';
+    const mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+    const readStoredTheme = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch (err) {
+        console.debug('Theme storage unavailable:', err);
+        return null;
+      }
+    };
+
+    const writeStoredTheme = (theme) => {
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (err) {
+        console.debug('Theme storage unavailable:', err);
+      }
+    };
+
+    const applyTheme = (theme, persist = false) => {
+      const sanitizedTheme = theme === 'light' ? 'light' : 'dark';
+      document.body.dataset.theme = sanitizedTheme;
+      toggle.setAttribute('aria-pressed', sanitizedTheme === 'dark' ? 'true' : 'false');
+      if (persist) {
+        writeStoredTheme(sanitizedTheme);
+      }
+    };
+
+    const storedTheme = readStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme);
+    } else if (mediaQuery) {
+      applyTheme(mediaQuery.matches ? 'dark' : 'light');
+    } else {
+      applyTheme('dark');
+    }
+
+    toggle.addEventListener('click', () => {
+      const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme, true);
+    });
+
+    if (mediaQuery?.addEventListener) {
+      mediaQuery.addEventListener('change', event => {
+        const stored = readStoredTheme();
+        if (!stored) {
+          applyTheme(event.matches ? 'dark' : 'light');
+        }
+      });
+    }
+  }
+
   // Create a project card element
   function createProjectCard(project) {
     const card = document.createElement('div');
@@ -757,10 +814,15 @@
     });
   }
 
+  function bootstrap() {
+    initPortfolio();
+    initThemeToggle();
+  }
+
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPortfolio);
+    document.addEventListener('DOMContentLoaded', bootstrap);
   } else {
-    initPortfolio();
+    bootstrap();
   }
 })();
