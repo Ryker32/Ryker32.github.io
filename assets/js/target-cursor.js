@@ -18,7 +18,8 @@
 
   let spinHandle = null;
   let rotation = 0;
-  let activeRect = null;
+  let lockRect = null;
+  let isLocked = false;
   let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
   const setRotation = (angle) => {
@@ -66,11 +67,18 @@
     });
   };
 
+  const updateCursorPosition = (x, y) => {
+    if (isLocked) return;
+    cursorPos = { x, y };
+    cursor.style.left = `${x}px`;
+    cursor.style.top = `${y}px`;
+  };
+
   window.addEventListener('pointermove', (e) => {
-    cursorPos = { x: e.clientX, y: e.clientY };
-    cursor.style.left = `${cursorPos.x}px`;
-    cursor.style.top = `${cursorPos.y}px`;
-    if (activeRect) lockCornersToRect(activeRect);
+    updateCursorPosition(e.clientX, e.clientY);
+    if (lockRect) {
+      lockCornersToRect(lockRect);
+    }
   });
 
   window.addEventListener('pointerdown', () => {
@@ -87,12 +95,14 @@
     stopSpin();
     rotation = 0;
     cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
-    activeRect = target.getBoundingClientRect();
-    lockCornersToRect(activeRect);
+    isLocked = true;
+    lockRect = target.getBoundingClientRect();
+    lockCornersToRect(lockRect);
   };
 
   const handleLeave = () => {
-    activeRect = null;
+    lockRect = null;
+    isLocked = false;
     releaseCorners();
     startSpin();
   };

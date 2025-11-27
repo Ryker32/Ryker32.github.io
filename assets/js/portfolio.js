@@ -633,13 +633,6 @@
     };
     media.appendChild(thumbnail);
 
-    if (project.badge) {
-      const badge = document.createElement('span');
-      badge.className = 'project-card__badge';
-      badge.textContent = project.badge;
-      media.appendChild(badge);
-    }
-
     const body = document.createElement('div');
     body.className = 'project-card__body';
 
@@ -694,6 +687,12 @@
     body.appendChild(overview);
 
     article.appendChild(media);
+    if (project.badge) {
+      const badge = document.createElement('span');
+      badge.className = 'project-card__badge';
+      badge.textContent = project.badge;
+      article.appendChild(badge);
+    }
     article.appendChild(body);
 
     article.addEventListener('click', (evt) => {
