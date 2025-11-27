@@ -16,35 +16,8 @@
   </head>
   <body id="top" data-theme="dark">
     <div class="glass-nav-wrapper">
-      <header class="glass-surface glass-surface--svg" style="--glass-frost:0.35; --glass-saturation:1.8; --filter-id:url(#glass-filter-nav)">
-        <svg class="glass-surface__filter" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-          <defs>
-            <filter id="glass-filter-nav" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
-              <feImage id="glass-nav-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"></feImage>
-              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-red" result="dispRed" scale="-160" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-              <feColorMatrix in="dispRed" type="matrix"
-                values="1 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 1 0" result="red"></feColorMatrix>
-              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-green" result="dispGreen" scale="-120" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-              <feColorMatrix in="dispGreen" type="matrix"
-                values="0 0 0 0 0
-                        0 1 0 0 0
-                        0 0 0 0 0
-                        0 0 0 1 0" result="green"></feColorMatrix>
-              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-blue" result="dispBlue" scale="-80" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-              <feColorMatrix in="dispBlue" type="matrix"
-                values="0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 1 0 0
-                        0 0 0 1 0" result="blue"></feColorMatrix>
-              <feBlend in="red" in2="green" mode="screen" result="rg"></feBlend>
-              <feBlend in="rg" in2="blue" mode="screen" result="output"></feBlend>
-              <feGaussianBlur in="output" stdDeviation="1.2"></feGaussianBlur>
-            </filter>
-          </defs>
-        </svg>
+      <header class="glass-surface glass-surface--svg" style="--glass-frost:0.35; --glass-saturation:1.8;">
+        <canvas class="glass-surface__canvas" aria-hidden="true"></canvas>
         <div class="glass-surface__content">
           <a class="glass-nav__icon" href="#top" aria-label="Back to top">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
@@ -108,6 +81,8 @@
 
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha384-3yb6v7OZPA7eGRIDcH+xr3aMcMBXNIN1qNbfXDnpa9eKJeNEgnbWiwxupCSvJ0Qp" crossorigin="anonymous"></script>
     <script src="{{ "/assets/js/glass-nav.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/glass-canvas.js" | relative_url }}"></script>
   </body>
 </html>
