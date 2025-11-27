@@ -1,6 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-const vertexShader = /* glsl */ `
+const sharedVertexTransform = /* glsl */ `
   uniform float uTime;
   attribute float aOffset;
   varying float vDepth;
@@ -91,6 +91,10 @@ const vertexShader = /* glsl */ `
 
     return normalize(vec3(p_x, p_y, p_z));
   }
+`;
+
+const vertexShader = /* glsl */ `
+${sharedVertexTransform}
 
   void main() {
     float t = uTime * 0.12;
@@ -105,8 +109,28 @@ const vertexShader = /* glsl */ `
 
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
-    float size = (vDepth * 3.5 + 1.5) * (1.0 / -mvPosition.z) * 40.0;
-    gl_PointSize = clamp(size, 1.0, 6.0);
+    float size = (vDepth * 4.5 + 2.5) * (1.0 / -mvPosition.z) * 70.0;
+    gl_PointSize = clamp(size, 2.0, 14.0);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+const lineVertexShader = /* glsl */ `
+${sharedVertexTransform}
+
+  void main() {
+    float t = uTime * 0.12;
+    vec3 pos = position;
+    vec3 curl = curlNoise(pos * 0.75 + t) * 0.35;
+    pos += curl;
+
+    float angle = t + aOffset;
+    float s = sin(angle);
+    float c = cos(angle);
+    pos.xz = mat2(c, -s, s, c) * pos.xz;
+
+    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
@@ -120,6 +144,15 @@ const fragmentShader = /* glsl */ `
     float alpha = smoothstep(0.25, 0.0, dist);
     vec3 base = mix(vec3(0.35, 0.65, 1.0), vec3(1.0, 0.55, 0.9), vDepth);
     gl_FragColor = vec4(base, alpha * (0.25 + vDepth * 0.75));
+  }
+`;
+
+const lineFragmentShader = /* glsl */ `
+  varying float vDepth;
+  uniform vec3 uLineColor;
+  void main() {
+    float alpha = mix(0.05, 0.35, vDepth);
+    gl_FragColor = vec4(uLineColor, alpha);
   }
 `;
 
@@ -149,7 +182,10 @@ function initHero3D() {
   const group = new THREE.Group();
   scene.add(group);
 
-  const PARTICLE_COUNT = prefersMotion ? 24000 : 8000;
+  const PARTICLE_COUNT = prefersMotion ? 2600 : 1200;
+  const LINK_DISTANCE = prefersMotion ? 0.65 : 0.55;
+  const MAX_CONNECTIONS = prefersMotion ? 5 : 3;
+
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const offsets = new Float32Array(PARTICLE_COUNT);
 
@@ -163,6 +199,37 @@ function initHero3D() {
     positions[i * 3 + 1] = radius * Math.cos(phi);
     positions[i * 3 + 2] = radius * sinPhi * Math.sin(theta);
     offsets[i] = Math.random() * Math.PI * 2;
+  }
+
+  const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
+  const linkPositions = [];
+  const linkOffsets = [];
+  const linkDistanceSq = LINK_DISTANCE * LINK_DISTANCE;
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const baseIndex = i * 3;
+    for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+      if (connectionCounts[i] >= MAX_CONNECTIONS) break;
+      if (connectionCounts[j] >= MAX_CONNECTIONS) continue;
+      const otherIndex = j * 3;
+      const dx = positions[baseIndex] - positions[otherIndex];
+      const dy = positions[baseIndex + 1] - positions[otherIndex + 1];
+      const dz = positions[baseIndex + 2] - positions[otherIndex + 2];
+      const distSq = dx * dx + dy * dy + dz * dz;
+      if (distSq <= linkDistanceSq) {
+        linkPositions.push(
+          positions[baseIndex],
+          positions[baseIndex + 1],
+          positions[baseIndex + 2],
+          positions[otherIndex],
+          positions[otherIndex + 1],
+          positions[otherIndex + 2]
+        );
+        linkOffsets.push(offsets[i], offsets[j]);
+        connectionCounts[i]++;
+        connectionCounts[j]++;
+      }
+    }
   }
 
   const geometry = new THREE.BufferGeometry();
@@ -184,6 +251,27 @@ function initHero3D() {
 
   const points = new THREE.Points(geometry, material);
   group.add(points);
+
+  if (linkPositions.length > 0) {
+    const linkGeometry = new THREE.BufferGeometry();
+    linkGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linkPositions), 3));
+    linkGeometry.setAttribute('aOffset', new THREE.BufferAttribute(new Float32Array(linkOffsets), 1));
+
+    const lineMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: uniforms.uTime,
+        uLineColor: { value: new THREE.Color(0.55, 0.8, 1.0) }
+      },
+      vertexShader: lineVertexShader,
+      fragmentShader: lineFragmentShader,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    const links = new THREE.LineSegments(linkGeometry, lineMaterial);
+    group.add(links);
+  }
 
   const pointer = new THREE.Vector2(0, 0);
   window.addEventListener('pointermove', (event) => {
