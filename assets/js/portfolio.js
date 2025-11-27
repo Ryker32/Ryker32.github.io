@@ -650,9 +650,13 @@
       titleRow.appendChild(links);
     }
 
+    const overview = document.createElement('div');
+    overview.className = 'project-card__overview';
+
     const summary = document.createElement('p');
     summary.className = 'project-card__summary';
     summary.textContent = project.description || 'Detailed case study below.';
+    overview.appendChild(summary);
 
     const highlights = document.createElement('ul');
     highlights.className = 'project-card__list';
@@ -665,6 +669,9 @@
       li.textContent = text;
       highlights.appendChild(li);
     });
+    if (highlights.children.length) {
+      overview.appendChild(highlights);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'project-card__actions';
@@ -672,7 +679,7 @@
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'project-card__toggle';
-    toggle.textContent = 'Open case study';
+    toggle.innerHTML = 'Open case study <span class="project-card__toggleIcon" aria-hidden="true"></span>';
 
     const details = document.createElement('div');
     details.className = 'project-card__details';
@@ -704,9 +711,7 @@
 
     body.appendChild(titleRow);
     body.appendChild(summary);
-    if (highlights.children.length) {
-      body.appendChild(highlights);
-    }
+    body.appendChild(overview);
     body.appendChild(actions);
     body.appendChild(details);
 
