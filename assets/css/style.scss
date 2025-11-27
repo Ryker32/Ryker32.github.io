@@ -673,22 +673,6 @@ body {
   transform: rotate(-135deg);
 }
 
-.project-card__details {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: none;
-}
-
-.project-card.expanded .project-card__details {
-  display: block;
-}
-
-.project-card__details .article-image,
-.project-card__details figure {
-  border-radius: 18px;
-}
-
 .project-card__files {
   margin-top: 32px;
 }

@@ -42,7 +42,43 @@
       {{ content }}
     </main>
 
+    <!-- Project Modal -->
+    <div class="project-modal" id="projectModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-thumbnail" id="modalThumbnail">
+          <img src="{{ '/assets/img/logo.png' | relative_url }}" data-placeholder="{{ '/assets/img/logo.png' | relative_url }}" alt="Project thumbnail" id="modalThumbnailImg" />
+        </div>
+        <div class="modal-title-section">
+          <div class="modal-title-row">
+            <h2 id="modalTitle">Project Title</h2>
+            <div class="modal-title-actions">
+              <a href="javascript:void(0);" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
+              <a href="javascript:void(0);" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
+            </div>
+          </div>
+          <div class="modal-meta" id="modalMeta">
+            <div class="modal-keypoints" id="modalKeyPoints"></div>
+            <div class="modal-date" id="modalDate"></div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="modal-description" id="modalDescription">
+            <p>Project description goes here...</p>
+          </div>
+          <div class="modal-files" id="modalFiles">
+            <h3>Project Files</h3>
+            <div class="files-grid" id="filesGrid">
+              <!-- Files will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
     <svg class="glass-filter-defs" aria-hidden="true">
       <defs>
         <filter id="glass-filter-nav" x="-30%" y="-70%" width="160%" height="240%" color-interpolation-filters="sRGB">

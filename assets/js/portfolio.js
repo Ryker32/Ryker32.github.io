@@ -500,7 +500,19 @@
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
-  const openState = { card: null };
+  const projectModal = document.getElementById('projectModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalThumbnailImg = document.getElementById('modalThumbnailImg');
+  const modalThumbnail = document.getElementById('modalThumbnail');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalRepoLink = document.getElementById('modalRepoLink');
+  const modalAppLink = document.getElementById('modalAppLink');
+  const modalMeta = document.getElementById('modalMeta');
+  const modalKeyPoints = document.getElementById('modalKeyPoints');
+  const modalDate = document.getElementById('modalDate');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalFiles = document.getElementById('modalFiles');
+  const filesGrid = document.getElementById('filesGrid');
 
   // Initialize portfolio grid
   function initPortfolio() {
@@ -686,21 +698,16 @@
     toggle.className = 'project-card__toggle';
     setToggleLabel(toggle, false);
 
-    const details = document.createElement('div');
-    details.className = 'project-card__details';
-    details.hidden = true;
-
     toggle.addEventListener('click', (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
-      handleCardToggle(article, details, toggle, project);
+      openModal(project);
     });
 
     article.addEventListener('click', (evt) => {
-      if (article.classList.contains('expanded')) return;
       if (evt.target.closest('a, button')) return;
       evt.preventDefault();
-      handleCardToggle(article, details, toggle, project);
+      openModal(project);
     });
 
     actions.appendChild(toggle);
@@ -708,7 +715,6 @@
     body.appendChild(titleRow);
     body.appendChild(overview);
     body.appendChild(actions);
-    body.appendChild(details);
 
     article.appendChild(media);
     article.appendChild(body);
@@ -716,116 +722,119 @@
     return article;
   }
 
-  function handleCardToggle(article, details, toggle, project) {
-    if (article.classList.contains('expanded')) {
-      collapseCard(article);
-      return;
+  function openModal(project) {
+    if (!projectModal || !modalTitle || !modalDescription || !filesGrid) return;
+
+    const placeholderSrc = modalThumbnailImg?.dataset?.placeholder || modalThumbnailImg?.getAttribute('src') || '';
+    const thumbnailSrc = project.image || '';
+    if (modalThumbnailImg && modalThumbnail) {
+      if (thumbnailSrc) {
+        modalThumbnailImg.src = thumbnailSrc;
+        modalThumbnailImg.alt = project.title;
+        modalThumbnailImg.style.display = 'block';
+        modalThumbnail.classList.add('has-image');
+      } else if (placeholderSrc) {
+        modalThumbnailImg.src = placeholderSrc;
+        modalThumbnailImg.style.display = 'block';
+        modalThumbnail.classList.remove('has-image');
+      } else {
+        modalThumbnailImg.removeAttribute('src');
+        modalThumbnailImg.style.display = 'none';
+        modalThumbnail.classList.remove('has-image');
+      }
     }
 
-    if (openState.card && openState.card !== article) {
-      collapseCard(openState.card);
+    modalTitle.textContent = project.title;
+
+    const hasKeyPoints = project.keyPoints && project.keyPoints.trim() !== '';
+    const hasDate = project.date && project.date.trim() !== '';
+    const hasRepo = project.repoUrl && project.repoUrl.trim() !== '';
+    const hasApp = project.appUrl && project.appUrl.trim() !== '';
+
+    if (modalKeyPoints) {
+      modalKeyPoints.textContent = hasKeyPoints ? project.keyPoints : '';
+      modalKeyPoints.style.display = hasKeyPoints ? 'block' : 'none';
+    }
+    if (modalDate) {
+      modalDate.textContent = hasDate ? project.date : '';
+      modalDate.style.display = hasDate ? 'block' : 'none';
+    }
+    if (modalRepoLink) {
+      modalRepoLink.style.display = hasRepo ? 'inline-flex' : 'none';
+      if (hasRepo) modalRepoLink.href = project.repoUrl;
+    }
+    if (modalAppLink) {
+      modalAppLink.style.display = hasApp ? 'inline-flex' : 'none';
+      if (hasApp) modalAppLink.href = project.appUrl;
+    }
+    if (modalMeta) {
+      modalMeta.style.display = (hasKeyPoints || hasDate) ? 'flex' : 'none';
     }
 
-    article.classList.add('expanded');
-    setToggleLabel(toggle, true);
-    details.hidden = false;
-    details.style.display = 'block';
-    if (!details.dataset.hydrated) {
-      hydrateDetails(details, project);
-      details.dataset.hydrated = 'true';
+    modalDescription.innerHTML = project.descriptionHtml || `<p>${project.description || 'Detailed write-up coming soon.'}</p>`;
+    modalDescription.querySelectorAll('img').forEach(img => {
+      if (!img.hasAttribute('loading')) img.loading = 'lazy';
+    });
+
+    if (modalFiles) {
+      filesGrid.innerHTML = '';
+      const hasFiles = project.files && project.files.length;
+      if (hasFiles) {
+        modalFiles.style.display = 'block';
+        modalFiles.removeAttribute('hidden');
+        project.files.forEach(file => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          if (file.type === 'image') {
+            const img = document.createElement('img');
+            img.src = file.url;
+            img.alt = file.name || 'Project file';
+            img.loading = 'lazy';
+            img.onerror = function() {
+              this.parentElement.innerHTML = `<div class="file-placeholder">${file.name || 'Image not found'}</div>`;
+            };
+            fileItem.appendChild(img);
+          } else {
+            fileItem.innerHTML = `<div class="file-placeholder">${file.name || 'File'}</div>`;
+          }
+          fileItem.addEventListener('click', () => {
+            if (file.type === 'image' && file.url) {
+              window.open(file.url, '_blank');
+            }
+          });
+          filesGrid.appendChild(fileItem);
+        });
+      } else {
+        modalFiles.style.display = 'none';
+        modalFiles.setAttribute('hidden', 'true');
+      }
     }
-    openState.card = article;
+
+    projectModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
-  function collapseCard(article) {
-    article.classList.remove('expanded');
-    const details = article.querySelector('.project-card__details');
-    const toggle = article.querySelector('.project-card__toggle');
-    if (toggle) {
-      setToggleLabel(toggle, false);
-    }
-    if (details) {
-      details.style.display = 'none';
-      details.hidden = true;
-      pauseMedia(details);
-    }
-    if (openState.card === article) {
-      openState.card = null;
-    }
+  function closeModal() {
+    if (!projectModal) return;
+    projectModal.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
-  function setToggleLabel(toggle, expanded) {
-    toggle.innerHTML = `${expanded ? 'Hide case study' : 'Open case study'} <span class="project-card__toggleIcon" aria-hidden="true"></span>`;
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
   }
 
-  function hydrateDetails(details, project) {
-    if (project.descriptionHtml) {
-      details.innerHTML = project.descriptionHtml;
-    } else {
-      const fallback = document.createElement('p');
-      fallback.textContent = project.description || 'Detailed write-up coming soon.';
-      details.appendChild(fallback);
-    }
-
-    const modalImages = details.querySelectorAll('img');
-    modalImages.forEach(img => {
-      if (!img.hasAttribute('loading')) {
-        img.loading = 'lazy';
+  if (projectModal) {
+    projectModal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeModal();
       }
     });
 
-    const modalVideos = details.querySelectorAll('video[data-lazy-video]');
-    if (modalVideos.length > 0 && 'IntersectionObserver' in window) {
-      const videoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const video = entry.target;
-            video.load();
-            video.play().catch(() => {});
-            observer.unobserve(video);
-          }
-        });
-      }, { rootMargin: '50px' });
-
-      modalVideos.forEach(video => videoObserver.observe(video));
-    }
-
-    if (project.files && project.files.length) {
-      const filesSection = document.createElement('section');
-      filesSection.className = 'project-card__files';
-      const heading = document.createElement('h4');
-      heading.textContent = 'Project files';
-      filesSection.appendChild(heading);
-
-      const grid = document.createElement('div');
-      grid.className = 'project-card__filesGrid';
-
-      project.files.forEach(file => {
-        const wrapper = document.createElement('div');
-        if (file.type === 'image') {
-          const img = document.createElement('img');
-          img.src = file.url;
-          img.alt = file.name || 'Project asset';
-          img.loading = 'lazy';
-          img.onerror = function() {
-            wrapper.textContent = file.name || 'Image not found';
-          };
-          wrapper.appendChild(img);
-        } else {
-          wrapper.textContent = file.name || 'File';
-        }
-        grid.appendChild(wrapper);
-      });
-
-      filesSection.appendChild(grid);
-      details.appendChild(filesSection);
-    }
-  }
-
-  function pauseMedia(container) {
-    container.querySelectorAll('video').forEach(video => {
-      video.pause();
-      video.currentTime = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+        closeModal();
+      }
     });
   }
 
