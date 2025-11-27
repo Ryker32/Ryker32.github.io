@@ -16,26 +16,55 @@
   </head>
   <body id="top" data-theme="dark">
     <div class="glass-nav-wrapper">
-      <header class="glass-nav" role="banner">
-        <div class="glass-nav__surface" aria-hidden="true"></div>
-        <a class="glass-nav__icon" href="#top" aria-label="Back to top">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
-            <path d="M12 3l9 9h-3v9h-12v-9h-3z" />
-          </svg>
-        </a>
-        <span class="glass-nav__divider" aria-hidden="true"></span>
-        <nav class="glass-nav__links" aria-label="Site sections">
-          <a href="#about">about</a>
-          <a href="#portfolio">portfolio</a>
-          <a href="#contact">contact</a>
-        </nav>
-        <span class="glass-nav__divider" aria-hidden="true"></span>
-        <button type="button" class="glass-nav__toggle" id="navThemeToggle" aria-label="Toggle theme" aria-pressed="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
-            <path d="M12 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm0 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-5a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm-13 0a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm10.95-5.536a1 1 0 0 1 1.414 0l.001.001a1 1 0 0 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm-9.9 9.9a1 1 0 0 1 1.414 0l.001.001a1 1 0 1 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm0-9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0zm9.9 9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0z" />
-          </svg>
-          <span class="sr-only">Toggle color theme</span>
-        </button>
+      <header class="glass-surface glass-surface--svg" style="--glass-frost:0.35; --glass-saturation:1.8; --filter-id:url(#glass-filter-nav)">
+        <svg class="glass-surface__filter" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <defs>
+            <filter id="glass-filter-nav" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+              <feImage id="glass-nav-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"></feImage>
+              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-red" result="dispRed" scale="-160" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+              <feColorMatrix in="dispRed" type="matrix"
+                values="1 0 0 0 0
+                        0 0 0 0 0
+                        0 0 0 0 0
+                        0 0 0 1 0" result="red"></feColorMatrix>
+              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-green" result="dispGreen" scale="-120" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+              <feColorMatrix in="dispGreen" type="matrix"
+                values="0 0 0 0 0
+                        0 1 0 0 0
+                        0 0 0 0 0
+                        0 0 0 1 0" result="green"></feColorMatrix>
+              <feDisplacementMap in="SourceGraphic" in2="map" id="glass-nav-blue" result="dispBlue" scale="-80" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+              <feColorMatrix in="dispBlue" type="matrix"
+                values="0 0 0 0 0
+                        0 0 0 0 0
+                        0 0 1 0 0
+                        0 0 0 1 0" result="blue"></feColorMatrix>
+              <feBlend in="red" in2="green" mode="screen" result="rg"></feBlend>
+              <feBlend in="rg" in2="blue" mode="screen" result="output"></feBlend>
+              <feGaussianBlur in="output" stdDeviation="1.2"></feGaussianBlur>
+            </filter>
+          </defs>
+        </svg>
+        <div class="glass-surface__content">
+          <a class="glass-nav__icon" href="#top" aria-label="Back to top">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+              <path d="M12 3l9 9h-3v9h-12v-9h-3z" />
+            </svg>
+          </a>
+          <span class="glass-nav__divider" aria-hidden="true"></span>
+          <nav class="glass-nav__links" aria-label="Site sections">
+            <a href="#about">about</a>
+            <a href="#portfolio">portfolio</a>
+            <a href="#contact">contact</a>
+          </nav>
+          <span class="glass-nav__divider" aria-hidden="true"></span>
+          <button type="button" class="glass-nav__toggle" id="navThemeToggle" aria-label="Toggle theme" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+              <path d="M12 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm0 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-5a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm-13 0a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm10.95-5.536a1 1 0 0 1 1.414 0l.001.001a1 1 0 0 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm-9.9 9.9a1 1 0 0 1 1.414 0l.001.001a1 1 0 1 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm0-9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0zm9.9 9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0z" />
+            </svg>
+            <span class="sr-only">Toggle color theme</span>
+          </button>
+        </div>
       </header>
     </div>
     <main class="site-main">
@@ -80,41 +109,5 @@
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/glass-nav.js" | relative_url }}"></script>
-    <svg class="glass-filter-defs" aria-hidden="true">
-      <defs>
-        <filter id="glass-filter-nav" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-          <feImage id="glass-nav-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
-          <feGaussianBlur in="map" stdDeviation="1.2" result="map-soft" />
-
-          <feDisplacementMap id="glass-nav-base-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-base" />
-
-          <feDisplacementMap id="glass-nav-red-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-red" />
-          <feColorMatrix in="disp-red" type="matrix"
-            values="1 0 0 0 0
-                    0 0 0 0 0
-                    0 0 0 0 0
-                    0 0 0 1 0" result="red" />
-
-          <feDisplacementMap id="glass-nav-green-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-green" />
-          <feColorMatrix in="disp-green" type="matrix"
-            values="0 0 0 0 0
-                    0 1 0 0 0
-                    0 0 0 0 0
-                    0 0 0 1 0" result="green" />
-
-          <feDisplacementMap id="glass-nav-blue-disp" in="SourceGraphic" in2="map-soft" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp-blue" />
-          <feColorMatrix in="disp-blue" type="matrix"
-            values="0 0 0 0 0
-                    0 0 0 0 0
-                    0 0 1 0 0
-                    0 0 0 1 0" result="blue" />
-
-          <feBlend in="red" in2="green" mode="screen" result="rg" />
-          <feBlend in="rg" in2="blue" mode="screen" result="rgb" />
-          <feBlend in="rgb" in2="disp-base" mode="lighten" result="output" />
-          <feGaussianBlur id="glass-nav-gaussian" in="output" stdDeviation="0.8" />
-        </filter>
-      </defs>
-    </svg>
   </body>
 </html>

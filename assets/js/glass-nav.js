@@ -1,12 +1,10 @@
 (function () {
-  const nav = document.querySelector('.glass-nav');
+  const nav = document.querySelector('.glass-surface');
   const mapNode = document.getElementById('glass-nav-map');
-  const baseDisp = document.getElementById('glass-nav-base-disp');
-  const redDisp = document.getElementById('glass-nav-red-disp');
-  const greenDisp = document.getElementById('glass-nav-green-disp');
-  const blueDisp = document.getElementById('glass-nav-blue-disp');
-  const gaussian = document.getElementById('glass-nav-gaussian');
-  if (!nav || !mapNode || !baseDisp || !redDisp || !greenDisp || !blueDisp || !gaussian) return;
+  const redDisp = document.getElementById('glass-nav-red');
+  const greenDisp = document.getElementById('glass-nav-green');
+  const blueDisp = document.getElementById('glass-nav-blue');
+  if (!nav || !mapNode || !redDisp || !greenDisp || !blueDisp) return;
 
   let rafId = null;
 
@@ -64,15 +62,9 @@
   }
 
   function updateDisplacement() {
-    const BASE_SCALE = -80;
-    const RED_OFFSET = -120;
-    const GREEN_OFFSET = -60;
-    const BLUE_OFFSET = -20;
-    baseDisp.setAttribute('scale', BASE_SCALE.toString());
-    redDisp.setAttribute('scale', (BASE_SCALE + RED_OFFSET).toString());
-    greenDisp.setAttribute('scale', (BASE_SCALE + GREEN_OFFSET).toString());
-    blueDisp.setAttribute('scale', (BASE_SCALE + BLUE_OFFSET).toString());
-    gaussian.setAttribute('stdDeviation', '1.2');
+    redDisp.setAttribute('scale', '-180');
+    greenDisp.setAttribute('scale', '-150');
+    blueDisp.setAttribute('scale', '-120');
   }
 
   scheduleUpdate();
