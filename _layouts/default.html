@@ -82,16 +82,35 @@
     <svg class="glass-filter-defs" aria-hidden="true">
       <defs>
         <filter id="glass-filter-nav" x="-30%" y="-70%" width="160%" height="240%" color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="8" result="noise" />
-          <feGaussianBlur in="noise" stdDeviation="8" result="blurred-noise" />
-          <feColorMatrix in="blurred-noise" type="matrix"
-            values="0 0 0 0 0.65
-                    0 0 0 0 0.45
-                    0 0 0 0 0.95
-                    0 0 0 0.8 0" result="tinted-noise" />
-          <feComposite in="tinted-noise" in2="SourceGraphic" operator="in" result="spec" />
-          <feGaussianBlur in="spec" stdDeviation="4" result="soft-spec" />
-          <feBlend in="SourceGraphic" in2="soft-spec" mode="screen" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.01 0.035" numOctaves="3" seed="11" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="4" result="soft-noise" />
+          <feDisplacementMap in="SourceGraphic" in2="soft-noise" scale="18" xChannelSelector="R" yChannelSelector="G" result="distorted" />
+          <feColorMatrix in="distorted" type="saturate" values="1.45" result="saturated" />
+
+          <feColorMatrix in="saturated" type="matrix"
+            values="1 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0" result="red-channel" />
+          <feOffset in="red-channel" dx="0.6" dy="0.3" result="red-shift" />
+
+          <feColorMatrix in="saturated" type="matrix"
+            values="0 0 0 0 0
+                    0 1 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0" result="green-channel" />
+          <feOffset in="green-channel" dx="-0.4" dy="0.2" result="green-shift" />
+
+          <feColorMatrix in="saturated" type="matrix"
+            values="0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 1 0 0
+                    0 0 0 1 0" result="blue-channel" />
+          <feOffset in="blue-channel" dx="0.3" dy="-0.5" result="blue-shift" />
+
+          <feBlend in="red-shift" in2="green-shift" mode="screen" result="rg-blend" />
+          <feBlend in="rg-blend" in2="blue-shift" mode="screen" result="rgb-blend" />
+          <feBlend in="rgb-blend" in2="distorted" mode="lighten" />
         </filter>
       </defs>
     </svg>

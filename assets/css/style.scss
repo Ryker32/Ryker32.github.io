@@ -76,8 +76,8 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 -2px 6px rgba(6, 7, 15, 0.32),
     0 10px 24px rgba(5, 6, 12, 0.16);
-  backdrop-filter: blur(6px) saturate(130%);
-  -webkit-backdrop-filter: blur(6px) saturate(130%);
+  backdrop-filter: blur(2px) saturate(150%) contrast(110%);
+  -webkit-backdrop-filter: blur(2px) saturate(150%) contrast(110%);
   position: relative;
   overflow: hidden;
 }
@@ -89,7 +89,7 @@ body {
   border-radius: inherit;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent);
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.06;
 }
 
 .glass-nav::before {
@@ -100,8 +100,13 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  background:
+    radial-gradient(circle at 25% 35%, rgba(255, 140, 120, 0.22), transparent 50%),
+    radial-gradient(circle at 70% 25%, rgba(120, 190, 255, 0.2), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(190, 150, 255, 0.18), transparent 60%);
   filter: url(#glass-filter-nav) blur(0.28px);
-  opacity: 0.25;
+  mix-blend-mode: screen;
+  opacity: 0.45;
   pointer-events: none;
   z-index: -1;
 }
