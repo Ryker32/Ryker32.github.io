@@ -513,6 +513,7 @@
   const modalDescription = document.getElementById('modalDescription');
   const modalFiles = document.getElementById('modalFiles');
   const filesGrid = document.getElementById('filesGrid');
+  const modalBody = document.querySelector('.modal-body');
 
   // Initialize portfolio grid
   function initPortfolio() {
@@ -523,6 +524,37 @@
     portfolioData.forEach(project => {
       const card = createProjectCard(project);
       portfolioGrid.appendChild(card);
+    });
+  }
+
+  function activateModalMedia() {
+    if (!modalDescription) return;
+    const videos = modalDescription.querySelectorAll('video[data-lazy-video]');
+    if (!videos.length) return;
+
+    videos.forEach(video => {
+      if (video.dataset.videoActivated === 'true') return;
+      video.dataset.videoActivated = 'true';
+      video.removeAttribute('preload');
+      video.preload = 'auto';
+      video.setAttribute('autoplay', 'autoplay');
+      video.muted = true;
+      const ensurePlay = () => {
+        const playPromise = video.play();
+        if (playPromise?.catch) {
+          playPromise.catch(() => {
+            video.addEventListener(
+              'pointerdown',
+              () => video.play().catch(() => {}),
+              { once: true }
+            );
+          });
+        }
+      };
+      video.addEventListener('loadeddata', ensurePlay, { once: true });
+      video.load();
+      // Fall back in case loadeddata already fired
+      ensurePlay();
     });
   }
 
@@ -725,6 +757,7 @@
     modalDescription.querySelectorAll('img').forEach(img => {
       if (!img.hasAttribute('loading')) img.loading = 'lazy';
     });
+    activateModalMedia();
 
     if (modalFiles) {
       filesGrid.innerHTML = '';
