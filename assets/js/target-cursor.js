@@ -85,6 +85,8 @@
 
   const handleEnter = (target) => {
     stopSpin();
+    rotation = 0;
+    cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
     activeRect = target.getBoundingClientRect();
     lockCornersToRect(activeRect);
   };
