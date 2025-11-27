@@ -17,16 +17,19 @@
   <body id="top" data-theme="dark">
     <div class="glass-nav-wrapper">
       <header class="glass-nav" role="banner">
+        <div class="glass-nav__surface" aria-hidden="true"></div>
         <a class="glass-nav__icon" href="#top" aria-label="Back to top">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
             <path d="M12 3l9 9h-3v9h-12v-9h-3z" />
           </svg>
         </a>
+        <span class="glass-nav__divider" aria-hidden="true"></span>
         <nav class="glass-nav__links" aria-label="Site sections">
           <a href="#about">about</a>
           <a href="#portfolio">portfolio</a>
           <a href="#contact">contact</a>
         </nav>
+        <span class="glass-nav__divider" aria-hidden="true"></span>
         <button type="button" class="glass-nav__toggle" id="navThemeToggle" aria-label="Toggle theme" aria-pressed="false">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
             <path d="M12 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm0 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-5a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm-13 0a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm10.95-5.536a1 1 0 0 1 1.414 0l.001.001a1 1 0 0 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm-9.9 9.9a1 1 0 0 1 1.414 0l.001.001a1 1 0 1 1-1.414 1.414l-.001-.001a1 1 0 0 1 0-1.414zm0-9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0zm9.9 9.9a1 1 0 0 1 0 1.414l-.001.001a1 1 0 1 1-1.414-1.414l.001-.001a1 1 0 0 1 1.414 0z" />
@@ -85,5 +88,21 @@
     
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/portfolio.js" | relative_url }}"></script>
+    <svg class="glass-filter-defs" aria-hidden="true">
+      <defs>
+        <filter id="glass-filter-nav" x="-30%" y="-70%" width="160%" height="240%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="8" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="8" result="blurred-noise" />
+          <feColorMatrix in="blurred-noise" type="matrix"
+            values="0 0 0 0 0.65
+                    0 0 0 0 0.45
+                    0 0 0 0 0.95
+                    0 0 0 0.8 0" result="tinted-noise" />
+          <feComposite in="tinted-noise" in2="SourceGraphic" operator="in" result="spec" />
+          <feGaussianBlur in="spec" stdDeviation="4" result="soft-spec" />
+          <feBlend in="SourceGraphic" in2="soft-spec" mode="screen" />
+        </filter>
+      </defs>
+    </svg>
   </body>
 </html>
