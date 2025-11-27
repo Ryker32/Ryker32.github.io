@@ -14,33 +14,34 @@
 
   function buildSvg(width, height) {
     const radius = Math.round(height / 2);
-    const edge = clamp(Math.round(Math.min(width, height) * 0.12), 6);
-    const innerWidth = Math.max(0, width - edge * 2);
-    const innerHeight = Math.max(0, height - edge * 2);
-    const innerRadius = Math.max(0, radius - edge);
-    const blur = (Math.min(width, height) * 0.08).toFixed(2);
-    const opacity = 0.32;
+    const ringWidth = Math.max(6, Math.round(height * 0.18));
+    const stops = [
+      '#ff6ec4',
+      '#7873f5',
+      '#35c7ff',
+      '#f4ea8e',
+      '#ff6ec4'
+    ];
+
+    const gradientStops = stops
+      .map((color, index) => `<stop offset="${(index / (stops.length - 1)) * 100}%" stop-color="${color}" />`)
+      .join('');
 
     return `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">
         <defs>
-          <linearGradient id="grad-r" x1="1" y1="0" x2="0" y2="0">
-            <stop offset="0%" stop-color="#0000"/>
-            <stop offset="100%" stop-color="#ff4d4d"/>
+          <linearGradient id="outer-grad" x1="0" y1="0" x2="1" y2="1">
+            ${gradientStops}
           </linearGradient>
-          <linearGradient id="grad-b" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0000"/>
-            <stop offset="100%" stop-color="#5f7bff"/>
-          </linearGradient>
-          <filter id="inner-blur" color-interpolation-filters="sRGB">
-            <feGaussianBlur stdDeviation="${blur}" />
-          </filter>
+          <radialGradient id="inner-fade" cx="0.5" cy="0.5" r="0.65">
+            <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,1)"/>
+          </radialGradient>
         </defs>
-        <rect width="${width}" height="${height}" fill="#000000"/>
-        <rect width="${width}" height="${height}" rx="${radius}" fill="url(#grad-r)"/>
-        <rect width="${width}" height="${height}" rx="${radius}" fill="url(#grad-b)" style="mix-blend-mode:difference"/>
-        <rect x="${edge}" y="${edge}" width="${innerWidth}" height="${innerHeight}" rx="${innerRadius}"
-          fill="rgba(255,255,255,${opacity})" filter="url(#inner-blur)"/>
+
+        <rect width="${width}" height="${height}" rx="${radius}" fill="#000000"/>
+        <rect width="${width}" height="${height}" rx="${radius}" fill="url(#outer-grad)"/>
+        <rect x="${ringWidth}" y="${ringWidth}" width="${width - ringWidth * 2}" height="${height - ringWidth * 2}" rx="${radius - ringWidth}" fill="url(#inner-fade)"/>
       </svg>
     `;
   }
