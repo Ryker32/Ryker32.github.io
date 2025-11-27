@@ -68,8 +68,8 @@ layout: default
       <p class="portfolio-kicker">"What if?" started everything in my</p>
       <h2>Engineering Portfolio</h2>
       <p>
-        Case studies pulled from research, hackathons, rocket labs, and shipped apps. Each card expands inline—no modal whiplash—to show CAD,
-        test data, videos, and documentation.
+        Software systems, hackathons, rockets, and apps. Click any card to see an expanded view of the project including interactive CAD files,
+        data, figures, high-def videos, and documentation.
       </p>
     </header>
     <div class="project-stack" id="portfolioGrid">
