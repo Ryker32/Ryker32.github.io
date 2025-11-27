@@ -684,38 +684,28 @@
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'project-card__toggle';
-    toggle.innerHTML = 'Open case study <span class="project-card__toggleIcon" aria-hidden="true"></span>';
+    setToggleLabel(toggle, false);
 
     const details = document.createElement('div');
     details.className = 'project-card__details';
     details.hidden = true;
 
-    toggle.addEventListener('click', () => {
-      const isExpanded = article.classList.contains('expanded');
-      if (isExpanded) {
-        collapseCard(article);
-        return;
-      }
+    toggle.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      handleCardToggle(article, details, toggle, project);
+    });
 
-      if (openState.card && openState.card !== article) {
-        collapseCard(openState.card);
-      }
-
-      article.classList.add('expanded');
-      toggle.textContent = 'Hide case study';
-      details.hidden = false;
-      details.style.display = 'block';
-      if (!details.dataset.hydrated) {
-        hydrateDetails(details, project);
-        details.dataset.hydrated = 'true';
-      }
-      openState.card = article;
+    article.addEventListener('click', (evt) => {
+      if (article.classList.contains('expanded')) return;
+      if (evt.target.closest('a, button')) return;
+      evt.preventDefault();
+      handleCardToggle(article, details, toggle, project);
     });
 
     actions.appendChild(toggle);
 
     body.appendChild(titleRow);
-    body.appendChild(summary);
     body.appendChild(overview);
     body.appendChild(actions);
     body.appendChild(details);
@@ -726,12 +716,33 @@
     return article;
   }
 
+  function handleCardToggle(article, details, toggle, project) {
+    if (article.classList.contains('expanded')) {
+      collapseCard(article);
+      return;
+    }
+
+    if (openState.card && openState.card !== article) {
+      collapseCard(openState.card);
+    }
+
+    article.classList.add('expanded');
+    setToggleLabel(toggle, true);
+    details.hidden = false;
+    details.style.display = 'block';
+    if (!details.dataset.hydrated) {
+      hydrateDetails(details, project);
+      details.dataset.hydrated = 'true';
+    }
+    openState.card = article;
+  }
+
   function collapseCard(article) {
     article.classList.remove('expanded');
     const details = article.querySelector('.project-card__details');
     const toggle = article.querySelector('.project-card__toggle');
     if (toggle) {
-      toggle.textContent = 'Open case study';
+      setToggleLabel(toggle, false);
     }
     if (details) {
       details.style.display = 'none';
@@ -741,6 +752,10 @@
     if (openState.card === article) {
       openState.card = null;
     }
+  }
+
+  function setToggleLabel(toggle, expanded) {
+    toggle.innerHTML = `${expanded ? 'Hide case study' : 'Open case study'} <span class="project-card__toggleIcon" aria-hidden="true"></span>`;
   }
 
   function hydrateDetails(details, project) {
