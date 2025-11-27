@@ -65,8 +65,8 @@ layout: default
 
   <div class="portfolio-column">
     <header class="portfolio-header">
-      <p class="portfolio-kicker">Engineering Portfolio</p>
-      <h2>Systems that stay resilient in the field</h2>
+      <p class="portfolio-kicker">"What if?" started everything in my</p>
+      <h2>Engineering Portfolio</h2>
       <p>
         Case studies pulled from research, hackathons, rocket labs, and shipped apps. Each card expands inline—no modal whiplash—to show CAD,
         test data, videos, and documentation.
