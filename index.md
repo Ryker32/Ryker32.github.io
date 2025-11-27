@@ -53,9 +53,6 @@ layout: default
         <a href="mailto:rykerkollmyer@gmail.com" class="pill-link pill-link--ghost">Email me</a>
         <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link" target="_blank" rel="noopener">LinkedIn</a>
       </div>
-      <div class="profile-panel__canvas">
-        <canvas id="profileNetwork" aria-hidden="true"></canvas>
-      </div>
     </div>
   </aside>
 
