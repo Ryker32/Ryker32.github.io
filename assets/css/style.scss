@@ -402,7 +402,7 @@ body[data-theme='light'] .hero__content {
   box-sizing: border-box;
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 64px auto 0;
 }
 
 #about,
@@ -480,14 +480,14 @@ body[data-theme='light'] .hero__content {
 .profile-panel__stats dt {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
-  color: color-mix(in srgb, var(--ink) 60%, transparent);
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
   text-transform: uppercase;
   margin: 0 0 4px;
 }
 
 .profile-panel__stats dd {
   margin: 0;
-  color: var(--ink);
+  color: color-mix(in srgb, var(--ink) 92%, transparent);
 }
 
 .profile-panel__actions {
@@ -538,7 +538,7 @@ body[data-theme='light'] .hero__content {
 
 .portfolio-header h2 {
   margin: 0 0 12px;
-  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-size: clamp(2.2rem, 3.6vw, 3.2rem);
   color: var(--heading-ink);
 }
 
@@ -651,7 +651,7 @@ body[data-theme='light'] .hero__content {
 
 .project-card__meta {
   font-size: 0.9rem;
-  color: color-mix(in srgb, var(--ink) 65%, transparent);
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
