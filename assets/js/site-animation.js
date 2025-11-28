@@ -22,23 +22,18 @@
     // Body already has animation-loading from HTML, just ensure scroll is locked
     document.documentElement.style.overflow = 'hidden';
     
-    // Force animation to trigger by removing and re-adding the class
-    // This ensures the animation starts fresh
-    const body = document.body;
-    body.classList.remove('animation-loading');
-    // Force reflow
-    void body.offsetHeight;
-    body.classList.add('animation-loading');
-    
-    // Start animation sequence
+    // Wait for hero3d.js to initialize and start rendering
+    // Give it enough time to create the WebGL context and start the animation loop
+    // The canvas is already in DOM, just need to wait for hero3d.js to set it up
     setTimeout(() => {
+      // Wait for frames to render, then start the animation sequence
       startAnimationSequence();
-    }, 100);
+    }, 600);
   }
 
   function startAnimationSequence() {
-    // Phase 1: Hero canvas explosion starts at 0.6s (CSS animation)
-    // Phase 2: Hero content expansion starts at 1.2s (CSS animation)
+    // Phase 1: Hero canvas explosion starts at 1s (CSS animation, after WebGL init)
+    // Phase 2: Hero content expansion starts at 1.6s (CSS animation)
     // Phase 3: Site main fade in starts at 1.8s (CSS transition)
     // Phase 4: Preloader fades out at 1.6s (CSS transition)
     
