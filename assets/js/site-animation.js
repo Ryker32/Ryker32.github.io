@@ -19,23 +19,19 @@
 
   // Initialize animation sequence
   function initAnimation() {
-    // Immediately add animation-loading class to lock scroll and trigger animations
-    document.body.classList.add('animation-loading');
+    // Body already has animation-loading from HTML, just ensure scroll is locked
     document.documentElement.style.overflow = 'hidden';
     
-    // Hide navigation and other elements initially
-    const nav = document.querySelector('.glass-nav-wrapper');
-    const siteMain = document.querySelector('.site-main');
-    
-    if (nav) nav.style.opacity = '0';
-    
-    // Start animation sequence immediately
-    startAnimationSequence();
+    // Wait a moment for hero3d.js to potentially initialize, then start animation
+    // The CSS animation will trigger automatically when animation-loading is present
+    setTimeout(() => {
+      startAnimationSequence();
+    }, 100);
   }
 
   function startAnimationSequence() {
-    // Phase 1: Hero canvas explosion starts at 0.8s (CSS transition)
-    // Phase 2: Hero content expansion starts at 1.2s (CSS transition)
+    // Phase 1: Hero canvas explosion starts at 0.6s (CSS animation)
+    // Phase 2: Hero content expansion starts at 1.2s (CSS animation)
     // Phase 3: Site main fade in starts at 1.8s (CSS transition)
     // Phase 4: Preloader fades out at 1.6s (CSS transition)
     
@@ -56,7 +52,11 @@
         siteMain.style.opacity = '1';
       }
       
-      // Navigation will fade in via CSS transition
+      // Navigation will be visible via CSS (body.animation-complete .glass-nav-wrapper)
+      const nav = document.querySelector('.glass-nav-wrapper');
+      if (nav) {
+        nav.style.opacity = '';
+      }
     }, 2500);
   }
 

@@ -96,10 +96,11 @@ body.animation-complete .site-main {
   padding: 0 24px;
   box-sizing: border-box;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease 2.6s;
 }
 
-body.animation-complete .glass-nav-wrapper {
+body.animation-complete .glass-nav-wrapper,
+body:not(.animation-loading) .glass-nav-wrapper {
   opacity: 1;
 }
 
@@ -306,10 +307,11 @@ body.animation-complete .glass-nav-wrapper {
   opacity: 0;
   transform: scale(0);
   transform-origin: center center;
+  will-change: transform, opacity;
 }
 
 body.animation-loading .hero__canvas {
-  animation: canvasExplode 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards;
+  animation: canvasExplode 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
 }
 
 body.animation-complete .hero__canvas {
@@ -363,6 +365,7 @@ body[data-theme='light'].animation-complete .hero__canvas {
   background: var(--card-panel-bg);
   color: var(--ink);
   opacity: 1;
+  -webkit-clip-path: inset(0 50% 0 50%);
   clip-path: inset(0 50% 0 50%);
 }
 
@@ -371,15 +374,18 @@ body.animation-loading .hero__content {
 }
 
 body.animation-complete .hero__content {
+  -webkit-clip-path: inset(0 0% 0 0%);
   clip-path: inset(0 0% 0 0%);
   animation: none;
 }
 
 @keyframes expandContent {
   0% {
+    -webkit-clip-path: inset(0 50% 0 50%);
     clip-path: inset(0 50% 0 50%);
   }
   100% {
+    -webkit-clip-path: inset(0 0% 0 0%);
     clip-path: inset(0 0% 0 0%);
   }
 }
@@ -683,7 +689,7 @@ body[data-theme='light'] .hero__content {
   overflow: hidden;
   z-index: 20;
   pointer-events: none;
-  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 3px 10px);
+  filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
 }
 
 .project-card__badge-inner {
