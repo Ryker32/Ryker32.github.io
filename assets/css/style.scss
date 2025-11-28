@@ -602,21 +602,21 @@ body[data-theme='light'] .hero__content {
 
 .project-card__badge {
   position: absolute;
-  top: -12px;
-  left: -12px;
-  padding: 10px 24px;
-  background: linear-gradient(120deg, #ffd858, #ffb347);
+  top: -10px;
+  left: -10px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #ffd858 0%, #ffb347 100%);
   color: #3a2800;
   font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  transform: rotate(-12deg);
-  border-radius: 0 4px 4px 4px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transform: rotate(-8deg);
+  border-radius: 0 2px 2px 2px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
   z-index: 3;
   pointer-events: none;
-  transform-origin: top left;
+  transform-origin: 0 0;
 }
 
 .project-card__body {
