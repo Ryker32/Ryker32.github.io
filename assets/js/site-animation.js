@@ -22,8 +22,15 @@
     // Body already has animation-loading from HTML, just ensure scroll is locked
     document.documentElement.style.overflow = 'hidden';
     
-    // Wait a moment for hero3d.js to potentially initialize, then start animation
-    // The CSS animation will trigger automatically when animation-loading is present
+    // Force animation to trigger by removing and re-adding the class
+    // This ensures the animation starts fresh
+    const body = document.body;
+    body.classList.remove('animation-loading');
+    // Force reflow
+    void body.offsetHeight;
+    body.classList.add('animation-loading');
+    
+    // Start animation sequence
     setTimeout(() => {
       startAnimationSequence();
     }, 100);
