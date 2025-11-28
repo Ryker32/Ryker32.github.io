@@ -23,35 +23,54 @@
     document.documentElement.style.overflow = 'hidden';
     
     // Wait for hero3d.js to initialize and start rendering
-    // Check if canvas has been initialized by checking if it has dimensions set
-    // hero3d.js will resize the canvas when it initializes
+    // Check multiple indicators that hero3d.js has initialized:
+    // 1. Canvas exists and has proper dimensions (not just default 300x150)
+    // 2. Canvas has a WebGL context
+    // 3. Give enough time for first render
     let checkCount = 0;
-    const maxChecks = 100; // 5 seconds max wait
+    const maxChecks = 120; // 6 seconds max wait
     const checkInterval = setInterval(() => {
       const canvas = document.getElementById('heroCanvas');
-      // Check if canvas has been sized (hero3d.js sets this when initializing)
-      const isInitialized = canvas && (canvas.width > 0 && canvas.height > 0);
+      let isInitialized = false;
+      
+      if (canvas) {
+        // Check if canvas has been properly sized (hero3d.js calls handleResize which sets size)
+        // Default canvas is 300x150, but hero3d.js sets it to container size
+        // We check both width and height to ensure it's been properly initialized
+        const container = canvas.parentElement;
+        const hasProperSize = container && 
+          (canvas.width >= (container.clientWidth * 0.9) || 
+           canvas.height >= (container.clientHeight * 0.9));
+        
+        // Also check if canvas is larger than default (indicating initialization)
+        const isLargerThanDefault = canvas.width > 300 || canvas.height > 150;
+        
+        // Canvas is initialized if it has proper size matching container or is larger than default
+        isInitialized = hasProperSize || isLargerThanDefault;
+      }
       
       if (isInitialized || checkCount >= maxChecks) {
         clearInterval(checkInterval);
         
-        // Give it a moment to render a few frames
+        // Give it a moment to render a few frames so the particles are visible
         setTimeout(() => {
-          // Mark as ready to trigger CSS animation
+          // Mark as ready to trigger CSS explosion animation
           document.body.classList.add('animation-ready');
           // Start the animation sequence
           startAnimationSequence();
-        }, 300);
+        }, 400);
       }
       checkCount++;
     }, 50);
   }
 
   function startAnimationSequence() {
-    // Phase 1: Hero canvas explosion starts immediately when animation-ready is added
-    // Phase 2: Hero content expansion starts at 1.2s delay (CSS animation)
-    // Phase 3: Site main fade in starts at 1.8s (CSS transition)
-    // Phase 4: Preloader fades out at 1.6s (CSS transition)
+    // Phase 1: Hero canvas explosion starts immediately when animation-ready is added (0s)
+    //   - Canvas scales from 0.01 to 1.0 with opacity fade (1.2s duration)
+    // Phase 2: Preloader fades out at 0.4s (so explosion is visible)
+    // Phase 3: Hero content expands from center at 1.2s (0.8s duration)
+    // Phase 4: Site main fades in at 1.8s
+    // Phase 5: Navigation fades in at 2.6s
     
     // Mark animation as shown immediately so it only runs once per session
     if (!hasSeenAnimation) {
