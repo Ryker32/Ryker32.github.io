@@ -179,15 +179,15 @@
     },
     {
       id: 2,
-      title: "Resilient Election and Impeachment Policy (REIP) Research",
+      title: "Novel Resilient Election and Impeachment Policy (REIP) Research",
       date: "May 2025 - Present",
       keyPoints: "Multi Agent Systems · Governance Policy · Research",
       description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
       badge: "REIP",
       highlights: [
-        "Trust-scored elections keep swarm coverage near 99%",
-        "Custom Python grid world with YAML-configured benchmarks",
-        "Documented for Washington State Science & Engineering Fair"
+        "52% better than baseline leader-follower policies",
+        "Fully custom sim env & ablation tests",
+        "Projected for Washington State Science & Engineering Fair '26"
       ],
       descriptionHtml: `
       <h3>At a glance</h3>
@@ -251,8 +251,8 @@
       badge: "BWSI Winner",
       highlights: [
         "Custom MAVLink + OpenCV stack on Raspberry Pi 5",
-        "Manufactured enclosures + landing gear to stabilize payloads",
-        "Won first place in an obstacle course in 52 seconds"
+        "Custom landing gear/rPi Enclosure",
+        "Won first place in the final challenge (52 sec.)"
       ],
       descriptionHtml: `
         <h3>Description</h3>
@@ -325,7 +325,7 @@
       date: "November 2024 - Present",
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
       appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
-      description: "Co-invented LifeFlo, a monitored GPT + FlutterFlow women’s health app that’s live on Google Play and covered by US provisional patent 63/873,509.",
+      description: "Co-invented LifeFlo, a monitored GPT + FlutterFlow women's health app that's live on Google Play and covered by US provisional patent 63/873,509.",
       badge: "Patent Pending",
       highlights: [
         "GPT-based menstrual insights with human-in-the-loop review",
