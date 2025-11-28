@@ -14,11 +14,15 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js" integrity="sha384-ycxtgj7aPUpK6OvsYarejYrITzqdS2Q6xoKkgnKMFoCyS5lQhW2h0OPCeInjM6qi" crossorigin="anonymous"></script>
     {% include head-custom.html %}
   </head>
-  <body id="top" data-theme="dark">
+  <body id="top" data-theme="dark" class="animation-loading">
     <!-- Opening Animation Preloader -->
     <div class="site-preloader" id="sitePreloader">
       <div class="preloader-dot"></div>
     </div>
+    <script>
+      // Immediately lock scroll and start animation
+      document.documentElement.style.overflow = 'hidden';
+    </script>
     <div class="glass-nav-wrapper">
       <header class="glass-surface glass-surface--svg" data-glass data-glass-background-opacity="0.35" data-glass-saturation="1.8" data-glass-border-radius="50" data-glass-border-width="0.07" data-glass-brightness="45" data-glass-opacity="0.93" data-glass-blur="11" data-glass-displace="1.5" data-glass-distortion-scale="-180" data-glass-red-offset="0" data-glass-green-offset="10" data-glass-blue-offset="20">
         <div class="glass-surface__content">

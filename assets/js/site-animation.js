@@ -19,8 +19,9 @@
 
   // Initialize animation sequence
   function initAnimation() {
-    // Lock body scroll during animation
+    // Immediately add animation-loading class to lock scroll and trigger animations
     document.body.classList.add('animation-loading');
+    document.documentElement.style.overflow = 'hidden';
     
     // Hide navigation and other elements initially
     const nav = document.querySelector('.glass-nav-wrapper');
@@ -47,6 +48,7 @@
     setTimeout(() => {
       document.body.classList.add('animation-complete');
       document.body.classList.remove('animation-loading');
+      document.documentElement.style.overflow = '';
       
       // Ensure all content is visible
       const siteMain = document.querySelector('.site-main');
