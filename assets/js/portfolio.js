@@ -688,10 +688,16 @@
 
     article.appendChild(media);
     if (project.badge) {
-      const badge = document.createElement('span');
-      badge.className = 'project-card__badge';
-      badge.textContent = project.badge;
-      article.appendChild(badge);
+      const badgeWrapper = document.createElement('div');
+      badgeWrapper.className = 'project-card__badge-wrapper';
+      const badgeInner = document.createElement('div');
+      badgeInner.className = 'project-card__badge-inner';
+      const badgeText = document.createElement('span');
+      badgeText.className = 'project-card__badge-text';
+      badgeText.textContent = project.badge;
+      badgeInner.appendChild(badgeText);
+      badgeWrapper.appendChild(badgeInner);
+      article.appendChild(badgeWrapper);
     }
     article.appendChild(body);
 
