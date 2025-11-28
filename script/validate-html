@@ -44,10 +44,10 @@ def validate_with_retry(file, max_retries: 3, base_delay: 2)
       end
 
       # Filter out known false positives
-      # pointer-events is valid CSS3 but some validators don't recognize it
+      # pointer-events and clip-path are valid CSS3 but some validators don't recognize them
       filtered_errors = results.errors.reject do |err|
         err_str = err.to_s.downcase
-        err_str.include?("pointer-events") && (
+        (err_str.include?("pointer-events") || err_str.include?("clip-path")) && (
           err_str.include?("doesn't exist") ||
           err_str.include?("does not exist") ||
           err_str.include?("unknown property")

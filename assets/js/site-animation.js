@@ -23,45 +23,69 @@
     document.documentElement.style.overflow = 'hidden';
     
     // Wait for hero3d.js to initialize and start rendering
-    // Check multiple indicators that hero3d.js has initialized:
-    // 1. Canvas exists and has proper dimensions (not just default 300x150)
-    // 2. Canvas has a WebGL context
-    // 3. Give enough time for first render
+    // hero3d.js runs on DOMContentLoaded, so we need to wait a bit for it to initialize
+    // Use a combination of detection and timeout to ensure animation triggers
+    
+    let animationTriggered = false;
+    
+    function triggerAnimation() {
+      if (animationTriggered) return;
+      animationTriggered = true;
+      
+      const canvas = document.getElementById('heroCanvas');
+      console.log('Triggering explosion animation', {
+        canvasExists: !!canvas,
+        canvasSize: canvas ? `${canvas.width}x${canvas.height}` : 'N/A',
+        bodyClasses: document.body.className
+      });
+      
+      // Mark as ready to trigger CSS explosion animation
+      document.body.classList.add('animation-ready');
+      // Start the animation sequence
+      startAnimationSequence();
+    }
+    
+    // Method 1: Check if canvas has been initialized
     let checkCount = 0;
-    const maxChecks = 120; // 6 seconds max wait
+    const maxChecks = 100; // 5 seconds max wait
     const checkInterval = setInterval(() => {
       const canvas = document.getElementById('heroCanvas');
       let isInitialized = false;
       
       if (canvas) {
-        // Check if canvas has been properly sized (hero3d.js calls handleResize which sets size)
-        // Default canvas is 300x150, but hero3d.js sets it to container size
-        // We check both width and height to ensure it's been properly initialized
-        const container = canvas.parentElement;
-        const hasProperSize = container && 
-          (canvas.width >= (container.clientWidth * 0.9) || 
-           canvas.height >= (container.clientHeight * 0.9));
+        // Check if canvas has been properly sized (hero3d.js sets size in handleResize)
+        // Default canvas is 300x150, hero3d.js sets it to container size
+        const isLargerThanDefault = canvas.width > 400 || canvas.height > 200;
         
-        // Also check if canvas is larger than default (indicating initialization)
-        const isLargerThanDefault = canvas.width > 300 || canvas.height > 150;
+        // Also check if renderer has been created by checking canvas attributes
+        // WebGL canvas typically gets specific attributes set
+        const hasWebGLAttributes = canvas.width > 0 && canvas.height > 0 && 
+                                    (canvas.width !== 300 || canvas.height !== 150);
         
-        // Canvas is initialized if it has proper size matching container or is larger than default
-        isInitialized = hasProperSize || isLargerThanDefault;
+        isInitialized = isLargerThanDefault || hasWebGLAttributes;
       }
       
-      if (isInitialized || checkCount >= maxChecks) {
+      if (isInitialized) {
         clearInterval(checkInterval);
-        
-        // Give it a moment to render a few frames so the particles are visible
-        setTimeout(() => {
-          // Mark as ready to trigger CSS explosion animation
-          document.body.classList.add('animation-ready');
-          // Start the animation sequence
-          startAnimationSequence();
-        }, 400);
+        // Give it a moment to render a few frames
+        setTimeout(triggerAnimation, 300);
+      } else if (checkCount >= maxChecks) {
+        clearInterval(checkInterval);
+        // Fallback: trigger anyway after timeout (canvas might still render)
+        console.warn('Canvas initialization timeout, triggering animation anyway');
+        setTimeout(triggerAnimation, 100);
       }
       checkCount++;
     }, 50);
+    
+    // Method 2: Fallback timeout - trigger animation after reasonable delay regardless
+    // This ensures animation always runs even if detection fails
+    setTimeout(() => {
+      if (!animationTriggered) {
+        console.warn('Animation fallback triggered');
+        triggerAnimation();
+      }
+    }, 2000); // 2 second fallback
   }
 
   function startAnimationSequence() {
@@ -97,11 +121,22 @@
     }, 2500);
   }
 
-  // Start immediately when script loads
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAnimation);
-  } else {
-    // DOM already ready, start immediately
-    setTimeout(initAnimation, 10);
+  // Start animation initialization
+  // hero3d.js is a module script, so it loads asynchronously after DOMContentLoaded
+  // We need to wait for both DOM ready AND give hero3d.js time to initialize
+  function startInit() {
+    if (document.readyState === 'loading') {
+      // Wait for DOM, then wait a bit more for hero3d.js module to load
+      document.addEventListener('DOMContentLoaded', () => {
+        // Module scripts execute after DOMContentLoaded, so wait a bit
+        setTimeout(initAnimation, 100);
+      });
+    } else {
+      // DOM already ready, but hero3d.js module might still be loading
+      // Wait a bit to give it time to initialize
+      setTimeout(initAnimation, 150);
+    }
   }
+  
+  startInit();
 })();
