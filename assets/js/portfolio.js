@@ -93,7 +93,7 @@
       keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
       repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
       description: "Built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain, re-docks in flight, and ships data back over ROS2 + PX4.",
-      badge: "URTC Poster",
+      badge: "IEEE-URTC",
       highlights: [
         "Custom dock + battery rails keep the UGV stable in flight",
         "Flight controller + rover share ROS2/PX4 telemetry for hand-offs",
@@ -183,7 +183,7 @@
       date: "May 2025 - Present",
       keyPoints: "Multi Agent Systems · Governance Policy · Research",
       description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
-      badge: "REIP",
+      badge: "Research",
       highlights: [
         "52% better than baseline leader-follower policies",
         "Fully custom sim env & ablation tests",
@@ -248,7 +248,7 @@
       keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
       repoUrl: "https://github.com/amzoeee/line_follower_v2",
       description: "Led sensing + electronics for the MIT BWSI UAV racing team, integrating OpenCV line tracking on a Pi 5 with PX4 autopilot to win by over a minute.",
-      badge: "BWSI Winner",
+      badge: "BWSI",
       highlights: [
         "Custom MAVLink + OpenCV stack on Raspberry Pi 5",
         "Custom landing gear/rPi Enclosure",
@@ -291,7 +291,7 @@
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
       repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
       description: "Built a safety-aware teleop stack for a KiwiBot/LeRobot platform at YC Agent Jam ’25, blending HuggingFace LLM cues with real-time manipulation.",
-      badge: "YC Agent Jam",
+      badge: "Y-combinator",
       highlights: [
         "LLM watches for hazards & triggers alerts in teleop mode",
         "Robot grips color-coded objects via custom HF training loop",
@@ -326,7 +326,7 @@
       keyPoints: "US Provisional Patent Pending No. 63/873,509 · Google Play Store · Co-inventor",
       appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
       description: "Co-invented LifeFlo, a monitored GPT + FlutterFlow women's health app that's live on Google Play and covered by US provisional patent 63/873,509.",
-      badge: "Patent Pending",
+      badge: "Patent",
       highlights: [
         "GPT-based menstrual insights with human-in-the-loop review",
         "Firebase backend w/ logging + push-ready symptom tracking",
@@ -367,7 +367,7 @@
       date: "December 2023 - January 2025",
       keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
       description: "Led design/build/test of a regen-cooled LOX/propane engine made from scrap materials, then diagnosed failures with ANSYS CFD and iterated the cooling loop.",
-      badge: "Hot-fire",
+      badge: "Rocket",
       highlights: [
         "Regen cooling sized in ANSYS Fluent",
         "Hot-fired multiple builds with instrumented pressure data",
