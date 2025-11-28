@@ -1906,11 +1906,14 @@ body.animation-complete .site-preloader {
 }
 
 .preloader-dot {
-  width: 8px;
-  height: 8px;
+  width: 16px;
+  height: 16px;
   background: #fff;
   border-radius: 50%;
   animation: dotPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 10001;
 }
 
 /* =======================
