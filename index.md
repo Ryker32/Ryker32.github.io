@@ -26,19 +26,20 @@ layout: default
       {% endif %}
       <div class="profile-panel__meta">
         <p class="profile-panel__eyebrow">Ryker Kollmyer</p>
-        <h2 id="profileHeading">Autonomy researcher</h2>
+        <h2 id="profileHeading">Youth Researcher</h2>
         <p class="profile-panel__summary">
-          I prototype hybrid UAV/UGV systems, governance policies for multi-agent drones, hands-on rockets, and health tech apps.
+          I develop and build robots, research, and am founder of a education access initiative in Fiji.
+          Outside of engineering I hike, boat, and cycle.
         </p>
       </div>
       <dl class="profile-panel__stats">
         <div>
           <dt>Focus</dt>
-          <dd>Robotics, MAS, CAD</dd>
+          <dd>Mechatronics, Distributed Systems</dd>
         </div>
         <div>
-          <dt>Currently</dt>
-          <dd>REIP research + UAV programs</dd>
+          <dt>Current</dt>
+          <dd>Olympia High School CO '27</dd>
         </div>
       </dl>
       <div class="profile-panel__actions">

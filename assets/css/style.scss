@@ -1918,7 +1918,7 @@ body[data-theme='light'] .hero__content {
   background: #fff;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .target-cursor__corner {

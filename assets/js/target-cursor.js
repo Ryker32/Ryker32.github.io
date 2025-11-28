@@ -19,6 +19,7 @@
   let spinHandle = null;
   let rotation = 0;
   let lockRect = null;
+  let lockedTarget = null;
   let isLocked = false;
   let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
@@ -76,8 +77,20 @@
 
   window.addEventListener('pointermove', (e) => {
     updateCursorPosition(e.clientX, e.clientY);
-    if (lockRect) {
-      lockCornersToRect(lockRect);
+    if (isLocked) {
+      updateLockRect();
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    if (isLocked) {
+      updateLockRect();
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (isLocked) {
+      updateLockRect();
     }
   });
 
@@ -91,20 +104,31 @@
     cursor.style.scale = 1;
   });
 
+  const updateLockRect = () => {
+    if (lockedTarget) {
+      lockRect = lockedTarget.getBoundingClientRect();
+      lockCornersToRect(lockRect);
+    }
+  };
+
   const handleEnter = (target) => {
     stopSpin();
     rotation = 0;
     cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
     isLocked = true;
+    lockedTarget = target;
     lockRect = target.getBoundingClientRect();
     lockCornersToRect(lockRect);
+    dot.style.opacity = '0';
   };
 
   const handleLeave = () => {
     lockRect = null;
+    lockedTarget = null;
     isLocked = false;
     releaseCorners();
     startSpin();
+    dot.style.opacity = '1';
   };
 
   const bindTargets = () => {
