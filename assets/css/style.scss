@@ -303,12 +303,29 @@ body.animation-complete .glass-nav-wrapper {
   opacity: 0;
   transform: scale(0);
   transform-origin: center;
+}
+
+body.animation-loading .hero__canvas {
+  opacity: 0;
+  transform: scale(0);
   transition: opacity 0.8s ease 0.8s, transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s;
+  animation: canvasExplode 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
 }
 
 body.animation-complete .hero__canvas {
   opacity: 0.9;
   transform: scale(1);
+}
+
+@keyframes canvasExplode {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
 }
 
 body[data-theme='light'] .hero__canvas {
