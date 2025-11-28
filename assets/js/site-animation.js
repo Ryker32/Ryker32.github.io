@@ -23,17 +23,33 @@
     document.documentElement.style.overflow = 'hidden';
     
     // Wait for hero3d.js to initialize and start rendering
-    // Give it enough time to create the WebGL context and start the animation loop
-    // The canvas is already in DOM, just need to wait for hero3d.js to set it up
-    setTimeout(() => {
-      // Wait for frames to render, then start the animation sequence
-      startAnimationSequence();
-    }, 600);
+    // Check if canvas has been initialized by checking if it has dimensions set
+    // hero3d.js will resize the canvas when it initializes
+    let checkCount = 0;
+    const maxChecks = 100; // 5 seconds max wait
+    const checkInterval = setInterval(() => {
+      const canvas = document.getElementById('heroCanvas');
+      // Check if canvas has been sized (hero3d.js sets this when initializing)
+      const isInitialized = canvas && (canvas.width > 0 && canvas.height > 0);
+      
+      if (isInitialized || checkCount >= maxChecks) {
+        clearInterval(checkInterval);
+        
+        // Give it a moment to render a few frames
+        setTimeout(() => {
+          // Mark as ready to trigger CSS animation
+          document.body.classList.add('animation-ready');
+          // Start the animation sequence
+          startAnimationSequence();
+        }, 300);
+      }
+      checkCount++;
+    }, 50);
   }
 
   function startAnimationSequence() {
-    // Phase 1: Hero canvas explosion starts at 1s (CSS animation, after WebGL init)
-    // Phase 2: Hero content expansion starts at 1.6s (CSS animation)
+    // Phase 1: Hero canvas explosion starts immediately when animation-ready is added
+    // Phase 2: Hero content expansion starts at 1.2s delay (CSS animation)
     // Phase 3: Site main fade in starts at 1.8s (CSS transition)
     // Phase 4: Preloader fades out at 1.6s (CSS transition)
     
