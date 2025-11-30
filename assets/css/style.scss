@@ -301,9 +301,17 @@ body.animation-complete .glass-nav-wrapper {
   inset: 0;
   pointer-events: none;
   z-index: 4;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
   transition: opacity 0.6s ease 2s;
+}
+
+.hero-frame__inner {
+  position: relative;
+  width: min(85vw, 1100px);
+  height: min(65vh, 520px);
 }
 
 .hero-frame__bar {
@@ -317,10 +325,10 @@ body.animation-complete .glass-nav-wrapper {
 
 .bar-top,
 .bar-bottom {
-  left: 5%;
-  right: 5%;
-  height: 35vh;
+  width: 100%;
+  height: min(22vh, 220px);
   transform-origin: center;
+  left: 0;
 }
 
 .bar-top { top: 0; }
@@ -328,10 +336,10 @@ body.animation-complete .glass-nav-wrapper {
 
 .bar-left,
 .bar-right {
-  top: 8%;
-  bottom: 8%;
-  width: min(28vw, 280px);
+  height: 100%;
+  width: min(16vw, 140px);
   transform-origin: center;
+  top: 0;
 }
 
 .bar-left { left: 0; }
@@ -339,12 +347,12 @@ body.animation-complete .glass-nav-wrapper {
 
 .hero-frame--collapsed .bar-top,
 .hero-frame--collapsed .bar-bottom {
-  transform: scaleY(0.03);
+  transform: scaleY(0.035);
 }
 
 .hero-frame--collapsed .bar-left,
 .hero-frame--collapsed .bar-right {
-  transform: scaleX(0.03);
+  transform: scaleX(0.035);
 }
 
 body.animation-complete .hero-frame {

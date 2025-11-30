@@ -4,10 +4,12 @@ layout: default
 
 <section class="hero" id="home">
   <div class="hero-frame" aria-hidden="true">
-    <span class="hero-frame__bar bar-top"></span>
-    <span class="hero-frame__bar bar-bottom"></span>
-    <span class="hero-frame__bar bar-left"></span>
-    <span class="hero-frame__bar bar-right"></span>
+    <div class="hero-frame__inner">
+      <span class="hero-frame__bar bar-top"></span>
+      <span class="hero-frame__bar bar-bottom"></span>
+      <span class="hero-frame__bar bar-left"></span>
+      <span class="hero-frame__bar bar-right"></span>
+    </div>
   </div>
   <div class="hero__canvas" aria-hidden="true">
     <canvas id="heroCanvas"></canvas>
