@@ -1,8 +1,5 @@
 (() => {
-  'use strict';
-  
-  console.log('Site animation script loaded');
-  
+  // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasSeenAnimation = false; // sessionStorage.getItem('siteAnimationShown');
   const heroFrame = document.querySelector('.hero-frame');
@@ -26,7 +23,6 @@
   };
 
   if (prefersReducedMotion) {
-    console.log('Reduced motion enabled, skipping animation');
     document.body.classList.add('animation-complete');
     const siteMain = document.querySelector('.site-main');
     if (siteMain) siteMain.style.opacity = '1';
@@ -39,30 +35,9 @@
     hidePreloader();
     return;
   }
-  
-  console.log('Starting animation sequence');
 
   // Initialize animation sequence
   function initAnimation() {
-    console.log('initAnimation called');
-    
-    // Verify preloader exists
-    const preloader = document.getElementById('sitePreloader');
-    if (!preloader) {
-      console.error('Preloader not found!');
-    } else {
-      console.log('Preloader found');
-    }
-    resetHeroFrame();
-    
-    // Verify canvas exists
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) {
-      console.warn('Canvas not found yet, will wait for it');
-    } else {
-      console.log('Canvas found:', canvas.width, 'x', canvas.height);
-    }
-    
     // Body already has animation-loading from HTML, just ensure scroll is locked
     document.documentElement.style.overflow = 'hidden';
     
@@ -128,11 +103,10 @@
     // This ensures animation always runs even if detection fails
     setTimeout(() => {
       if (!animationTriggered) {
-        console.warn('Animation fallback triggered - forcing animation to start');
-        clearInterval(checkInterval);
+        console.warn('Animation fallback triggered');
         triggerAnimation();
       }
-    }, 1500); // 1.5 second fallback - ensures animation always starts
+    }, 2000); // 2 second fallback
   }
 
   function startAnimationSequence() {
@@ -167,44 +141,19 @@
     }, 2500);
   }
 
-  // Emergency fallback: If nothing happens after 3 seconds, show content anyway
-  setTimeout(() => {
-    if (document.body.classList.contains('animation-loading') && 
-        !document.body.classList.contains('animation-ready') &&
-        !document.body.classList.contains('animation-complete')) {
-      console.error('Emergency fallback triggered - showing content');
-      document.body.classList.add('animation-complete');
-      document.body.classList.remove('animation-loading');
-      document.documentElement.style.overflow = '';
-      const siteMain = document.querySelector('.site-main');
-      if (siteMain) siteMain.style.opacity = '1';
-      const heroCanvas = document.querySelector('.hero__canvas');
-      if (heroCanvas) {
-        heroCanvas.style.opacity = '0.9';
-        heroCanvas.style.transform = 'scale(1)';
-      }
-      const preloader = document.getElementById('sitePreloader');
-      if (preloader) preloader.style.opacity = '0';
-      collapseHeroFrame();
-    }
-  }, 3000);
-  
   // Start animation initialization
   // hero3d.js is a module script, so it loads asynchronously after DOMContentLoaded
   // We need to wait for both DOM ready AND give hero3d.js time to initialize
   function startInit() {
-    console.log('startInit called, readyState:', document.readyState);
     if (document.readyState === 'loading') {
       // Wait for DOM, then wait a bit more for hero3d.js module to load
       document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded fired');
         // Module scripts execute after DOMContentLoaded, so wait a bit
         setTimeout(initAnimation, 100);
       });
     } else {
       // DOM already ready, but hero3d.js module might still be loading
       // Wait a bit to give it time to initialize
-      console.log('DOM already ready, starting init');
       setTimeout(initAnimation, 150);
     }
   }
