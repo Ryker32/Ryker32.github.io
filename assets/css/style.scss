@@ -296,6 +296,55 @@ body.animation-complete .glass-nav-wrapper {
   pointer-events: none;
 }
 
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  overflow: hidden;
+}
+
+.hero-frame__bar {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 40px rgba(120, 180, 255, 0.15);
+  backdrop-filter: blur(16px);
+  transform: scale(1);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar-top,
+.bar-bottom {
+  left: 5%;
+  right: 5%;
+  height: 35vh;
+  transform-origin: center;
+}
+
+.bar-top { top: 0; }
+.bar-bottom { bottom: 0; }
+
+.bar-left,
+.bar-right {
+  top: 8%;
+  bottom: 8%;
+  width: min(28vw, 280px);
+  transform-origin: center;
+}
+
+.bar-left { left: 0; }
+.bar-right { right: 0; }
+
+.hero-frame--collapsed .bar-top,
+.hero-frame--collapsed .bar-bottom {
+  transform: scaleY(0.03);
+}
+
+.hero-frame--collapsed .bar-left,
+.hero-frame--collapsed .bar-right {
+  transform: scaleX(0.03);
+}
+
 .hero__canvas {
   position: absolute;
   inset: 0;

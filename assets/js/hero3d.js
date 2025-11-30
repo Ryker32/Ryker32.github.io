@@ -357,3 +357,24 @@ if (document.readyState === 'loading') {
   initHero3D();
 }
 
+function initHeroFrame() {
+  const frame = document.querySelector('.hero-frame');
+  if (!frame) return;
+
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const collapse = () => frame.classList.add('hero-frame--collapsed');
+
+  if (prefersReduce) {
+    collapse();
+    return;
+  }
+
+  requestAnimationFrame(collapse);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeroFrame, { once: true });
+} else {
+  initHeroFrame();
+}
+
