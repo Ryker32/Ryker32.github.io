@@ -185,7 +185,7 @@
       description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
       badge: "Research",
       highlights: [
-        "52% better than baseline leader-follower policies",
+        "52pp higher success rate under adversarial conditions compared to baseline round-robin leader-follower policies",
         "Fully custom sim env & ablation tests",
         "Projected for Washington State Science & Engineering Fair '26"
       ],
