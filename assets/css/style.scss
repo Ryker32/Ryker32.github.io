@@ -302,6 +302,8 @@ body.animation-complete .glass-nav-wrapper {
   pointer-events: none;
   z-index: 4;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.6s ease 2s;
 }
 
 .hero-frame__bar {
@@ -343,6 +345,11 @@ body.animation-complete .glass-nav-wrapper {
 .hero-frame--collapsed .bar-left,
 .hero-frame--collapsed .bar-right {
   transform: scaleX(0.03);
+}
+
+body.animation-complete .hero-frame {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .hero__canvas {
