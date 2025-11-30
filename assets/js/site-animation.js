@@ -3,11 +3,27 @@
   
   console.log('Site animation script loaded');
   
-  // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  // For now, always run animation (comment out sessionStorage check for testing)
   const hasSeenAnimation = false; // sessionStorage.getItem('siteAnimationShown');
+  const heroFrame = document.querySelector('.hero-frame');
+
+  const collapseHeroFrame = () => {
+    if (!heroFrame) return;
+    heroFrame.classList.add('hero-frame--collapsed');
+  };
+
+  const resetHeroFrame = () => {
+    if (!heroFrame) return;
+    heroFrame.classList.remove('hero-frame--collapsed');
+  };
+
+  const hidePreloader = () => {
+    const preloader = document.getElementById('sitePreloader');
+    if (!preloader) return;
+    preloader.style.transition = 'opacity 0.5s ease';
+    preloader.style.opacity = '0';
+    setTimeout(() => preloader.remove(), 600);
+  };
 
   if (prefersReducedMotion) {
     console.log('Reduced motion enabled, skipping animation');
@@ -19,6 +35,8 @@
       heroCanvas.style.opacity = '0.9';
       heroCanvas.style.transform = 'scale(1)';
     }
+    collapseHeroFrame();
+    hidePreloader();
     return;
   }
   
@@ -35,6 +53,7 @@
     } else {
       console.log('Preloader found');
     }
+    resetHeroFrame();
     
     // Verify canvas exists
     const canvas = document.getElementById('heroCanvas');
@@ -66,6 +85,8 @@
       
       // Mark as ready to trigger CSS explosion animation
       document.body.classList.add('animation-ready');
+      collapseHeroFrame();
+      hidePreloader();
       // Start the animation sequence
       startAnimationSequence();
     }
@@ -133,17 +154,16 @@
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
       
-      // Ensure all content is visible
       const siteMain = document.querySelector('.site-main');
       if (siteMain) {
         siteMain.style.opacity = '1';
       }
       
-      // Navigation will be visible via CSS (body.animation-complete .glass-nav-wrapper)
       const nav = document.querySelector('.glass-nav-wrapper');
       if (nav) {
         nav.style.opacity = '';
       }
+      collapseHeroFrame();
     }, 2500);
   }
 
@@ -165,6 +185,7 @@
       }
       const preloader = document.getElementById('sitePreloader');
       if (preloader) preloader.style.opacity = '0';
+      collapseHeroFrame();
     }
   }, 3000);
   
