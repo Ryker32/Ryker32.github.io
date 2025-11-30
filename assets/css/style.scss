@@ -356,11 +356,6 @@ body.animation-complete .glass-nav-wrapper {
   will-change: transform, opacity;
 }
 
-body.animation-loading .hero__canvas {
-  /* Animation will be triggered by JS after hero3d.js initializes */
-  /* Keep initial state: opacity 0, scale 0.01 */
-}
-
 body.animation-loading.animation-ready .hero__canvas {
   animation: canvasExplode 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0s forwards;
 }
