@@ -470,33 +470,6 @@
       image: "/assets/img/windsurfing/windsurfing.png",
       files: []
     },
-    {
-      id: 8,
-      title: "Project 8",
-      description: "This is a description of Project 8. Add your project details here.",
-      image: "/assets/img/project8.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project8-detail1.jpg", name: "Detail 1" }
-      ]
-    },
-    {
-      id: 9,
-      title: "Project 9",
-      description: "This is a description of Project 9. Add your project details here.",
-      image: "/assets/img/project9.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project9-detail1.jpg", name: "Detail 1" }
-      ]
-    },
-    {
-      id: 10,
-      title: "Project 10",
-      description: "This is a description of Project 10. Add your project details here.",
-      image: "/assets/img/project10.jpg",
-      files: [
-        { type: "image", url: "/assets/img/project10-detail1.jpg", name: "Detail 1" }
-      ]
-    }
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
