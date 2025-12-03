@@ -18,8 +18,7 @@ layout: default
     <p class="hero__eyebrow">Autonomy · Multi-agent systems · CAD</p>
     <h1>Ryker Kollmyer</h1>
     <p class="hero__lede">
-      Robotics researcher and systems builder focused on resilient UAV/UGV platforms, REIP governance, and UX-heavy engineering tools.
-      I like shipping polished demos that mix CAD, software, and field testing.
+      Mechatronics and distributed systems researcher focused on developing robust systems on both the hardware and software ends.
     </p>
   </div>
 </section>
