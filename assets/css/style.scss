@@ -744,42 +744,6 @@ body[data-theme='light'] .hero__content {
   display: block;
 }
 
-.project-card__badge-wrapper {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  width: 96px;
-  height: 96px;
-  overflow: hidden;
-  z-index: 20;
-  pointer-events: none;
-  filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
-}
-
-.project-card__badge-inner {
-  position: absolute;
-  width: 175px;
-  height: 30px;
-  top: 22px;
-  left: -52px;
-  background-color: rgb(244, 180, 0);
-  transform: rotate(-45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.project-card__badge-text {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  color: rgb(139, 105, 20);
-  text-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px;
-  letter-spacing: 0.05em;
-  padding-top: 1px;
-  text-transform: uppercase;
-}
-
 .project-card__body {
   flex: 1;
   display: flex;
