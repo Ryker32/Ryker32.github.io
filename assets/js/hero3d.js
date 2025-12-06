@@ -205,7 +205,7 @@ function initHero3D() {
   group.scale.setScalar(0.01);
   scene.add(group);
   
-  console.log('Particle group created with scale:', group.scale.x, 'particles:', PARTICLE_COUNT);
+  console.log('Particle group created with scale:', group.scale.x, 'particles:', PARTICLE_COUNT, 'initial opacity:', material.opacity);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
@@ -352,8 +352,17 @@ function initHero3D() {
     requestAnimationFrame(render);
   }
 
+  // Make canvas visible immediately
+  const canvasElement = document.getElementById('heroCanvas');
+  if (canvasElement && canvasElement.parentElement) {
+    canvasElement.parentElement.style.opacity = '1';
+  }
+
   // Explosion animation - triggered directly after WebGL init
+  let explosionStarted = false;
   function animateExplosion() {
+    if (explosionStarted) return;
+    explosionStarted = true;
     console.log('Starting explosion animation');
     const startTime = performance.now();
     const duration = 1200; // 1.2 seconds
@@ -380,6 +389,11 @@ function initHero3D() {
         lineMaterial.opacity = currentOpacity;
       }
       
+      // Log progress every 20% for debugging
+      if (Math.floor(progress * 5) !== Math.floor((progress - 0.01) * 5)) {
+        console.log(`Explosion progress: ${Math.floor(progress * 100)}% - scale: ${currentScale.toFixed(3)}, opacity: ${currentOpacity.toFixed(3)}`);
+      }
+      
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
@@ -389,38 +403,27 @@ function initHero3D() {
         if (lineMaterial) {
           lineMaterial.opacity = 1.0;
         }
-        console.log('Explosion animation complete');
+        console.log('Explosion animation complete - final scale:', group.scale.x, 'final opacity:', material.opacity);
       }
     }
     
     requestAnimationFrame(update);
   }
-  
-  // Make canvas visible immediately
-  const canvasElement = document.getElementById('heroCanvas');
-  if (canvasElement && canvasElement.parentElement) {
-    canvasElement.parentElement.style.opacity = '1';
-  }
 
-  // Start render loop first
-  requestAnimationFrame(render);
-
-  // Trigger explosion animation after a small delay to ensure first frame renders
-  // Also ensure render loop has started
+  // Start render loop and trigger explosion after a few frames
   let framesRendered = 0;
-  const originalRender = render;
-  const wrappedRender = function(time) {
+  function renderWithExplosion(time) {
+    render(time);
     framesRendered++;
-    originalRender(time);
     // Start explosion after a few frames have rendered
-    if (framesRendered === 3) {
+    if (framesRendered === 5 && !explosionStarted) {
       console.log('Starting explosion after', framesRendered, 'frames');
       animateExplosion();
     }
-  };
+  }
   
-  // Replace render with wrapped version
-  render = wrappedRender;
+  // Start the render loop
+  requestAnimationFrame(renderWithExplosion);
 }
 
 if (document.readyState === 'loading') {
