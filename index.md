@@ -26,11 +26,9 @@ layout: default
 <section class="content-split" id="portfolio" aria-label="Portfolio layout">
   <aside class="profile-panel" id="about" aria-labelledby="profileHeading">
     <div class="profile-panel__card">
-      {% if site.logo %}
       <div class="profile-panel__image">
-        <img src="{{site.logo | relative_url }}" alt="Ryker Kollmyer portrait">
+        <img src="{{ '/assets/img/ryker.jpg' | relative_url }}" alt="Ryker Kollmyer portrait">
       </div>
-      {% endif %}
       <div class="profile-panel__meta">
         <p class="profile-panel__eyebrow">Ryker Kollmyer</p>
         <h2 id="profileHeading">Youth Researcher</h2>

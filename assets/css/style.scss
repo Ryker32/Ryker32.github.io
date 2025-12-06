@@ -295,6 +295,8 @@ body.animation-complete .glass-nav-wrapper {
   justify-content: center;
   box-sizing: border-box;
   opacity: 1 !important; /* Always visible, even during loading */
+  background: var(--bg); /* Ensure hero has background */
+  z-index: 1; /* Ensure hero is above other content */
 }
 
 .hero::after {

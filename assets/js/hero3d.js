@@ -197,6 +197,8 @@ function initHero3D() {
       alpha: true,
       antialias: true
     });
+    renderer.setClearColor(0x000000, 0); // Transparent background
+    console.log('WebGL renderer created successfully');
   } catch (error) {
     console.error('WebGL unavailable, skipping hero animation.', error);
     canvas.remove();
@@ -211,6 +213,7 @@ function initHero3D() {
   // Start as a tiny orb for explosion effect
   group.scale.setScalar(0.01);
   scene.add(group);
+  console.log('Group added to scene with initial scale:', group.scale.x);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
@@ -371,7 +374,12 @@ function initHero3D() {
     renderer.render(scene, camera);
     renderCallCount++;
     if (renderCallCount === 1) {
-      console.log('First render call completed');
+      console.log('First render call completed - canvas size:', renderer.domElement.width, 'x', renderer.domElement.height);
+      console.log('Scene children:', scene.children.length, 'Group children:', group.children.length);
+      console.log('Group scale:', group.scale.x, 'Material opacity:', material.opacity);
+    }
+    if (renderCallCount === 10) {
+      console.log('10 frames rendered - checking if particles are visible');
     }
     requestAnimationFrame(render);
   }
@@ -437,7 +445,9 @@ function initHero3D() {
   }
 
   // Start render loop - particles start as visible orb
-  console.log('Starting render loop - orb should be visible at scale', group.scale.x);
+  console.log('Starting render loop - orb should be visible at scale', group.scale.x, 'opacity:', material.opacity);
+  console.log('Scene has', scene.children.length, 'children');
+  console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
   // Wait for animation-ready class to trigger explosion, or trigger after delay
