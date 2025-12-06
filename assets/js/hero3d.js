@@ -211,8 +211,6 @@ function initHero3D() {
   // Start as a tiny orb for explosion effect
   group.scale.setScalar(0.01);
   scene.add(group);
-  
-  console.log('Particle group created with scale:', group.scale.x, 'particles:', PARTICLE_COUNT, 'initial opacity:', material.opacity);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
@@ -287,6 +285,8 @@ function initHero3D() {
 
   const points = new THREE.Points(geometry, material);
   group.add(points);
+  
+  console.log('Particle group created - scale:', group.scale.x, 'particles:', PARTICLE_COUNT, 'initial opacity:', material.opacity);
 
   let lineMaterial = null;
 
