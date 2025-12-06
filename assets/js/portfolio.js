@@ -206,8 +206,15 @@
         <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
         <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP maintains ~99% coverage vs ~89% for a leader-follower baseline, with ~52% higher success rate at reaching 95% coverage in <400 steps and ~30% lower median time-to-95%.</li>      
         <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
-        </ul>
-        <hr>
+      </ul>
+      <figure class="project-figure">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+          <source src="/assets/img/reip/Hallucination.mp4" type="video/mp4">
+        </video>
+        <figcaption>Live demonstration of REIP in action in a 2-D gridworld environment.</figcaption>
+      </figure>
+      <hr>
+      
       <h3>Project Overview</h3>
       <p>
       Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2025. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
@@ -243,6 +250,11 @@
           </ul>
         </div>
       </div>
+      <hr>
+      <h3>Limitations and Next Steps</h3>
+      <p>
+      These results are currently limited to my 2-D gridworld benchmark with hand-tuned hyperparameters and a specific fault profile. I’m now porting REIP to higher-fidelity settings: first into a 3-D physics simulator (Isaac Sim / Gazebo), and in parallel onto micromouse-scale ground robots to see whether the robustness gains carry over to real hardware under sensing noise and actuation limits.
+      </p>
       <div class="clear-float"></div>
 
       `,
@@ -323,6 +335,7 @@
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
       <div class="clear-float"></div>
+      <hr>
       <h3>Demo Video</h3>
       <div class="article-image youtube-embed">
         <div class="youtube-thumbnail" data-video-id="Usc1UKZaNwo">
