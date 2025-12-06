@@ -43,6 +43,14 @@
   //     </div>
   //     <p>Videos can also be embedded and wrapped with text.</p>
   //     <div class="clear-float"></div>
+  //     <h3>YouTube Video</h3>
+  //     <div class="article-image youtube-embed">
+  //       <div class="youtube-thumbnail" data-video-id="VIDEO_ID">
+  //         <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Video thumbnail">
+  //       </div>
+  //       <div class="image-caption">Click the thumbnail to play the video.</div>
+  //     </div>
+  //     <div class="clear-float"></div>
   //   `,
   //   image: "/assets/img/project1.jpg",
   //   files: [
@@ -314,6 +322,14 @@
       This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
+      <div class="clear-float"></div>
+      <h3>Demo Video</h3>
+      <div class="article-image youtube-embed">
+        <div class="youtube-thumbnail" data-video-id="Usc1UKZaNwo">
+          <img src="https://img.youtube.com/vi/Usc1UKZaNwo/maxresdefault.jpg" alt="Demo video thumbnail">
+        </div>
+        <div class="image-caption">Watch the full demonstration.</div>
+      </div>
       <div class="clear-float"></div>
    `,
       image: "/assets/img/yc/dodada.png",
@@ -788,9 +804,42 @@
     });
   }
 
+  // Initialize YouTube click-to-play embeds
+  function initYouTubeEmbeds() {
+    document.addEventListener('click', (e) => {
+      const thumbnail = e.target.closest('.youtube-thumbnail');
+      if (!thumbnail) return;
+      
+      const container = thumbnail.closest('.youtube-embed');
+      if (!container) return;
+      
+      const videoId = thumbnail.dataset.videoId;
+      if (!videoId) return;
+      
+      // Create iframe with autoplay
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.frameBorder = '0';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.minHeight = '500px';
+      iframe.style.display = 'block';
+      iframe.style.borderRadius = '4px';
+      iframe.style.border = '2px solid var(--edge)';
+      iframe.style.background = '#161b22';
+      iframe.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+      
+      // Replace thumbnail with iframe
+      thumbnail.replaceWith(iframe);
+    });
+  }
+
   function bootstrap() {
     initPortfolio();
     initThemeToggle();
+    initYouTubeEmbeds();
   }
 
   // Initialize when DOM is ready
