@@ -71,6 +71,11 @@ body.animation-complete .site-main {
   opacity: 1;
 }
 
+/* Hero section should always be visible, even during loading */
+.hero {
+  opacity: 1 !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -289,6 +294,7 @@ body.animation-complete .glass-nav-wrapper {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  opacity: 1 !important; /* Always visible, even during loading */
 }
 
 .hero::after {
