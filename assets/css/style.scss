@@ -255,6 +255,13 @@ body.animation-complete .glass-nav-wrapper {
   height: 20px;
 }
 
+.glass-nav__icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
 .glass-nav__icon:hover,
 .glass-nav__toggle:hover,
 .glass-nav__icon:focus-visible,
