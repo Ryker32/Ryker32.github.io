@@ -280,7 +280,7 @@ function initHero3D() {
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
-    opacity: 0.8 // Start more visible so we can see the orb
+    opacity: 1.0 // Start fully visible so we can see the orb clearly
   });
 
   const points = new THREE.Points(geometry, material);
@@ -305,7 +305,7 @@ function initHero3D() {
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
-      opacity: 0.6 // Start more visible so we can see the orb
+      opacity: 0.8 // Start visible so we can see the orb
     });
 
     const links = new THREE.LineSegments(linkGeometry, lineMaterial);
@@ -436,24 +436,45 @@ function initHero3D() {
     requestAnimationFrame(update);
   }
 
-  // Start render loop and trigger explosion after a few frames
-  let framesRendered = 0;
-  let explosionStarted = false;
+  // Start render loop - particles start as visible orb
+  console.log('Starting render loop - orb should be visible at scale', group.scale.x);
+  requestAnimationFrame(render);
   
-  function renderWithExplosion(time) {
-    render(time);
-    framesRendered++;
-    // Start explosion after a few frames have rendered
-    if (framesRendered === 5 && !explosionStarted) {
+  // Wait for animation-ready class to trigger explosion, or trigger after delay
+  let explosionStarted = false;
+  function checkAndStartExplosion() {
+    if (explosionStarted) return;
+    
+    // Check if animation-ready class exists (from site-animation.js)
+    if (document.body.classList.contains('animation-ready')) {
       explosionStarted = true;
-      console.log('Starting explosion after', framesRendered, 'frames');
+      console.log('animation-ready class detected - starting explosion');
       animateExplosion();
+      return;
     }
+    
+    // Fallback: start after a reasonable delay (1.5s) if class never appears
+    setTimeout(() => {
+      if (!explosionStarted) {
+        explosionStarted = true;
+        console.log('Fallback: starting explosion after delay');
+        animateExplosion();
+      }
+    }, 1500);
   }
   
-  // Start the render loop
-  console.log('Starting render loop with explosion trigger');
-  requestAnimationFrame(renderWithExplosion);
+  // Check immediately and also watch for class changes
+  checkAndStartExplosion();
+  
+  const bodyObserver = new MutationObserver(() => {
+    if (document.body.classList.contains('animation-ready') && !explosionStarted) {
+      explosionStarted = true;
+      console.log('animation-ready class added - starting explosion');
+      animateExplosion();
+      bodyObserver.disconnect();
+    }
+  });
+  bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }
 
 if (document.readyState === 'loading') {
