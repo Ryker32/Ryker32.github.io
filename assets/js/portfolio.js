@@ -207,8 +207,8 @@
         <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP maintains ~99% coverage vs ~89% for a leader-follower baseline, with ~52% higher success rate at reaching 95% coverage in <400 steps and ~30% lower median time-to-95%.</li>      
         <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
       </ul>
-      <figure class="project-figure">
-        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+      <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
           <source src="/assets/img/reip/Hallucination.mp4" type="video/mp4">
         </video>
         <figcaption>Live demonstration of REIP in action in a 2-D gridworld environment.</figcaption>
