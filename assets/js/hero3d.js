@@ -280,7 +280,7 @@ function initHero3D() {
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
-    opacity: 0.3 // Start slightly visible so we can see the orb
+    opacity: 0.8 // Start more visible so we can see the orb
   });
 
   const points = new THREE.Points(geometry, material);
@@ -305,7 +305,7 @@ function initHero3D() {
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
-      opacity: 0.2 // Start slightly visible so we can see the orb
+      opacity: 0.6 // Start more visible so we can see the orb
     });
 
     const links = new THREE.LineSegments(linkGeometry, lineMaterial);
@@ -335,11 +335,23 @@ function initHero3D() {
   function handleResize() {
     const width = canvas.clientWidth || canvas.offsetWidth;
     const height = canvas.clientHeight || canvas.offsetHeight;
-    if (width === 0 || height === 0) return;
+    console.log('handleResize - canvas size:', width, 'x', height);
+    if (width === 0 || height === 0) {
+      console.warn('Canvas has zero size!', { 
+        clientWidth: canvas.clientWidth, 
+        offsetWidth: canvas.offsetWidth, 
+        clientHeight: canvas.clientHeight, 
+        offsetHeight: canvas.offsetHeight,
+        parentWidth: canvas.parentElement?.clientWidth,
+        parentHeight: canvas.parentElement?.clientHeight
+      });
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    console.log('Canvas resized successfully');
   }
 
   handleResize();
@@ -348,6 +360,7 @@ function initHero3D() {
   let rotationX = 0;
   let rotationY = 0;
 
+  let renderCallCount = 0;
   function render(time) {
     uniforms.uTime.value = time * 0.001;
     const easing = prefersMotion ? 0.08 : 0;
@@ -356,20 +369,26 @@ function initHero3D() {
     group.rotation.x = rotationX;
     group.rotation.y = rotationY;
     renderer.render(scene, camera);
+    renderCallCount++;
+    if (renderCallCount === 1) {
+      console.log('First render call completed');
+    }
     requestAnimationFrame(render);
   }
+  
+  console.log('Render function created, starting render loop');
 
   // Make canvas visible immediately
   const canvasElement = document.getElementById('heroCanvas');
   if (canvasElement && canvasElement.parentElement) {
     canvasElement.parentElement.style.opacity = '1';
+    console.log('Canvas parent opacity set to 1');
+  } else {
+    console.warn('Canvas or parent not found for opacity setting');
   }
 
   // Explosion animation - triggered directly after WebGL init
-  let explosionStarted = false;
   function animateExplosion() {
-    if (explosionStarted) return;
-    explosionStarted = true;
     console.log('Starting explosion animation');
     const startTime = performance.now();
     const duration = 1200; // 1.2 seconds
@@ -419,17 +438,21 @@ function initHero3D() {
 
   // Start render loop and trigger explosion after a few frames
   let framesRendered = 0;
+  let explosionStarted = false;
+  
   function renderWithExplosion(time) {
     render(time);
     framesRendered++;
     // Start explosion after a few frames have rendered
     if (framesRendered === 5 && !explosionStarted) {
+      explosionStarted = true;
       console.log('Starting explosion after', framesRendered, 'frames');
       animateExplosion();
     }
   }
   
   // Start the render loop
+  console.log('Starting render loop with explosion trigger');
   requestAnimationFrame(renderWithExplosion);
 }
 
