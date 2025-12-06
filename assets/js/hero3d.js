@@ -204,6 +204,8 @@ function initHero3D() {
   // Start as a tiny orb for explosion effect
   group.scale.setScalar(0.01);
   scene.add(group);
+  
+  console.log('Particle group created with scale:', group.scale.x, 'particles:', PARTICLE_COUNT);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
@@ -273,7 +275,7 @@ function initHero3D() {
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
-    opacity: 0 // Start invisible for explosion fade-in
+    opacity: 0.3 // Start slightly visible so we can see the orb
   });
 
   const points = new THREE.Points(geometry, material);
@@ -296,7 +298,7 @@ function initHero3D() {
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
-      opacity: 0 // Start invisible for explosion fade-in
+      opacity: 0.2 // Start slightly visible so we can see the orb
     });
 
     const links = new THREE.LineSegments(linkGeometry, lineMaterial);
@@ -352,11 +354,12 @@ function initHero3D() {
 
   // Explosion animation - triggered directly after WebGL init
   function animateExplosion() {
+    console.log('Starting explosion animation');
     const startTime = performance.now();
     const duration = 1200; // 1.2 seconds
     const startScale = 0.01;
     const endScale = 1.0;
-    const startOpacity = 0;
+    const startOpacity = material.opacity; // Use current opacity as start
     const endOpacity = 1;
     
     function easeOutCubic(t) {
@@ -386,6 +389,7 @@ function initHero3D() {
         if (lineMaterial) {
           lineMaterial.opacity = 1.0;
         }
+        console.log('Explosion animation complete');
       }
     }
     
@@ -402,9 +406,21 @@ function initHero3D() {
   requestAnimationFrame(render);
 
   // Trigger explosion animation after a small delay to ensure first frame renders
-  setTimeout(() => {
-    animateExplosion();
-  }, 100);
+  // Also ensure render loop has started
+  let framesRendered = 0;
+  const originalRender = render;
+  const wrappedRender = function(time) {
+    framesRendered++;
+    originalRender(time);
+    // Start explosion after a few frames have rendered
+    if (framesRendered === 3) {
+      console.log('Starting explosion after', framesRendered, 'frames');
+      animateExplosion();
+    }
+  };
+  
+  // Replace render with wrapped version
+  render = wrappedRender;
 }
 
 if (document.readyState === 'loading') {
