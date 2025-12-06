@@ -251,9 +251,28 @@
         </div>
       </div>
       <hr>
+      <h3>Results</h3>
+      <p> <strong class="list-label">Clean conditions (no injected faults):</strong>
+      A round-robin leader-follower baseline and REIP both reach similar final coverage (baseline 92.6%, REIP 91.2%), showing that the governance layer doesn't significantly hurt performance when the leader is healthy.
+      </p>
+      <p> <strong class="list-label">Adversarial conditions (hallucinations + packet / command loss):</strong>
+      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid — a 76-percentage-point advantage in this benchmark. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median time 399.6 steps), whereas REIP succeeds in 100% of runs with a median time-to-95% of 273.5 steps (~32% faster).
+      </p>
+      <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
+        <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
+          <figure class="project-figure project-figure--right object-cover" style="height: auto; width: auto;">
+            <img src="/assets/img/reip/adversarial.png" alt="Adversarial Conditions">
+            <figcaption>Adversarial conditions Coverage Vs. Time graph.</figcaption>
+          </figure>
+          <figure class="project-figure project-figure--right object-cover" style="height: auto; width: auto;">
+            <img src="/assets/img/reip/cleanconditions.png" alt="Clean Conditions">
+            <figcaption>Clean conditions Coverage Vs. Time graph.</figcaption>
+          </figure>
+        </div>
+      </div>
       <h3>Limitations and Next Steps</h3>
       <p>
-      These results are currently limited to my 2-D gridworld benchmark with hand-tuned hyperparameters and a specific fault profile. I’m now porting REIP to higher-fidelity settings: first into a 3-D physics simulator (Isaac Sim / Gazebo), and in parallel onto micromouse-scale ground robots to see whether the robustness gains carry over to real hardware under sensing noise and actuation limits.
+      These results are currently limited to my 2-D gridworld benchmark with hand-tuned hyperparameters and a specific fault profile. I'm now porting REIP to higher-fidelity settings: first into a 3-D physics simulator (Isaac Sim / Gazebo), and in parallel onto micromouse-scale ground robots to see whether the robustness gains carry over to real hardware under sensing noise and actuation limits.
       </p>
       <div class="clear-float"></div>
 
