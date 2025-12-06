@@ -352,7 +352,7 @@ function initHero3D() {
     }
   }
 
-  // Explosion animation - triggered when animation-ready class is added
+  // Explosion animation - triggered directly after WebGL init
   function animateExplosion() {
     const startTime = performance.now();
     const duration = 1200; // 1.2 seconds
@@ -394,24 +394,11 @@ function initHero3D() {
     requestAnimationFrame(update);
   }
   
-  // Watch for animation-ready class to trigger explosion
-  const bodyObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-        if (document.body.classList.contains('animation-ready')) {
-          animateExplosion();
-          bodyObserver.disconnect(); // Only run once
-        }
-      }
-    });
-  });
-  
-  // Check if already ready (in case class was added before observer)
-  if (document.body.classList.contains('animation-ready')) {
+  // Trigger explosion animation directly after scene is ready
+  // Give it a small delay to ensure first frame renders
+  requestAnimationFrame(() => {
     animateExplosion();
-  } else {
-    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-  }
+  });
 
   requestAnimationFrame(render);
 }
