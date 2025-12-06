@@ -201,6 +201,8 @@ function initHero3D() {
   camera.position.set(0, 0, 6);
 
   const group = new THREE.Group();
+  // Start as a tiny orb for explosion effect
+  group.scale.setScalar(0.01);
   scene.add(group);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
@@ -270,7 +272,8 @@ function initHero3D() {
     fragmentShader,
     transparent: true,
     blending: THREE.AdditiveBlending,
-    depthWrite: false
+    depthWrite: false,
+    opacity: 0 // Start invisible for explosion fade-in
   });
 
   const points = new THREE.Points(geometry, material);
@@ -292,7 +295,8 @@ function initHero3D() {
       fragmentShader: lineFragmentShader,
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      opacity: 0 // Start invisible for explosion fade-in
     });
 
     const links = new THREE.LineSegments(linkGeometry, lineMaterial);
@@ -346,6 +350,67 @@ function initHero3D() {
     if (prefersMotion) {
       requestAnimationFrame(render);
     }
+  }
+
+  // Explosion animation - triggered when animation-ready class is added
+  function animateExplosion() {
+    const startTime = performance.now();
+    const duration = 1200; // 1.2 seconds
+    const startScale = 0.01;
+    const endScale = 1.0;
+    const startOpacity = 0;
+    const endOpacity = 1;
+    
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+    
+    function update() {
+      const elapsed = performance.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      
+      const currentScale = startScale + (endScale - startScale) * eased;
+      const currentOpacity = startOpacity + (endOpacity - startOpacity) * eased;
+      
+      group.scale.setScalar(currentScale);
+      material.opacity = currentOpacity;
+      if (lineMaterial) {
+        lineMaterial.opacity = currentOpacity;
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        // Ensure final values
+        group.scale.setScalar(1.0);
+        material.opacity = 1.0;
+        if (lineMaterial) {
+          lineMaterial.opacity = 1.0;
+        }
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+  
+  // Watch for animation-ready class to trigger explosion
+  const bodyObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (document.body.classList.contains('animation-ready')) {
+          animateExplosion();
+          bodyObserver.disconnect(); // Only run once
+        }
+      }
+    });
+  });
+  
+  // Check if already ready (in case class was added before observer)
+  if (document.body.classList.contains('animation-ready')) {
+    animateExplosion();
+  } else {
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
   requestAnimationFrame(render);
