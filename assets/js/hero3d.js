@@ -1,5 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
+console.log('hero3d.js module loaded');
+
 function getThemeMode() {
   return document.body?.dataset?.theme === 'light' ? 'light' : 'dark';
 }
@@ -178,8 +180,13 @@ const lineFragmentShader = /* glsl */ `
 `;
 
 function initHero3D() {
+  console.log('initHero3D called');
   const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
+  if (!canvas) {
+    console.warn('heroCanvas not found');
+    return;
+  }
+  console.log('heroCanvas found:', canvas);
 
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -427,8 +434,20 @@ function initHero3D() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initHero3D);
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded - initializing hero3d');
+    try {
+      initHero3D();
+    } catch (error) {
+      console.error('Error initializing hero3d:', error);
+    }
+  });
 } else {
-  initHero3D();
+  console.log('DOM already ready - initializing hero3d');
+  try {
+    initHero3D();
+  } catch (error) {
+    console.error('Error initializing hero3d:', error);
+  }
 }
 
