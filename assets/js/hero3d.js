@@ -347,9 +347,7 @@ function initHero3D() {
     group.rotation.x = rotationX;
     group.rotation.y = rotationY;
     renderer.render(scene, camera);
-    if (prefersMotion) {
-      requestAnimationFrame(render);
-    }
+    requestAnimationFrame(render);
   }
 
   // Explosion animation - triggered directly after WebGL init
@@ -394,13 +392,19 @@ function initHero3D() {
     requestAnimationFrame(update);
   }
   
-  // Trigger explosion animation directly after scene is ready
-  // Give it a small delay to ensure first frame renders
-  requestAnimationFrame(() => {
-    animateExplosion();
-  });
+  // Make canvas visible immediately
+  const canvasElement = document.getElementById('heroCanvas');
+  if (canvasElement && canvasElement.parentElement) {
+    canvasElement.parentElement.style.opacity = '1';
+  }
 
+  // Start render loop first
   requestAnimationFrame(render);
+
+  // Trigger explosion animation after a small delay to ensure first frame renders
+  setTimeout(() => {
+    animateExplosion();
+  }, 100);
 }
 
 if (document.readyState === 'loading') {
