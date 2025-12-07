@@ -117,9 +117,16 @@ const sharedVertexTransform = /* glsl */ `
 const vertexShader = /* glsl */ `
 ${sharedVertexTransform}
 
+  attribute vec3 aStart;
+  attribute vec3 aTarget;
+  uniform float uReveal;
+
   void main() {
     float t = uTime * 0.12;
-    vec3 pos = position;
+
+    // Lerp from clustered start to full layout
+    vec3 pos = mix(aStart, aTarget, uReveal);
+
     vec3 curl = curlNoise(pos * 0.75 + t) * 0.35;
     pos += curl;
 
@@ -139,9 +146,15 @@ ${sharedVertexTransform}
 const lineVertexShader = /* glsl */ `
 ${sharedVertexTransform}
 
+  attribute vec3 aStart;
+  attribute vec3 aTarget;
+  uniform float uReveal;
+
   void main() {
     float t = uTime * 0.12;
-    vec3 pos = position;
+
+    vec3 pos = mix(aStart, aTarget, uReveal);
+
     vec3 curl = curlNoise(pos * 0.75 + t) * 0.35;
     pos += curl;
 
@@ -206,30 +219,23 @@ function initHero3D() {
     return;
   }
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 0, 6);
-
-  const group = new THREE.Group();
-  // Start as a tiny orb for explosion effect (unless animation already shown)
-  if (animationAlreadyShown) {
-    group.scale.setScalar(1.0); // Already shown, start at full size
-    material.opacity = 1.0;
-    if (lineMaterial) lineMaterial.opacity = 0.8;
-  } else {
-    group.scale.setScalar(0.01); // First time, start as orb
-  }
-  scene.add(group);
-  // Store reference for external access
-  canvas.__heroGroup = group;
-  console.log('Group added to scene with initial scale:', group.scale.x, 'animationAlreadyShown:', animationAlreadyShown);
-
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
   const MAX_CONNECTIONS = prefersMotion ? 4 : 2;
 
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 0, 6);
+  const group = new THREE.Group();
+  group.scale.setScalar(1.0);
+  scene.add(group);
+  // Store reference for external access
+  canvas.__heroGroup = group;
+
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const offsets = new Float32Array(PARTICLE_COUNT);
+  const startPositions = new Float32Array(PARTICLE_COUNT * 3);
+  const finalPositions = new Float32Array(PARTICLE_COUNT * 3);
   const palette = getHeroPalette();
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -238,9 +244,25 @@ function initHero3D() {
     const v = Math.random() * 2 - 1;
     const phi = Math.acos(v);
     const sinPhi = Math.sin(phi);
-    positions[i * 3] = radius * sinPhi * Math.cos(theta);
-    positions[i * 3 + 1] = radius * Math.cos(phi);
-    positions[i * 3 + 2] = radius * sinPhi * Math.sin(theta);
+    const x = radius * sinPhi * Math.cos(theta);
+    const y = radius * Math.cos(phi);
+    const z = radius * sinPhi * Math.sin(theta);
+
+    positions[i * 3] = x;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = z;
+
+    finalPositions[i * 3] = x;
+    finalPositions[i * 3 + 1] = y;
+    finalPositions[i * 3 + 2] = z;
+
+    // Clustered start on a small sphere
+    const len = Math.max(Math.hypot(x, y, z), 1e-4);
+    const rStart = 0.2;
+    startPositions[i * 3] = (x / len) * rStart;
+    startPositions[i * 3 + 1] = (y / len) * rStart;
+    startPositions[i * 3 + 2] = (z / len) * rStart;
+
     offsets[i] = Math.random() * Math.PI * 2;
   }
 
@@ -278,9 +300,12 @@ function initHero3D() {
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
+  geometry.setAttribute('aStart', new THREE.BufferAttribute(startPositions, 3));
+  geometry.setAttribute('aTarget', new THREE.BufferAttribute(finalPositions, 3));
 
   const uniforms = {
     uTime: { value: 0 },
+    uReveal: { value: animationAlreadyShown ? 1 : 0 },
     uColorNear: { value: new THREE.Color().fromArray(palette.near) },
     uColorFar: { value: new THREE.Color().fromArray(palette.far) }
   };
@@ -292,7 +317,7 @@ function initHero3D() {
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
-    opacity: 1.0 // Start fully visible so we can see the orb clearly
+    opacity: 1.0
   });
 
   const points = new THREE.Points(geometry, material);
@@ -310,6 +335,7 @@ function initHero3D() {
     lineMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: uniforms.uTime,
+        uReveal: uniforms.uReveal,
         uLineColor: { value: new THREE.Color().fromArray(palette.line) }
       },
       vertexShader: lineVertexShader,
@@ -404,52 +430,41 @@ function initHero3D() {
     console.warn('Canvas or parent not found for opacity setting');
   }
 
-  // Explosion animation - triggered directly after WebGL init
-  function animateExplosion() {
-    console.log('Starting explosion animation');
+  // Reveal animation - lerp positions from clustered start to full layout
+  function animateReveal() {
+    console.log('Starting reveal animation');
     const startTime = performance.now();
     const duration = 1200; // 1.2 seconds
-    const startScale = 0.01;
-    const endScale = 1.0;
-    const startOpacity = material.opacity; // Use current opacity as start
-    const endOpacity = 1;
-    
+
     function easeOutCubic(t) {
       return 1 - Math.pow(1 - t, 3);
     }
-    
+
     function update() {
       const elapsed = performance.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeOutCubic(progress);
-      
-      const currentScale = startScale + (endScale - startScale) * eased;
-      const currentOpacity = startOpacity + (endOpacity - startOpacity) * eased;
-      
-      group.scale.setScalar(currentScale);
-      material.opacity = currentOpacity;
+
+      uniforms.uReveal.value = eased;
       if (lineMaterial) {
-        lineMaterial.opacity = currentOpacity;
+        lineMaterial.uniforms.uReveal.value = eased;
       }
-      
-      // Log progress every 20% for debugging
+
       if (Math.floor(progress * 5) !== Math.floor((progress - 0.01) * 5)) {
-        console.log(`Explosion progress: ${Math.floor(progress * 100)}% - scale: ${currentScale.toFixed(3)}, opacity: ${currentOpacity.toFixed(3)}`);
+        console.log(`Reveal progress: ${Math.floor(progress * 100)}% - uReveal: ${uniforms.uReveal.value.toFixed(3)}`);
       }
-      
+
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        // Ensure final values
-        group.scale.setScalar(1.0);
-        material.opacity = 1.0;
+        uniforms.uReveal.value = 1.0;
         if (lineMaterial) {
-          lineMaterial.opacity = 1.0;
+          lineMaterial.uniforms.uReveal.value = 1.0;
         }
-        console.log('Explosion animation complete - final scale:', group.scale.x, 'final opacity:', material.opacity);
+        console.log('Reveal animation complete');
       }
     }
-    
+
     requestAnimationFrame(update);
   }
 
@@ -459,45 +474,44 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Only run explosion animation if animation hasn't been shown yet
+  // Only run reveal animation if animation hasn't been shown yet
   if (!animationAlreadyShown) {
-    // Wait for animation-ready class to trigger explosion, or trigger after delay
-    let explosionStarted = false;
-    function checkAndStartExplosion() {
-      if (explosionStarted) return;
+    let revealStarted = false;
+    function checkAndStartReveal() {
+      if (revealStarted) return;
       
-      // Check if animation-ready class exists (from site-animation.js)
       if (document.body.classList.contains('animation-ready')) {
-        explosionStarted = true;
-        console.log('animation-ready class detected - starting explosion');
-        animateExplosion();
+        revealStarted = true;
+        console.log('animation-ready class detected - starting reveal');
+        animateReveal();
         return;
       }
       
-      // Fallback: start after a reasonable delay (1.5s) if class never appears
       setTimeout(() => {
-        if (!explosionStarted) {
-          explosionStarted = true;
-          console.log('Fallback: starting explosion after delay');
-          animateExplosion();
+        if (!revealStarted) {
+          revealStarted = true;
+          console.log('Fallback: starting reveal after delay');
+          animateReveal();
         }
       }, 1500);
     }
     
-    // Check immediately and also watch for class changes
-    checkAndStartExplosion();
+    checkAndStartReveal();
     
     const bodyObserver = new MutationObserver(() => {
-      if (document.body.classList.contains('animation-ready') && !explosionStarted) {
-        explosionStarted = true;
-        console.log('animation-ready class added - starting explosion');
-        animateExplosion();
+      if (document.body.classList.contains('animation-ready') && !revealStarted) {
+        revealStarted = true;
+        console.log('animation-ready class added - starting reveal');
+        animateReveal();
         bodyObserver.disconnect();
       }
     });
     bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   } else {
-    console.log('Animation already shown, skipping explosion - particles already at full scale');
+    // Ensure reveal is fully applied
+    uniforms.uReveal.value = 1.0;
+    if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
+    console.log('Animation already shown, skipping reveal - particles already at full layout');
   }
 }
 
