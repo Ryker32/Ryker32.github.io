@@ -66,75 +66,34 @@
 
   // Initialize animation sequence
   function initAnimation() {
-    // Body already has animation-loading from HTML, just ensure scroll is locked
     document.documentElement.style.overflow = 'hidden';
-    
-    // Wait for hero3d.js to initialize and start rendering
-    // hero3d.js runs on DOMContentLoaded, so we need to wait a bit for it to initialize
-    // Use a combination of detection and timeout to ensure animation triggers
-    
+
     let animationTriggered = false;
-    
+
     function triggerAnimation() {
       if (animationTriggered) return;
       animationTriggered = true;
-      
+
       const canvas = document.getElementById('heroCanvas');
-      console.log('Triggering explosion animation', {
+      console.log('Triggering hero reveal', {
         canvasExists: !!canvas,
         canvasSize: canvas ? `${canvas.width}x${canvas.height}` : 'N/A',
         bodyClasses: document.body.className
       });
-      
-      // Mark as ready to trigger CSS explosion animation
+
       document.body.classList.add('animation-ready');
       collapseHeroFrame();
       hidePreloader();
-      // Start the animation sequence
       startAnimationSequence();
     }
-    
-    // Method 1: Check if canvas has been initialized
-    let checkCount = 0;
-    const maxChecks = 100; // 5 seconds max wait
-    const checkInterval = setInterval(() => {
-      const canvas = document.getElementById('heroCanvas');
-      let isInitialized = false;
-      
-      if (canvas) {
-        // Check if canvas has been properly sized (hero3d.js sets size in handleResize)
-        // Default canvas is 300x150, hero3d.js sets it to container size
-        const isLargerThanDefault = canvas.width > 400 || canvas.height > 200;
-        
-        // Also check if renderer has been created by checking canvas attributes
-        // WebGL canvas typically gets specific attributes set
-        const hasWebGLAttributes = canvas.width > 0 && canvas.height > 0 && 
-                                    (canvas.width !== 300 || canvas.height !== 150);
-        
-        isInitialized = isLargerThanDefault || hasWebGLAttributes;
-      }
-      
-      if (isInitialized) {
-        clearInterval(checkInterval);
-        // Give it a moment to render a few frames
-        setTimeout(triggerAnimation, 300);
-      } else if (checkCount >= maxChecks) {
-        clearInterval(checkInterval);
-        // Fallback: trigger anyway after timeout (canvas might still render)
-        console.warn('Canvas initialization timeout, triggering animation anyway');
-        setTimeout(triggerAnimation, 100);
-      }
-      checkCount++;
-    }, 50);
-    
-    // Method 2: Fallback timeout - trigger animation after reasonable delay regardless
-    // This ensures animation always runs even if detection fails
-    setTimeout(() => {
-      if (!animationTriggered) {
-        console.warn('Animation fallback triggered');
-        triggerAnimation();
-      }
-    }, 2000); // 2 second fallback
+
+    // Trigger as soon as the hero scene signals readiness
+    document.addEventListener('hero-ready', () => {
+      triggerAnimation();
+    });
+
+    // Fallback: trigger shortly after DOM ready in case the event is missed
+    setTimeout(() => triggerAnimation(), 400);
   }
 
   function startAnimationSequence() {
@@ -169,22 +128,12 @@
     }, 2500);
   }
 
-  // Start animation initialization
-  // hero3d.js is a module script, so it loads asynchronously after DOMContentLoaded
-  // We need to wait for both DOM ready AND give hero3d.js time to initialize
-  function startInit() {
-    if (document.readyState === 'loading') {
-      // Wait for DOM, then wait a bit more for hero3d.js module to load
-      document.addEventListener('DOMContentLoaded', () => {
-        // Module scripts execute after DOMContentLoaded, so wait a bit
-        setTimeout(initAnimation, 100);
-      });
-    } else {
-      // DOM already ready, but hero3d.js module might still be loading
-      // Wait a bit to give it time to initialize
-      setTimeout(initAnimation, 150);
-    }
+  // Start animation initialization promptly
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initAnimation, 50);
+    });
+  } else {
+    setTimeout(initAnimation, 50);
   }
-  
-  startInit();
 })();
