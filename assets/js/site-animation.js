@@ -9,6 +9,7 @@
   if (!heroCanvas) {
     document.body.classList.add('animation-complete');
     document.body.classList.remove('animation-loading');
+    document.documentElement.style.overflow = '';
     const siteMain = document.querySelector('.site-main');
     if (siteMain) siteMain.style.opacity = '1';
     const nav = document.querySelector('.glass-nav-wrapper');
@@ -20,6 +21,7 @@
   if (hasSeenAnimation) {
     document.body.classList.add('animation-complete', 'animation-ready');
     document.body.classList.remove('animation-loading');
+    document.documentElement.style.overflow = '';
     const siteMain = document.querySelector('.site-main');
     if (siteMain) siteMain.style.opacity = '1';
     const nav = document.querySelector('.glass-nav-wrapper');
