@@ -418,6 +418,9 @@ function initHero3D() {
   handleResize();
   window.addEventListener('resize', handleResize);
 
+  // Signal that hero scene is ready for the controller
+  document.dispatchEvent(new Event('hero-ready'));
+
   let rotationX = 0;
   let rotationY = 0;
 

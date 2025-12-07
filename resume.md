@@ -5,7 +5,11 @@ permalink: /resume/
 ---
 
 {% assign resume_file = site.static_files | where: "path", "/assets/img/resume.png" | first %}
-{% assign resume_src = resume_file ? resume_file.path | relative_url : '/assets/img/ryker.jpg' | relative_url %}
+{% if resume_file %}
+  {% assign resume_src = resume_file.path | relative_url %}
+{% else %}
+  {% assign resume_src = "/assets/img/ryker.jpg" | relative_url %}
+{% endif %}
 
 <section class="resume-page">
   <div class="resume-container">

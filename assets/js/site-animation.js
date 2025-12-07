@@ -92,8 +92,8 @@
       triggerAnimation();
     });
 
-    // Fallback: trigger shortly after DOM ready in case the event is missed
-    setTimeout(() => triggerAnimation(), 400);
+    // Fallback: trigger after a brief delay in case the event is missed
+    setTimeout(() => triggerAnimation(), 1200);
   }
 
   function startAnimationSequence() {
