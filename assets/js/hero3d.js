@@ -220,8 +220,8 @@ function initHero3D() {
   }
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
-  const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
-  const MAX_CONNECTIONS = prefersMotion ? 4 : 2;
+  const LINK_DISTANCE = prefersMotion ? 0.65 : 0.55; // slightly longer to guarantee links
+  const MAX_CONNECTIONS = prefersMotion ? 3 : 3;      // 2-3 closest connections
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -268,6 +268,8 @@ function initHero3D() {
 
   const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
   const linkPositions = [];
+  const linkStartPositions = [];
+  const linkTargetPositions = [];
   const linkOffsets = [];
   const linkDistanceSq = LINK_DISTANCE * LINK_DISTANCE;
 
@@ -282,6 +284,7 @@ function initHero3D() {
       const dz = positions[baseIndex + 2] - positions[otherIndex + 2];
       const distSq = dx * dx + dy * dy + dz * dz;
       if (distSq <= linkDistanceSq) {
+        // line positions (final)
         linkPositions.push(
           positions[baseIndex],
           positions[baseIndex + 1],
@@ -289,6 +292,24 @@ function initHero3D() {
           positions[otherIndex],
           positions[otherIndex + 1],
           positions[otherIndex + 2]
+        );
+        // line start positions (clustered)
+        linkStartPositions.push(
+          startPositions[baseIndex],
+          startPositions[baseIndex + 1],
+          startPositions[baseIndex + 2],
+          startPositions[otherIndex],
+          startPositions[otherIndex + 1],
+          startPositions[otherIndex + 2]
+        );
+        // line target positions (same as final)
+        linkTargetPositions.push(
+          finalPositions[baseIndex],
+          finalPositions[baseIndex + 1],
+          finalPositions[baseIndex + 2],
+          finalPositions[otherIndex],
+          finalPositions[otherIndex + 1],
+          finalPositions[otherIndex + 2]
         );
         linkOffsets.push(offsets[i], offsets[j]);
         connectionCounts[i]++;
@@ -330,6 +351,8 @@ function initHero3D() {
   if (linkPositions.length > 0) {
     const linkGeometry = new THREE.BufferGeometry();
     linkGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linkPositions), 3));
+    linkGeometry.setAttribute('aStart', new THREE.BufferAttribute(new Float32Array(linkStartPositions), 3));
+    linkGeometry.setAttribute('aTarget', new THREE.BufferAttribute(new Float32Array(linkTargetPositions), 3));
     linkGeometry.setAttribute('aOffset', new THREE.BufferAttribute(new Float32Array(linkOffsets), 1));
 
     lineMaterial = new THREE.ShaderMaterial({
@@ -474,41 +497,10 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Only run reveal animation if animation hasn't been shown yet
+  // Run reveal animation immediately on first load; skip if already shown this session
   if (!animationAlreadyShown) {
-    let revealStarted = false;
-    function checkAndStartReveal() {
-      if (revealStarted) return;
-      
-      if (document.body.classList.contains('animation-ready')) {
-        revealStarted = true;
-        console.log('animation-ready class detected - starting reveal');
-        animateReveal();
-        return;
-      }
-      
-      setTimeout(() => {
-        if (!revealStarted) {
-          revealStarted = true;
-          console.log('Fallback: starting reveal after delay');
-          animateReveal();
-        }
-      }, 1500);
-    }
-    
-    checkAndStartReveal();
-    
-    const bodyObserver = new MutationObserver(() => {
-      if (document.body.classList.contains('animation-ready') && !revealStarted) {
-        revealStarted = true;
-        console.log('animation-ready class added - starting reveal');
-        animateReveal();
-        bodyObserver.disconnect();
-      }
-    });
-    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    animateReveal(); // start right away so we don't sit on a blank screen
   } else {
-    // Ensure reveal is fully applied
     uniforms.uReveal.value = 1.0;
     if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
     console.log('Animation already shown, skipping reveal - particles already at full layout');
