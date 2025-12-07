@@ -1,9 +1,7 @@
 (() => {
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Force replay of intro for debugging/visibility
-  sessionStorage.removeItem('siteAnimationShown');
-  const hasSeenAnimation = false;
+  const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
   const heroFrame = document.querySelector('.hero-frame');
   const heroCanvas = document.getElementById('heroCanvas');
   
@@ -94,9 +92,6 @@
     document.addEventListener('hero-ready', () => {
       triggerAnimation();
     });
-
-    // Fallback: trigger after a brief delay in case the event is missed
-    setTimeout(() => triggerAnimation(), 1700);
   }
 
   function startAnimationSequence() {
