@@ -29,9 +29,6 @@ permalink: /resume/
   <div class="resume-container">
     <div class="resume-image-wrapper">
       <img src="{{ resume_src }}" alt="Ryker Kollmyer Resume" class="resume-image">
-      {% unless resume_file %}
-      <p class="resume-note">Inline preview placeholder shown until resume.png is uploaded to assets/img/.</p>
-      {% endunless %}
     </div>
   </div>
 </section>

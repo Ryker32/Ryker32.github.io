@@ -2223,8 +2223,10 @@ header, section, footer {
 
 .resume-page {
   padding: 96px clamp(16px, 5vw, 72px) 72px;
-  max-width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .resume-container {
@@ -2234,10 +2236,14 @@ header, section, footer {
   border: none;
   box-shadow: none;
   color: var(--ink);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .resume-image-wrapper {
   width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2245,6 +2251,8 @@ header, section, footer {
   border-radius: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .resume-image {
@@ -2254,6 +2262,10 @@ header, section, footer {
   display: block;
   border-radius: 0;
   box-shadow: none;
+  margin: 0 auto;
+  /* Soft fade at the edges to blend into the background */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
 }
 
 .resume-header {
