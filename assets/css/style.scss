@@ -2253,6 +2253,13 @@ header, section, footer {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  /* Fade edges into the background */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 62%, transparent 90%);
+  mask-image: radial-gradient(ellipse at center, #000 62%, transparent 90%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .resume-image {
@@ -2263,9 +2270,9 @@ header, section, footer {
   border-radius: 0;
   box-shadow: none;
   margin: 0 auto;
-  /* Soft fade at the edges to blend into the background */
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
+  /* Ensure the image inherits the wrapper mask cleanly */
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .resume-header {
