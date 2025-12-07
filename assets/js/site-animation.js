@@ -88,6 +88,23 @@
       startAnimationSequence();
     }
 
+    // Hard fallback: force-ready and complete after 1.5s if nothing fired
+    setTimeout(() => {
+      if (animationTriggered) return;
+      console.warn('Forcing animation-ready/complete fallback');
+      animationTriggered = true;
+      document.body.classList.add('animation-ready', 'animation-complete');
+      document.body.classList.remove('animation-loading');
+      document.documentElement.style.overflow = '';
+      const siteMain = document.querySelector('.site-main');
+      if (siteMain) siteMain.style.opacity = '1';
+      const nav = document.querySelector('.glass-nav-wrapper');
+      if (nav) nav.style.opacity = '';
+      const pre = document.getElementById('sitePreloader');
+      if (pre) pre.remove();
+      collapseHeroFrame();
+    }, 1500);
+
     // Trigger as soon as the hero scene signals readiness
     document.addEventListener('hero-ready', () => {
       triggerAnimation();
