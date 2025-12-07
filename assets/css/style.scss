@@ -2253,13 +2253,15 @@ header, section, footer {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  /* Fade edges into the background (white → transparent) */
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 90%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, #000 90%, transparent 100%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  /* Fade edges linearly from white to transparent at the margins */
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(0deg,  transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(0deg,  transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite: intersect;
+  mask-composite: intersect;
 }
 
 .resume-image {
