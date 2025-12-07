@@ -501,10 +501,14 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Run reveal animation immediately on first load; skip if already shown this session
-  if (!animationAlreadyShown) {
-    animateReveal(); // start right away so we don't sit on a blank screen
-  } else {
+  // Listen for animation-ready signal from controller to start reveal
+  document.addEventListener('animation-ready', () => {
+    if (animationAlreadyShown) return;
+    animateReveal();
+  });
+
+  // Skip reveal if already shown this session
+  if (animationAlreadyShown) {
     uniforms.uReveal.value = 1.0;
     if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
     console.log('Animation already shown, skipping reveal - particles already at full layout');

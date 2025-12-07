@@ -82,6 +82,7 @@
       });
 
       document.body.classList.add('animation-ready');
+      document.dispatchEvent(new Event('animation-ready'));
       collapseHeroFrame();
       hidePreloader();
       startAnimationSequence();
@@ -93,7 +94,7 @@
     });
 
     // Fallback: trigger after a brief delay in case the event is missed
-    setTimeout(() => triggerAnimation(), 1200);
+    setTimeout(() => triggerAnimation(), 1700);
   }
 
   function startAnimationSequence() {
