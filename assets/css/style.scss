@@ -2253,9 +2253,9 @@ header, section, footer {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  /* Fade edges into the background */
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 62%, transparent 90%);
-  mask-image: radial-gradient(ellipse at center, #000 62%, transparent 90%);
+  /* Fade edges into the background (white → transparent) */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 90%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, #000 90%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
