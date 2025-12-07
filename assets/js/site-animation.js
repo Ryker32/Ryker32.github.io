@@ -1,7 +1,9 @@
 (() => {
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
+  // Force replay of intro for debugging/visibility
+  sessionStorage.removeItem('siteAnimationShown');
+  const hasSeenAnimation = false;
   const heroFrame = document.querySelector('.hero-frame');
   const heroCanvas = document.getElementById('heroCanvas');
   

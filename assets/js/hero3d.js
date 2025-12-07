@@ -202,7 +202,8 @@ function initHero3D() {
   console.log('heroCanvas found:', canvas);
 
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const animationAlreadyShown = sessionStorage.getItem('siteAnimationShown') === 'true';
+  // Force replay of intro for visibility/debugging
+  const animationAlreadyShown = false;
 
   let renderer;
   try {
