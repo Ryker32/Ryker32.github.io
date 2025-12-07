@@ -2253,15 +2253,18 @@ header, section, footer {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  /* Fade edges linearly from white to transparent at the margins */
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(0deg,  transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-image:
-    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(0deg,  transparent 0%, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite: intersect;
-  mask-composite: intersect;
+}
+
+.resume-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    transparent 70%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
 }
 
 .resume-image {
