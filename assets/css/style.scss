@@ -2223,17 +2223,36 @@ header, section, footer {
 
 .resume-page {
   padding: 120px clamp(24px, 6vw, 96px) 80px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .resume-container {
   background: var(--card-panel-bg);
   border-radius: 6px;
-  padding: clamp(32px, 4vw, 64px);
+  padding: clamp(24px, 3vw, 48px);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 20px 60px rgba(3, 10, 24, 0.45);
   color: var(--ink);
+}
+
+.resume-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.resume-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .resume-header {

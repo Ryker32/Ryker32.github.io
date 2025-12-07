@@ -1,8 +1,34 @@
 (() => {
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasSeenAnimation = false; // sessionStorage.getItem('siteAnimationShown');
+  const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
   const heroFrame = document.querySelector('.hero-frame');
+  const heroCanvas = document.getElementById('heroCanvas');
+  
+  // If there's no hero section on this page, skip all animation logic
+  if (!heroCanvas) {
+    document.body.classList.add('animation-complete');
+    document.body.classList.remove('animation-loading');
+    const siteMain = document.querySelector('.site-main');
+    if (siteMain) siteMain.style.opacity = '1';
+    const nav = document.querySelector('.glass-nav-wrapper');
+    if (nav) nav.style.opacity = '1';
+    return;
+  }
+  
+  // If animation was already shown in this session, skip it
+  if (hasSeenAnimation) {
+    document.body.classList.add('animation-complete', 'animation-ready');
+    document.body.classList.remove('animation-loading');
+    const siteMain = document.querySelector('.site-main');
+    if (siteMain) siteMain.style.opacity = '1';
+    const nav = document.querySelector('.glass-nav-wrapper');
+    if (nav) nav.style.opacity = '1';
+    if (heroFrame) heroFrame.classList.add('hero-frame--collapsed');
+    const preloader = document.getElementById('sitePreloader');
+    if (preloader) preloader.remove();
+    return;
+  }
 
   const collapseHeroFrame = () => {
     if (!heroFrame) return;

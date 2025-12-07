@@ -189,6 +189,7 @@ function initHero3D() {
   console.log('heroCanvas found:', canvas);
 
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animationAlreadyShown = sessionStorage.getItem('siteAnimationShown') === 'true';
 
   let renderer;
   try {
@@ -210,10 +211,18 @@ function initHero3D() {
   camera.position.set(0, 0, 6);
 
   const group = new THREE.Group();
-  // Start as a tiny orb for explosion effect
-  group.scale.setScalar(0.01);
+  // Start as a tiny orb for explosion effect (unless animation already shown)
+  if (animationAlreadyShown) {
+    group.scale.setScalar(1.0); // Already shown, start at full size
+    material.opacity = 1.0;
+    if (lineMaterial) lineMaterial.opacity = 0.8;
+  } else {
+    group.scale.setScalar(0.01); // First time, start as orb
+  }
   scene.add(group);
-  console.log('Group added to scene with initial scale:', group.scale.x);
+  // Store reference for external access
+  canvas.__heroGroup = group;
+  console.log('Group added to scene with initial scale:', group.scale.x, 'animationAlreadyShown:', animationAlreadyShown);
 
   const PARTICLE_COUNT = prefersMotion ? 300 : 150;
   const LINK_DISTANCE = prefersMotion ? 0.55 : 0.45;
@@ -450,58 +459,104 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Wait for animation-ready class to trigger explosion, or trigger after delay
-  let explosionStarted = false;
-  function checkAndStartExplosion() {
-    if (explosionStarted) return;
-    
-    // Check if animation-ready class exists (from site-animation.js)
-    if (document.body.classList.contains('animation-ready')) {
-      explosionStarted = true;
-      console.log('animation-ready class detected - starting explosion');
-      animateExplosion();
-      return;
-    }
-    
-    // Fallback: start after a reasonable delay (1.5s) if class never appears
-    setTimeout(() => {
-      if (!explosionStarted) {
+  // Only run explosion animation if animation hasn't been shown yet
+  if (!animationAlreadyShown) {
+    // Wait for animation-ready class to trigger explosion, or trigger after delay
+    let explosionStarted = false;
+    function checkAndStartExplosion() {
+      if (explosionStarted) return;
+      
+      // Check if animation-ready class exists (from site-animation.js)
+      if (document.body.classList.contains('animation-ready')) {
         explosionStarted = true;
-        console.log('Fallback: starting explosion after delay');
+        console.log('animation-ready class detected - starting explosion');
         animateExplosion();
+        return;
       }
-    }, 1500);
-  }
-  
-  // Check immediately and also watch for class changes
-  checkAndStartExplosion();
-  
-  const bodyObserver = new MutationObserver(() => {
-    if (document.body.classList.contains('animation-ready') && !explosionStarted) {
-      explosionStarted = true;
-      console.log('animation-ready class added - starting explosion');
-      animateExplosion();
-      bodyObserver.disconnect();
+      
+      // Fallback: start after a reasonable delay (1.5s) if class never appears
+      setTimeout(() => {
+        if (!explosionStarted) {
+          explosionStarted = true;
+          console.log('Fallback: starting explosion after delay');
+          animateExplosion();
+        }
+      }, 1500);
     }
-  });
-  bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    // Check immediately and also watch for class changes
+    checkAndStartExplosion();
+    
+    const bodyObserver = new MutationObserver(() => {
+      if (document.body.classList.contains('animation-ready') && !explosionStarted) {
+        explosionStarted = true;
+        console.log('animation-ready class added - starting explosion');
+        animateExplosion();
+        bodyObserver.disconnect();
+      }
+    });
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  } else {
+    console.log('Animation already shown, skipping explosion - particles already at full scale');
+  }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded - initializing hero3d');
+// Only initialize if hero canvas exists and animation hasn't been shown
+const heroCanvas = document.getElementById('heroCanvas');
+const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
+
+if (!heroCanvas) {
+  // No hero section on this page, skip initialization
+  console.log('No hero canvas found, skipping hero3d initialization');
+} else if (hasSeenAnimation) {
+  // Animation already shown, initialize immediately without explosion
+  console.log('Animation already shown, initializing hero3d without explosion');
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        initHero3D();
+        // Immediately set to final state
+        setTimeout(() => {
+          const group = document.querySelector('#heroCanvas')?.__heroGroup;
+          if (group) {
+            group.scale.setScalar(1.0);
+          }
+        }, 100);
+      } catch (error) {
+        console.error('Error initializing hero3d:', error);
+      }
+    });
+  } else {
+    try {
+      initHero3D();
+      setTimeout(() => {
+        const group = document.querySelector('#heroCanvas')?.__heroGroup;
+        if (group) {
+          group.scale.setScalar(1.0);
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Error initializing hero3d:', error);
+    }
+  }
+} else {
+  // First time, run full animation
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded - initializing hero3d');
+      try {
+        initHero3D();
+      } catch (error) {
+        console.error('Error initializing hero3d:', error);
+      }
+    });
+  } else {
+    console.log('DOM already ready - initializing hero3d');
     try {
       initHero3D();
     } catch (error) {
       console.error('Error initializing hero3d:', error);
     }
-  });
-} else {
-  console.log('DOM already ready - initializing hero3d');
-  try {
-    initHero3D();
-  } catch (error) {
-    console.error('Error initializing hero3d:', error);
   }
 }
 
