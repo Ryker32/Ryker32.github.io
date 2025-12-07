@@ -2223,7 +2223,7 @@ header, section, footer {
 
 .resume-page {
   padding: 120px clamp(24px, 6vw, 96px) 80px;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -2236,6 +2236,12 @@ header, section, footer {
   color: var(--ink);
 }
 
+.resume-download {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+
 .resume-image-wrapper {
   width: 100%;
   display: flex;
@@ -2243,16 +2249,17 @@ header, section, footer {
   align-items: center;
   background: #ffffff;
   border-radius: 4px;
-  padding: 24px;
+  padding: clamp(16px, 2vw, 32px);
   box-sizing: border-box;
 }
 
 .resume-image {
   width: 100%;
+  max-width: 1050px;
   height: auto;
   display: block;
   border-radius: 2px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
 }
 
 .resume-header {
