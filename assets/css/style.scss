@@ -2255,23 +2255,6 @@ header, section, footer {
   overflow: hidden;
 }
 
-.resume-image-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  /* Horizontal side fade: white image → transparent → background */
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.85) 10%,
-    rgba(255, 255, 255, 1) 20%,
-    rgba(255, 255, 255, 1) 80%,
-    rgba(255, 255, 255, 0.85) 90%,
-    transparent 100%
-  );
-}
-
 .resume-image {
   width: 100%;
   max-width: 1050px;
