@@ -219,9 +219,9 @@ function initHero3D() {
     return;
   }
 
-  const PARTICLE_COUNT = prefersMotion ? 300 : 150;
-  const LINK_DISTANCE = prefersMotion ? 0.65 : 0.55; // slightly longer to guarantee links
-  const MAX_CONNECTIONS = prefersMotion ? 3 : 3;      // 2-3 closest connections
+  const PARTICLE_COUNT = prefersMotion ? 320 : 180;
+  const LINK_DISTANCE = prefersMotion ? 0.75 : 0.65; // slightly longer to guarantee links
+  const MAX_CONNECTIONS = 3;                          // aim for 2-3 closest connections
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -239,7 +239,7 @@ function initHero3D() {
   const palette = getHeroPalette();
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const radius = 1.2 + Math.random() * 1.5;
+    const radius = 1.4 + Math.random() * 1.8; // final spread radius
     const theta = Math.random() * Math.PI * 2;
     const v = Math.random() * 2 - 1;
     const phi = Math.acos(v);
@@ -258,7 +258,7 @@ function initHero3D() {
 
     // Clustered start on a small sphere
     const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 0.2;
+    const rStart = 0.04; // tight clustered orb start radius
     startPositions[i * 3] = (x / len) * rStart;
     startPositions[i * 3 + 1] = (y / len) * rStart;
     startPositions[i * 3 + 2] = (z / len) * rStart;
@@ -485,6 +485,7 @@ function initHero3D() {
           lineMaterial.uniforms.uReveal.value = 1.0;
         }
         console.log('Reveal animation complete');
+        document.dispatchEvent(new Event('hero-reveal-complete'));
       }
     }
 
@@ -504,65 +505,27 @@ function initHero3D() {
     uniforms.uReveal.value = 1.0;
     if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
     console.log('Animation already shown, skipping reveal - particles already at full layout');
+    document.dispatchEvent(new Event('hero-reveal-complete'));
   }
 }
 
-// Only initialize if hero canvas exists and animation hasn't been shown
-const heroCanvas = document.getElementById('heroCanvas');
-const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
+  // Signal that hero is ready (scene built)
+  document.dispatchEvent(new Event('hero-ready'));
 
-if (!heroCanvas) {
-  // No hero section on this page, skip initialization
-  console.log('No hero canvas found, skipping hero3d initialization');
-} else if (hasSeenAnimation) {
-  // Animation already shown, initialize immediately without explosion
-  console.log('Animation already shown, initializing hero3d without explosion');
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      try {
-        initHero3D();
-        // Immediately set to final state
-        setTimeout(() => {
-          const group = document.querySelector('#heroCanvas')?.__heroGroup;
-          if (group) {
-            group.scale.setScalar(1.0);
-          }
-        }, 100);
-      } catch (error) {
-        console.error('Error initializing hero3d:', error);
-      }
-    });
-  } else {
+// Initialize once DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
     try {
       initHero3D();
-      setTimeout(() => {
-        const group = document.querySelector('#heroCanvas')?.__heroGroup;
-        if (group) {
-          group.scale.setScalar(1.0);
-        }
-      }, 100);
     } catch (error) {
       console.error('Error initializing hero3d:', error);
     }
-  }
+  });
 } else {
-  // First time, run full animation
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('DOMContentLoaded - initializing hero3d');
-      try {
-        initHero3D();
-      } catch (error) {
-        console.error('Error initializing hero3d:', error);
-      }
-    });
-  } else {
-    console.log('DOM already ready - initializing hero3d');
-    try {
-      initHero3D();
-    } catch (error) {
-      console.error('Error initializing hero3d:', error);
-    }
+  try {
+    initHero3D();
+  } catch (error) {
+    console.error('Error initializing hero3d:', error);
   }
 }
 
