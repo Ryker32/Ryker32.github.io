@@ -117,30 +117,26 @@
         <li><strong class="list-label">Stack:</strong> Fusion 360, ROS2, PX4, Python, 3D printing.</li>
         <li><strong class="list-label">Outcome:</strong> Working prototype demonstrated at Beaver Works Summer Institute (BWSI) in the Zesiger Center MIT; presented as a peer-reviewed poster at the IEEE MIT Undergraduate Research and Technology Conference (URTC).</li>
         </ul>
-        <hr>
-        <h3>Project Overview</h3>
-        <p>We extended the BWSI UAV course by proposing an external research project: a “drone on wheels” that combines a quadcopter (UAV) with a ground vehicle (UGV). The UAV carries the UGV over terrain the rover can't handle, releases it to drive a precision course, then re-attaches and extracts it (using Aruco tags).</p>
-        <p>We designed a modular attachment system where the landing gear doubles as rails for the UGV, plus a new battery mount that keeps the vehicle mechanically stable in flight while still allowing quick separation and re-docking.</p>
-        <p>We tested the hybrid platform in the <strong class="list-label">MIT AeroAstro lab</strong> and on foam, concrete, grass, mulch, sand, and dirt, measuring linear and angular velocity to quantify when a UAV “ride” is necessary for small UGVs. Control and telemetry were handled with <strong class="list-label">ROS2</strong> + <strong class="list-label">PX4</strong>.</p>
-        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 24px 0; clear: both; align-items: stretch; width: 100%;">
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
             <img src="/assets/img/bwsicars/cardrone.png" alt="Soldering">
             <figcaption>This is the drone with the car attached.</figcaption>
           </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
             <img src="/assets/img/bwsicars/car.png" alt="Soldering">
             <figcaption>This is the standalone car.</figcaption>
           </figure>
-          <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/bwsicars/mitdrone.png" alt="Soldering">
-            <figcaption>This is the final drone design with a fun design.</figcaption>
-          </figure>
-          <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
+          <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
             <img src="/assets/img/bwsicars/presentationposter.png" alt="Deconstruction">
             <figcaption>Poster with demo drone on it.</figcaption>
           </figure>
         </div>
         <div class="clear-float"></div>
+        <hr>
+        <h3>Project Overview</h3>
+        <p>We extended the BWSI UAV course by proposing an external research project: a “drone on wheels” that combines a quadcopter (UAV) with a ground vehicle (UGV). The UAV carries the UGV over terrain the rover can't handle, releases it to drive a precision course, then re-attaches and extracts it (using Aruco tags).</p>
+        <p>We designed a modular attachment system where the landing gear doubles as rails for the UGV, plus a new battery mount that keeps the vehicle mechanically stable in flight while still allowing quick separation and re-docking.</p>
+        <p>We tested the hybrid platform in the <strong class="list-label">MIT AeroAstro lab</strong> and on foam, concrete, grass, mulch, sand, and dirt, measuring linear and angular velocity to quantify when a UAV “ride” is necessary for small UGVs. Control and telemetry were handled with <strong class="list-label">ROS2</strong> + <strong class="list-label">PX4</strong>.</p>
         <hr>
         <h3>IEEE-URTC</h3>
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
