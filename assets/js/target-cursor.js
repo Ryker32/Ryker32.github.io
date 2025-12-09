@@ -3,10 +3,7 @@
   if (!cursor) return;
 
   const pointerFine = window.matchMedia('(pointer: fine)');
-  if (!pointerFine.matches) {
-    cursor.remove();
-    return;
-  }
+  if (!pointerFine.matches) { cursor.remove(); return; }
 
   const dot = cursor.querySelector('.target-cursor__dot');
   const corners = [...cursor.querySelectorAll('.target-cursor__corner')];
@@ -16,19 +13,19 @@
   const TARGET_SELECTOR = '.cursor-target, [data-cursor-target]';
   const RELEASE_POSITIONS = [
     { x: -CORNER_SIZE * 1.5, y: -CORNER_SIZE * 1.5 },
-    { x: CORNER_SIZE * 0.5, y: -CORNER_SIZE * 1.5 },
-    { x: CORNER_SIZE * 0.5, y: CORNER_SIZE * 0.5 },
-    { x: -CORNER_SIZE * 1.5, y: CORNER_SIZE * 0.5 }
+    { x: CORNER_SIZE * 0.5,   y: -CORNER_SIZE * 1.5 },
+    { x: CORNER_SIZE * 0.5,   y:  CORNER_SIZE * 0.5 },
+    { x: -CORNER_SIZE * 1.5,  y:  CORNER_SIZE * 0.5 }
   ];
 
   let spinHandle = null;
+  let spinResumeTimeout = null;
   let rotation = 0;
   let lockedTarget = null;
   let isLocked = false;
-  let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 }; // rendered position
-  let cursorTarget = { ...cursorPos }; // immediate pointer position
+  let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let cursorTarget = { ...cursorPos };
   let scheduledLockUpdate = false;
-  let leaveTimeout = null;
   let smoothHandle = null;
 
   const setRotation = (angle) => {
@@ -58,9 +55,7 @@
       { x: rect.left - BORDER, y: rect.bottom + BORDER - CORNER_SIZE }
     ];
     corners.forEach((corner, i) => {
-      const offsetX = positions[i].x - cursorPos.x;
-      const offsetY = positions[i].y - cursorPos.y;
-      corner.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      corner.style.transform = `translate(${positions[i].x - cursorPos.x}px, ${positions[i].y - cursorPos.y}px)`;
     });
   };
 
@@ -68,22 +63,6 @@
     corners.forEach((corner, i) => {
       corner.style.transform = `translate(${RELEASE_POSITIONS[i].x}px, ${RELEASE_POSITIONS[i].y}px)`;
     });
-  };
-
-  const updateCursorPositionImmediate = (x, y) => {
-    cursorPos = { x, y };
-    cursor.style.left = `${x}px`;
-    cursor.style.top = `${y}px`;
-  };
-
-  const smoothUpdate = () => {
-    const lerp = isLocked ? 0.42 : 0.3; // faster when locked for a firmer feel
-    cursorPos.x += (cursorTarget.x - cursorPos.x) * lerp;
-    cursorPos.y += (cursorTarget.y - cursorPos.y) * lerp;
-    cursor.style.left = `${cursorPos.x}px`;
-    cursor.style.top = `${cursorPos.y}px`;
-    if (isLocked) scheduleLockUpdate();
-    smoothHandle = requestAnimationFrame(smoothUpdate);
   };
 
   const updateLockRect = () => {
@@ -100,24 +79,48 @@
     });
   };
 
+  // Smoother / snappier follow
+  const smoothUpdate = () => {
+    const dx = cursorTarget.x - cursorPos.x;
+    const dy = cursorTarget.y - cursorPos.y;
+    const dist = Math.hypot(dx, dy);
+
+    const lerp = isLocked ? 0.7 : 0.55; // tighter, quicker response
+    if (dist > 32) {
+      // snap on big jumps
+      cursorPos.x = cursorTarget.x;
+      cursorPos.y = cursorTarget.y;
+    } else {
+      cursorPos.x += dx * lerp;
+      cursorPos.y += dy * lerp;
+    }
+
+    cursor.style.left = `${cursorPos.x}px`;
+    cursor.style.top = `${cursorPos.y}px`;
+
+    if (isLocked) scheduleLockUpdate();
+    smoothHandle = requestAnimationFrame(smoothUpdate);
+  };
+
   const handleEnter = (target) => {
-    if (leaveTimeout) {
-      clearTimeout(leaveTimeout);
-      leaveTimeout = null;
+    if (spinResumeTimeout) {
+      clearTimeout(spinResumeTimeout);
+      spinResumeTimeout = null;
     }
     stopSpin();
-    rotation = 0;
-    cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
     isLocked = true;
     lockedTarget = target;
     updateLockRect();
   };
 
   const handleLeave = () => {
+    // if already unlocked, skip
+    if (!isLocked) return;
     lockedTarget = null;
     isLocked = false;
     releaseCorners();
-    setTimeout(startSpin, 120);
+    // delay spin restart slightly
+    spinResumeTimeout = setTimeout(() => startSpin(), 100);
   };
 
   const bindTargets = () => {
@@ -125,17 +128,11 @@
       if (el.dataset.cursorBound) return;
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => handleEnter(el));
-      el.addEventListener('mouseleave', () => {
-        if (leaveTimeout) clearTimeout(leaveTimeout);
-        leaveTimeout = setTimeout(() => {
-          leaveTimeout = null;
-          handleLeave();
-        }, 50);
-      });
+      el.addEventListener('mouseleave', handleLeave);
     });
   };
 
-  // Updates when the DOM changes (e.g., modals opening)
+  // Observe DOM changes for dynamically added targets
   const observer = new MutationObserver(bindTargets);
   observer.observe(document.body, { childList: true, subtree: true });
 
