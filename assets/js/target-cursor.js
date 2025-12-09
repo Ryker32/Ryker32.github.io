@@ -25,8 +25,11 @@
   let rotation = 0;
   let lockedTarget = null;
   let isLocked = false;
-  let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 }; // rendered position
+  let cursorTarget = { ...cursorPos }; // immediate pointer position
   let scheduledLockUpdate = false;
+  let leaveTimeout = null;
+  let smoothHandle = null;
 
   const setRotation = (angle) => {
     rotation = angle % 360;
@@ -67,10 +70,20 @@
     });
   };
 
-  const updateCursorPosition = (x, y) => {
+  const updateCursorPositionImmediate = (x, y) => {
     cursorPos = { x, y };
     cursor.style.left = `${x}px`;
     cursor.style.top = `${y}px`;
+  };
+
+  const smoothUpdate = () => {
+    const lerp = 0.18; // lower = smoother/slower
+    cursorPos.x += (cursorTarget.x - cursorPos.x) * lerp;
+    cursorPos.y += (cursorTarget.y - cursorPos.y) * lerp;
+    cursor.style.left = `${cursorPos.x}px`;
+    cursor.style.top = `${cursorPos.y}px`;
+    if (isLocked) scheduleLockUpdate();
+    smoothHandle = requestAnimationFrame(smoothUpdate);
   };
 
   const updateLockRect = () => {
@@ -88,6 +101,10 @@
   };
 
   const handleEnter = (target) => {
+    if (leaveTimeout) {
+      clearTimeout(leaveTimeout);
+      leaveTimeout = null;
+    }
     stopSpin();
     rotation = 0;
     cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
@@ -108,7 +125,13 @@
       if (el.dataset.cursorBound) return;
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => handleEnter(el));
-      el.addEventListener('mouseleave', handleLeave);
+      el.addEventListener('mouseleave', () => {
+        if (leaveTimeout) clearTimeout(leaveTimeout);
+        leaveTimeout = setTimeout(() => {
+          leaveTimeout = null;
+          handleLeave();
+        }, 80);
+      });
     });
   };
 
@@ -117,8 +140,7 @@
   observer.observe(document.body, { childList: true, subtree: true });
 
   window.addEventListener('pointermove', (e) => {
-    updateCursorPosition(e.clientX, e.clientY);
-    if (isLocked) scheduleLockUpdate();
+    cursorTarget = { x: e.clientX, y: e.clientY };
   });
 
   window.addEventListener('scroll', () => {
@@ -148,6 +170,7 @@
 
   releaseCorners();
   startSpin();
+  if (!smoothHandle) smoothHandle = requestAnimationFrame(smoothUpdate);
   bindTargets();
   document.body.classList.add('has-target-cursor');
 })();

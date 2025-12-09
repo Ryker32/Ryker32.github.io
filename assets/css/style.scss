@@ -384,7 +384,8 @@ body.animation-complete .hero-frame {
   will-change: opacity, transform;
 }
 
-.hero__canvas.hero-fallback {
+.hero__canvas.hero-fallback,
+#heroCanvas.hero-fallback {
   background:
     radial-gradient(circle at 20% 20%, rgba(118, 167, 255, 0.25), transparent 55%),
     radial-gradient(circle at 80% 30%, rgba(255, 137, 205, 0.15), transparent 60%),

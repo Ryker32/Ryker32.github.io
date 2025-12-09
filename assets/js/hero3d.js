@@ -217,6 +217,7 @@ function initHero3D() {
   if (!supportsWebGL()) {
     console.warn('WebGL not supported; using hero fallback');
     canvas.classList.add('hero-fallback');
+    if (canvas.parentElement) canvas.parentElement.classList.add('hero-fallback');
     document.dispatchEvent(new Event('hero-ready'));
     return;
   }
@@ -233,6 +234,7 @@ function initHero3D() {
   } catch (error) {
     console.error('WebGL unavailable, showing fallback.', error);
     canvas.classList.add('hero-fallback');
+    if (canvas.parentElement) canvas.parentElement.classList.add('hero-fallback');
     document.dispatchEvent(new Event('hero-ready'));
     return;
   }
