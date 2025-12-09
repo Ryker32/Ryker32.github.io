@@ -26,6 +26,7 @@
   let lockedTarget = null;
   let isLocked = false;
   let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let scheduledLockUpdate = false;
 
   const setRotation = (angle) => {
     rotation = angle % 360;
@@ -67,7 +68,6 @@
   };
 
   const updateCursorPosition = (x, y) => {
-    if (isLocked) return;
     cursorPos = { x, y };
     cursor.style.left = `${x}px`;
     cursor.style.top = `${y}px`;
@@ -78,6 +78,15 @@
     lockCornersToRect(lockedTarget.getBoundingClientRect());
   };
 
+  const scheduleLockUpdate = () => {
+    if (scheduledLockUpdate) return;
+    scheduledLockUpdate = true;
+    requestAnimationFrame(() => {
+      scheduledLockUpdate = false;
+      updateLockRect();
+    });
+  };
+
   const handleEnter = (target) => {
     stopSpin();
     rotation = 0;
@@ -85,15 +94,13 @@
     isLocked = true;
     lockedTarget = target;
     updateLockRect();
-    dot.style.opacity = '0';
   };
 
   const handleLeave = () => {
     lockedTarget = null;
     isLocked = false;
     releaseCorners();
-    startSpin();
-    dot.style.opacity = '1';
+    setTimeout(startSpin, 120);
   };
 
   const bindTargets = () => {
@@ -111,15 +118,22 @@
 
   window.addEventListener('pointermove', (e) => {
     updateCursorPosition(e.clientX, e.clientY);
-    if (isLocked) updateLockRect();
+    if (isLocked) scheduleLockUpdate();
   });
 
   window.addEventListener('scroll', () => {
-    if (isLocked) updateLockRect();
+    if (!lockedTarget) return;
+    const el = document.elementFromPoint(cursorPos.x, cursorPos.y);
+    const stillOver = el && (el === lockedTarget || el.closest(TARGET_SELECTOR) === lockedTarget);
+    if (!stillOver) {
+      handleLeave();
+      return;
+    }
+    scheduleLockUpdate();
   }, { passive: true });
 
   window.addEventListener('resize', () => {
-    if (isLocked) updateLockRect();
+    if (isLocked) scheduleLockUpdate();
   });
 
   window.addEventListener('pointerdown', () => {

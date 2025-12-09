@@ -204,18 +204,36 @@ function initHero3D() {
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const animationAlreadyShown = sessionStorage.getItem('siteAnimationShown') === 'true';
 
+  function supportsWebGL() {
+    try {
+      const gl = document.createElement('canvas').getContext('webgl');
+      return !!gl;
+    } catch (e) {
+      return false;
+    }
+  }
+
   let renderer;
+  if (!supportsWebGL()) {
+    console.warn('WebGL not supported; using hero fallback');
+    canvas.classList.add('hero-fallback');
+    document.dispatchEvent(new Event('hero-ready'));
+    return;
+  }
+
   try {
     renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true
+      antialias: true,
+      powerPreference: 'high-performance'
     });
     renderer.setClearColor(0x000000, 0); // Transparent background
     console.log('WebGL renderer created successfully');
   } catch (error) {
-    console.error('WebGL unavailable, skipping hero animation.', error);
-    canvas.remove();
+    console.error('WebGL unavailable, showing fallback.', error);
+    canvas.classList.add('hero-fallback');
+    document.dispatchEvent(new Event('hero-ready'));
     return;
   }
 
