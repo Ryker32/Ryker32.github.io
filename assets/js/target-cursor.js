@@ -108,6 +108,7 @@
       spinResumeTimeout = null;
     }
     stopSpin();
+    setRotation(0); // ensure brackets orient upright on lock
     isLocked = true;
     lockedTarget = target;
     updateLockRect();
