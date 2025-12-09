@@ -208,7 +208,7 @@
     {
       id: 2,
       title: "Novel Resilient Election and Impeachment Policy (REIP) Research",
-      date: "May 2025 - Present",
+      date: "April 2025 - December 2025",
       keyPoints: "Multi Agent Systems · Governance Policy · Research",
       description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
       badge: "Research",
