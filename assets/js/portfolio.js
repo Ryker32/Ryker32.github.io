@@ -147,13 +147,13 @@
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
             <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
               <figure class="project-figure">
-                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 125%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
                 </video>
                 <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
-                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 125%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-flight.mp4" type="video/mp4">
                 </video>
                 <figcaption>Hybrid Vehicle Flight</figcaption>
