@@ -24,9 +24,7 @@
   let lockedTarget = null;
   let isLocked = false;
   let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  let cursorTarget = { ...cursorPos };
   let scheduledLockUpdate = false;
-  let smoothHandle = null;
 
   const setRotation = (angle) => {
     rotation = angle % 360;
@@ -79,29 +77,6 @@
     });
   };
 
-  // Smoother / snappier follow
-  const smoothUpdate = () => {
-    const dx = cursorTarget.x - cursorPos.x;
-    const dy = cursorTarget.y - cursorPos.y;
-    const dist = Math.hypot(dx, dy);
-
-    const lerp = isLocked ? 0.7 : 0.55; // tighter, quicker response
-    if (dist > 32) {
-      // snap on big jumps
-      cursorPos.x = cursorTarget.x;
-      cursorPos.y = cursorTarget.y;
-    } else {
-      cursorPos.x += dx * lerp;
-      cursorPos.y += dy * lerp;
-    }
-
-    cursor.style.left = `${cursorPos.x}px`;
-    cursor.style.top = `${cursorPos.y}px`;
-
-    if (isLocked) scheduleLockUpdate();
-    smoothHandle = requestAnimationFrame(smoothUpdate);
-  };
-
   const handleEnter = (target) => {
     if (spinResumeTimeout) {
       clearTimeout(spinResumeTimeout);
@@ -138,7 +113,9 @@
   observer.observe(document.body, { childList: true, subtree: true });
 
   window.addEventListener('pointermove', (e) => {
-    cursorTarget = { x: e.clientX, y: e.clientY };
+    cursorPos = { x: e.clientX, y: e.clientY };
+    cursor.style.left = `${cursorPos.x}px`;
+    cursor.style.top = `${cursorPos.y}px`;
   });
 
   window.addEventListener('scroll', () => {
@@ -168,7 +145,6 @@
 
   releaseCorners();
   startSpin();
-  if (!smoothHandle) smoothHandle = requestAnimationFrame(smoothUpdate);
   bindTargets();
   document.body.classList.add('has-target-cursor');
 })();
