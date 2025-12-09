@@ -163,7 +163,7 @@
               <iframe 
                 src="/assets/img/bwsicars/poster.pdf" 
                 type="application/pdf"
-                style="width: 100%; height: 600px; min-height: 600px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
+                style="width: 100%; height: 600px; min-height: 800px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
                 frameborder="0">
               </iframe>
             </div>
