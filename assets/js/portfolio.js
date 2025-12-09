@@ -137,11 +137,11 @@
           <img src="/assets/img/bwsicars/mitdrone.jpg" alt="Custom drone frame">
           <figcaption>Final modified Holybro X500 V2 drone.</figcaption>
         </figure>
-        <div class="clear-float"></div>
         <h3>Project Overview</h3>
         <p>We extended the BWSI UAV course by proposing an external research project: a “drone on wheels” that combines a quadcopter (UAV) with a ground vehicle (UGV). The UAV carries the UGV over terrain the rover can't handle, releases it to drive a precision course, then re-attaches and extracts it (using Aruco tags).</p>
         <p>We designed a modular attachment system where the landing gear doubles as rails for the UGV, plus a new battery mount that keeps the vehicle mechanically stable in flight while still allowing quick separation and re-docking.</p>
         <p>We tested the hybrid platform in the <strong class="list-label">MIT AeroAstro lab</strong> and on foam, concrete, grass, mulch, sand, and dirt, measuring linear and angular velocity to quantify when a UAV “ride” is necessary for small UGVs. Control and telemetry were handled with <strong class="list-label">ROS2</strong> + <strong class="list-label">PX4</strong>.</p>
+        <div class="clear-float"></div>
         <hr>
         <h3>IEEE-URTC</h3>
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
