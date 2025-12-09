@@ -18,7 +18,7 @@ layout: default
     <p class="hero__eyebrow">Autonomy · Multi-agent systems · CAD</p>
     <h1>Ryker Kollmyer</h1>
     <p class="hero__lede">
-      Mechatronics and distributed systems researcher focused on developing robust systems on both the hardware and software ends.
+      Mechatronics and distributed-systems student researcher focused on robust hardware and software systems.
     </p>
   </div>
 </section>

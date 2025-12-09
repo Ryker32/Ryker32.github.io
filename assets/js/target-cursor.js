@@ -8,17 +8,21 @@
     return;
   }
 
-  document.body.classList.add('has-target-cursor');
-
   const dot = cursor.querySelector('.target-cursor__dot');
   const corners = [...cursor.querySelectorAll('.target-cursor__corner')];
   const CORNER_SIZE = 12;
   const BORDER = 3;
   const ROTATE_DURATION = 2000;
+  const TARGET_SELECTOR = '.cursor-target, [data-cursor-target]';
+  const RELEASE_POSITIONS = [
+    { x: -CORNER_SIZE * 1.5, y: -CORNER_SIZE * 1.5 },
+    { x: CORNER_SIZE * 0.5, y: -CORNER_SIZE * 1.5 },
+    { x: CORNER_SIZE * 0.5, y: CORNER_SIZE * 0.5 },
+    { x: -CORNER_SIZE * 1.5, y: CORNER_SIZE * 0.5 }
+  ];
 
   let spinHandle = null;
   let rotation = 0;
-  let lockRect = null;
   let lockedTarget = null;
   let isLocked = false;
   let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -57,14 +61,8 @@
   };
 
   const releaseCorners = () => {
-    const positions = [
-      { x: -CORNER_SIZE * 1.5, y: -CORNER_SIZE * 1.5 },
-      { x: CORNER_SIZE * 0.5, y: -CORNER_SIZE * 1.5 },
-      { x: CORNER_SIZE * 0.5, y: CORNER_SIZE * 0.5 },
-      { x: -CORNER_SIZE * 1.5, y: CORNER_SIZE * 0.5 }
-    ];
     corners.forEach((corner, i) => {
-      corner.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px)`;
+      corner.style.transform = `translate(${RELEASE_POSITIONS[i].x}px, ${RELEASE_POSITIONS[i].y}px)`;
     });
   };
 
@@ -75,23 +73,53 @@
     cursor.style.top = `${y}px`;
   };
 
+  const updateLockRect = () => {
+    if (!lockedTarget) return;
+    lockCornersToRect(lockedTarget.getBoundingClientRect());
+  };
+
+  const handleEnter = (target) => {
+    stopSpin();
+    rotation = 0;
+    cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+    isLocked = true;
+    lockedTarget = target;
+    updateLockRect();
+    dot.style.opacity = '0';
+  };
+
+  const handleLeave = () => {
+    lockedTarget = null;
+    isLocked = false;
+    releaseCorners();
+    startSpin();
+    dot.style.opacity = '1';
+  };
+
+  const bindTargets = () => {
+    document.querySelectorAll(TARGET_SELECTOR).forEach((el) => {
+      if (el.dataset.cursorBound) return;
+      el.dataset.cursorBound = 'true';
+      el.addEventListener('mouseenter', () => handleEnter(el));
+      el.addEventListener('mouseleave', handleLeave);
+    });
+  };
+
+  // Updates when the DOM changes (e.g., modals opening)
+  const observer = new MutationObserver(bindTargets);
+  observer.observe(document.body, { childList: true, subtree: true });
+
   window.addEventListener('pointermove', (e) => {
     updateCursorPosition(e.clientX, e.clientY);
-    if (isLocked) {
-      updateLockRect();
-    }
+    if (isLocked) updateLockRect();
   });
 
   window.addEventListener('scroll', () => {
-    if (isLocked) {
-      updateLockRect();
-    }
+    if (isLocked) updateLockRect();
   }, { passive: true });
 
   window.addEventListener('resize', () => {
-    if (isLocked) {
-      updateLockRect();
-    }
+    if (isLocked) updateLockRect();
   });
 
   window.addEventListener('pointerdown', () => {
@@ -104,47 +132,8 @@
     cursor.style.scale = 1;
   });
 
-  const updateLockRect = () => {
-    if (lockedTarget) {
-      lockRect = lockedTarget.getBoundingClientRect();
-      lockCornersToRect(lockRect);
-    }
-  };
-
-  const handleEnter = (target) => {
-    stopSpin();
-    rotation = 0;
-    cursor.style.transform = 'translate(-50%, -50%) rotate(0deg)';
-    isLocked = true;
-    lockedTarget = target;
-    lockRect = target.getBoundingClientRect();
-    lockCornersToRect(lockRect);
-    dot.style.opacity = '0';
-  };
-
-  const handleLeave = () => {
-    lockRect = null;
-    lockedTarget = null;
-    isLocked = false;
-    releaseCorners();
-    startSpin();
-    dot.style.opacity = '1';
-  };
-
-  const bindTargets = () => {
-    document.querySelectorAll('[data-cursor-target]').forEach((el) => {
-      if (el.dataset.cursorBound) return;
-      el.dataset.cursorBound = 'true';
-      el.addEventListener('mouseenter', () => handleEnter(el));
-      el.addEventListener('mouseleave', handleLeave);
-    });
-  };
-
-  const observer = new MutationObserver(bindTargets);
-  observer.observe(document.body, { childList: true, subtree: true });
-
   releaseCorners();
   startSpin();
   bindTargets();
+  document.body.classList.add('has-target-cursor');
 })();
-

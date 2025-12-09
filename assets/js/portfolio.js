@@ -110,7 +110,7 @@
       descriptionHtml: `
       <H3>At a glance</H3>
       <ul>
-        <li><strong class="list-label">Team:</strong> 5 high-school students</li>
+        <li><strong class="list-label">Team:</strong> 5 high school students</li>
         <li><strong class="list-label">Mentors:</strong> Two Cambridge-area researchers from the BWSI network</li>
         <li><strong class="list-label">Goal:</strong> Design a hybrid UAV-UGV system where a quadcopter ferries a small rover over terrain it can't traverse (tall grass, stairs, rubble), then re-docks and extracts it</li>
         <li><strong class="list-label">My role:</strong> Research project organizer, hardware, data analysis, CAD, materials sourcing, and documentation</li>
@@ -152,7 +152,7 @@
         <hr>
         <h3 class="clear-both">Context</h3>
         <p>This was completed externally from BWSI under guidance of two researchers from the Cambridge area. I presented it along with a teammate at the IEEE-MIT Undergraduate Research and Technology Conference as a poster presentation. 
-        This was done during the summer of 2025 with four other team mates. I contributed by CADing the wheels, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
+        This was done during the summer of 2025 with four other teammates. I contributed by designing the wheels in CAD, sourcing materials, and coming up with an overall team plan for the project including documentation in a notebook and creating a roadmap.
         </p>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
           <img src="/assets/img/bwsicars/modifiedlanding.png" alt="Landing Gear">
@@ -193,7 +193,7 @@
       description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
       badge: "Research",
       highlights: [
-        "52pp higher time to 95% coverage success rate (100% vs 47.6%) under adversarial conditions compared to baseline leader-follower policy",
+        "Maintains 98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain).",
         "Fully custom sim env & ablation tests",
         "Projected for Washington State Science & Engineering Fair '26"
       ],
@@ -204,8 +204,8 @@
         <li><strong class="list-label">My role:</strong> Conducted literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran controlled experiments/ablations, wrote a technical analysis report paper and a software system description document.</li>
         <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
         <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
-        <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP maintains ~99% coverage vs ~89% for a leader-follower baseline, with ~52% higher success rate at reaching 95% coverage in <400 steps and ~30% lower median time-to-95%.</li>      
-        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on six Holybro X500 drones courtesy of South Puget Sound Community College.</li>
+        <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP m98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain).</li>      
+        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on two Holybro X500 drones courtesy of South Puget Sound Community College, and five Micromouse robots using Raspberry Pi 5s.</li>
       </ul>
       <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
         <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
@@ -217,7 +217,7 @@
       
       <h3>Project Overview</h3>
       <p>
-      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2025. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2026. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
       </p>
       <p>
       REIP's high-level approach blends collective trust scoring, democratic leadership rotation, and lightweight fallback autonomy so that no single failure can derail the mission. In large benchmark trials, REIP remained within 0.7% of the baseline while achieving a ~52% higher success rate at reaching 95% coverage in under 400 steps while completing missions 32% faster in adversarial conditions. These gains translate to faster, safer mapping and search missions under uncertainty. Detailed technical documentation is currently under review for competition, but this summary highlights the outcome: multi-agent robotics can remain resilient if governance is distributed, transparent, and accountable to the team it serves.
