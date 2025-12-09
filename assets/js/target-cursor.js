@@ -77,7 +77,7 @@
   };
 
   const smoothUpdate = () => {
-    const lerp = 0.18; // lower = smoother/slower
+    const lerp = isLocked ? 0.42 : 0.3; // faster when locked for a firmer feel
     cursorPos.x += (cursorTarget.x - cursorPos.x) * lerp;
     cursorPos.y += (cursorTarget.y - cursorPos.y) * lerp;
     cursor.style.left = `${cursorPos.x}px`;
@@ -130,7 +130,7 @@
         leaveTimeout = setTimeout(() => {
           leaveTimeout = null;
           handleLeave();
-        }, 80);
+        }, 50);
       });
     });
   };
