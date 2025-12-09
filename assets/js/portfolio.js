@@ -266,7 +266,7 @@
       A round-robin leader-follower baseline and REIP both reach similar final coverage (baseline 92.6%, REIP 91.2%), showing that the governance layer doesn't significantly hurt performance when the leader is healthy.
       </p>
       <p> <strong class="list-label">Adversarial conditions (hallucinations + packet / command loss):</strong>
-      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid — a 76-percentage-point advantage in this benchmark. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median time 399.6 steps), whereas REIP succeeds in 100% of runs with a median time-to-95% of 273.5 steps (~32% faster).
+      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid which is a 76-percentage-point advantage in this benchmark. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median time 399.6 steps), whereas REIP succeeds in 100% of runs with a median time-to-95% of 273.5 steps (~32% faster).
       </p>
       <figure class="project-figure" style="width: 80%; max-width: 500px; margin: 24px 0;">
         <img src="/assets/img/reip/reipbarchartfinal.png" alt="Bar chart comparison" style="width: 100%; height: auto; display: block;">
