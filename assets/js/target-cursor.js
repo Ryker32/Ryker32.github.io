@@ -116,6 +116,8 @@
     cursorPos = { x: e.clientX, y: e.clientY };
     cursor.style.left = `${cursorPos.x}px`;
     cursor.style.top = `${cursorPos.y}px`;
+    // keep corners locked to the hovered target as the pointer moves
+    if (isLocked) scheduleLockUpdate();
   });
 
   window.addEventListener('scroll', () => {
