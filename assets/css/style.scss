@@ -57,6 +57,9 @@ body {
 
 body.animation-loading {
   overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .site-main {
@@ -69,11 +72,6 @@ body.animation-loading {
 
 body.animation-complete .site-main {
   opacity: 1;
-}
-
-/* Hero section should always be visible, even during loading */
-.hero {
-  opacity: 1 !important;
 }
 
 .sr-only {
@@ -98,7 +96,6 @@ body.animation-complete .site-main {
   padding: 0 24px;
   box-sizing: border-box;
   opacity: 0;
-  isolation: isolate;
   transition: opacity 0.6s ease 2.6s;
 }
 
@@ -261,13 +258,6 @@ body.animation-complete .glass-nav-wrapper {
   height: 20px;
 }
 
-.glass-nav__icon img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
 .glass-nav__icon:hover,
 .glass-nav__toggle:hover,
 .glass-nav__icon:focus-visible,
@@ -295,9 +285,6 @@ body.animation-complete .glass-nav-wrapper {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  opacity: 1 !important; /* Always visible, even during loading */
-  background: var(--bg); /* Ensure hero has background */
-  z-index: 1; /* Ensure hero is above other content */
 }
 
 .hero::after {
@@ -312,90 +299,47 @@ body.animation-complete .glass-nav-wrapper {
   pointer-events: none;
 }
 
-.hero-frame {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  transition: opacity 0.6s ease 2s;
-}
-
-.hero-frame__inner {
-  position: relative;
-  width: min(85vw, 1100px);
-  height: min(65vh, 520px);
-}
-
-.hero-frame__bar {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 40px rgba(120, 180, 255, 0.15);
-  backdrop-filter: blur(16px);
-  transform: scale(1);
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.bar-top,
-.bar-bottom {
-  width: 100%;
-  height: min(22vh, 220px);
-  transform-origin: center;
-  left: 0;
-}
-
-.bar-top { top: 0; }
-.bar-bottom { bottom: 0; }
-
-.bar-left,
-.bar-right {
-  height: 100%;
-  width: min(16vw, 140px);
-  transform-origin: center;
-  top: 0;
-}
-
-.bar-left { left: 0; }
-.bar-right { right: 0; }
-
-.hero-frame--collapsed .bar-top,
-.hero-frame--collapsed .bar-bottom {
-  transform: scaleY(0.035);
-}
-
-.hero-frame--collapsed .bar-left,
-.hero-frame--collapsed .bar-right {
-  transform: scaleX(0.035);
-}
-
-body.animation-complete .hero-frame {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .hero__canvas {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 1;
-  will-change: opacity, transform;
+  opacity: 0;
+  transform: scale(0.01);
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
-.hero__canvas.hero-fallback,
-#heroCanvas.hero-fallback {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(118, 167, 255, 0.25), transparent 55%),
-    radial-gradient(circle at 80% 30%, rgba(255, 137, 205, 0.15), transparent 60%),
-    radial-gradient(circle at 50% 80%, rgba(79, 213, 255, 0.12), transparent 65%);
-  opacity: 0.9;
+body.animation-loading .hero__canvas {
+  /* Animation will be triggered by JS after hero3d.js initializes */
+  /* Keep initial state: opacity 0, scale 0.01 */
+}
+
+body.animation-loading.animation-ready .hero__canvas {
+  animation: canvasExplode 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0s forwards;
 }
 
 body.animation-complete .hero__canvas {
   opacity: 0.9;
+  transform: scale(1);
+  animation: none;
+}
+
+@keyframes canvasExplode {
+  0% {
+    opacity: 0;
+    transform: scale(0.01);
+  }
+  30% {
+    opacity: 0.3;
+  }
+  70% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
 }
 
 body[data-theme='light'] .hero__canvas {
@@ -429,8 +373,8 @@ body[data-theme='light'].animation-complete .hero__canvas {
   background: var(--card-panel-bg);
   color: var(--ink);
   opacity: 1;
-  -webkit-clip-path: inset(0 0% 0 0%);
-  clip-path: inset(0 0% 0 0%);
+  -webkit-clip-path: inset(0 50% 0 50%);
+  clip-path: inset(0 50% 0 50%);
 }
 
 body.animation-loading.animation-ready .hero__content {
@@ -455,7 +399,7 @@ body.animation-complete .hero__content {
 }
 
 .hero__content > * {
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.5s ease 2s;
 }
 
@@ -742,6 +686,42 @@ body[data-theme='light'] .hero__content {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.project-card__badge-wrapper {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
+  filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
+}
+
+.project-card__badge-inner {
+  position: absolute;
+  width: 175px;
+  height: 30px;
+  top: 22px;
+  left: -52px;
+  background-color: rgb(244, 180, 0);
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-card__badge-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: rgb(139, 105, 20);
+  text-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px;
+  letter-spacing: 0.05em;
+  padding-top: 1px;
+  text-transform: uppercase;
 }
 
 .project-card__body {
@@ -1536,88 +1516,6 @@ body[data-theme='light'] .hero__content {
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     
-    /* YouTube embed container - click to play */
-    &.youtube-embed {
-      --article-image-width: 100%;
-      --article-image-height: 500px;
-      float: none;
-      margin: 24px 0;
-      clear: both;
-      position: relative;
-      cursor: pointer;
-      
-      .youtube-thumbnail {
-        position: relative;
-        width: 100%;
-        height: var(--article-image-height);
-        min-height: 500px;
-        display: block;
-        border-radius: 4px;
-        border: 2px solid var(--edge);
-        background: #161b22;
-        overflow: hidden;
-        
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-        
-        &::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 80px;
-          height: 80px;
-          background: rgba(255, 0, 0, 0.9);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-          transition: transform 0.2s ease, background 0.2s ease;
-        }
-        
-        &::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-40%, -50%);
-          width: 0;
-          height: 0;
-          border-left: 28px solid white;
-          border-top: 18px solid transparent;
-          border-bottom: 18px solid transparent;
-          z-index: 1;
-          transition: transform 0.2s ease;
-        }
-        
-        &:hover::after {
-          transform: translate(-50%, -50%) scale(1.1);
-          background: rgba(255, 0, 0, 1);
-        }
-        
-        &:hover::before {
-          transform: translate(-40%, -50%) scale(1.1);
-        }
-      }
-      
-      iframe {
-        width: 100%;
-        height: var(--article-image-height);
-        min-height: 500px;
-        display: block;
-        border-radius: 4px;
-        border: 2px solid var(--edge);
-        background: #161b22;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      }
-    }
-    
     /* Fusion 360 embed container - use with full-width class */
     &.fusion-360-embed {
       --article-image-width: 100%;
@@ -2008,11 +1906,14 @@ body.animation-complete .site-preloader {
 }
 
 .preloader-dot {
-  width: 8px;
-  height: 8px;
+  width: 16px;
+  height: 16px;
   background: #fff;
   border-radius: 50%;
   animation: dotPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 10001;
 }
 
 /* =======================
@@ -2122,18 +2023,6 @@ body.animation-complete .site-preloader {
     min-height: 400px;
   }
   
-  .modal-description .article-image.youtube-embed {
-    .youtube-thumbnail {
-      min-height: 300px;
-      height: 300px;
-    }
-    
-    iframe {
-      min-height: 300px;
-      height: 300px;
-    }
-  }
-  
   .modal-description .reip-section {
     flex-direction: column;
   }
@@ -2169,7 +2058,7 @@ body.animation-complete .site-preloader {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  mix-blend-mode: normal;
+  mix-blend-mode: difference;
 }
 
 .target-cursor__dot {

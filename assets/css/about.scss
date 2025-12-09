@@ -1,0 +1,211 @@
+/* =======================
+   About Page
+   ======================= */
+
+   .about-page {
+    padding: 96px clamp(16px, 5vw, 72px) 72px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .about-container {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    color: var(--ink);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .about-image-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  
+  .about-image {
+    width: 100%;
+    max-width: 1050px;
+    height: auto;
+    display: block;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0 auto;
+  }
+  
+  .about-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .about-header h1 {
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    margin: 0 0 8px;
+    color: var(--heading-ink);
+  }
+  
+  .about-subtitle {
+    font-size: 1.2rem;
+    color: color-mix(in srgb, var(--ink) 80%, transparent);
+    margin: 0 0 16px;
+  }
+  
+  .about-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+  }
+  
+  .about-contact a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .about-contact a:hover {
+    color: var(--accent-strong);
+    text-decoration: underline;
+  }
+  
+  .about-contact span {
+    color: color-mix(in srgb, var(--ink) 50%, transparent);
+  }
+  
+  .about-section {
+    margin-bottom: 40px;
+  }
+  
+  .about-section:last-child {
+    margin-bottom: 0;
+  }
+  
+  .about-section h2 {
+    font-size: 1.8rem;
+    color: var(--heading-ink);
+    margin: 0 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  .about-item {
+    margin-bottom: 32px;
+  }
+  
+  .about-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .about-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  
+  .about-item-header h3 {
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  .about-date {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .about-org {
+    color: color-mix(in srgb, var(--ink) 75%, transparent);
+    font-size: 1rem;
+    margin: 0 0 12px;
+    font-style: italic;
+  }
+  
+  .about-location {
+    color: color-mix(in srgb, var(--ink) 65%, transparent);
+    font-size: 0.9rem;
+    margin: 0 0 12px;
+  }
+  
+  .about-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .about-bullets li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--ink) 85%, transparent);
+  }
+  
+  .about-bullets li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  
+  .about-skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  
+  .about-skill-group h4 {
+    font-size: 1rem;
+    color: var(--heading-ink);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  
+  .about-skill-group p {
+    margin: 0;
+    color: color-mix(in srgb, var(--ink) 80%, transparent);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .about-page {
+      padding: 80px 20px 60px;
+    }
+    
+    .about-container {
+      padding: 32px 24px;
+    }
+    
+    .about-item-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .about-skills {
+      grid-template-columns: 1fr;
+    }
+  }
