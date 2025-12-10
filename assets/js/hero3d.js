@@ -226,7 +226,7 @@ const lineFragmentShader = /* glsl */ `
   uniform vec3 uLineColor;
   uniform float uReveal;
   void main() {
-    float baseAlpha = mix(0.05, 0.35, vDepth);
+    float baseAlpha = mix(0.03, 0.22, vDepth);
     float fade = smoothstep(0.7, 0.95, uReveal); // lines fade in later, after the blast
     gl_FragColor = vec4(uLineColor, baseAlpha * fade);
   }
