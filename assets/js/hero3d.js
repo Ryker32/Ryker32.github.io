@@ -24,6 +24,7 @@ function getHeroPalette(mode = getThemeMode()) {
 const sharedVertexTransform = /* glsl */ `
   uniform float uTime;
   attribute float aOffset;
+  attribute float aExplode;  // per-particle explosion distance
   varying float vDepth;
 
   vec3 mod289(vec3 x) {
@@ -124,21 +125,30 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    // Phase mapping:
-    //  0.0–0.2  -> hold spherical orb
-    //  0.2–1.0  -> explode outward to targets
-    float explodeT = smoothstep(0.2, 1.0, uReveal);
+    // Phases:
+    // 0.0–0.2: static orb
+    // 0.2–0.5: radial explosion
+    // 0.5–1.0: settle into final layout
+    float explodePhase = smoothstep(0.2, 0.5, uReveal);
+    float settlePhase  = smoothstep(0.5, 1.0, uReveal);
 
-    // Radial motion: stay on the ray from center to target
-    vec3 pos = mix(aStart, aTarget, explodeT);
+    // Start as perfect sphere
+    vec3 dir = normalize(aStart);
+    vec3 pos = aStart;
 
-    // Curl only after the main outward motion is underway
-    float curlWeight = smoothstep(0.7, 1.0, uReveal);
+    // Blast straight out from the center, random length per particle
+    pos += dir * aExplode * explodePhase;
+
+    // Then pull everything into the final jumbled network
+    pos = mix(pos, aTarget, settlePhase);
+
+    // Curl only once we're mostly done exploding
+    float curlWeight = smoothstep(0.55, 1.0, uReveal);
     vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
 
-    // Tiny puff at the end, no early shrink
-    float spread = mix(1.0, 1.1, explodeT);
+    // Little extra breathing as it settles
+    float spread = mix(1.0, 1.15, settlePhase);
     pos *= spread;
 
     float angle = t + aOffset;
@@ -164,15 +174,19 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    float explodeT = smoothstep(0.2, 1.0, uReveal);
+    float explodePhase = smoothstep(0.2, 0.5, uReveal);
+    float settlePhase  = smoothstep(0.5, 1.0, uReveal);
 
-    vec3 pos = mix(aStart, aTarget, explodeT);
+    vec3 dir = normalize(aStart);
+    vec3 pos = aStart;
+    pos += dir * aExplode * explodePhase;
+    pos = mix(pos, aTarget, settlePhase);
 
-    float curlWeight = smoothstep(0.7, 1.0, uReveal);
+    float curlWeight = smoothstep(0.55, 1.0, uReveal);
     vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
 
-    float spread = mix(1.0, 1.1, explodeT);
+    float spread = mix(1.0, 1.15, settlePhase);
     pos *= spread;
 
     float angle = t + aOffset;
@@ -206,7 +220,7 @@ const lineFragmentShader = /* glsl */ `
   uniform float uReveal;
   void main() {
     float baseAlpha = mix(0.05, 0.35, vDepth);
-    float fade = smoothstep(0.55, 0.9, uReveal); // lines fade in after explosion starts
+    float fade = smoothstep(0.7, 0.95, uReveal); // lines fade in later, after the blast
     gl_FragColor = vec4(uLineColor, baseAlpha * fade);
   }
 `;
@@ -273,6 +287,7 @@ function initHero3D() {
 
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const offsets = new Float32Array(PARTICLE_COUNT);
+  const explodeDistances = new Float32Array(PARTICLE_COUNT);
   const startPositions = new Float32Array(PARTICLE_COUNT * 3);
   const finalPositions = new Float32Array(PARTICLE_COUNT * 3);
   const palette = getHeroPalette();
@@ -303,6 +318,7 @@ function initHero3D() {
     startPositions[i * 3 + 2] = (z / len) * rStart;
 
     offsets[i] = Math.random() * Math.PI * 2;
+    explodeDistances[i] = 1.5 + Math.random() * 3.0; // per-particle blast length
   }
 
   const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
@@ -310,6 +326,7 @@ function initHero3D() {
   const linkStartPositions = [];
   const linkTargetPositions = [];
   const linkOffsets = [];
+  const linkExplodes = [];
   const linkDistanceSq = LINK_DISTANCE * LINK_DISTANCE;
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -351,6 +368,7 @@ function initHero3D() {
           finalPositions[otherIndex + 2]
         );
         linkOffsets.push(offsets[i], offsets[j]);
+        linkExplodes.push(explodeDistances[i], explodeDistances[j]);
         connectionCounts[i]++;
         connectionCounts[j]++;
       }
@@ -360,6 +378,7 @@ function initHero3D() {
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
+  geometry.setAttribute('aExplode', new THREE.BufferAttribute(explodeDistances, 1));
   geometry.setAttribute('aStart', new THREE.BufferAttribute(startPositions, 3));
   geometry.setAttribute('aTarget', new THREE.BufferAttribute(finalPositions, 3));
 
@@ -393,6 +412,7 @@ function initHero3D() {
     linkGeometry.setAttribute('aStart', new THREE.BufferAttribute(new Float32Array(linkStartPositions), 3));
     linkGeometry.setAttribute('aTarget', new THREE.BufferAttribute(new Float32Array(linkTargetPositions), 3));
     linkGeometry.setAttribute('aOffset', new THREE.BufferAttribute(new Float32Array(linkOffsets), 1));
+    linkGeometry.setAttribute('aExplode', new THREE.BufferAttribute(new Float32Array(linkExplodes), 1));
 
     lineMaterial = new THREE.ShaderMaterial({
       uniforms: {
@@ -499,7 +519,7 @@ function initHero3D() {
   function animateReveal() {
     console.log('Starting reveal animation');
     const startTime = performance.now();
-    const duration = 1800; // give orb/explosion more time to read
+    const duration = 2200; // give orb/explosion more time to read
 
     function easeOutCubic(t) {
       return 1 - Math.pow(1 - t, 3);
