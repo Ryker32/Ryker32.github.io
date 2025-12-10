@@ -45,7 +45,7 @@ permalink: /about/
       </ul>
       <div class="about-hero__links">
         <a class="pill" href="mailto:rykerkollmyer@gmail.com">Email</a>
-        <a class="pill" href="https://www.linkedin.com/in/rykerkollmyer/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://www.linkedin.com/in/rykerkollmyer/" target="_blank" rel="noopener" data-proofer-ignore>LinkedIn</a>
         {% if resume_pdf %}
           <a class="pill" href="{{ resume_pdf.path | relative_url }}" target="_blank" rel="noopener">Resume PDF</a>
         {% endif %}
