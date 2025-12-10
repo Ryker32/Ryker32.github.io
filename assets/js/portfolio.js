@@ -161,11 +161,14 @@
             </div>
             <div style="flex: 1 1 55%;">
               <iframe 
-                src="/assets/img/bwsicars/poster.pdf" 
+                src="/assets/img/bwsicars/poster.pdf#view=FitH" 
                 type="application/pdf"
-                style="width: 100%; height: 800px; min-height: 800px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
+                style="width: 100%; height: 1000px; min-height: 1000px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
                 frameborder="0">
               </iframe>
+              <div style="margin-top: 8px; font-size: 0.95rem;">
+                <a href="/assets/img/bwsicars/poster.pdf" target="_blank" rel="noopener" data-cursor-target>Open full PDF</a>
+              </div>
             </div>
           </div>
         <div class="clear-float"></div>
