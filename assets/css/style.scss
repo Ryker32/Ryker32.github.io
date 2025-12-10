@@ -343,6 +343,19 @@ body.animation-ready .hero__canvas canvas {
   height: 100vh;
 }
 
+/* After intro, return canvas to the hero bounds */
+body.animation-complete .hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body.animation-complete .hero__canvas canvas {
+  width: 100%;
+  height: 100%;
+}
+
 /* Collapse hero shell after intro */
 body.animation-complete .hero-shell {
   position: relative;
