@@ -60,9 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(loop, 600);
   }
 
-  // GSAP card swap (vanilla)
+  // Card swap (vanilla, no deps)
   (function initCardSwap() {
-    if (typeof gsap === 'undefined') return;
     const container = document.querySelector('.about__cards');
     if (!container) return;
     const cards = Array.from(container.querySelectorAll('.about__card'));
@@ -73,12 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
       distY: 70,
       skew: 6,
       delay: 5000,
-      easing: 'elastic.out(0.6,0.9)',
-      durDrop: 2,
-      durMove: 2,
-      durReturn: 2,
-      promoteOverlap: 0.9,
-      returnDelay: 0.05
+      drop: 1200,
+      move: 1200,
+      back: 1200,
+      overlap: 0.5,
+      ease: 'cubic-bezier(0.19, 1, 0.22, 1)'
     };
 
     const slot = (i) => ({
@@ -88,56 +86,53 @@ document.addEventListener('DOMContentLoaded', () => {
       zIndex: cards.length - i
     });
 
+    const applyTransform = (el, s) => {
+      el.style.transform = `translate3d(${s.x}px, ${s.y}px, ${s.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      el.style.zIndex = String(s.zIndex);
+    };
+
     cards.forEach((el, i) => {
-      const s = slot(i);
-      gsap.set(el, {
-        x: s.x,
-        y: s.y,
-        z: s.z,
-        xPercent: -50,
-        yPercent: -50,
-        skewY: cfg.skew,
-        transformOrigin: 'center center',
-        zIndex: s.zIndex,
-        force3D: true
-      });
+      el.style.transition = 'none';
+      applyTransform(el, slot(i));
     });
+    void container.offsetHeight; // force reflow
+    cards.forEach((el) => { el.style.transition = ''; });
 
     let order = cards.map((_, i) => i);
-    let intervalId;
+    let timerId;
 
     const swap = () => {
       if (order.length < 2) return;
       const [front, ...rest] = order;
       const elFront = cards[front];
-      const tl = gsap.timeline();
 
-      tl.to(elFront, { y: '+=500', duration: cfg.durDrop, ease: cfg.easing });
-      tl.addLabel('promote', `-=${cfg.durDrop * cfg.promoteOverlap}`);
+      // Drop front
+      const currentSlot = slot(0);
+      elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}`;
+      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 500}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
 
+      // Promote rest
       rest.forEach((idx, i) => {
         const el = cards[idx];
         const s = slot(i);
-        tl.set(el, { zIndex: s.zIndex }, 'promote');
-        tl.to(
-          el,
-          { x: s.x, y: s.y, z: s.z, duration: cfg.durMove, ease: cfg.easing },
-          `promote+=${i * 0.15}`
-        );
+        el.style.transition = `transform ${cfg.move}ms ${cfg.ease}`;
+        applyTransform(el, s);
       });
 
-      const back = slot(cards.length - 1);
-      tl.addLabel('return', `promote+=${cfg.durMove * cfg.returnDelay}`);
-      tl.call(() => gsap.set(elFront, { zIndex: back.zIndex }), null, 'return');
-      tl.to(elFront, { x: back.x, y: back.y, z: back.z, duration: cfg.durReturn, ease: cfg.easing }, 'return');
-      tl.call(() => { order = [...rest, front]; });
+      const backSlot = slot(cards.length - 1);
+      const returnDelay = cfg.move * cfg.overlap;
+      window.setTimeout(() => {
+        elFront.style.transition = `transform ${cfg.back}ms ${cfg.ease}`;
+        applyTransform(elFront, backSlot);
+        order = [...rest, front];
+      }, returnDelay);
     };
 
     const start = () => {
       swap();
-      intervalId = window.setInterval(swap, cfg.delay);
+      timerId = window.setInterval(swap, cfg.delay);
     };
-    const stop = () => intervalId && clearInterval(intervalId);
+    const stop = () => timerId && window.clearInterval(timerId);
 
     container.addEventListener('mouseenter', stop);
     container.addEventListener('mouseleave', start);
