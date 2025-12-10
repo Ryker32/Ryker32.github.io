@@ -57,8 +57,12 @@
     // Hide main/nav until after hero expands
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
-    if (siteMain) siteMain.style.opacity = '0';
+    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
     if (nav) nav.style.opacity = '0';
+    // Keep hero visible; only hide content after the hero
+    contentBlocks.forEach((el) => {
+      el.style.opacity = '0';
+    });
 
     function triggerAnimation() {
       if (animationTriggered) return;
@@ -85,6 +89,7 @@
     const canvas = document.getElementById('heroCanvas');
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
+    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
 
     // Make the hero visible in its small state right away
     if (canvas) {
@@ -106,11 +111,15 @@
       }, 800);
     }
 
-    if (siteMain) {
-      siteMain.style.opacity = '0';
+    if (contentBlocks.length) {
+      contentBlocks.forEach((el) => {
+        el.style.opacity = '0';
+      });
       setTimeout(() => {
-        siteMain.style.transition = 'opacity 0.5s ease';
-        siteMain.style.opacity = '1';
+        contentBlocks.forEach((el) => {
+          el.style.transition = 'opacity 0.5s ease';
+          el.style.opacity = '1';
+        });
       }, 950);
     }
 
