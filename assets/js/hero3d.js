@@ -235,7 +235,7 @@ function initHero3D() {
   console.log('heroCanvas found:', canvas);
 
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const animationAlreadyShown = sessionStorage.getItem('siteAnimationShown') === 'true';
+  const animationAlreadyShown = false; // always play
 
   function supportsWebGL() {
     try {
@@ -384,7 +384,7 @@ function initHero3D() {
 
   const uniforms = {
     uTime: { value: 0 },
-    uReveal: { value: animationAlreadyShown ? 1 : 0 },
+    uReveal: { value: 0 },
     uColorNear: { value: new THREE.Color().fromArray(palette.near) },
     uColorFar: { value: new THREE.Color().fromArray(palette.far) }
   };
@@ -521,14 +521,10 @@ function initHero3D() {
     const startTime = performance.now();
     const duration = 2200; // give orb/explosion more time to read
 
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
-    }
-
     function update() {
       const elapsed = performance.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
+      const eased = progress; // keep linear to honor shader phase thresholds
 
       uniforms.uReveal.value = eased;
       if (lineMaterial) {
@@ -560,16 +556,8 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Skip reveal if already shown this session
-  if (animationAlreadyShown) {
-    uniforms.uReveal.value = 1.0;
-    if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
-    console.log('Animation already shown, skipping reveal - particles already at full layout');
-    document.dispatchEvent(new Event('hero-reveal-complete'));
-  } else {
-    // Always start reveal immediately; the canvas itself is the preloader
-    animateReveal();
-  }
+  // Always start reveal immediately; the canvas itself is the preloader
+  animateReveal();
 }
 
   // Signal that hero is ready (scene built)

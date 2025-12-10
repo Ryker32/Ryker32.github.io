@@ -102,34 +102,28 @@
       });
     }
 
-    // Stagger in nav and hero card/site content after the hero expands
-    if (nav) {
-      nav.style.opacity = '0';
-      setTimeout(() => {
+    // Hide nav/content until swarm reveal completes
+    if (nav) nav.style.opacity = '0';
+    contentBlocks.forEach((el) => {
+      el.style.opacity = '0';
+    });
+
+    const onHeroDone = () => {
+      if (nav) {
         nav.style.transition = 'opacity 0.5s ease';
         nav.style.opacity = '1';
-      }, 800);
-    }
-
-    if (contentBlocks.length) {
+      }
       contentBlocks.forEach((el) => {
-        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.5s ease';
+        el.style.opacity = '1';
       });
-      setTimeout(() => {
-        contentBlocks.forEach((el) => {
-          el.style.transition = 'opacity 0.5s ease';
-          el.style.opacity = '1';
-        });
-      }, 950);
-    }
-
-    // Finish: unlock scroll and mark complete
-    setTimeout(() => {
       document.body.classList.add('animation-complete');
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
       collapseHeroFrame();
-    }, 1600);
+    };
+
+    document.addEventListener('hero-reveal-complete', onHeroDone, { once: true });
   }
 
   // Start animation initialization promptly
