@@ -159,7 +159,8 @@ ${sharedVertexTransform}
     float c = cos(angle);
     pos.xz = mat2(c, -s, s, c) * pos.xz;
 
-    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    // Raise the swarm upward for better visual balance
+    vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
     vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
     float size = (vDepth * 4.5 + 2.5) * (1.0 / -mvPosition.z) * 70.0;
     gl_PointSize = clamp(size, 2.0, 14.0);
@@ -200,7 +201,7 @@ ${sharedVertexTransform}
     float c = cos(angle);
     pos.xz = mat2(c, -s, s, c) * pos.xz;
 
-    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
     vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
     gl_Position = projectionMatrix * mvPosition;
   }
