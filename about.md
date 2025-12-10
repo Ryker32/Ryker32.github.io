@@ -33,6 +33,7 @@ permalink: /about/
 {% endif %}
 
 <link rel="stylesheet" href="{{ '/assets/css/about.css' | relative_url }}">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
 <section id="about" class="about">
   <div class="about__bg"></div>
   <div class="about__grid">

@@ -59,5 +59,89 @@ document.addEventListener('DOMContentLoaded', () => {
     render('');
     setTimeout(loop, 600);
   }
+
+  // GSAP card swap (vanilla)
+  (function initCardSwap() {
+    if (typeof gsap === 'undefined') return;
+    const container = document.querySelector('.about__cards');
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll('.about__card'));
+    if (cards.length < 2) return;
+
+    const cfg = {
+      distX: 60,
+      distY: 70,
+      skew: 6,
+      delay: 5000,
+      easing: 'elastic.out(0.6,0.9)',
+      durDrop: 2,
+      durMove: 2,
+      durReturn: 2,
+      promoteOverlap: 0.9,
+      returnDelay: 0.05
+    };
+
+    const slot = (i) => ({
+      x: i * cfg.distX,
+      y: -i * cfg.distY,
+      z: -i * cfg.distX * 1.5,
+      zIndex: cards.length - i
+    });
+
+    cards.forEach((el, i) => {
+      const s = slot(i);
+      gsap.set(el, {
+        x: s.x,
+        y: s.y,
+        z: s.z,
+        xPercent: -50,
+        yPercent: -50,
+        skewY: cfg.skew,
+        transformOrigin: 'center center',
+        zIndex: s.zIndex,
+        force3D: true
+      });
+    });
+
+    let order = cards.map((_, i) => i);
+    let intervalId;
+
+    const swap = () => {
+      if (order.length < 2) return;
+      const [front, ...rest] = order;
+      const elFront = cards[front];
+      const tl = gsap.timeline();
+
+      tl.to(elFront, { y: '+=500', duration: cfg.durDrop, ease: cfg.easing });
+      tl.addLabel('promote', `-=${cfg.durDrop * cfg.promoteOverlap}`);
+
+      rest.forEach((idx, i) => {
+        const el = cards[idx];
+        const s = slot(i);
+        tl.set(el, { zIndex: s.zIndex }, 'promote');
+        tl.to(
+          el,
+          { x: s.x, y: s.y, z: s.z, duration: cfg.durMove, ease: cfg.easing },
+          `promote+=${i * 0.15}`
+        );
+      });
+
+      const back = slot(cards.length - 1);
+      tl.addLabel('return', `promote+=${cfg.durMove * cfg.returnDelay}`);
+      tl.call(() => gsap.set(elFront, { zIndex: back.zIndex }), null, 'return');
+      tl.to(elFront, { x: back.x, y: back.y, z: back.z, duration: cfg.durReturn, ease: cfg.easing }, 'return');
+      tl.call(() => { order = [...rest, front]; });
+    };
+
+    const start = () => {
+      swap();
+      intervalId = window.setInterval(swap, cfg.delay);
+    };
+    const stop = () => intervalId && clearInterval(intervalId);
+
+    container.addEventListener('mouseenter', stop);
+    container.addEventListener('mouseleave', start);
+    start();
+  })();
 });
 
