@@ -280,7 +280,7 @@ function initHero3D() {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   camera.position.set(0, 0, 6);
   const group = new THREE.Group();
-  group.scale.setScalar(1.0);
+  group.scale.setScalar(0.9); // slightly smaller overall to reduce initial footprint
   scene.add(group);
   // Store reference for external access
   canvas.__heroGroup = group;
@@ -312,13 +312,13 @@ function initHero3D() {
 
     // Clustered start on a small sphere
     const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 1.4; // big, clearly visible orb
+    const rStart = 0.9; // smaller starting orb
     startPositions[i * 3] = (x / len) * rStart;
     startPositions[i * 3 + 1] = (y / len) * rStart;
     startPositions[i * 3 + 2] = (z / len) * rStart;
 
     offsets[i] = Math.random() * Math.PI * 2;
-    explodeDistances[i] = 1.5 + Math.random() * 3.0; // per-particle blast length
+    explodeDistances[i] = 1.2 + Math.random() * 2.4; // per-particle blast length
   }
 
   const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
@@ -453,9 +453,17 @@ function initHero3D() {
   });
 
   function handleResize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    console.log('handleResize - canvas size:', width, 'x', height);
+    const fullscreenPhase = document.body.classList.contains('animation-loading') ||
+      document.body.classList.contains('animation-ready');
+
+    const width = fullscreenPhase
+      ? window.innerWidth
+      : (canvas.clientWidth || canvas.offsetWidth || window.innerWidth);
+    const height = fullscreenPhase
+      ? window.innerHeight
+      : (canvas.clientHeight || canvas.offsetHeight || window.innerHeight);
+
+    console.log('handleResize - canvas size:', width, 'x', height, 'fullscreenPhase:', fullscreenPhase);
     if (width === 0 || height === 0) {
       console.warn('Canvas has zero size!', { 
         clientWidth: canvas.clientWidth, 
