@@ -147,13 +147,13 @@
           <div style="display: flex; gap: 24px; margin: 24px 0; clear: both;">
             <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 16px;">
               <figure class="project-figure">
-                <video muted loop playsinline preload="none" data-lazy-video style="width: 150%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-detached.mp4" type="video/mp4">
                 </video>
                 <figcaption>UAV and UGV separated</figcaption>
               </figure>
               <figure class="project-figure">
-                <video muted loop playsinline preload="none" data-lazy-video style="width: 150%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
+                <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0; object-fit: cover;">
                   <source src="/assets/video/hybrid-vehicle-flight.mp4" type="video/mp4">
                 </video>
                 <figcaption>Hybrid Vehicle Flight</figcaption>
@@ -163,7 +163,7 @@
               <img 
                 src="/assets/img/bwsicars/presentationposter.png" 
                 alt="IEEE URTC poster" 
-                style="width: 100%; height: auto; display: block; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;" />
+                style="width: 100%; max-height: 520px; height: auto; display: block; object-fit: contain; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;" />
               <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                 <a href="/assets/img/bwsicars/poster.pdf" target="_blank" rel="noopener" data-cursor-target>Open full PDF</a>
                 <a href="/assets/img/bwsicars/poster.pdf#view=FitH" target="_blank" rel="noopener" data-cursor-target>View in browser</a>
