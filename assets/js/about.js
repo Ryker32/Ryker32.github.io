@@ -13,18 +13,51 @@ document.addEventListener('DOMContentLoaded', () => {
     obs.observe(aboutSection);
   }
 
-  // Simple looping typing effect
-  const phrases = ['hello, stranger...', 'hello, world...', 'hello, friend...', 'hello, there...'];
+  // Type + delete the word after "hello,"
   const typedEl = document.getElementById('aboutTyped');
-  let idx = 0;
+  const base = 'hello,';
+  const phrases = ['stranger...', 'world...', 'friend...', 'there...'];
+  const typeSpeed = 70;      // ms per character when typing
+  const deleteSpeed = 45;    // ms per character when deleting
+  const holdDelay = 1200;    // pause when a word is fully typed
+  const gapDelay = 500;      // pause before starting the next word
+  let phraseIdx = 0;
+  let charIdx = 0;
+  let isTyping = true;
 
-  function typeLoop() {
+  const render = (wordSlice) => {
+    typedEl.textContent = `${base} ${wordSlice}`;
+  };
+
+  function loop() {
     if (!typedEl) return;
-    typedEl.textContent = phrases[idx];
-    idx = (idx + 1) % phrases.length;
-    setTimeout(typeLoop, 2000);
+    const word = phrases[phraseIdx];
+
+    if (isTyping) {
+      if (charIdx < word.length) {
+        charIdx += 1;
+        render(word.slice(0, charIdx));
+        setTimeout(loop, typeSpeed);
+      } else {
+        isTyping = false;
+        setTimeout(loop, holdDelay);
+      }
+    } else {
+      if (charIdx > 0) {
+        charIdx -= 1;
+        render(word.slice(0, charIdx));
+        setTimeout(loop, deleteSpeed);
+      } else {
+        isTyping = true;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        setTimeout(loop, gapDelay);
+      }
+    }
   }
 
-  setTimeout(typeLoop, 2000);
+  if (typedEl) {
+    render('');
+    setTimeout(loop, 600);
+  }
 });
 
