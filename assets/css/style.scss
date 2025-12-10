@@ -273,11 +273,11 @@ body.animation-complete .glass-nav-wrapper {
 
 .hero {
   position: relative;
-  min-height: clamp(520px, 70vh, 760px);
+  min-height: 100vh;
+  height: 100vh;
   width: 100%;
-  height: auto;
   overflow: hidden;
-  padding: 0; /* allow canvas to span full width/height */
+  padding: 140px clamp(24px, 6vw, 96px) 160px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -356,17 +356,17 @@ body.animation-complete .hero__canvas canvas {
   height: 100%;
 }
 
-/* Collapse hero shell after intro */
+/* Keep hero full-screen after intro */
 body.animation-complete .hero-shell {
   position: relative;
   inset: auto;
   width: 100%;
   max-width: none;
-  min-height: clamp(520px, 70vh, 760px);
-  height: auto;
+  min-height: 100vh;
+  height: 100vh;
   padding: 140px clamp(24px, 6vw, 96px) 160px;
   overflow: hidden;
-  transition: height 0.8s ease, min-height 0.8s ease, padding 0.8s ease, inset 0.8s ease;
+  transition: padding 0.8s ease;
 }
 
 .hero__canvas canvas {

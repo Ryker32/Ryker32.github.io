@@ -280,7 +280,7 @@ function initHero3D() {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   camera.position.set(0, 0, 6);
   const group = new THREE.Group();
-  group.scale.setScalar(0.9); // slightly smaller overall to reduce initial footprint
+  group.scale.setScalar(0.85); // slightly smaller overall to reduce initial footprint
   scene.add(group);
   // Store reference for external access
   canvas.__heroGroup = group;
@@ -293,7 +293,7 @@ function initHero3D() {
   const palette = getHeroPalette();
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const radius = 1.4 + Math.random() * 1.8; // final spread radius
+    const radius = 1.2 + Math.random() * 1.0; // tighter final spread radius
     const theta = Math.random() * Math.PI * 2;
     const v = Math.random() * 2 - 1;
     const phi = Math.acos(v);
@@ -312,13 +312,13 @@ function initHero3D() {
 
     // Clustered start on a small sphere
     const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 0.9; // smaller starting orb
+    const rStart = 0.45; // smaller starting orb
     startPositions[i * 3] = (x / len) * rStart;
     startPositions[i * 3 + 1] = (y / len) * rStart;
     startPositions[i * 3 + 2] = (z / len) * rStart;
 
     offsets[i] = Math.random() * Math.PI * 2;
-    explodeDistances[i] = 1.2 + Math.random() * 2.4; // per-particle blast length
+    explodeDistances[i] = 0.9 + Math.random() * 1.6; // per-particle blast length
   }
 
   const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
