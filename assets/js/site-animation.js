@@ -1,7 +1,7 @@
 (() => {
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasSeenAnimation = sessionStorage.getItem('siteAnimationShown') === 'true';
+  const hasSeenAnimation = false; // always play for now
   const heroFrame = document.querySelector('.hero-frame');
   const heroCanvas = document.getElementById('heroCanvas');
   
@@ -17,24 +17,7 @@
     return;
   }
   
-  // If animation was already shown in this session, skip it
-  if (hasSeenAnimation) {
-    document.body.classList.add('animation-complete', 'animation-ready');
-    document.body.classList.remove('animation-loading');
-    document.documentElement.style.overflow = '';
-    // ensure hero canvas is visible in its final state
-    heroCanvas.style.opacity = '0.95';
-    heroCanvas.style.transform = 'scale(1)';
-    heroCanvas.style.transition = 'none';
-    const siteMain = document.querySelector('.site-main');
-    if (siteMain) siteMain.style.opacity = '1';
-    const nav = document.querySelector('.glass-nav-wrapper');
-    if (nav) nav.style.opacity = '1';
-    if (heroFrame) heroFrame.classList.add('hero-frame--collapsed');
-    const preloader = document.getElementById('sitePreloader');
-    if (preloader) preloader.remove();
-    return;
-  }
+  // Always play; no skip path
 
   const collapseHeroFrame = () => {
     if (!heroFrame) return;
@@ -44,8 +27,8 @@
   const prepHeroCanvasSmall = () => {
     if (!heroCanvas) return;
     heroCanvas.style.opacity = '1';
-    heroCanvas.style.transform = 'scale(0.18)';
-    heroCanvas.style.transition = 'transform 1.2s ease, opacity 1s ease';
+    heroCanvas.style.transform = 'scale(0.32)';
+    heroCanvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
   };
 
   const resetHeroFrame = () => {
@@ -108,32 +91,8 @@
       startAnimationSequence();
     }
 
-    // Hard fallback: force-ready and complete after 1.5s if nothing fired
-    setTimeout(() => {
-      if (animationTriggered) return;
-      console.warn('Forcing animation-ready/complete fallback');
-      animationTriggered = true;
-      prepHeroCanvasSmall();
-      document.body.classList.add('animation-ready', 'animation-complete');
-      document.body.classList.remove('animation-loading');
-      document.documentElement.style.overflow = '';
-      const siteMain = document.querySelector('.site-main');
-      if (siteMain) siteMain.style.opacity = '1';
-      const nav = document.querySelector('.glass-nav-wrapper');
-      if (nav) nav.style.opacity = '';
-      const pre = document.getElementById('sitePreloader');
-      if (pre) pre.remove();
-      collapseHeroFrame();
-      startAnimationSequence();
-    }, 1500);
-
-    // Trigger as soon as the hero scene signals readiness
-    document.addEventListener('hero-ready', () => {
-      triggerAnimation();
-    });
-
-    // Also trigger shortly after load to ensure we don't sit on black
-    setTimeout(() => triggerAnimation(), 80);
+    // Trigger immediately (hero is the preloader)
+    setTimeout(() => triggerAnimation(), 50);
   }
 
   function startAnimationSequence() {
@@ -141,16 +100,11 @@
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
 
-    // Mark animation as shown immediately so it only runs once per session
-    if (!hasSeenAnimation) {
-      sessionStorage.setItem('siteAnimationShown', 'true');
-    }
-
     // Make the hero visible in its small state right away
     if (canvas) {
       canvas.style.opacity = '1';
-      canvas.style.transform = 'scale(0.18)';
-      canvas.style.transition = 'transform 1.2s ease, opacity 1s ease';
+      canvas.style.transform = 'scale(0.32)';
+      canvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
       requestAnimationFrame(() => {
         canvas.style.transform = 'scale(1.05)';
         canvas.style.opacity = '1';
@@ -180,7 +134,7 @@
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
       collapseHeroFrame();
-    }, 1300);
+    }, 1600);
   }
 
   // Start animation initialization promptly
