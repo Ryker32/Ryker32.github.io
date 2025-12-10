@@ -66,13 +66,5 @@ permalink: /about/
   </div>
 </section>
 
-<section class="resume-page">
-  <div class="resume-container">
-    <div class="resume-image-wrapper">
-      <img src="{{ resume_src }}" alt="Ryker Kollmyer Resume" class="resume-image">
-    </div>
-  </div>
-</section>
-
 <script src="{{ '/assets/js/about.js' | relative_url }}"></script>
 
