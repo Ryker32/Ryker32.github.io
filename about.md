@@ -12,6 +12,7 @@ permalink: /about/
 {% assign resume_img4   = site.static_files | where: "path", "/assets/img/resume.jpg" | first %}
 {% assign about_video   = site.static_files | where: "path", "/assets/video/about-loop.mp4" | first %}
 {% assign about_poster  = "/assets/img/ryker.jpg" | relative_url %}
+{% assign aboutme_images = site.static_files | where_exp: "f", "f.path contains '/assets/img/aboutme/' and f.extname != '.mp4'" | sort: "path" %}
 
 {% if resume_img0 %}
   {% assign resume_src = resume_img0.path | relative_url %}
@@ -71,9 +72,14 @@ permalink: /about/
         <img src="{{ about_poster }}" alt="Ryker Kollmyer" class="about__media-base about__hero-img" decoding="async">
         {% endif %}
         <div class="about__cards">
-          <div class="about__card"><img src="{{ '/assets/img/bwsicars/mitdrone.jpg' | relative_url }}" alt="Hybrid UAV/UGV drone"></div>
-          <div class="about__card"><img src="{{ '/assets/img/bwsicars/presentationposter.png' | relative_url }}" alt="IEEE poster"></div>
-          <div class="about__card"><img src="{{ '/assets/img/bwsicars/cardrone.png' | relative_url }}" alt="UGV rover"></div>
+          {% assign has_cards = false %}
+          {% for img in aboutme_images %}
+            {% assign has_cards = true %}
+            <div class="about__card"><img src="{{ img.path | relative_url }}" alt="About photo"></div>
+          {% endfor %}
+          {% unless has_cards %}
+            <div class="about__card"><img src="{{ '/assets/img/ryker.jpg' | relative_url }}" alt="Ryker"></div>
+          {% endunless %}
         </div>
         <div class="about__media-smear"></div>
         <div class="about__media-mask"></div>
