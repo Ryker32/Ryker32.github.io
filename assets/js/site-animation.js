@@ -22,6 +22,10 @@
     document.body.classList.add('animation-complete', 'animation-ready');
     document.body.classList.remove('animation-loading');
     document.documentElement.style.overflow = '';
+    // ensure hero canvas is visible in its final state
+    heroCanvas.style.opacity = '0.95';
+    heroCanvas.style.transform = 'scale(1)';
+    heroCanvas.style.transition = 'none';
     const siteMain = document.querySelector('.site-main');
     if (siteMain) siteMain.style.opacity = '1';
     const nav = document.querySelector('.glass-nav-wrapper');
