@@ -434,19 +434,15 @@ body[data-theme='light'].animation-complete .hero__canvas {
   box-shadow: 0 30px 120px rgba(3, 10, 24, 0.55);
   background: var(--card-panel-bg);
   color: var(--ink);
-  opacity: 1;
+  opacity: 0; /* hidden until intro completes */
   -webkit-clip-path: inset(0 50% 0 50%);
   clip-path: inset(0 50% 0 50%);
 }
 
-body.animation-loading.animation-ready .hero__content {
-  animation: expandContent 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-}
-
+/* Run the center-out reveal after the swarm finishes */
 body.animation-complete .hero__content {
-  -webkit-clip-path: inset(0 0% 0 0%);
-  clip-path: inset(0 0% 0 0%);
-  animation: none;
+  opacity: 1;
+  animation: expandContent 1s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
 
 @keyframes expandContent {
@@ -462,7 +458,7 @@ body.animation-complete .hero__content {
 
 .hero__content > * {
   opacity: 0;
-  transition: opacity 0.4s ease 0.6s;
+  transition: opacity 0.4s ease 0.5s;
 }
 
 body.animation-complete .hero__content > * {
