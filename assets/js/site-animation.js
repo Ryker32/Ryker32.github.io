@@ -14,8 +14,6 @@
     if (siteMain) siteMain.style.opacity = '1';
     const nav = document.querySelector('.glass-nav-wrapper');
     if (nav) nav.style.opacity = '1';
-    const preloader = document.getElementById('sitePreloader');
-    if (preloader) preloader.remove();
     return;
   }
   
@@ -42,8 +40,8 @@
   const prepHeroCanvasSmall = () => {
     if (!heroCanvas) return;
     heroCanvas.style.opacity = '1';
-    heroCanvas.style.transform = 'scale(0.22)';
-    heroCanvas.style.transition = 'transform 1.1s ease, opacity 0.9s ease';
+    heroCanvas.style.transform = 'scale(0.18)';
+    heroCanvas.style.transition = 'transform 1.2s ease, opacity 1s ease';
   };
 
   const resetHeroFrame = () => {
@@ -87,10 +85,6 @@
     const nav = document.querySelector('.glass-nav-wrapper');
     if (siteMain) siteMain.style.opacity = '0';
     if (nav) nav.style.opacity = '0';
-    const preloader = document.getElementById('sitePreloader');
-    if (preloader) {
-      preloader.style.opacity = '0';
-    }
 
     function triggerAnimation() {
       if (animationTriggered) return;
@@ -140,7 +134,6 @@
 
   function startAnimationSequence() {
     const canvas = document.getElementById('heroCanvas');
-    const preloader = document.getElementById('sitePreloader');
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
 
@@ -152,19 +145,12 @@
     // Make the hero visible in its small state right away
     if (canvas) {
       canvas.style.opacity = '1';
-      canvas.style.transform = 'scale(0.22)';
-      canvas.style.transition = 'transform 1.1s ease, opacity 0.9s ease';
+      canvas.style.transform = 'scale(0.18)';
+      canvas.style.transition = 'transform 1.2s ease, opacity 1s ease';
       requestAnimationFrame(() => {
-        canvas.style.transform = 'scale(1.02)';
-        canvas.style.opacity = '0.95';
+        canvas.style.transform = 'scale(1.05)';
+        canvas.style.opacity = '1';
       });
-    }
-
-    // Remove/fade preloader immediately so hero is visible
-    if (preloader) {
-      preloader.style.transition = 'opacity 0.2s ease';
-      preloader.style.opacity = '0';
-      setTimeout(() => preloader.remove(), 250);
     }
 
     // Stagger in nav and hero card/site content after the hero expands

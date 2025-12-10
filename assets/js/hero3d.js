@@ -528,17 +528,8 @@ function initHero3D() {
     console.log('Animation already shown, skipping reveal - particles already at full layout');
     document.dispatchEvent(new Event('hero-reveal-complete'));
   } else {
-    // If animation-ready already happened, start reveal immediately; otherwise wait for it
-    const tryStartReveal = () => {
-      if (animationAlreadyShown || uniforms.uReveal.value > 0) return;
-      animateReveal();
-    };
-
-    if (document.body.classList.contains('animation-ready')) {
-      tryStartReveal();
-    } else {
-      document.addEventListener('animation-ready', tryStartReveal, { once: true });
-    }
+    // Always start reveal immediately; the canvas itself is the preloader
+    animateReveal();
   }
 }
 
