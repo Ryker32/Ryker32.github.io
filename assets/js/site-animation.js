@@ -102,24 +102,16 @@
       });
     }
 
-    // Hide nav/content until swarm reveal completes
-    if (nav) nav.style.opacity = '0';
+    // Keep nav/content visible; hero is the preloader
+    if (nav) nav.style.opacity = '1';
     contentBlocks.forEach((el) => {
-      el.style.opacity = '0';
+      el.style.opacity = '1';
     });
 
     let revealDone = false;
     const onHeroDone = () => {
       if (revealDone) return;
       revealDone = true;
-      if (nav) {
-        nav.style.transition = 'opacity 0.5s ease';
-        nav.style.opacity = '1';
-      }
-      contentBlocks.forEach((el) => {
-        el.style.transition = 'opacity 0.5s ease';
-        el.style.opacity = '1';
-      });
       document.body.classList.add('animation-complete');
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
