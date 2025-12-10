@@ -23,8 +23,8 @@
   const prepHeroCanvasSmall = () => {
     if (!heroCanvas) return;
     heroCanvas.style.opacity = '1';
-    heroCanvas.style.transform = 'scale(0.5)';
-    heroCanvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
+    heroCanvas.style.transform = 'none';
+    heroCanvas.style.transition = 'opacity 0.8s ease';
   };
 
   const resetHeroFrame = () => {
@@ -93,19 +93,16 @@
     const nonHeroSections = document.querySelectorAll('.site-main > *:not(.hero)');
     const heroContent = document.querySelector('.hero__content');
 
-    // Make the hero visible in its small state right away
+    // Ensure hero is visible; no canvas scaling
     if (canvas) {
       canvas.style.opacity = '1';
-      canvas.style.transform = 'scale(0.5)';
-      canvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
-      requestAnimationFrame(() => {
-        canvas.style.transform = 'scale(1.08)';
-        canvas.style.opacity = '1';
-      });
+      canvas.style.transform = 'none';
+      canvas.style.transition = 'opacity 0.8s ease';
     }
 
-    // Hide nav/content until the swarm reveal finishes; keep hero visible
+    // Hide nav/content (including hero card) until swarm reveal finishes; keep canvas visible
     if (nav) nav.style.opacity = '0';
+    if (heroContent) heroContent.style.opacity = '0';
     nonHeroSections.forEach((el) => {
       el.style.opacity = '0';
     });
@@ -122,7 +119,10 @@
           nav.style.transition = 'opacity 0.5s ease';
           nav.style.opacity = '1';
         }
-        // heroContent reveal is handled via CSS clip-path animation
+        if (heroContent) {
+          heroContent.style.transition = 'opacity 0.5s ease';
+          heroContent.style.opacity = '1';
+        }
         nonHeroSections.forEach((el) => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '1';

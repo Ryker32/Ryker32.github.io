@@ -273,11 +273,11 @@ body.animation-complete .glass-nav-wrapper {
 
 .hero {
   position: relative;
-  min-height: clamp(500px, 60vh, 680px);
-  height: auto;
+  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
-  padding: 80px clamp(24px, 6vw, 96px) 120px;
+  padding: 90px clamp(24px, 6vw, 96px) 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,9 +362,9 @@ body.animation-complete .hero-shell {
   inset: auto;
   width: 100%;
   max-width: none;
-  min-height: clamp(500px, 60vh, 680px);
-  height: auto;
-  padding: 80px clamp(24px, 6vw, 96px) 120px;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 90px clamp(24px, 6vw, 96px) 120px;
   overflow: hidden;
   transition: padding 0.8s ease;
 }
