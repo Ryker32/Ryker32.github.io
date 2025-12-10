@@ -124,17 +124,18 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    // Lerp from clustered start to full layout
-    vec3 pos = mix(aStart, aTarget, uReveal);
+    // Interpolate radius separately to keep a spherical silhouette
+    vec3 mixed = mix(aStart, aTarget, uReveal);
+    float rStart = length(aStart);
+    float rEnd = length(aTarget);
+    float radius = mix(rStart, rEnd, uReveal);
+    vec3 dir = mixed == vec3(0.0) ? vec3(0.0, 0.0, 1.0) : normalize(mixed);
+    vec3 pos = dir * radius;
 
-    // Keep early phase perfectly round, then introduce curl as it explodes
-    float curlWeight = smoothstep(0.35, 0.75, uReveal);
-    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
+    // Only add curl once the explosion is underway to avoid warping the orb
+    float curlWeight = smoothstep(0.45, 0.85, uReveal);
+    vec3 curl = curlNoise(pos * 0.85 + t) * (0.28 * curlWeight);
     pos += curl;
-
-    // Push overall scale outward during the reveal for a pronounced "blast"
-    float spread = mix(0.2, 1.0, uReveal);
-    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
@@ -159,14 +160,16 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    vec3 pos = mix(aStart, aTarget, uReveal);
+    vec3 mixed = mix(aStart, aTarget, uReveal);
+    float rStart = length(aStart);
+    float rEnd = length(aTarget);
+    float radius = mix(rStart, rEnd, uReveal);
+    vec3 dir = mixed == vec3(0.0) ? vec3(0.0, 0.0, 1.0) : normalize(mixed);
+    vec3 pos = dir * radius;
 
-    float curlWeight = smoothstep(0.35, 0.75, uReveal);
-    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
+    float curlWeight = smoothstep(0.45, 0.85, uReveal);
+    vec3 curl = curlNoise(pos * 0.85 + t) * (0.28 * curlWeight);
     pos += curl;
-
-    float spread = mix(0.2, 1.0, uReveal);
-    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
