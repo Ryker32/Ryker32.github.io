@@ -106,7 +106,6 @@
 
     // Hide nav/content until the swarm reveal finishes; keep hero visible
     if (nav) nav.style.opacity = '0';
-    if (heroContent) heroContent.style.opacity = '0';
     nonHeroSections.forEach((el) => {
       el.style.opacity = '0';
     });
@@ -123,10 +122,7 @@
           nav.style.transition = 'opacity 0.5s ease';
           nav.style.opacity = '1';
         }
-        if (heroContent) {
-          heroContent.style.transition = 'opacity 0.5s ease';
-          heroContent.style.opacity = '1';
-        }
+        // heroContent reveal is handled via CSS clip-path animation
         nonHeroSections.forEach((el) => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '1';
