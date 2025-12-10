@@ -279,6 +279,7 @@ body.animation-complete .glass-nav-wrapper {
   position: relative;
   min-height: clamp(520px, 70vh, 760px);
   width: 100%;
+  height: auto;
   overflow: hidden;
   padding: 140px clamp(24px, 6vw, 96px) 160px;
   display: flex;
@@ -302,12 +303,20 @@ body.animation-complete .glass-nav-wrapper {
 .hero__canvas {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
   transform: scale(0.01);
   transform-origin: center center;
   will-change: transform, opacity;
+}
+
+.hero__canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 body.animation-loading .hero__canvas {
