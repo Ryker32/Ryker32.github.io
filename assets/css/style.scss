@@ -327,6 +327,21 @@ body.animation-ready .hero-shell {
   overflow: hidden;
 }
 
+/* Make the canvas truly fullscreen during intro */
+body.animation-loading .hero__canvas,
+body.animation-ready .hero__canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+body.animation-loading .hero__canvas canvas,
+body.animation-ready .hero__canvas canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
 /* Collapse hero shell after intro */
 body.animation-complete .hero-shell {
   position: relative;
