@@ -159,15 +159,14 @@
                 <figcaption>Hybrid Vehicle Flight</figcaption>
               </figure>
             </div>
-            <div style="flex: 1 1 55%;">
-              <iframe 
-                src="/assets/img/bwsicars/poster.pdf#view=FitH" 
-                type="application/pdf"
-                style="width: 100%; height: 1000px; min-height: 1000px; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;"
-                frameborder="0">
-              </iframe>
-              <div style="margin-top: 8px; font-size: 0.95rem;">
+            <div style="flex: 1 1 55%; display: flex; flex-direction: column; gap: 12px;">
+              <img 
+                src="/assets/img/bwsicars/presentationposter.png" 
+                alt="IEEE URTC poster" 
+                style="width: 100%; height: auto; display: block; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;" />
+              <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                 <a href="/assets/img/bwsicars/poster.pdf" target="_blank" rel="noopener" data-cursor-target>Open full PDF</a>
+                <a href="/assets/img/bwsicars/poster.pdf#view=FitH" target="_blank" rel="noopener" data-cursor-target>View in browser</a>
               </div>
             </div>
           </div>
