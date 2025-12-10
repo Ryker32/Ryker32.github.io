@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<section class="hero" id="home">
+<section class="hero hero-shell" id="home">
   <div class="hero-frame" aria-hidden="true">
     <div class="hero-frame__inner">
       <span class="hero-frame__bar bar-top"></span>

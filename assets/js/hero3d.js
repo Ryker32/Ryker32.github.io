@@ -556,8 +556,12 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Always start reveal immediately; the canvas itself is the preloader
-  animateReveal();
+  // Start reveal when the page signals readiness
+  if (document.body.classList.contains('animation-ready')) {
+    animateReveal();
+  } else {
+    document.addEventListener('animation-ready', () => animateReveal(), { once: true });
+  }
 }
 
   // Signal that hero is ready (scene built)
