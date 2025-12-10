@@ -127,8 +127,14 @@ ${sharedVertexTransform}
     // Lerp from clustered start to full layout
     vec3 pos = mix(aStart, aTarget, uReveal);
 
-    vec3 curl = curlNoise(pos * 0.75 + t) * 0.35;
+    // Keep early phase perfectly round, then introduce curl as it explodes
+    float curlWeight = smoothstep(0.35, 0.75, uReveal);
+    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
+
+    // Push overall scale outward during the reveal for a pronounced "blast"
+    float spread = mix(0.2, 1.0, uReveal);
+    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
@@ -155,8 +161,12 @@ ${sharedVertexTransform}
 
     vec3 pos = mix(aStart, aTarget, uReveal);
 
-    vec3 curl = curlNoise(pos * 0.75 + t) * 0.35;
+    float curlWeight = smoothstep(0.35, 0.75, uReveal);
+    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
+
+    float spread = mix(0.2, 1.0, uReveal);
+    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
@@ -278,7 +288,7 @@ function initHero3D() {
 
     // Clustered start on a small sphere
     const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 0.04; // tight clustered orb start radius
+    const rStart = 0.35; // start as a visible, tight sphere
     startPositions[i * 3] = (x / len) * rStart;
     startPositions[i * 3 + 1] = (y / len) * rStart;
     startPositions[i * 3 + 2] = (z / len) * rStart;
