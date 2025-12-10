@@ -108,7 +108,10 @@
       el.style.opacity = '0';
     });
 
+    let revealDone = false;
     const onHeroDone = () => {
+      if (revealDone) return;
+      revealDone = true;
       if (nav) {
         nav.style.transition = 'opacity 0.5s ease';
         nav.style.opacity = '1';
@@ -124,6 +127,8 @@
     };
 
     document.addEventListener('hero-reveal-complete', onHeroDone, { once: true });
+    // Fallback in case hero-reveal-complete never fires (e.g., WebGL fails)
+    setTimeout(onHeroDone, 3000);
   }
 
   // Start animation initialization promptly
