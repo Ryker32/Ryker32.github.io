@@ -126,12 +126,16 @@
       const pre = document.getElementById('sitePreloader');
       if (pre) pre.remove();
       collapseHeroFrame();
+      startAnimationSequence();
     }, 1500);
 
     // Trigger as soon as the hero scene signals readiness
     document.addEventListener('hero-ready', () => {
       triggerAnimation();
     });
+
+    // Also trigger shortly after load to ensure we don't sit on black
+    setTimeout(() => triggerAnimation(), 80);
   }
 
   function startAnimationSequence() {

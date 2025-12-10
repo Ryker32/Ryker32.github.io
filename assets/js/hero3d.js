@@ -521,18 +521,24 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Listen for animation-ready signal from controller to start reveal
-  document.addEventListener('animation-ready', () => {
-    if (animationAlreadyShown) return;
-    animateReveal();
-  });
-
   // Skip reveal if already shown this session
   if (animationAlreadyShown) {
     uniforms.uReveal.value = 1.0;
     if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
     console.log('Animation already shown, skipping reveal - particles already at full layout');
     document.dispatchEvent(new Event('hero-reveal-complete'));
+  } else {
+    // If animation-ready already happened, start reveal immediately; otherwise wait for it
+    const tryStartReveal = () => {
+      if (animationAlreadyShown || uniforms.uReveal.value > 0) return;
+      animateReveal();
+    };
+
+    if (document.body.classList.contains('animation-ready')) {
+      tryStartReveal();
+    } else {
+      document.addEventListener('animation-ready', tryStartReveal, { once: true });
+    }
   }
 }
 
