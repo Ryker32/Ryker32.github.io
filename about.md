@@ -60,7 +60,6 @@ permalink: /about/
           <div class="about__card"><img src="{{ '/assets/img/bwsicars/presentationposter.png' | relative_url }}" alt="IEEE poster"></div>
           <div class="about__card"><img src="{{ '/assets/img/bwsicars/cardrone.png' | relative_url }}" alt="UGV rover"></div>
         </div>
-        <div class="about__mask"></div>
       </div>
     </div>
   </div>

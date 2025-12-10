@@ -359,14 +359,6 @@
     }
   }
 
-  &__mask {
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    box-shadow: 0 0 0 9999px var(--bg, #07020d);
-    pointer-events: none;
-  }
-
   @media (max-width: 960px) {
     padding: 96px 20px;
 
