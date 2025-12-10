@@ -68,14 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cards.length < 2) return;
 
     const cfg = {
-      distX: 60,
-      distY: 70,
-      skew: 6,
+      distX: 40,
+      distY: 40,
+      skew: 4,
       delay: 5000,
-      drop: 1200,
-      move: 1200,
-      back: 1200,
-      overlap: 0.5,
+      drop: 900,
+      move: 900,
+      back: 900,
+      overlap: 0.45,
       ease: 'cubic-bezier(0.19, 1, 0.22, 1)'
     };
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Drop front
       const currentSlot = slot(0);
       elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}`;
-      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 500}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 300}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
 
       // Promote rest
       rest.forEach((idx, i) => {
