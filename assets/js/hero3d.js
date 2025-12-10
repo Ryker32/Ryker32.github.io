@@ -453,17 +453,9 @@ function initHero3D() {
   });
 
   function handleResize() {
-    const fullscreenPhase = document.body.classList.contains('animation-loading') ||
-      document.body.classList.contains('animation-ready');
-
-    const width = fullscreenPhase
-      ? window.innerWidth
-      : (canvas.clientWidth || canvas.offsetWidth);
-    const height = fullscreenPhase
-      ? window.innerHeight
-      : (canvas.clientHeight || canvas.offsetHeight);
-
-    console.log('handleResize - canvas size:', width, 'x', height, 'fullscreenPhase:', fullscreenPhase);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    console.log('handleResize - canvas size:', width, 'x', height);
     if (width === 0 || height === 0) {
       console.warn('Canvas has zero size!', { 
         clientWidth: canvas.clientWidth, 

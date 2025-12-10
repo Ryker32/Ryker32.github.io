@@ -304,10 +304,10 @@ body.animation-complete .glass-nav-wrapper {
   pointer-events: none;
   z-index: 1; /* above background gradients, below content */
   opacity: 1; /* visible from the first frame */
-  transform: scale(0.5); /* start slightly small; JS will drive expansion */
+  transform: none;
   transform-origin: center center;
-  will-change: transform, opacity;
-  transition: transform 1.6s ease, opacity 1s ease;
+  will-change: opacity;
+  transition: opacity 1s ease;
 }
 
 /* Fullscreen hero shell during intro */
