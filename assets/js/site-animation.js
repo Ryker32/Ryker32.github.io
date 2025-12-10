@@ -114,35 +114,58 @@
   }
 
   function startAnimationSequence() {
-    // Phase 1: Hero canvas explosion starts immediately when animation-ready is added (0s)
-    //   - Canvas scales from 0.01 to 1.0 with opacity fade (1.2s duration)
-    // Phase 2: Preloader fades out at 0.4s (so explosion is visible)
-    // Phase 3: Hero content expands from center at 1.2s (0.8s duration)
-    // Phase 4: Site main fades in at 1.8s
-    // Phase 5: Navigation fades in at 2.6s
-    
+    const canvas = document.getElementById('heroCanvas');
+    const preloader = document.getElementById('sitePreloader');
+    const siteMain = document.querySelector('.site-main');
+    const nav = document.querySelector('.glass-nav-wrapper');
+
     // Mark animation as shown immediately so it only runs once per session
     if (!hasSeenAnimation) {
       sessionStorage.setItem('siteAnimationShown', 'true');
     }
-    
-    // Mark animation as complete after all phases
+
+    // Make the hero visible in its small state right away
+    if (canvas) {
+      canvas.style.opacity = '1';
+      canvas.style.transform = 'scale(0.15)';
+      canvas.style.transition = 'transform 1.1s ease, opacity 0.9s ease';
+      requestAnimationFrame(() => {
+        canvas.style.transform = 'scale(1)';
+        canvas.style.opacity = '0.9';
+      });
+    }
+
+    // Fade the preloader out quickly so the small hero is visible
+    if (preloader) {
+      preloader.style.transition = 'opacity 0.35s ease';
+      preloader.style.opacity = '0';
+      setTimeout(() => preloader.remove(), 450);
+    }
+
+    // Stagger in nav and hero card/site content after the hero expands
+    if (nav) {
+      nav.style.opacity = '0';
+      setTimeout(() => {
+        nav.style.transition = 'opacity 0.5s ease';
+        nav.style.opacity = '1';
+      }, 800);
+    }
+
+    if (siteMain) {
+      siteMain.style.opacity = '0';
+      setTimeout(() => {
+        siteMain.style.transition = 'opacity 0.5s ease';
+        siteMain.style.opacity = '1';
+      }, 950);
+    }
+
+    // Finish: unlock scroll and mark complete
     setTimeout(() => {
       document.body.classList.add('animation-complete');
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
-      
-      const siteMain = document.querySelector('.site-main');
-      if (siteMain) {
-        siteMain.style.opacity = '1';
-      }
-      
-      const nav = document.querySelector('.glass-nav-wrapper');
-      if (nav) {
-        nav.style.opacity = '';
-      }
       collapseHeroFrame();
-    }, 2500);
+    }, 1300);
   }
 
   // Start animation initialization promptly
