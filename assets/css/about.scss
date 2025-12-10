@@ -309,9 +309,17 @@
     width: 100%;
     max-width: 520px;
     aspect-ratio: 4 / 5;
-    overflow: visible;
+    overflow: hidden;
     border-radius: 12px;
     margin-left: auto;
+    isolation: isolate;
+  }
+
+  &__media-base {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   &__hero-img {
@@ -323,6 +331,29 @@
     background: #222;
   }
 
+  &__media-smear {
+    position: absolute;
+    inset: 0;
+    filter: blur(10px) saturate(120%);
+    mix-blend-mode: screen;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 2;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(118,167,255,0.18), transparent 55%),
+      radial-gradient(circle at 80% 30%, rgba(255,137,205,0.12), transparent 60%),
+      radial-gradient(circle at 50% 80%, rgba(79,213,255,0.10), transparent 65%);
+  }
+
+  &__media-mask {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px var(--bg, #07020d);
+    pointer-events: none;
+    z-index: 3;
+  }
+
   &__cards {
     position: absolute;
     right: 8px;
@@ -332,6 +363,7 @@
     perspective: 1000px;
     display: grid;
     place-items: center;
+    z-index: 1;
 
     .about__card {
       position: absolute;

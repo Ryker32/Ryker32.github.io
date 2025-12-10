@@ -10,6 +10,8 @@ permalink: /about/
 {% assign resume_img2   = site.static_files | where: "path", "/assets/img/resume/resume.jpg" | first %}
 {% assign resume_img3   = site.static_files | where: "path", "/assets/img/resume.png" | first %}
 {% assign resume_img4   = site.static_files | where: "path", "/assets/img/resume.jpg" | first %}
+{% assign about_video   = site.static_files | where: "path", "/assets/video/about-loop.mp4" | first %}
+{% assign about_poster  = "/assets/img/ryker.jpg" | relative_url %}
 
 {% if resume_img0 %}
   {% assign resume_src = resume_img0.path | relative_url %}
@@ -54,12 +56,27 @@ permalink: /about/
     </div>
     <div class="about__media">
       <div class="about__media-frame">
-        <img src="{{ '/assets/img/ryker.jpg' | relative_url }}" alt="Ryker Kollmyer" class="about__hero-img" decoding="async">
+        {% if about_video %}
+        <video
+          class="about__media-base"
+          src="{{ about_video.path | relative_url }}"
+          poster="{{ about_poster }}"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        ></video>
+        {% else %}
+        <img src="{{ about_poster }}" alt="Ryker Kollmyer" class="about__media-base about__hero-img" decoding="async">
+        {% endif %}
         <div class="about__cards">
           <div class="about__card"><img src="{{ '/assets/img/bwsicars/mitdrone.jpg' | relative_url }}" alt="Hybrid UAV/UGV drone"></div>
           <div class="about__card"><img src="{{ '/assets/img/bwsicars/presentationposter.png' | relative_url }}" alt="IEEE poster"></div>
           <div class="about__card"><img src="{{ '/assets/img/bwsicars/cardrone.png' | relative_url }}" alt="UGV rover"></div>
         </div>
+        <div class="about__media-smear"></div>
+        <div class="about__media-mask"></div>
       </div>
     </div>
   </div>
