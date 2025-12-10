@@ -520,6 +520,7 @@ function initHero3D() {
     console.log('Starting reveal animation');
     const startTime = performance.now();
     const duration = 2200; // give orb/explosion more time to read
+    let settleStarted = false;
 
     function update() {
       const elapsed = performance.now() - startTime;
@@ -544,10 +545,31 @@ function initHero3D() {
         }
         console.log('Reveal animation complete');
         document.dispatchEvent(new Event('hero-reveal-complete'));
+        if (!settleStarted) {
+          settleStarted = true;
+          settleIntoBand();
+        }
       }
     }
 
     requestAnimationFrame(update);
+  }
+
+  // After reveal, gently move the swarm toward its final band position
+  function settleIntoBand() {
+    const startY = group.position.y;
+    const endY = -0.6; // tweak to position the swarm toward the hero band
+    const duration = 700;
+    const startTime = performance.now();
+
+    function tick() {
+      const elapsed = performance.now() - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out
+      group.position.y = startY + (endY - startY) * eased;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   // Start render loop - particles start as visible orb

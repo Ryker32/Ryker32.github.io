@@ -325,6 +325,7 @@ body.animation-ready .hero-shell {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition: height 0.8s ease, min-height 0.8s ease, padding 0.8s ease, inset 0.8s ease;
 }
 
 /* Make the canvas truly fullscreen during intro */
@@ -352,6 +353,7 @@ body.animation-complete .hero-shell {
   height: auto;
   padding: 140px clamp(24px, 6vw, 96px) 160px;
   overflow: hidden;
+  transition: height 0.8s ease, min-height 0.8s ease, padding 0.8s ease, inset 0.8s ease;
 }
 
 .hero__canvas canvas {
