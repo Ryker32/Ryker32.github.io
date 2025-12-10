@@ -160,10 +160,11 @@
               </figure>
             </div>
             <div style="flex: 1 1 55%; display: flex; flex-direction: column; gap: 12px;">
-              <img 
-                src="/assets/img/bwsicars/presentationposter.png" 
-                alt="IEEE URTC poster preview" 
-                style="width: 100%; max-height: 520px; height: auto; display: block; object-fit: contain; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;" />
+              <object 
+                data="/assets/img/bwsicars/poster.pdf#view=FitH" 
+                type="application/pdf" 
+                style="width: 100%; max-height: 720px; height: 600px; border: 2px solid var(--edge); border-radius: 8px; background: #0f131b;"
+              ></object>
               <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                 <a href="/assets/img/bwsicars/poster.pdf" target="_blank" rel="noopener" data-cursor-target>Open full PDF</a>
                 <a href="/assets/img/bwsicars/poster.pdf#view=FitH" target="_blank" rel="noopener" data-cursor-target>View in browser</a>
