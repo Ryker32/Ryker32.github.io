@@ -124,18 +124,22 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    // Interpolate radius separately to keep a spherical silhouette
-    vec3 mixed = mix(aStart, aTarget, uReveal);
-    float rStart = length(aStart);
-    float rEnd = length(aTarget);
-    float radius = mix(rStart, rEnd, uReveal);
-    vec3 dir = mixed == vec3(0.0) ? vec3(0.0, 0.0, 1.0) : normalize(mixed);
-    vec3 pos = dir * radius;
+    // Phase mapping:
+    //  0.0–0.2  -> hold spherical orb
+    //  0.2–1.0  -> explode outward to targets
+    float explodeT = smoothstep(0.2, 1.0, uReveal);
 
-    // Only add curl once the explosion is underway to avoid warping the orb
-    float curlWeight = smoothstep(0.45, 0.85, uReveal);
-    vec3 curl = curlNoise(pos * 0.85 + t) * (0.28 * curlWeight);
+    // Radial motion: stay on the ray from center to target
+    vec3 pos = mix(aStart, aTarget, explodeT);
+
+    // Curl only after the main outward motion is underway
+    float curlWeight = smoothstep(0.7, 1.0, uReveal);
+    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
+
+    // Tiny puff at the end, no early shrink
+    float spread = mix(1.0, 1.1, explodeT);
+    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
@@ -160,16 +164,16 @@ ${sharedVertexTransform}
   void main() {
     float t = uTime * 0.12;
 
-    vec3 mixed = mix(aStart, aTarget, uReveal);
-    float rStart = length(aStart);
-    float rEnd = length(aTarget);
-    float radius = mix(rStart, rEnd, uReveal);
-    vec3 dir = mixed == vec3(0.0) ? vec3(0.0, 0.0, 1.0) : normalize(mixed);
-    vec3 pos = dir * radius;
+    float explodeT = smoothstep(0.2, 1.0, uReveal);
 
-    float curlWeight = smoothstep(0.45, 0.85, uReveal);
-    vec3 curl = curlNoise(pos * 0.85 + t) * (0.28 * curlWeight);
+    vec3 pos = mix(aStart, aTarget, explodeT);
+
+    float curlWeight = smoothstep(0.7, 1.0, uReveal);
+    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
+
+    float spread = mix(1.0, 1.1, explodeT);
+    pos *= spread;
 
     float angle = t + aOffset;
     float s = sin(angle);
@@ -199,9 +203,11 @@ const fragmentShader = /* glsl */ `
 const lineFragmentShader = /* glsl */ `
   varying float vDepth;
   uniform vec3 uLineColor;
+  uniform float uReveal;
   void main() {
-    float alpha = mix(0.05, 0.35, vDepth);
-    gl_FragColor = vec4(uLineColor, alpha);
+    float baseAlpha = mix(0.05, 0.35, vDepth);
+    float fade = smoothstep(0.55, 0.9, uReveal); // lines fade in after explosion starts
+    gl_FragColor = vec4(uLineColor, baseAlpha * fade);
   }
 `;
 
@@ -291,7 +297,7 @@ function initHero3D() {
 
     // Clustered start on a small sphere
     const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 0.35; // start as a visible, tight sphere
+    const rStart = 1.4; // big, clearly visible orb
     startPositions[i * 3] = (x / len) * rStart;
     startPositions[i * 3 + 1] = (y / len) * rStart;
     startPositions[i * 3 + 2] = (z / len) * rStart;
@@ -493,7 +499,7 @@ function initHero3D() {
   function animateReveal() {
     console.log('Starting reveal animation');
     const startTime = performance.now();
-    const duration = 1200; // 1.2 seconds
+    const duration = 1800; // give orb/explosion more time to read
 
     function easeOutCubic(t) {
       return 1 - Math.pow(1 - t, 3);
