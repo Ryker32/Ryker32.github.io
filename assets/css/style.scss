@@ -66,12 +66,8 @@ body.animation-loading {
   display: flex;
   flex-direction: column;
   gap: 80px;
-  opacity: 0;
-  transition: opacity 0.6s ease 1.8s;
-}
-
-body.animation-complete .site-main {
   opacity: 1;
+  transition: opacity 0.6s ease;
 }
 
 .sr-only {
