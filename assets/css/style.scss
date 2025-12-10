@@ -440,7 +440,7 @@ body[data-theme='light'].animation-complete .hero__canvas {
 }
 
 body.animation-loading.animation-ready .hero__content {
-  animation: expandContent 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+  animation: expandContent 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
 }
 
 body.animation-complete .hero__content {
@@ -462,7 +462,7 @@ body.animation-complete .hero__content {
 
 .hero__content > * {
   opacity: 0;
-  transition: opacity 0.5s ease 2s;
+  transition: opacity 0.4s ease 0.6s;
 }
 
 body.animation-complete .hero__content > * {
