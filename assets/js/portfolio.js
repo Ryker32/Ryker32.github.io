@@ -161,7 +161,7 @@
             </div>
             <div style="flex: 1 1 55%; display: flex; flex-direction: column; gap: 12px;">
               <img 
-                src="/assets/img/bwsicars/presentationposter.png" 
+                src="/assets/img/bwsicars/poster.pdf" 
                 alt="IEEE URTC poster" 
                 style="width: 100%; max-height: 520px; height: auto; display: block; object-fit: contain; border: 2px solid var(--edge); border-radius: 8px; background: #161b22;" />
               <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
