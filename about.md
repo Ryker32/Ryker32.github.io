@@ -11,7 +11,7 @@ permalink: /about/
 {% assign resume_img3   = site.static_files | where: "path", "/assets/img/resume.png" | first %}
 {% assign resume_img4   = site.static_files | where: "path", "/assets/img/resume.jpg" | first %}
 {% assign about_loop    = site.static_files | where: "path", "/assets/video/about-loop.mp4" | first %}
-{% assign aboutme_video = site.static_files | where_exp: "f", "f.path contains '/assets/img/aboutme/' and f.extname == '.mp4'" | first %}
+{% assign aboutme_video = site.static_files | where_exp: "f", "f.path contains '/assets/img/aboutme/' and f.extname == \".mp4\"" | first %}
 {% assign about_video   = aboutme_video | default: about_loop %}
 {% assign aboutme_images = site.static_files | where_exp: "f", "f.path contains '/assets/img/aboutme/'" | sort: "path" %}
 {% assign about_poster_raw = aboutme_images[0].path | default: "/assets/img/ryker.jpg" %}
