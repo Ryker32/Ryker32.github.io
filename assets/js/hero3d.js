@@ -147,6 +147,9 @@ ${sharedVertexTransform}
     vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
 
+    // Compress vertically to give breathing room
+    pos.y *= 0.75;
+
     // Little extra breathing as it settles
     float spread = mix(1.0, 1.15, settlePhase);
     pos *= spread;
@@ -185,6 +188,9 @@ ${sharedVertexTransform}
     float curlWeight = smoothstep(0.55, 1.0, uReveal);
     vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
     pos += curl;
+
+    // Compress vertically to give breathing room
+    pos.y *= 0.75;
 
     float spread = mix(1.0, 1.15, settlePhase);
     pos *= spread;
@@ -280,7 +286,7 @@ function initHero3D() {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   camera.position.set(0, 0, 6);
   const group = new THREE.Group();
-  group.scale.setScalar(0.85); // slightly smaller overall to reduce initial footprint
+  group.scale.setScalar(0.8); // shrink overall footprint
   scene.add(group);
   // Store reference for external access
   canvas.__heroGroup = group;
@@ -293,7 +299,7 @@ function initHero3D() {
   const palette = getHeroPalette();
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const radius = 1.2 + Math.random() * 1.0; // tighter final spread radius
+    const radius = 1.1 + Math.random() * 1.3; // tighter final spread radius
     const theta = Math.random() * Math.PI * 2;
     const v = Math.random() * 2 - 1;
     const phi = Math.acos(v);
