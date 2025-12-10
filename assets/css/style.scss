@@ -315,6 +315,8 @@ body.animation-loading .hero-shell,
 body.animation-ready .hero-shell {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  max-width: none;
   min-height: 100vh;
   height: 100vh;
   padding: 0;
@@ -322,15 +324,19 @@ body.animation-ready .hero-shell {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* Collapse hero shell after intro */
 body.animation-complete .hero-shell {
   position: relative;
   inset: auto;
+  width: 100%;
+  max-width: none;
   min-height: clamp(520px, 70vh, 760px);
   height: auto;
   padding: 140px clamp(24px, 6vw, 96px) 160px;
+  overflow: hidden;
 }
 
 .hero__canvas canvas {
