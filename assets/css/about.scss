@@ -238,12 +238,15 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: clamp(24px, 4vw, 64px);
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   &__text {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    color: var(--ink, #e6e6e6);
     max-width: 640px;
     opacity: 1;
     transform: translateY(0);
