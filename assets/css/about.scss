@@ -356,14 +356,14 @@
 
   &__cards {
     position: absolute;
-    right: 8px;
-    bottom: -32px;
+    right: 12px;
+    bottom: 12px;
     width: clamp(140px, 24vw, 260px);
     height: clamp(140px, 24vw, 260px);
     perspective: 1000px;
     display: grid;
     place-items: center;
-    z-index: 1;
+    z-index: 4;
 
     .about__card {
       position: absolute;
