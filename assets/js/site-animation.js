@@ -90,6 +90,8 @@
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
     const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
+    const nonHeroSections = document.querySelectorAll('.site-main > *:not(.hero)');
+    const heroContent = document.querySelector('.hero__content');
 
     // Make the hero visible in its small state right away
     if (canvas) {
@@ -102,20 +104,42 @@
       });
     }
 
-    // Keep nav/content visible; hero is the preloader
-    if (nav) nav.style.opacity = '1';
+    // Hide nav/content until the swarm reveal finishes; keep hero visible
+    if (nav) nav.style.opacity = '0';
+    if (heroContent) heroContent.style.opacity = '0';
+    nonHeroSections.forEach((el) => {
+      el.style.opacity = '0';
+    });
     contentBlocks.forEach((el) => {
-      el.style.opacity = '1';
+      el.style.opacity = '0';
     });
 
     let revealDone = false;
     const onHeroDone = () => {
       if (revealDone) return;
       revealDone = true;
-      document.body.classList.add('animation-complete');
-      document.body.classList.remove('animation-loading');
-      document.documentElement.style.overflow = '';
-      collapseHeroFrame();
+      setTimeout(() => {
+        if (nav) {
+          nav.style.transition = 'opacity 0.5s ease';
+          nav.style.opacity = '1';
+        }
+        if (heroContent) {
+          heroContent.style.transition = 'opacity 0.5s ease';
+          heroContent.style.opacity = '1';
+        }
+        nonHeroSections.forEach((el) => {
+          el.style.transition = 'opacity 0.5s ease';
+          el.style.opacity = '1';
+        });
+        contentBlocks.forEach((el) => {
+          el.style.transition = 'opacity 0.5s ease';
+          el.style.opacity = '1';
+        });
+        document.body.classList.add('animation-complete');
+        document.body.classList.remove('animation-loading');
+        document.documentElement.style.overflow = '';
+        collapseHeroFrame();
+      }, 350); // slight delay after hero completes
     };
 
     document.addEventListener('hero-reveal-complete', onHeroDone, { once: true });
