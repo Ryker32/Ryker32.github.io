@@ -27,21 +27,13 @@
   const prepHeroCanvasSmall = () => {
     if (!heroCanvas) return;
     heroCanvas.style.opacity = '1';
-    heroCanvas.style.transform = 'scale(0.32)';
+    heroCanvas.style.transform = 'scale(0.5)';
     heroCanvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
   };
 
   const resetHeroFrame = () => {
     if (!heroFrame) return;
     heroFrame.classList.remove('hero-frame--collapsed');
-  };
-
-  const hidePreloader = () => {
-    const preloader = document.getElementById('sitePreloader');
-    if (!preloader) return;
-    preloader.style.transition = 'opacity 0.5s ease';
-    preloader.style.opacity = '0';
-    setTimeout(() => preloader.remove(), 600);
   };
 
   if (prefersReducedMotion) {
@@ -54,7 +46,6 @@
       heroCanvas.style.transform = 'scale(1)';
     }
     collapseHeroFrame();
-    hidePreloader();
     return;
   }
 
@@ -87,7 +78,6 @@
       document.body.classList.add('animation-ready');
       document.dispatchEvent(new Event('animation-ready'));
       collapseHeroFrame();
-      hidePreloader();
       startAnimationSequence();
     }
 
@@ -103,10 +93,10 @@
     // Make the hero visible in its small state right away
     if (canvas) {
       canvas.style.opacity = '1';
-      canvas.style.transform = 'scale(0.32)';
+      canvas.style.transform = 'scale(0.5)';
       canvas.style.transition = 'transform 1.6s ease, opacity 1s ease';
       requestAnimationFrame(() => {
-        canvas.style.transform = 'scale(1.05)';
+        canvas.style.transform = 'scale(1.08)';
         canvas.style.opacity = '1';
       });
     }
