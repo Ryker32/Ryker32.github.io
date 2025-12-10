@@ -39,6 +39,13 @@
     heroFrame.classList.add('hero-frame--collapsed');
   };
 
+  const prepHeroCanvasSmall = () => {
+    if (!heroCanvas) return;
+    heroCanvas.style.opacity = '1';
+    heroCanvas.style.transform = 'scale(0.18)';
+    heroCanvas.style.transition = 'transform 1.1s ease, opacity 0.9s ease';
+  };
+
   const resetHeroFrame = () => {
     if (!heroFrame) return;
     heroFrame.classList.remove('hero-frame--collapsed');
@@ -72,6 +79,9 @@
 
     let animationTriggered = false;
 
+    // Make sure the hero is visible in its small state immediately
+    prepHeroCanvasSmall();
+
     function triggerAnimation() {
       if (animationTriggered) return;
       animationTriggered = true;
@@ -95,6 +105,7 @@
       if (animationTriggered) return;
       console.warn('Forcing animation-ready/complete fallback');
       animationTriggered = true;
+      prepHeroCanvasSmall();
       document.body.classList.add('animation-ready', 'animation-complete');
       document.body.classList.remove('animation-loading');
       document.documentElement.style.overflow = '';
