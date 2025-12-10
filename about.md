@@ -42,7 +42,7 @@ permalink: /about/
         i've presented at IEEE-MIT URTC and MIT AeroAstro, shipped 10+ hackathon projects, and led STEM writing and community fundraisers back home.
       </p>
       <p class="about__para">
-        i'm into controls, sensing, and rapid prototyping. if you're working on something interesting, <a class="about__link" href="#contact">reach out</a>!
+        i'm into controls, sensing, and rapid prototyping. if you're working on something interesting, <a class="about__link" href="/#contact">reach out</a>!
       </p>
       <div class="about__links">
         <a class="pill" href="mailto:rykerkollmyer@gmail.com">Email</a>
