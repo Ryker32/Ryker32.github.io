@@ -14,6 +14,8 @@
     if (siteMain) siteMain.style.opacity = '1';
     const nav = document.querySelector('.glass-nav-wrapper');
     if (nav) nav.style.opacity = '1';
+    const preloader = document.getElementById('sitePreloader');
+    if (preloader) preloader.remove();
     return;
   }
   
