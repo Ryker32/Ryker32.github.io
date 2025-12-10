@@ -97,7 +97,7 @@
     {
       id: 1,
       title: "Hybrid/Modular UAV-UGV Research",
-      date: "8/2025 - 10/2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
+      date: "August 2025 - October 2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
       keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
       repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
       description: "Built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain, re-docks in flight, and ships data back over ROS2 + PX4.",
