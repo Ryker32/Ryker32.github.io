@@ -2,7 +2,6 @@
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasSeenAnimation = false; // always play for now
-  const heroFrame = document.querySelector('.hero-frame');
   const heroCanvas = document.getElementById('heroCanvas');
   
   // If there's no hero section on this page, skip all animation logic
@@ -19,10 +18,7 @@
   
   // Always play; no skip path
 
-  const collapseHeroFrame = () => {
-    if (!heroFrame) return;
-    heroFrame.classList.add('hero-frame--collapsed');
-  };
+  const collapseHeroFrame = () => {};
 
   const prepHeroCanvasSmall = () => {
     if (!heroCanvas) return;
