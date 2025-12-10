@@ -100,9 +100,8 @@
       canvas.style.transition = 'opacity 0.8s ease';
     }
 
-    // Hide nav/content (including hero card) until swarm reveal finishes; keep canvas visible
+    // Hide nav/content until swarm reveal finishes; keep canvas and hero card visible
     if (nav) nav.style.opacity = '0';
-    if (heroContent) heroContent.style.opacity = '0';
     nonHeroSections.forEach((el) => {
       el.style.opacity = '0';
     });
@@ -119,10 +118,7 @@
           nav.style.transition = 'opacity 0.5s ease';
           nav.style.opacity = '1';
         }
-        if (heroContent) {
-          heroContent.style.transition = 'opacity 0.5s ease';
-          heroContent.style.opacity = '1';
-        }
+        // heroContent reveal runs via CSS clip-path; leave it visible
         nonHeroSections.forEach((el) => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '1';
