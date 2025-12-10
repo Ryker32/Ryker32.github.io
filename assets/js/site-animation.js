@@ -118,7 +118,14 @@
           nav.style.transition = 'opacity 0.5s ease';
           nav.style.opacity = '1';
         }
-        // heroContent reveal runs via CSS clip-path; leave it visible
+        // Retrigger hero card clip-path reveal explicitly (Chrome reliability)
+        if (heroContent) {
+          heroContent.style.animation = 'none';
+          // force reflow
+          void heroContent.offsetWidth;
+          heroContent.style.opacity = '1';
+          heroContent.style.animation = 'expandContent 1s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards';
+        }
         nonHeroSections.forEach((el) => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '1';
