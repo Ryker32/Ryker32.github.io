@@ -68,15 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cards.length < 2) return;
 
     const cfg = {
-      distX: 40,
-      distY: 40,
-      skew: 4,
-      delay: 4500,
-      drop: 800,
-      move: 800,
-      back: 800,
-      overlap: 0.4,
-      ease: 'cubic-bezier(0.19, 1, 0.22, 1)'
+      distX: 32,
+      distY: 24,
+      skew: 2.5,
+      delay: 4200,
+      drop: 700,
+      move: 700,
+      back: 700,
+      overlap: 0.35,
+      ease: 'cubic-bezier(0.22, 1, 0.36, 1)'
     };
 
     const slot = (i) => ({
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Drop front
       const currentSlot = slot(0);
       elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}, opacity ${cfg.drop}ms ${cfg.ease}`;
-      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 260}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 180}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
       elFront.style.opacity = '0';
 
       // Promote rest
