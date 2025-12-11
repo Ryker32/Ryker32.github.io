@@ -49,7 +49,7 @@ permalink: /about/
         i've presented at the <strong class="list-label">IEEE-MIT Undergraduate Research and Technology Conference</strong>, a Y-Combinator hackathon, and i am a Beaver Works Summer Institute scholar. i founded and run the STEM column for my school's newspaper, <strong class="list-label">The Olympus</strong>, and i founded and run a fundraising effort for education access in Nalauwaki Fiji.
       </p>
       <p class="about__para">
-        i'm into controls, sensing, and rapid prototyping. if you're working on something interesting, <a class="about__link" href="/#contact">reach out</a>!
+        outside of academics i often work on my fish tanks or windsurf in a windy bay. i am a ferrari fan even though they have had a terrible performance recently.
       </p>
       <div class="about__links">
         <a class="pill" href="mailto:rykerkollmyer@gmail.com">Email</a>
