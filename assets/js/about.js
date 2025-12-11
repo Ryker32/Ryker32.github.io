@@ -7,7 +7,8 @@ class CardSwap {
 
     if (!this.container) return;
 
-    this.cards = Array.from(this.container.querySelectorAll('.about__card'));
+    // Keep the stack small for stability; grab only the first 3 cards
+    this.cards = Array.from(this.container.querySelectorAll('.about__card')).slice(0, 3);
     if (this.cards.length < 2) return;
 
     const defaults = {
