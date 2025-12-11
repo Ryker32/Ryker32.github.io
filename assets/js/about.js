@@ -1,3 +1,133 @@
+class CardSwap {
+  constructor(container, options = {}) {
+    this.container =
+      typeof container === 'string'
+        ? document.querySelector(container)
+        : container;
+
+    if (!this.container) return;
+
+    this.cards = Array.from(this.container.querySelectorAll('.about__card'));
+    if (this.cards.length < 2) return;
+
+    const defaults = {
+      cardDistance: 36,
+      verticalDistance: 28,
+      delay: 4200,
+      skew: 3,
+      dropDistance: 220,
+      durDrop: 750,
+      durMove: 750,
+      durReturn: 750,
+      promoteOverlap: 0.42,
+      returnDelay: 0.2,
+      stagger: 120,
+      ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      pauseOnHover: true
+    };
+
+    this.cfg = { ...defaults, ...options };
+    this.order = this.cards.map((_, i) => i);
+    this.timerId = null;
+
+    this.setup();
+    this.attachHover();
+    this.start();
+  }
+
+  makeSlot(i) {
+    const { cardDistance, verticalDistance } = this.cfg;
+    const total = this.cards.length;
+    return {
+      x: i * cardDistance,
+      y: -i * verticalDistance,
+      z: -i * cardDistance * 1.5,
+      zIndex: total - i
+    };
+  }
+
+  placeNow(el, slot) {
+    el.style.transform = `translate3d(${slot.x}px, ${slot.y}px, ${slot.z}px) skewY(${this.cfg.skew}deg) translate(-50%, -50%)`;
+    el.style.zIndex = String(slot.zIndex);
+  }
+
+  setup() {
+    this.cards.forEach((el, i) => {
+      el.style.backfaceVisibility = 'hidden';
+      el.style.transformStyle = 'preserve-3d';
+      el.style.opacity = '1';
+      el.style.transition = 'none';
+      this.placeNow(el, this.makeSlot(i));
+    });
+    void this.container.offsetHeight;
+    this.cards.forEach((el) => {
+      el.style.transition = '';
+    });
+  }
+
+  swap() {
+    const {
+      durDrop,
+      durMove,
+      durReturn,
+      dropDistance,
+      ease,
+      promoteOverlap,
+      returnDelay,
+      stagger
+    } = this.cfg;
+
+    if (this.order.length < 2) return;
+
+    const [frontIndex, ...rest] = this.order;
+    const frontEl = this.cards[frontIndex];
+    if (!frontEl) return;
+
+    const currentSlot = this.makeSlot(0);
+
+    frontEl.style.transition = `transform ${durDrop}ms ${ease}, opacity ${durDrop}ms ${ease}`;
+    frontEl.style.opacity = '0';
+    frontEl.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + dropDistance}px, ${currentSlot.z}px) skewY(${this.cfg.skew}deg) translate(-50%, -50%)`;
+
+    rest.forEach((idx, i) => {
+      const el = this.cards[idx];
+      const slot = this.makeSlot(i);
+      el.style.transition = `transform ${durMove}ms ${ease}, opacity ${durMove}ms ${ease}`;
+      el.style.opacity = '1';
+      setTimeout(() => this.placeNow(el, slot), i * stagger);
+    });
+
+    const backSlot = this.makeSlot(this.cards.length - 1);
+    const startReturnAfter = durDrop * promoteOverlap + durMove * returnDelay;
+
+    setTimeout(() => {
+      frontEl.style.transition = `transform ${durReturn}ms ${ease}, opacity ${durReturn}ms ${ease}`;
+      frontEl.style.opacity = '1';
+      this.placeNow(frontEl, backSlot);
+      this.order = [...rest, frontIndex];
+    }, startReturnAfter);
+  }
+
+  start() {
+    if (this.timerId) clearInterval(this.timerId);
+    this.swap();
+    this.timerId = window.setInterval(() => this.swap(), this.cfg.delay);
+  }
+
+  stop() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    }
+  }
+
+  attachHover() {
+    if (!this.cfg.pauseOnHover) return;
+    this.container.addEventListener('mouseenter', () => this.stop());
+    this.container.addEventListener('mouseleave', () => this.start());
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Reveal on scroll
   const aboutSection = document.getElementById('about');
@@ -60,92 +190,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(loop, 600);
   }
 
-  // Card swap (vanilla, no deps)
-  (function initCardSwap() {
-    const container = document.querySelector('.about__cards');
-    if (!container) return;
-    const cards = Array.from(container.querySelectorAll('.about__card'));
-    if (cards.length < 2) return;
-
-    const cfg = {
-      distX: 36,
-      distY: 28,
-      skew: 3,
+  // Card swap carousel (vanilla)
+  const aboutCards = document.querySelector('.js-card-carousel');
+  if (aboutCards) {
+    new CardSwap(aboutCards, {
+      cardDistance: 36,
+      verticalDistance: 28,
       delay: 4200,
-      drop: 750,
-      move: 750,
-      back: 750,
-      overlap: 0.42,
-      stagger: 120,
-      dropOffset: 220,
-      ease: 'cubic-bezier(0.22, 1, 0.36, 1)'
-    };
-
-    const slot = (i) => ({
-      x: i * cfg.distX,
-      y: -i * cfg.distY,
-      z: -i * cfg.distX * 1.5,
-      zIndex: cards.length - i
+      skew: 3,
+      dropDistance: 220,
+      durDrop: 750,
+      durMove: 750,
+      durReturn: 750,
+      promoteOverlap: 0.42,
+      stagger: 120
     });
-
-    const applyTransform = (el, s) => {
-      el.style.transform = `translate3d(${s.x}px, ${s.y}px, ${s.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
-      el.style.zIndex = String(s.zIndex);
-    };
-
-    cards.forEach((el, i) => {
-      el.style.backfaceVisibility = 'hidden';
-      el.style.transformStyle = 'preserve-3d';
-      el.style.opacity = '1';
-      el.style.transition = 'none';
-      applyTransform(el, slot(i));
-    });
-    void container.offsetHeight; // force reflow
-    cards.forEach((el) => { el.style.transition = ''; });
-
-    let order = cards.map((_, i) => i);
-    let timerId;
-
-    const swap = () => {
-      if (order.length < 2) return;
-      const [front, ...rest] = order;
-      const elFront = cards[front];
-
-      // Drop front out
-      const currentSlot = slot(0);
-      elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}, opacity ${cfg.drop}ms ${cfg.ease}`;
-      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + cfg.dropOffset}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
-      elFront.style.opacity = '0';
-
-      // Promote rest forward with slight stagger
-      rest.forEach((idx, i) => {
-        const el = cards[idx];
-        const s = slot(i);
-        el.style.transition = `transform ${cfg.move}ms ${cfg.ease}, opacity ${cfg.move}ms ${cfg.ease}`;
-        el.style.opacity = '1';
-        setTimeout(() => applyTransform(el, s), i * cfg.stagger);
-      });
-
-      const backSlot = slot(cards.length - 1);
-      const returnDelay = cfg.move * cfg.overlap;
-      window.setTimeout(() => {
-        elFront.style.transition = `transform ${cfg.back}ms ${cfg.ease}, opacity ${cfg.back}ms ${cfg.ease}`;
-        applyTransform(elFront, backSlot);
-        elFront.style.opacity = '1';
-        order = [...rest, front];
-      }, returnDelay);
-    };
-
-    const start = () => {
-      if (timerId) window.clearInterval(timerId);
-      swap();
-      timerId = window.setInterval(swap, cfg.delay);
-    };
-    const stop = () => timerId && window.clearInterval(timerId);
-
-    container.addEventListener('mouseenter', stop);
-    container.addEventListener('mouseleave', start);
-    window.setTimeout(start, 400);
-  })();
+  }
 });
-

@@ -75,7 +75,7 @@ permalink: /about/
         {% else %}
         <img src="{{ about_poster }}" alt="Ryker Kollmyer" class="about__media-base about__hero-img" decoding="async">
         {% endif %}
-        <div class="about__cards">
+        <div class="about__cards js-card-carousel">
           {% assign has_cards = false %}
           {% for img in aboutme_images %}
             {% unless img.extname == '.mp4' %}

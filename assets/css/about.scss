@@ -358,8 +358,8 @@
     position: absolute;
     right: 12px;
     bottom: 20px;
-    width: clamp(140px, 24vw, 260px);
-    height: clamp(140px, 24vw, 260px);
+    width: 240px;
+    height: 240px;
     perspective: 1000px;
     display: grid;
     place-items: center;
