@@ -55,6 +55,17 @@ body {
   color: var(--ink);
 }
 
+/* Make everything square-edged by default */
+body * {
+  border-radius: 0 !important;
+}
+
+/* Preserve nav bar rounding */
+.glass-nav-wrapper,
+.glass-nav-wrapper * {
+  border-radius: 999px !important;
+}
+
 body.animation-loading {
   overflow: hidden;
   position: fixed;
