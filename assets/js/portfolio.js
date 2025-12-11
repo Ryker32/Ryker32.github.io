@@ -893,10 +893,42 @@
     });
   }
 
+  // Lightweight view counter using countapi.xyz
+  function initViewCounter() {
+    const valueEl = document.getElementById('siteViewCounterValue');
+    const container = document.getElementById('siteViewCounter');
+    if (!valueEl || !container) return;
+
+    const namespace = 'ryker-portfolio';
+    const key = 'site-views';
+    const endpoint = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+
+    valueEl.textContent = '...';
+
+    fetch(endpoint)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (typeof data?.value === 'number') {
+          valueEl.textContent = data.value.toLocaleString();
+        } else {
+          throw new Error('Unexpected payload');
+        }
+      })
+      .catch((err) => {
+        console.warn('View counter unavailable:', err);
+        valueEl.textContent = '—';
+        container.title = 'View counter unavailable right now.';
+      });
+  }
+
   function bootstrap() {
     initPortfolio();
     initThemeToggle();
     initYouTubeEmbeds();
+    initViewCounter();
   }
 
   // Initialize when DOM is ready

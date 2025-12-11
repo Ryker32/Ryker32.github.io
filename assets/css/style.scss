@@ -2555,3 +2555,52 @@ header, section, footer {
     right: 0;
   }
 }
+
+/* Site-wide view counter */
+.site-view-counter {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  padding: 10px 14px;
+  background: rgba(11, 15, 20, 0.9);
+  border: 1px solid var(--edge);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  z-index: 900;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.site-view-counter__label {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+}
+
+.site-view-counter__value {
+  min-width: 36px;
+  font-weight: 700;
+  color: var(--accent, #79c0ff);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .site-view-counter {
+    right: auto;
+    left: 12px;
+    bottom: 12px;
+    font-size: 13px;
+  }
+}
+
+/* Improve emphasis visibility on About page */
+.about strong,
+.about .list-label {
+  color: var(--accent, #79c0ff);
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(87, 199, 255, 0.35);
+}
