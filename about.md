@@ -41,12 +41,12 @@ permalink: /about/
         <span class="about__typed" id="aboutTyped">hello, stranger...</span>
         <span class="about__caret">|</span>
       </h2>
-      <p class="about__para">hey, i'm <strong>ryker.</strong></p>
+      <p class="about__para">hey, i'm <strong class="list-label">ryker.</strong></p>
       <p class="about__para">
-        building and testing autonomy, robotics, and systems that have to work in the real world—from hybrid UAV/UGV platforms to EVs and battlebots.
+        i have loved stem ever since i watched mark rober for the first time when i was eight. i have a focus in mechatronics because i like to develop, program, and build robots for researching and personal projects.
       </p>
       <p class="about__para">
-        i've presented at IEEE-MIT URTC and MIT AeroAstro, shipped 10+ hackathon projects, and led STEM writing and community fundraisers back home.
+        i've presented at the <strong class="list-label">IEEE-MIT Undergraduate Research and Technology Conference</strong>, a Y-Combinator hackathon, and i am a Beaver Works Summer Institute scholar. i founded and run the STEM column for my school's newspaper, <strong class="list-label">The Olympus</strong>, and i founded and run a fundraising effort for education access in Nalauwaki Fiji.
       </p>
       <p class="about__para">
         i'm into controls, sensing, and rapid prototyping. if you're working on something interesting, <a class="about__link" href="/#contact">reach out</a>!
