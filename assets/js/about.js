@@ -71,11 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
       distX: 40,
       distY: 40,
       skew: 4,
-      delay: 5000,
-      drop: 900,
-      move: 900,
-      back: 900,
-      overlap: 0.45,
+      delay: 4500,
+      drop: 800,
+      move: 800,
+      back: 800,
+      overlap: 0.4,
       ease: 'cubic-bezier(0.19, 1, 0.22, 1)'
     };
 
@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     cards.forEach((el, i) => {
+      el.style.backfaceVisibility = 'hidden';
+      el.style.transformStyle = 'preserve-3d';
+      el.style.opacity = '1';
       el.style.transition = 'none';
       applyTransform(el, slot(i));
     });
@@ -108,27 +111,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Drop front
       const currentSlot = slot(0);
-      elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}`;
-      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 300}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}, opacity ${cfg.drop}ms ${cfg.ease}`;
+      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 260}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      elFront.style.opacity = '0';
 
       // Promote rest
       rest.forEach((idx, i) => {
         const el = cards[idx];
         const s = slot(i);
-        el.style.transition = `transform ${cfg.move}ms ${cfg.ease}`;
+        el.style.transition = `transform ${cfg.move}ms ${cfg.ease}, opacity ${cfg.move}ms ${cfg.ease}`;
+        el.style.opacity = '1';
         applyTransform(el, s);
       });
 
       const backSlot = slot(cards.length - 1);
       const returnDelay = cfg.move * cfg.overlap;
       window.setTimeout(() => {
-        elFront.style.transition = `transform ${cfg.back}ms ${cfg.ease}`;
+        elFront.style.transition = `transform ${cfg.back}ms ${cfg.ease}, opacity ${cfg.back}ms ${cfg.ease}`;
         applyTransform(elFront, backSlot);
+        elFront.style.opacity = '1';
         order = [...rest, front];
       }, returnDelay);
     };
 
     const start = () => {
+      if (timerId) window.clearInterval(timerId);
       swap();
       timerId = window.setInterval(swap, cfg.delay);
     };
@@ -136,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.addEventListener('mouseenter', stop);
     container.addEventListener('mouseleave', start);
-    start();
+    window.setTimeout(start, 400);
   })();
 });
 
