@@ -27,11 +27,6 @@
     heroCanvas.style.transition = 'opacity 0.8s ease';
   };
 
-  const resetHeroFrame = () => {
-    if (!heroFrame) return;
-    heroFrame.classList.remove('hero-frame--collapsed');
-  };
-
   if (prefersReducedMotion) {
     document.body.classList.add('animation-complete');
     const siteMain = document.querySelector('.site-main');

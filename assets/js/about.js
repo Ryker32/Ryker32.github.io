@@ -11,17 +11,17 @@ class CardSwap {
     if (this.cards.length < 2) return;
 
     const defaults = {
-      cardDistance: 36,
-      verticalDistance: 28,
+      cardDistance: 24,
+      verticalDistance: 18,
       delay: 4200,
-      skew: 3,
-      dropDistance: 220,
-      durDrop: 750,
-      durMove: 750,
-      durReturn: 750,
-      promoteOverlap: 0.42,
+      skew: 2.5,
+      dropDistance: 160,
+      durDrop: 650,
+      durMove: 650,
+      durReturn: 650,
+      promoteOverlap: 0.4,
       returnDelay: 0.2,
-      stagger: 120,
+      stagger: 90,
       ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       pauseOnHover: true
     };
@@ -194,16 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const aboutCards = document.querySelector('.js-card-carousel');
   if (aboutCards) {
     new CardSwap(aboutCards, {
-      cardDistance: 36,
-      verticalDistance: 28,
+      cardDistance: 24,
+      verticalDistance: 18,
       delay: 4200,
-      skew: 3,
-      dropDistance: 220,
-      durDrop: 750,
-      durMove: 750,
-      durReturn: 750,
-      promoteOverlap: 0.42,
-      stagger: 120
+      skew: 2.5,
+      dropDistance: 160,
+      durDrop: 650,
+      durMove: 650,
+      durReturn: 650,
+      promoteOverlap: 0.4,
+      stagger: 90
     });
   }
 });
