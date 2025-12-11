@@ -47,7 +47,7 @@ class CardSwap {
   }
 
   placeNow(el, slot) {
-    el.style.transform = `translate3d(${slot.x}px, ${slot.y}px, ${slot.z}px) skewY(${this.cfg.skew}deg) translate(-50%, -50%)`;
+    el.style.transform = `translate3d(${slot.x}px, ${slot.y}px, ${slot.z}px) skewY(${this.cfg.skew}deg)`;
     el.style.zIndex = String(slot.zIndex);
   }
 
@@ -87,7 +87,7 @@ class CardSwap {
 
     frontEl.style.transition = `transform ${durDrop}ms ${ease}, opacity ${durDrop}ms ${ease}`;
     frontEl.style.opacity = '0';
-    frontEl.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + dropDistance}px, ${currentSlot.z}px) skewY(${this.cfg.skew}deg) translate(-50%, -50%)`;
+    frontEl.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + dropDistance}px, ${currentSlot.z}px) skewY(${this.cfg.skew}deg)`;
 
     rest.forEach((idx, i) => {
       const el = this.cards[idx];
