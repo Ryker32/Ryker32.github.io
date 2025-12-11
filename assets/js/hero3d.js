@@ -534,7 +534,7 @@ function initHero3D() {
   function animateReveal() {
     console.log('Starting reveal animation');
     const startTime = performance.now();
-    const duration = 2200; // give orb/explosion more time to read
+    const duration = 3200; // hold orb phase longer before blast
     let settleStarted = false;
 
     function update() {
@@ -574,7 +574,7 @@ function initHero3D() {
   function settleIntoBand() {
     const startY = group.position.y;
     const endY = -0.6; // tweak to position the swarm toward the hero band
-    const duration = 700;
+    const duration = 900;
     const startTime = performance.now();
 
     function tick() {
