@@ -26,6 +26,7 @@ const sharedVertexTransform = /* glsl */ `
   attribute float aOffset;
   attribute float aExplode;  // per-particle explosion distance
   varying float vDepth;
+  varying vec3 vPos;
 
   vec3 mod289(vec3 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -162,6 +163,7 @@ ${sharedVertexTransform}
     // Raise the swarm upward for better visual balance
     vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
     vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
+    vPos = pos + vec3(0.0, 0.6, 0.0);
     float size = (vDepth * 4.5 + 2.5) * (1.0 / -mvPosition.z) * 70.0;
     gl_PointSize = clamp(size, 2.0, 14.0);
     gl_Position = projectionMatrix * mvPosition;
@@ -203,6 +205,7 @@ ${sharedVertexTransform}
 
     vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
     vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
+    vPos = pos + vec3(0.0, 0.6, 0.0);
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
@@ -210,14 +213,30 @@ ${sharedVertexTransform}
 const fragmentShader = /* glsl */ `
   uniform vec3 uColorNear;
   uniform vec3 uColorFar;
+  uniform vec3 uPulseOrigin;
+  uniform float uPulseStart;
+  uniform float uPulseSpeed;
+  uniform float uPulseWidth;
+  uniform float uPulseBoost;
+  uniform float uTime;
   varying float vDepth;
+  varying vec3 vPos;
   void main() {
     vec2 uv = gl_PointCoord - 0.5;
     float dist = dot(uv, uv);
     if (dist > 0.25) discard;
     float alpha = smoothstep(0.25, 0.0, dist);
     vec3 base = mix(uColorNear, uColorFar, vDepth);
-    gl_FragColor = vec4(base, alpha * (0.25 + vDepth * 0.75));
+    float pulse = 0.0;
+    float phase = uTime - uPulseStart;
+    if (phase > 0.0) {
+      float r = phase * uPulseSpeed;
+      float d = length(vPos - uPulseOrigin);
+      float band = smoothstep(uPulseWidth, 0.0, abs(d - r));
+      pulse = band;
+    }
+    float intensity = 1.0 + pulse * uPulseBoost;
+    gl_FragColor = vec4(base * intensity, alpha * (0.25 + vDepth * 0.75) * (1.0 + pulse * 0.6));
   }
 `;
 
@@ -225,10 +244,27 @@ const lineFragmentShader = /* glsl */ `
   varying float vDepth;
   uniform vec3 uLineColor;
   uniform float uReveal;
+  uniform vec3 uPulseOrigin;
+  uniform float uPulseStart;
+  uniform float uPulseSpeed;
+  uniform float uPulseWidth;
+  uniform float uPulseBoost;
+  uniform float uTime;
+  varying vec3 vPos;
   void main() {
     float baseAlpha = mix(0.03, 0.22, vDepth);
     float fade = smoothstep(0.7, 0.95, uReveal); // lines fade in later, after the blast
-    gl_FragColor = vec4(uLineColor, baseAlpha * fade);
+    float pulse = 0.0;
+    float phase = uTime - uPulseStart;
+    if (phase > 0.0) {
+      float r = phase * uPulseSpeed;
+      float d = length(vPos - uPulseOrigin);
+      float band = smoothstep(uPulseWidth, 0.0, abs(d - r));
+      pulse = band;
+    }
+    float alpha = baseAlpha * fade * (1.0 + pulse * 0.8);
+    vec3 color = uLineColor * (1.0 + pulse * uPulseBoost * 0.5);
+    gl_FragColor = vec4(color, alpha);
   }
 `;
 
@@ -393,7 +429,12 @@ function initHero3D() {
     uTime: { value: 0 },
     uReveal: { value: 0 },
     uColorNear: { value: new THREE.Color().fromArray(palette.near) },
-    uColorFar: { value: new THREE.Color().fromArray(palette.far) }
+    uColorFar: { value: new THREE.Color().fromArray(palette.far) },
+    uPulseOrigin: { value: new THREE.Vector3(0, 0, 0) },
+    uPulseStart: { value: 0 },
+    uPulseSpeed: { value: 1.4 },
+    uPulseWidth: { value: 0.28 },
+    uPulseBoost: { value: 1.2 }
   };
 
   const material = new THREE.ShaderMaterial({
@@ -425,7 +466,12 @@ function initHero3D() {
       uniforms: {
         uTime: uniforms.uTime,
         uReveal: uniforms.uReveal,
-        uLineColor: { value: new THREE.Color().fromArray(palette.line) }
+        uLineColor: { value: new THREE.Color().fromArray(palette.line) },
+        uPulseOrigin: uniforms.uPulseOrigin,
+        uPulseStart: uniforms.uPulseStart,
+        uPulseSpeed: uniforms.uPulseSpeed,
+        uPulseWidth: uniforms.uPulseWidth,
+        uPulseBoost: uniforms.uPulseBoost
       },
       vertexShader: lineVertexShader,
       fragmentShader: lineFragmentShader,
@@ -499,6 +545,7 @@ function initHero3D() {
   let rotationY = 0;
 
   let renderCallCount = 0;
+  let nextPulseAt = 0;
   function render(time) {
     uniforms.uTime.value = time * 0.001;
     const easing = prefersMotion ? 0.08 : 0;
@@ -506,6 +553,18 @@ function initHero3D() {
     rotationY += ((prefersMotion ? -pointer.x * 0.7 : 0) - rotationY) * easing;
     group.rotation.x = rotationX;
     group.rotation.y = rotationY;
+    if (uniforms.uTime.value >= nextPulseAt && prefersMotion) {
+      const idx = Math.floor(Math.random() * (finalPositions.length / 3));
+      const base = idx * 3;
+      uniforms.uPulseOrigin.value.set(
+        finalPositions[base],
+        finalPositions[base + 1],
+        finalPositions[base + 2]
+      );
+      uniforms.uPulseStart.value = uniforms.uTime.value;
+      nextPulseAt = uniforms.uTime.value + 2.8; // seconds until next pulse
+    }
+
     renderer.render(scene, camera);
     renderCallCount++;
     if (renderCallCount === 1) {
