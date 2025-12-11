@@ -68,14 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cards.length < 2) return;
 
     const cfg = {
-      distX: 32,
-      distY: 24,
-      skew: 2.5,
+      distX: 36,
+      distY: 28,
+      skew: 3,
       delay: 4200,
-      drop: 700,
-      move: 700,
-      back: 700,
-      overlap: 0.35,
+      drop: 750,
+      move: 750,
+      back: 750,
+      overlap: 0.42,
+      stagger: 120,
+      dropOffset: 220,
       ease: 'cubic-bezier(0.22, 1, 0.36, 1)'
     };
 
@@ -109,19 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const [front, ...rest] = order;
       const elFront = cards[front];
 
-      // Drop front
+      // Drop front out
       const currentSlot = slot(0);
       elFront.style.transition = `transform ${cfg.drop}ms ${cfg.ease}, opacity ${cfg.drop}ms ${cfg.ease}`;
-      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + 180}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
+      elFront.style.transform = `translate3d(${currentSlot.x}px, ${currentSlot.y + cfg.dropOffset}px, ${currentSlot.z}px) skewY(${cfg.skew}deg) translate(-50%, -50%)`;
       elFront.style.opacity = '0';
 
-      // Promote rest
+      // Promote rest forward with slight stagger
       rest.forEach((idx, i) => {
         const el = cards[idx];
         const s = slot(i);
         el.style.transition = `transform ${cfg.move}ms ${cfg.ease}, opacity ${cfg.move}ms ${cfg.ease}`;
         el.style.opacity = '1';
-        applyTransform(el, s);
+        setTimeout(() => applyTransform(el, s), i * cfg.stagger);
       });
 
       const backSlot = slot(cards.length - 1);
