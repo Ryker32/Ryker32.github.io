@@ -235,6 +235,18 @@
         </video>
         <figcaption>Live demonstration of REIP in action in a 2-D gridworld environment.</figcaption>
       </figure>
+
+      <figure class="project-figure" style="width: 100%; max-width: 960px; margin: 24px auto; display: block;">
+        <iframe 
+          src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed?start=false&loop=false&delayms=3000" 
+          frameborder="0" 
+          allowfullscreen="true" 
+          allow="autoplay; fullscreen"
+          loading="lazy"
+          style="width: 100%; height: 560px; border: 2px solid var(--edge); border-radius: 8px; background: #0b0f14;">
+        </iframe>
+        <figcaption>Hardware implementation slides for REIP.</figcaption>
+      </figure>
       <hr>
       
       <h3>Project Overview</h3>
