@@ -901,22 +901,48 @@
 
     const namespace = 'ryker-portfolio';
     const key = 'site-views';
-    const endpoint = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+    const base = 'https://api.countapi.xyz';
+    const hitUrl = `${base}/hit/${namespace}/${key}`;
+    const getUrl = `${base}/get/${namespace}/${key}`;
+    const storageKey = 'ryker-view-hit-ts';
+
+    const now = Date.now();
+    let shouldHit = true;
+    try {
+      const lastHit = Number(localStorage.getItem(storageKey));
+      // Only increment once per 12 hours per browser to avoid noisy counts
+      shouldHit = Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000;
+    } catch (e) {
+      // Ignore storage issues and default to hitting
+    }
 
     valueEl.textContent = '...';
 
-    fetch(endpoint)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (typeof data?.value === 'number') {
-          valueEl.textContent = data.value.toLocaleString();
-        } else {
-          throw new Error('Unexpected payload');
-        }
-      })
+    const updateValue = (data) => {
+      if (typeof data?.value === 'number') {
+        valueEl.textContent = data.value.toLocaleString();
+        try {
+          localStorage.setItem(storageKey, String(now));
+        } catch (e) {}
+        return true;
+      }
+      return false;
+    };
+
+    const fetchCount = (url) =>
+      fetch(url)
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then((data) => {
+          if (!updateValue(data)) throw new Error('Unexpected payload');
+        });
+
+    const firstUrl = shouldHit ? hitUrl : getUrl;
+
+    fetchCount(firstUrl)
+      .catch(() => fetchCount(getUrl))
       .catch((err) => {
         console.warn('View counter unavailable:', err);
         valueEl.textContent = '—';
