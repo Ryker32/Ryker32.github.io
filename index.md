@@ -49,7 +49,7 @@ layout: default
       </dl>
       <div class="profile-panel__actions">
         <a href="{{ site.github.owner_url }}" class="pill-link" target="_blank" rel="noopener" data-cursor-target>GitHub</a>
-        <a href="https://www.linkedin.com/in/ryker-kollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target>LinkedIn</a>
+        <a href="https://www.linkedin.com/in/rykerkollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target>LinkedIn</a>
       </div>
     </div>
   </aside>
