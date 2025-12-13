@@ -913,9 +913,9 @@
 
     const namespace = 'ryker-portfolio';
     const key = 'site-views';
-    const base = 'https://api.countapi.xyz';
-    const hitUrl = `${base}/hit/${namespace}/${key}`;
-    const getUrl = `${base}/get/${namespace}/${key}`;
+    const providers = ['https://api.countapi.xyz', 'https://api.countapi.dev'];
+    const hitUrls = providers.map((base) => `${base}/hit/${namespace}/${key}`);
+    const getUrls = providers.map((base) => `${base}/get/${namespace}/${key}`);
     const storageKey = 'ryker-view-hit-ts';
 
     const now = Date.now();
@@ -942,7 +942,7 @@
     };
 
     const fetchCount = (url) =>
-      fetch(url)
+      fetch(url, { mode: 'cors' })
         .then((res) => {
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           return res.json();
@@ -951,15 +951,34 @@
           if (!updateValue(data)) throw new Error('Unexpected payload');
         });
 
-    const firstUrl = shouldHit ? hitUrl : getUrl;
+    const tryProviders = async () => {
+      // Pick the first provider; if it fails, try the next; fall back to GET if HIT blocked.
+      const urls = shouldHit ? hitUrls : getUrls;
+      for (let i = 0; i < urls.length; i += 1) {
+        try {
+          await fetchCount(urls[i]);
+          return;
+        } catch (_) {
+          // try next
+        }
+      }
+      // If all HIT attempts fail, try GET across providers
+      for (let i = 0; i < getUrls.length; i += 1) {
+        try {
+          await fetchCount(getUrls[i]);
+          return;
+        } catch (_) {
+          // try next
+        }
+      }
+      throw new Error('All providers failed');
+    };
 
-    fetchCount(firstUrl)
-      .catch(() => fetchCount(getUrl))
-      .catch((err) => {
-        console.warn('View counter unavailable:', err);
-        valueEl.textContent = '—';
-        container.title = 'View counter unavailable right now.';
-      });
+    tryProviders().catch((err) => {
+      console.warn('View counter unavailable:', err);
+      valueEl.textContent = '—';
+      container.title = 'View counter unavailable right now.';
+    });
   }
 
   function bootstrap() {
