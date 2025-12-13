@@ -917,13 +917,17 @@
     const hitUrls = providers.map((base) => `${base}/hit/${namespace}/${key}`);
     const getUrls = providers.map((base) => `${base}/get/${namespace}/${key}`);
     const storageKey = 'ryker-view-hit-ts';
+    const sessionKey = 'ryker-view-hit-session';
 
     const now = Date.now();
     let shouldHit = true;
     try {
+      if (sessionStorage.getItem(sessionKey) === '1') {
+        shouldHit = false;
+      }
       const lastHit = Number(localStorage.getItem(storageKey));
       // Only increment once per 12 hours per browser to avoid noisy counts
-      shouldHit = Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000;
+      shouldHit = shouldHit && (Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000);
     } catch (e) {
       // Ignore storage issues and default to hitting
     }
@@ -957,6 +961,9 @@
       for (let i = 0; i < urls.length; i += 1) {
         try {
           await fetchCount(urls[i]);
+          try {
+            sessionStorage.setItem(sessionKey, '1');
+          } catch (e) {}
           return;
         } catch (_) {
           // try next
@@ -966,6 +973,9 @@
       for (let i = 0; i < getUrls.length; i += 1) {
         try {
           await fetchCount(getUrls[i]);
+          try {
+            sessionStorage.setItem(sessionKey, '1');
+          } catch (e) {}
           return;
         } catch (_) {
           // try next
