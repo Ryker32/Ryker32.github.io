@@ -981,11 +981,21 @@
     });
   }
 
+  // Silent geo ping to Cloudflare Worker (once per session)
+  function initGeoPing() {
+    const endpoint = 'https://view-geo-worker.therykerviewgeo.workers.dev/';
+    if (!endpoint) return;
+    if (sessionStorage.getItem('geoPingSent')) return;
+    sessionStorage.setItem('geoPingSent', '1');
+    fetch(endpoint, { mode: 'cors' }).catch(() => {});
+  }
+
   function bootstrap() {
     initPortfolio();
     initThemeToggle();
     initYouTubeEmbeds();
     initViewCounter();
+    initGeoPing();
   }
 
   // Initialize when DOM is ready
