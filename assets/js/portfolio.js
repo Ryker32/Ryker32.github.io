@@ -236,25 +236,11 @@
         <figcaption>Live demonstration of REIP in action in a 2-D gridworld environment.</figcaption>
       </figure>
 
-      <figure class="project-figure" style="width: 100%; max-width: 960px; margin: 24px auto; display: block;">
-        <iframe 
-          src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed?start=false&loop=false&delayms=3000" 
-          frameborder="0" 
-          allowfullscreen="true" 
-          allow="autoplay; fullscreen"
-          loading="lazy"
-          style="width: 100%; height: 560px; border: 2px solid var(--edge); border-radius: 8px; background: #0b0f14;">
-        </iframe>
-        <figcaption>Hardware implementation slides for REIP.</figcaption>
-      </figure>
       <hr>
       
       <h3>Project Overview</h3>
       <p>
       Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2026. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
-      </p>
-      <p>
-      REIP's high-level approach blends collective trust scoring, democratic leadership rotation, and lightweight fallback autonomy so that no single failure can derail the mission. In large benchmark trials, REIP remained within 0.7% of the baseline while achieving a ~52% higher success rate at reaching 95% coverage in under 400 steps while completing missions 32% faster in adversarial conditions. These gains translate to faster, safer mapping and search missions under uncertainty. Detailed technical documentation is currently under review for competition, but this summary highlights the outcome: multi-agent robotics can remain resilient if governance is distributed, transparent, and accountable to the team it serves.
       </p>
       <hr>
       <h3>Custom Simulation Environment</h3>
@@ -311,6 +297,17 @@
       <p>
       These results are currently limited to my 2-D gridworld benchmark with hand-tuned hyperparameters and a specific fault profile. I'm now porting REIP to higher-fidelity settings: first into a 3-D physics simulator (Isaac Sim / Gazebo), and in parallel onto micromouse-scale ground robots to see whether the robustness gains carry over to real hardware under sensing noise and actuation limits.
       </p>
+      <figure class="project-figure" style="width: 100%; max-width: 960px; margin: 24px auto; display: block;">
+        <iframe 
+          src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed?start=false&loop=false&delayms=3000" 
+          frameborder="0" 
+          allowfullscreen="true" 
+          allow="autoplay; fullscreen"
+          loading="lazy"
+          style="width: 100%; height: 560px; border: 2px solid var(--edge); border-radius: 8px; background: #0b0f14;">
+        </iframe>
+      <figcaption>Hardware implementation slides for REIP.</figcaption>
+      </figure>
       <div class="clear-float"></div>
 
       `,
@@ -913,17 +910,21 @@
 
     const namespace = 'ryker-portfolio';
     const key = 'site-views';
-    const base = 'https://api.countapi.xyz';
-    const hitUrl = `${base}/hit/${namespace}/${key}`;
-    const getUrl = `${base}/get/${namespace}/${key}`;
+    const providers = ['https://api.countapi.xyz', 'https://api.countapi.dev'];
+    const hitUrls = providers.map((base) => `${base}/hit/${namespace}/${key}`);
+    const getUrls = providers.map((base) => `${base}/get/${namespace}/${key}`);
     const storageKey = 'ryker-view-hit-ts';
+    const sessionKey = 'ryker-view-hit-session';
 
     const now = Date.now();
     let shouldHit = true;
     try {
+      if (sessionStorage.getItem(sessionKey) === '1') {
+        shouldHit = false;
+      }
       const lastHit = Number(localStorage.getItem(storageKey));
       // Only increment once per 12 hours per browser to avoid noisy counts
-      shouldHit = Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000;
+      shouldHit = shouldHit && (Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000);
     } catch (e) {
       // Ignore storage issues and default to hitting
     }
@@ -942,7 +943,7 @@
     };
 
     const fetchCount = (url) =>
-      fetch(url)
+      fetch(url, { mode: 'cors' })
         .then((res) => {
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           return res.json();
@@ -951,15 +952,49 @@
           if (!updateValue(data)) throw new Error('Unexpected payload');
         });
 
-    const firstUrl = shouldHit ? hitUrl : getUrl;
+    const tryProviders = async () => {
+      // Pick the first provider; if it fails, try the next; fall back to GET if HIT blocked.
+      const urls = shouldHit ? hitUrls : getUrls;
+      for (let i = 0; i < urls.length; i += 1) {
+        try {
+          await fetchCount(urls[i]);
+          try {
+            sessionStorage.setItem(sessionKey, '1');
+          } catch (e) {}
+          return;
+        } catch (_) {
+          // try next
+        }
+      }
+      // If all HIT attempts fail, try GET across providers
+      for (let i = 0; i < getUrls.length; i += 1) {
+        try {
+          await fetchCount(getUrls[i]);
+          try {
+            sessionStorage.setItem(sessionKey, '1');
+          } catch (e) {}
+          return;
+        } catch (_) {
+          // try next
+        }
+      }
+      throw new Error('All providers failed');
+    };
 
-    fetchCount(firstUrl)
-      .catch(() => fetchCount(getUrl))
-      .catch((err) => {
-        console.warn('View counter unavailable:', err);
-        valueEl.textContent = '—';
-        container.title = 'View counter unavailable right now.';
-      });
+    tryProviders().catch((err) => {
+      console.warn('View counter unavailable:', err);
+      valueEl.textContent = '—';
+      container.title = 'View counter unavailable right now.';
+    });
+  }
+
+  // Silent geo ping to Cloudflare Worker (once per session)
+  function initGeoPing() {
+    const endpoint = 'https://view-geo-worker.therykerviewgeo.workers.dev/';
+    if (!endpoint) return;
+    if (sessionStorage.getItem('geoPingSent')) return;
+    sessionStorage.setItem('geoPingSent', '1');
+    fetch(endpoint, { mode: 'cors' }).catch(() => {});
   }
 
   function bootstrap() {
@@ -967,6 +1002,7 @@
     initThemeToggle();
     initYouTubeEmbeds();
     initViewCounter();
+    initGeoPing();
   }
 
   // Initialize when DOM is ready
