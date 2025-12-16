@@ -568,12 +568,12 @@
       descriptionHtml: `
         <h3>At a glance</h3>
         <ul>
-          <li><strong class="list-label">Context:</strong> Two-week volunteer work at Yalobi school in Nalauwaki, Fiji before freshman year</li>
-          <li><strong class="list-label">Problem:</strong> Remote island schools lack funding for supplies; battery-powered devices are unsustainable due to expensive, hard-to-source coin cells</li>
+          <li><strong class="list-label">Context:</strong> It is difficult for children in the Yalobi school, Fiji to constantly buy paper from the mainland due to expensive boat gas.</li>
+          <li><strong class="list-label">Problem:</strong> The Yalobi school lacks government support; battery-powered devices are unsustainable due to expensive, hard-to-source coin cells</li>
           <li><strong class="list-label">Solution:</strong> Prototyped a solar-powered e-writer that combines a Boogie Board writing device with a small solar-powered circuit</li>
-          <li><strong class="list-label">My role:</strong> Fundraising organizer, CAD design, electronics prototyping, iterative testing, nonprofit formation</li>
-          <li><strong class="list-label">Tools:</strong> Fusion 360, 3D printing (PLA), solar circuit design, iterative prototyping</li>
-          <li><strong class="list-label">Outcome:</strong> Functional prototype under $3 total cost; currently testing with middle school students before sending units to Fiji; formalizing nonprofit organization</li>
+          <li><strong class="list-label">My role:</strong> Founder and engineer for the initiative: CAD design, local business outreach, electronics prototyping, and community testing.</li>
+          <li><strong class="list-label">Tools:</strong> Fusion 360, 3D printing, circuit design</li>
+          <li><strong class="list-label">Outcome:</strong> Functional prototype under $3 total cost; currently testing with middle school students before sending units to Fiji.</li>
         </ul>
         
         <hr>
@@ -583,15 +583,19 @@
           <img src="/assets/img/fiji/kidfiji.jpg" alt="Yalobi school in Fiji">
           <figcaption>Yalobi school in Nalauwaki, Fiji. (Photo Credit: Ryker Kollmyer)</figcaption>
         </figure>
-        <p>During my time volunteering at the Yalobi school in Fiji, I learned that teacher J had to pay over $200 out of pocket for a box of crayons because the island's population is too low to meet subsidy requirements. This experience sparked a multi-year effort to provide sustainable educational tools to remote island communities.</p>
-        
-        <p>After raising funds for basic supplies and infrastructure (cubbies, laptops, Starlink Wi-Fi), I identified a deeper problem: battery-powered devices like Boogie Board e-writers require uncommon coin cell batteries that are expensive and difficult to source on small islands. Fiji is one of the sunniest places I've ever been, which led me to prototype a solar-powered solution.</p>
-        
+        <p> I learned that the teacher of the Yalobi school has to pay over $200 per trip to the mainland to buy school supplies for her students.
+        This is very unsustainable because everything has to be paid out of pocket due to the lack of government support.
+        I initially started by raising funds for basic supplies and new cubbies for the students to store their supplies.
+        Then, I considered a more permanent solution for the students. 
+        Instead of buying new supplies, the students could use an e-writer that doesnt need paper or even a pencil to work, it just needs a small coin cell battery.
+        However, I realized that coin cell batteries are very hard to source on the island of Nalauwaki so I decided to prototype a solar-powered solution that would be sustainable in the sunny climate.
+        </p>
+
         <div class="clear-float"></div>
         
-        <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+        <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 500px; max-width: 500px;">
           <img src="/assets/img/fiji/boogieboardjpg.jpg" alt="Solar-powered e-writer prototype">
-          <figcaption>Solar-powered e-writer prototype. (Photo Credit: Ryker Kollmyer)</figcaption>
+          <figcaption>Original Boogie Board e-writer.(Photo Credit: Ryker Kollmyer)</figcaption>
         </figure>
         
         <h3>Engineering the Solution</h3>
