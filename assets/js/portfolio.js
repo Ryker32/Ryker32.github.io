@@ -579,9 +579,15 @@
         <hr>
         
         <h3>Project Overview</h3>
+        <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/fiji/kidfiji.jpg" alt="Yalobi school in Fiji">
+          <figcaption>Yalobi school in Nalauwaki, Fiji. (Photo Credit: Ryker Kollmyer)</figcaption>
+        </figure>
         <p>During my time volunteering at the Yalobi school in Fiji, I learned that teacher J had to pay over $200 out of pocket for a box of crayons because the island's population is too low to meet subsidy requirements. This experience sparked a multi-year effort to provide sustainable educational tools to remote island communities.</p>
         
         <p>After raising funds for basic supplies and infrastructure (cubbies, laptops, Starlink Wi-Fi), I identified a deeper problem: battery-powered devices like Boogie Board e-writers require uncommon coin cell batteries that are expensive and difficult to source on small islands. Fiji is one of the sunniest places I've ever been, which led me to prototype a solar-powered solution.</p>
+        
+        <div class="clear-float"></div>
         
         <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
           <img src="/assets/img/fiji/boogieboardjpg.jpg" alt="Solar-powered e-writer prototype">
@@ -631,7 +637,7 @@
         <h3>Reflection</h3>
         <p>Although physics class taught me how to break down problems into steps, my experience with the Yalobi students taught me to consider a mathematically unfamiliar dimension: the needs and situations of others. Outreach can mean many things, and through my journey alongside the students of Yalobi, I came to realize that my way of outreach is engineering a solution for others.</p>
       `,
-      image: "/assets/img/fiji/boogieboardjpg.jpg",
+      image: "/assets/img/fiji/kidfiji.jpg",
       files: []
     },
   ];
