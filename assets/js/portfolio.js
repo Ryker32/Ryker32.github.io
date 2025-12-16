@@ -552,6 +552,88 @@
       image: "/assets/img/windsurfing/windsurfing.png",
       files: []
     },
+    {
+      id: 8,
+      title: "Solar-Powered E-Writer for Yalobi School, Fiji",
+      date: "2023 - Present",
+      keyPoints: "Sustainable Design · CAD Prototyping · Community Engineering",
+      description: "Designed and prototyped a solar-powered e-writer to replace expensive, battery-dependent devices for students in remote Fijian communities, addressing sustainability and cost barriers.",
+      badge: "Community",
+      highlights: [
+        "Solar-powered circuit design eliminates need for expensive coin cell batteries",
+        "Under $3 total cost (PLA filament + electronics)",
+        "Iterative prototyping with middle school students before deployment",
+        "Raised $4,000+ for school supplies, laptops, and Starlink Wi-Fi"
+      ],
+      descriptionHtml: `
+        <h3>At a glance</h3>
+        <ul>
+          <li><strong class="list-label">Context:</strong> Two-week volunteer work at Yalobi school in Nalauwaki, Fiji before freshman year</li>
+          <li><strong class="list-label">Problem:</strong> Remote island schools lack funding for supplies; battery-powered devices are unsustainable due to expensive, hard-to-source coin cells</li>
+          <li><strong class="list-label">Solution:</strong> Prototyped a solar-powered e-writer that combines a Boogie Board writing device with a small solar-powered circuit</li>
+          <li><strong class="list-label">My role:</strong> Fundraising organizer, CAD design, electronics prototyping, iterative testing, nonprofit formation</li>
+          <li><strong class="list-label">Tools:</strong> Fusion 360, 3D printing (PLA), solar circuit design, iterative prototyping</li>
+          <li><strong class="list-label">Outcome:</strong> Functional prototype under $3 total cost; currently testing with middle school students before sending units to Fiji; formalizing nonprofit organization</li>
+        </ul>
+        
+        <hr>
+        
+        <h3>Project Overview</h3>
+        <p>During my time volunteering at the Yalobi school in Fiji, I learned that teacher J had to pay over $200 out of pocket for a box of crayons because the island's population is too low to meet subsidy requirements. This experience sparked a multi-year effort to provide sustainable educational tools to remote island communities.</p>
+        
+        <p>After raising funds for basic supplies and infrastructure (cubbies, laptops, Starlink Wi-Fi), I identified a deeper problem: battery-powered devices like Boogie Board e-writers require uncommon coin cell batteries that are expensive and difficult to source on small islands. Fiji is one of the sunniest places I've ever been, which led me to prototype a solar-powered solution.</p>
+        
+        <figure class="project-figure project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
+          <img src="/assets/img/fiji/boogieboardjpg.jpg" alt="Solar-powered e-writer prototype">
+          <figcaption>Solar-powered e-writer prototype. (Photo Credit: Ryker Kollmyer)</figcaption>
+        </figure>
+        
+        <h3>Engineering the Solution</h3>
+        <p>My design combines the writing device with a small solar-powered circuit. The total cost is under $3: less than a dollar in PLA filament for the housing, and less than $2 for the electronics. The device doesn't require a special stylus—students can write with their finger if the pen is lost, making it ideal for resource-constrained environments.</p>
+        
+        <p>I'm currently iterating on a more robust design and ensuring long-term functionality by giving demos to students in my old middle school before sending units abroad. The goal is to engineer a sustainable tool that fits their environment, rather than one that seems promising but proves unsustainable.</p>
+        
+        <div class="clear-float"></div>
+        
+        <hr>
+        
+        <h3>CAD Design</h3>
+        <div class="article-image fusion-360-embed">
+          <iframe 
+            src="https://a360.co/3MwGFYp" 
+            allowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            mozallowfullscreen="true" 
+            frameborder="0">
+          </iframe>
+          <div class="image-caption">Interactive Fusion 360 model of the solar-powered e-writer housing. Click and drag to rotate, scroll to zoom.</div>
+        </div>
+        <div class="clear-float"></div>
+        
+        <hr>
+        
+        <h3>Fundraising & Community Impact</h3>
+        <p>I started with a small fundraising effort within my immediate family, raising $500 to build simple cubby layouts that fit the classroom. I then expanded to my school, writing passages about the children's lives and publishing one in my school's literary anthology, <em>Ursa Major</em>. This proved to be a turning point—we distributed hundreds of copies and raised about $600 for writing and medical supplies.</p>
+        
+        <p>Over the next year, I worked with businesses in my city to promote the effort, raising nearly $2,900 that went directly to the school for laptops and Starlink Wi-Fi, enabling students to watch educational videos and follow their beloved rugby team.</p>
+        
+        <hr>
+        
+        <h3>Systems Thinking & Long-Term Vision</h3>
+        <p>My experience with the Yalobi students taught me to consider a dimension beyond pure engineering: the needs and situations of others. I can't only design something that works in the moment; I need to consider everything that could go wrong and optimize for a robust solution.</p>
+        
+        <p>After talking with a local nurse, I learned that the Yalobi situation is not unique—she's worked in communities in five different countries that share the same problem: small island communities that fall below the population threshold for education funding.</p>
+        
+        <p>I know I can't fix the problem by myself or with one fundraiser, which is why I'm working with local community college students and a professor to formalize a nonprofit organization. We're drafting bylaws, locating local businesses for pilot support, and have identified two new target schools in Fiji to begin.</p>
+        
+        <hr>
+        
+        <h3>Reflection</h3>
+        <p>Although physics class taught me how to break down problems into steps, my experience with the Yalobi students taught me to consider a mathematically unfamiliar dimension: the needs and situations of others. Outreach can mean many things, and through my journey alongside the students of Yalobi, I came to realize that my way of outreach is engineering a solution for others.</p>
+      `,
+      image: "/assets/img/fiji/boogieboardjpg.jpg",
+      files: []
+    },
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
