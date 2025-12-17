@@ -622,24 +622,6 @@
         
         <hr>
         
-        <h3>Fundraising & Community Impact</h3>
-        <p>I started with a small fundraising effort within my immediate family, raising $500 to build simple cubby layouts that fit the classroom. I then expanded to my school, writing passages about the children's lives and publishing one in my school's literary anthology, <em>Ursa Major</em>. This proved to be a turning point—we distributed hundreds of copies and raised about $600 for writing and medical supplies.</p>
-        
-        <p>Over the next year, I worked with businesses in my city to promote the effort, raising nearly $2,900 that went directly to the school for laptops and Starlink Wi-Fi, enabling students to watch educational videos and follow their beloved rugby team.</p>
-        
-        <hr>
-        
-        <h3>Systems Thinking & Long-Term Vision</h3>
-        <p>My experience with the Yalobi students taught me to consider a dimension beyond pure engineering: the needs and situations of others. I can't only design something that works in the moment; I need to consider everything that could go wrong and optimize for a robust solution.</p>
-        
-        <p>After talking with a local nurse, I learned that the Yalobi situation is not unique—she's worked in communities in five different countries that share the same problem: small island communities that fall below the population threshold for education funding.</p>
-        
-        <p>I know I can't fix the problem by myself or with one fundraiser, which is why I'm working with local community college students and a professor to formalize a nonprofit organization. We're drafting bylaws, locating local businesses for pilot support, and have identified two new target schools in Fiji to begin.</p>
-        
-        <hr>
-        
-        <h3>Reflection</h3>
-        <p>Although physics class taught me how to break down problems into steps, my experience with the Yalobi students taught me to consider a mathematically unfamiliar dimension: the needs and situations of others. Outreach can mean many things, and through my journey alongside the students of Yalobi, I came to realize that my way of outreach is engineering a solution for others.</p>
       `,
       image: "/assets/img/fiji/kidfiji.jpg",
       files: []
