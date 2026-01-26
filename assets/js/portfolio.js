@@ -310,6 +310,19 @@
       </figure>
       <div class="clear-float"></div>
 
+              <h3>Micromouse CAD Design</h3>
+        <div class="article-image fusion-360-embed">
+          <iframe 
+            src="https://a360.co/49DkAQU" 
+            allowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            mozallowfullscreen="true" 
+            frameborder="0">
+          </iframe>
+          <div class="image-caption">Micromouse Robot CAD Design.</div>
+        </div>
+        <div class="clear-float"></div>
+
       `,
       image: "/assets/img/reip/reipenv.png",
       files: []
