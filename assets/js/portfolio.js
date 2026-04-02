@@ -691,6 +691,79 @@
       image: "/assets/img/fiji/kidfiji.jpg",
       files: []
     },
+    {
+      id: 9,
+      title: "American Rocketry Challenge",
+      date: "2024 - Present",
+      keyPoints: "ARC team · dual-deploy · telemetry & sims",
+      description: "Building and flight-testing an ARC vehicle with dual-deploy recovery, ground tests, and telemetry-driven iterations.",
+      badge: "Rocketry",
+      highlights: [
+        "Dual-deploy recovery with redundant altimeter and charge tests",
+        "Ground fire + flight test videos with thrust/altitude telemetry",
+        "OpenRocket sims + checklists to keep the stack competition ready"
+      ],
+      descriptionHtml: `
+        <h3>At a glance</h3>
+        <ul>
+          <li><strong class="list-label">Team:</strong> ARC student team (competition entry)</li>
+          <li><strong class="list-label">Vehicle:</strong> Dual-deploy airframe, redundant altimeter, competition mass budget</li>
+          <li><strong class="list-label">My role:</strong> Avionics + recovery setup, ground test instrumentation, sims + checklists</li>
+          <li><strong class="list-label">Goal:</strong> Consistent, safe flights to hit target altitude with clean data for scoring</li>
+        </ul>
+
+        <hr>
+
+        <h3>Flight & test clips</h3>
+        <div class="project-media-grid">
+          <figure class="project-figure">
+            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 6px;">
+              <source src="/assets/img/rocket/rockettest2.mp4" type="video/mp4">
+            </video>
+            <figcaption>Flight test clip</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 6px;">
+              <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
+            </video>
+            <figcaption>Static fire / flow visualization</figcaption>
+          </figure>
+        </div>
+
+        <hr>
+
+        <h3>Gallery</h3>
+        <div class="project-media-grid">
+          <figure class="project-figure">
+            <img src="/assets/img/rocket/rocketmk3.png" alt="ARC airframe build">
+            <figcaption>Airframe build</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <img src="/assets/img/rocket/mk4picture.jpg" alt="Stack assembly">
+            <figcaption>Stack assembly</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <img src="/assets/img/rocket/buildingrocket.jpg" alt="Static fire prep">
+            <figcaption>Static fire prep</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <img src="/assets/img/rocket/rocketbackfire.png" alt="Exhaust during test">
+            <figcaption>Exhaust during testing</figcaption>
+          </figure>
+        </div>
+
+        <hr>
+
+        <h3>Notes</h3>
+        <ul>
+          <li>Dual-deploy charge testing and checklists in progress</li>
+          <li>Telemetry review after each flight to tune sims and recovery</li>
+          <li>OpenRocket sims kept in sync with hardware mass changes</li>
+        </ul>
+      `,
+      image: "/assets/img/rocket/rocketmk3.png",
+      files: []
+    },
   ];
 
   const portfolioGrid = document.getElementById('portfolioGrid');
