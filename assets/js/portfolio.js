@@ -209,124 +209,176 @@
     },
     {
       id: 2,
-      title: "Novel Resilient Election and Impeachment Policy (REIP) Research",
-      date: "April 2025 - December 2025",
-      keyPoints: "Multi Agent Systems · Governance Policy · Research",
-      description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
+      title: "Resilient Multi-Robot Governance (REIP)",
+      date: "April 2025 - Present",
+      keyPoints: "Multi-Agent Systems · Autonomous Robotics · Distributed Governance",
+      description: "Built a distributed governance framework that lets robot teams detect and replace compromised leaders before mission performance collapses.",
       badge: "Research",
+    
       highlights: [
-        "Maintains 98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain).",
-        "Fully custom sim env & ablation tests",
-        "Projected for Washington State Science & Engineering Fair '26"
+        "Proactive three-tier trust model verifies leader assignments before execution.",
+        "Distributed impeachment + merit-based re-election restore healthy leadership in real time.",
+        "Validated in simulation and on real robots for resilient multi-agent exploration under adversarial faults."
       ],
+    
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
-        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval, a masters student in aerospace and multi agent systems research.</li>
-        <li><strong class="list-label">My role:</strong> Conducted literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran controlled experiments/ablations, wrote a technical analysis report paper and a software system description document.</li>
-        <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
-        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
-        <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP m98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain).</li>      
-        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on two Holybro X500 drones courtesy of South Puget Sound Community College, and five Micromouse robots using Raspberry Pi 5s.</li>
+        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval (multi-agent systems / aerospace).</li>
+        <li><strong class="list-label">My role:</strong> Designed REIP, built simulation + evaluation stack, ran adversarial experiments, and led hardware implementation.</li>
+        <li><strong class="list-label">Goal:</strong> Make robot teams resilient to bad leaders that degrade performance without fully failing.</li>
+        <li><strong class="list-label">Core idea:</strong> Treat leadership as revocable — robots verify assignments, build trust, and replace leaders when needed.</li>
+        <li><strong class="list-label">Tools:</strong> Python, NumPy, OpenCV, multiprocessing, Matplotlib, Raspberry Pi, ArUco localization, UDP networking.</li>
+        <li><strong class="list-label">Outcome:</strong> Maintains high exploration performance under adversarial leadership faults while staying competitive in clean conditions.</li>
       </ul>
-      <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
-        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
+    
+      <!-- KEEP THIS AT TOP -->
+      <figure class="project-figure" style="margin: 24px 0;">
+        <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; border-radius: 6px;">
           <source src="/assets/img/reip/Hallucination.mp4" type="video/mp4">
         </video>
-        <figcaption>Live demonstration of REIP in action in a 2-D gridworld environment.</figcaption>
+        <figcaption>
+          Gridworld visualization of REIP: robots explore, share information, and recover when leadership degrades.
+        </figcaption>
       </figure>
-
+    
       <hr>
-      
+    
       <h3>Project Overview</h3>
       <p>
-      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2026. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+        REIP (Resilient Election & Impeachment Policy) is a distributed governance framework for autonomous robot teams.
+        It targets a failure mode most systems ignore: leaders that stay online but quietly degrade performance through stale,
+        redundant, or misleading assignments.
       </p>
-      <hr>
-      <h3>Custom Simulation Environment</h3>
+    
       <p>
-      I built this custom simulation environment in Python that allows me to live monitor the behavior of the agents in the environment.
-      This environment is a grid-world with a start and end point, and a number of obstacles. The drones can move around the grid-world and collect rewards.
-      The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
-      The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
+        Instead of blindly following a leader, robots evaluate assignments before executing them. When trust drops,
+        they can impeach the leader and elect a better one — all without a central controller.
       </p>
+    
+      <hr>
+    
+      <h3>Core Mechanism</h3>
+      <p>
+        REIP uses a three-tier trust model:
+      </p>
+      <ul>
+        <li><strong>Tier 1:</strong> personal visit history</li>
+        <li><strong>Tier 2:</strong> local sensor validation</li>
+        <li><strong>Tier 3:</strong> peer-reported information (lower weight)</li>
+      </ul>
+    
+      <p>
+        A causality-aware check prevents false accusations when teammates explore concurrently. If a leader’s trust drops too low,
+        robots initiate distributed impeachment and elect a replacement.
+      </p>
+    
       <div class="reip-section">
-        <figure class="project-figure" style="height: 550px; max-height: 550px; width: 500px; max-width: 500px;">
-          <img src="/assets/img/reip/square.png" alt="REIP Simulation Demo">
-          <figcaption>Demo image of the REIP simulation environment.</figcaption>
+        <figure class="project-figure">
+          <img src="/assets/img/reip/square.png" alt="Simulation">
+          <figcaption>Simulation environment used for testing.</figcaption>
         </figure>
+    
         <div class="reip-guide">
-          <h3>Simulation Interpretation Guide</h3>
+          <h3>Simulation Guide</h3>
           <ul class="reip-list">
-            <li><strong class="list-label">t:</strong> Current time step</li>
-            <li><strong class="list-label">N:</strong> Number of agents</li>
-            <li><strong class="list-label">Dots:</strong> Agents with their individual ID number labeled</li>
-            <li><strong class="list-label">Agent with yellow "halo":</strong> Current leader with current trust metric labeled</li>
-            <li><strong class="list-label">Dashed circle around agents:</strong> Communication Radius</li>
-            <li><strong class="list-label">Green squares around agents:</strong> Visibility Radius</li>
-            <li><strong class="list-label">Black Squares:</strong> Obstacles</li>
-            <li><strong class="list-label">Blue Squares:</strong> Unexplored Spaces</li>
-            <li><strong class="list-label">Yellow Squares:</strong> Currently visible frontiers (exploration targets)</li>
+            <li><strong class="list-label">Dots:</strong> robots</li>
+            <li><strong class="list-label">Halo:</strong> leader + trust</li>
+            <li><strong class="list-label">Dashed circle:</strong> communication radius</li>
+            <li><strong class="list-label">Green:</strong> visibility</li>
+            <li><strong class="list-label">Blue:</strong> unexplored</li>
+            <li><strong class="list-label">Yellow:</strong> targets</li>
           </ul>
         </div>
       </div>
+    
       <hr>
+    
+      <h3>Experimental Design</h3>
+      <p>
+        I tested REIP under adversarial conditions where leaders assign already-explored cells or rebroadcast stale targets.
+        Ablations removed trust components to isolate what actually drives robustness.
+      </p>
+    
+      <hr>
+    
       <h3>Results</h3>
-      <div style="float: right; width: 500px; max-width: 50%; margin: 0 0 24px 40px; display: flex; flex-direction: column; gap: 24px;">
-        <figure class="project-figure" style="width: 100%; max-width: 100%; margin: 0;">
-          <img src="/assets/img/reip/adversarial.png" alt="Adversarial Conditions" style="width: 100%; height: auto; display: block;">
-          <figcaption>Adversarial conditions Coverage Vs. Time graph.</figcaption>
+    
+      <div style="float:right; width:48%; margin-left:32px;">
+        <figure class="project-figure">
+          <img src="/assets/img/reip/adversarial.png">
+          <figcaption>Adversarial conditions</figcaption>
         </figure>
-        <figure class="project-figure" style="width: 100%; max-width: 100%; margin: 0;">
-          <img src="/assets/img/reip/cleanconditions.png" alt="Clean Conditions" style="width: 100%; height: auto; display: block;">
-          <figcaption>Clean conditions Coverage Vs. Time graph.</figcaption>
+    
+        <figure class="project-figure">
+          <img src="/assets/img/reip/cleanconditions.png">
+          <figcaption>Clean conditions</figcaption>
         </figure>
       </div>
-      <p> <strong class="list-label">Clean conditions (no injected faults):</strong>
-      A round-robin leader-follower baseline and REIP both reach similar final coverage (baseline 92.6%, REIP 91.2%), showing that the governance layer doesn't significantly hurt performance when the leader is healthy.
-      </p>
-      <p> <strong class="list-label">Adversarial conditions (hallucinations + packet / command loss):</strong>
-      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid which is a 76-percentage-point advantage in this benchmark. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median time 399.6 steps), whereas REIP succeeds in 100% of runs with a median time-to-95% of 273.5 steps (~32% faster).
-      </p>
-      <figure class="project-figure" style="width: 80%; max-width: 500px; margin: 24px 0;">
-        <img src="/assets/img/reip/reipbarchartfinal.png" alt="Bar chart comparison" style="width: 100%; height: auto; display: block;">
-        <figcaption>Performance comparison between baseline and REIP systems.</figcaption>
-      </figure>
-      <div class="clear-float"></div>
-      <h3>Limitations and Next Steps</h3>
+    
       <p>
-      These results are currently limited to my 2-D gridworld benchmark with hand-tuned hyperparameters and a specific fault profile. I'm now porting REIP to higher-fidelity settings: first into a 3-D physics simulator (Isaac Sim / Gazebo), and in parallel onto micromouse-scale ground robots to see whether the robustness gains carry over to real hardware under sensing noise and actuation limits.
+        <strong>Clean conditions:</strong> REIP performs similarly to baseline systems, showing minimal overhead.
       </p>
-      <figure class="project-figure" style="width: 100%; max-width: 960px; margin: 24px auto; display: block;">
-        <iframe 
-          src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed?start=false&loop=false&delayms=3000" 
-          frameborder="0" 
-          allowfullscreen="true" 
-          allow="autoplay; fullscreen"
-          loading="lazy"
-          style="width: 100%; height: 560px; border: 2px solid var(--edge); border-radius: 8px; background: #0b0f14;">
-        </iframe>
-      <figcaption>Hardware implementation slides for REIP.</figcaption>
+    
+      <p>
+        <strong>Adversarial conditions:</strong> REIP maintains exploration by detecting bad assignments early
+        and recovering through impeachment + re-election.
+      </p>
+    
+      <p>
+        <strong>Key insight:</strong> The contribution is not better exploration — it is resilient exploration under internal failure.
+      </p>
+    
+      <figure class="project-figure" style="max-width:500px;">
+        <img src="/assets/img/reip/reipbarchartfinal.png">
+        <figcaption>Benchmark comparison</figcaption>
       </figure>
+    
       <div class="clear-float"></div>
-
-              <h3>Micromouse CAD Design</h3>
-        <div class="article-image fusion-360-embed">
-          <iframe 
-            src="https://a360.co/4q0nG6c" 
-            allowfullscreen="true" 
-            webkitallowfullscreen="true" 
-            mozallowfullscreen="true" 
-            frameborder="0">
-          </iframe>
-          <div class="image-caption">Micromouse Robot CAD Design.</div>
-        </div>
-        <div class="clear-float"></div>
-
+    
+      <hr>
+    
+      <h3>Hardware Validation</h3>
+      <p>
+        Implemented REIP on micromouse robots with onboard computation and peer-to-peer communication,
+        validating behavior under real sensing noise and actuation limits.
+      </p>
+    
+      <p>
+        Extended toward larger systems including Holybro X500 drones to explore real-world deployment.
+      </p>
+    
+      <figure class="project-figure">
+        <iframe 
+          src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed"
+          style="width:100%; height:560px; border-radius:8px;">
+        </iframe>
+        <figcaption>Hardware implementation</figcaption>
+      </figure>
+    
+      <h3>Micromouse CAD</h3>
+      <div class="fusion-360-embed">
+        <iframe src="https://a360.co/4q0nG6c"></iframe>
+        <div class="image-caption">Robot CAD design</div>
+      </div>
+    
+      <hr>
+    
+      <h3>Why It Matters</h3>
+      <p>
+        Autonomous robot teams increasingly operate without constant human oversight. REIP addresses a critical gap:
+        leaders that are still active but no longer trustworthy.
+      </p>
+    
+      <p>
+        This makes the framework relevant to planetary robotics, search-and-rescue, and distributed autonomous systems
+        where resilience to internal failure is essential.
+      </p>
       `,
+    
       image: "/assets/img/reip/reipenv.png",
       files: []
-    },
+    }
     {
       id: 3,
       title: "MIT-BWSI Autonomous UAV Racing",
