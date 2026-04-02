@@ -378,7 +378,7 @@
     
       image: "/assets/img/reip/reipenv.png",
       files: []
-    }
+    },
     {
       id: 3,
       title: "MIT-BWSI Autonomous UAV Racing",
