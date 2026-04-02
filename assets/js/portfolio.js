@@ -218,42 +218,37 @@
       highlights: [
         "Proactive three-tier trust model verifies leader assignments before execution.",
         "Distributed impeachment + merit-based re-election restore healthy leadership in real time.",
-        "Validated in simulation and on real robots for resilient multi-agent exploration under adversarial faults."
+        "Validated in simulation and on real robots for resilient multi-agent exploration."
       ],
     
       descriptionHtml: `
       <h3>At a glance</h3>
       <ul>
-        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval (multi-agent systems / aerospace).</li>
+        <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval.</li>
         <li><strong class="list-label">My role:</strong> Designed REIP, built simulation + evaluation stack, ran adversarial experiments, and led hardware implementation.</li>
         <li><strong class="list-label">Goal:</strong> Make robot teams resilient to bad leaders that degrade performance without fully failing.</li>
-        <li><strong class="list-label">Core idea:</strong> Treat leadership as revocable — robots verify assignments, build trust, and replace leaders when needed.</li>
-        <li><strong class="list-label">Tools:</strong> Python, NumPy, OpenCV, multiprocessing, Matplotlib, Raspberry Pi, ArUco localization, UDP networking.</li>
-        <li><strong class="list-label">Outcome:</strong> Maintains high exploration performance under adversarial leadership faults while staying competitive in clean conditions.</li>
+        <li><strong class="list-label">Core idea:</strong> Leadership is revocable — robots verify assignments, build trust, and replace leaders when needed.</li>
+        <li><strong class="list-label">Tools:</strong> Python, NumPy, OpenCV, multiprocessing, Matplotlib, Raspberry Pi, ArUco, UDP networking.</li>
+        <li><strong class="list-label">Outcome:</strong> Maintains high exploration performance under adversarial faults while staying competitive in clean conditions.</li>
       </ul>
     
-      <!-- KEEP THIS AT TOP -->
+      <!-- GRIDWORLD (kept at top) -->
       <figure class="project-figure" style="margin: 24px 0;">
         <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; border-radius: 6px;">
           <source src="/assets/img/reip/Hallucination.mp4" type="video/mp4">
         </video>
-        <figcaption>
-          Gridworld visualization of REIP: robots explore, share information, and recover when leadership degrades.
-        </figcaption>
+        <figcaption>Gridworld visualization of REIP: robots explore, share information, and recover when leadership degrades.</figcaption>
       </figure>
     
       <hr>
     
       <h3>Project Overview</h3>
       <p>
-        REIP (Resilient Election & Impeachment Policy) is a distributed governance framework for autonomous robot teams.
-        It targets a failure mode most systems ignore: leaders that stay online but quietly degrade performance through stale,
-        redundant, or misleading assignments.
+        REIP is a distributed governance framework for multi-robot systems. It addresses a key failure mode: leaders that remain online but degrade team performance through stale or misleading assignments.
       </p>
     
       <p>
-        Instead of blindly following a leader, robots evaluate assignments before executing them. When trust drops,
-        they can impeach the leader and elect a better one — all without a central controller.
+        Instead of blindly following a leader, robots verify assignments before executing them. When trust drops, they can impeach the leader and elect a better one — all without central control.
       </p>
     
       <hr>
@@ -265,18 +260,17 @@
       <ul>
         <li><strong>Tier 1:</strong> personal visit history</li>
         <li><strong>Tier 2:</strong> local sensor validation</li>
-        <li><strong>Tier 3:</strong> peer-reported information (lower weight)</li>
+        <li><strong>Tier 3:</strong> peer-reported info (lower weight)</li>
       </ul>
     
       <p>
-        A causality-aware check prevents false accusations when teammates explore concurrently. If a leader’s trust drops too low,
-        robots initiate distributed impeachment and elect a replacement.
+        A causality-aware check prevents false accusations from concurrent exploration. If trust drops, robots trigger distributed impeachment and re-election.
       </p>
     
       <div class="reip-section">
-        <figure class="project-figure">
+        <figure class="project-figure" style="width: 100%; max-width: 900px;">
           <img src="/assets/img/reip/square.png" alt="Simulation">
-          <figcaption>Simulation environment used for testing.</figcaption>
+          <figcaption>Simulation environment used for evaluation.</figcaption>
         </figure>
     
         <div class="reip-guide">
@@ -284,7 +278,7 @@
           <ul class="reip-list">
             <li><strong class="list-label">Dots:</strong> robots</li>
             <li><strong class="list-label">Halo:</strong> leader + trust</li>
-            <li><strong class="list-label">Dashed circle:</strong> communication radius</li>
+            <li><strong class="list-label">Dashed:</strong> communication</li>
             <li><strong class="list-label">Green:</strong> visibility</li>
             <li><strong class="list-label">Blue:</strong> unexplored</li>
             <li><strong class="list-label">Yellow:</strong> targets</li>
@@ -294,17 +288,10 @@
     
       <hr>
     
-      <h3>Experimental Design</h3>
-      <p>
-        I tested REIP under adversarial conditions where leaders assign already-explored cells or rebroadcast stale targets.
-        Ablations removed trust components to isolate what actually drives robustness.
-      </p>
-    
-      <hr>
-    
       <h3>Results</h3>
     
-      <div style="float:right; width:48%; margin-left:32px;">
+      <!-- FIXED SIZE -->
+      <div style="width: 100%; display: flex; gap: 24px; margin: 24px 0;">
         <figure class="project-figure">
           <img src="/assets/img/reip/adversarial.png">
           <figcaption>Adversarial conditions</figcaption>
@@ -316,49 +303,41 @@
         </figure>
       </div>
     
-      <p>
-        <strong>Clean conditions:</strong> REIP performs similarly to baseline systems, showing minimal overhead.
-      </p>
+      <p><strong>Clean:</strong> REIP performs similarly to baseline systems.</p>
+      <p><strong>Adversarial:</strong> REIP maintains exploration through early detection and recovery.</p>
+      <p><strong>Key insight:</strong> Resilience under internal failure is the core contribution.</p>
     
-      <p>
-        <strong>Adversarial conditions:</strong> REIP maintains exploration by detecting bad assignments early
-        and recovering through impeachment + re-election.
-      </p>
-    
-      <p>
-        <strong>Key insight:</strong> The contribution is not better exploration — it is resilient exploration under internal failure.
-      </p>
-    
-      <figure class="project-figure" style="max-width:500px;">
+      <figure class="project-figure" style="width: 100%; max-width: 900px;">
         <img src="/assets/img/reip/reipbarchartfinal.png">
         <figcaption>Benchmark comparison</figcaption>
       </figure>
-    
-      <div class="clear-float"></div>
     
       <hr>
     
       <h3>Hardware Validation</h3>
       <p>
-        Implemented REIP on micromouse robots with onboard computation and peer-to-peer communication,
-        validating behavior under real sensing noise and actuation limits.
+        Implemented REIP on micromouse robots with onboard compute and peer-to-peer communication, validating behavior under real-world noise.
       </p>
     
       <p>
-        Extended toward larger systems including Holybro X500 drones to explore real-world deployment.
+        Extended toward larger systems including Holybro X500 drones.
       </p>
     
+      <!-- BIGGER SLIDES -->
       <figure class="project-figure">
         <iframe 
           src="https://docs.google.com/presentation/d/1deZ7RDOKHEwC3LnkchgeaxY-HRdvQ7BTmA_eFWyl4E8/embed"
-          style="width:100%; height:560px; border-radius:8px;">
+          style="width: 100%; height: 700px; border-radius: 8px;">
         </iframe>
         <figcaption>Hardware implementation</figcaption>
       </figure>
     
       <h3>Micromouse CAD</h3>
       <div class="fusion-360-embed">
-        <iframe src="https://a360.co/4q0nG6c"></iframe>
+        <iframe 
+          src="https://a360.co/4q0nG6c"
+          style="width: 100%; height: 600px;">
+        </iframe>
         <div class="image-caption">Robot CAD design</div>
       </div>
     
@@ -366,13 +345,8 @@
     
       <h3>Why It Matters</h3>
       <p>
-        Autonomous robot teams increasingly operate without constant human oversight. REIP addresses a critical gap:
-        leaders that are still active but no longer trustworthy.
-      </p>
-    
-      <p>
-        This makes the framework relevant to planetary robotics, search-and-rescue, and distributed autonomous systems
-        where resilience to internal failure is essential.
+        REIP targets a gap in autonomy: leaders that are still active but no longer trustworthy.
+        This is critical for planetary robotics, search-and-rescue, and distributed systems.
       </p>
       `,
     
