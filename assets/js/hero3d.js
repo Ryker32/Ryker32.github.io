@@ -652,11 +652,23 @@ function initHero3D() {
   console.log('Group has', group.children.length, 'children');
   requestAnimationFrame(render);
   
-  // Start reveal when the page signals readiness
-  if (document.body.classList.contains('animation-ready')) {
+  // Start reveal when the page signals readiness (unless session says it's already shown)
+  const introShown = (() => { try { return sessionStorage.getItem('siteIntroShown') === '1'; } catch (_) { return false; } })();
+  const startRevealOnce = () => {
+    if (window.__heroRevealStarted) return;
+    window.__heroRevealStarted = true;
     animateReveal();
+  };
+
+  if (introShown) {
+    // Skip animation; show final state immediately and notify controller
+    uniforms.uReveal.value = 1.0;
+    if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
+    document.dispatchEvent(new Event('hero-reveal-complete'));
+  } else if (document.body.classList.contains('animation-ready')) {
+    startRevealOnce();
   } else {
-    document.addEventListener('animation-ready', () => animateReveal(), { once: true });
+    document.addEventListener('animation-ready', startRevealOnce, { once: true });
   }
 }
 

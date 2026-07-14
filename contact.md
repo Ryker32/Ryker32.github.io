@@ -35,13 +35,5 @@ permalink: /contact/
         <p>@Ryker32</p>
       </div>
     </a>
-
-    <a class="contact-tile" href="#top" rel="noopener">
-      <div class="contact-icon">⬆️</div>
-      <div class="contact-body">
-        <h3>Back to top</h3>
-        <p>Return to the hero</p>
-      </div>
-    </a>
   </div>
 </section>

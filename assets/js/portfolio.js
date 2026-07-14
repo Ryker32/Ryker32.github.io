@@ -377,7 +377,7 @@
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
       repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
       description: "Built a safety-aware teleop stack for a KiwiBot/LeRobot platform at YC Agent Jam ’25, blending HuggingFace LLM cues with real-time manipulation.",
-      badge: "Y-combinator",
+      badge: "YC",
       highlights: [
         "LLM watches for hazards & triggers alerts in teleop mode",
         "Robot grips color-coded objects via custom HF training loop",
@@ -836,6 +836,14 @@
     article.className = 'project-card';
     article.setAttribute('data-project-id', project.id);
 
+    if (project.badge) {
+      const org = document.createElement('span');
+      org.className = 'project-card__org';
+      org.textContent = project.badge;
+      org.setAttribute('aria-hidden', 'true');
+      article.appendChild(org);
+    }
+
     const media = document.createElement('div');
     media.className = 'project-card__media';
 
@@ -847,6 +855,13 @@
       this.src = '/assets/img/logo.png';
     };
     media.appendChild(thumbnail);
+
+    const frame = document.createElement('div');
+    frame.className = 'project-card__frame';
+    for (let i = 0; i < 4; i++) {
+      frame.appendChild(document.createElement('span'));
+    }
+    media.appendChild(frame);
 
     const body = document.createElement('div');
     body.className = 'project-card__body';
@@ -1161,7 +1176,6 @@
     initPortfolio();
     initThemeToggle();
     initYouTubeEmbeds();
-    initViewCounter();
     initGeoPing();
   }
 

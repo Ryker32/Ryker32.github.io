@@ -1,7 +1,10 @@
 (() => {
   // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasSeenAnimation = false; // always play for now
+  const INTRO_KEY = 'siteIntroShown';
+  const hasSeenAnimation = (() => {
+    try { return sessionStorage.getItem(INTRO_KEY) === '1'; } catch (_) { return false; }
+  })();
   const heroCanvas = document.getElementById('heroCanvas');
   
   // If there's no hero section on this page, skip all animation logic
@@ -40,8 +43,24 @@
     return;
   }
 
+  // If we've already shown the intro this session, don't replay it
+  if (hasSeenAnimation) {
+    document.body.classList.add('animation-complete');
+    document.body.classList.remove('animation-loading');
+    document.documentElement.style.overflow = '';
+    const nav = document.querySelector('.glass-nav-wrapper');
+    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
+    if (nav) nav.style.opacity = '1';
+    contentBlocks.forEach((el) => { el.style.opacity = '1'; });
+    // Let downstream listeners proceed as if reveal completed
+    document.dispatchEvent(new Event('hero-reveal-complete'));
+    return;
+  }
+
   // Initialize animation sequence
   function initAnimation() {
+    if (window.__siteIntroStarted) return;
+    window.__siteIntroStarted = true;
     document.documentElement.style.overflow = 'hidden';
 
     let animationTriggered = false;
@@ -133,6 +152,7 @@
         document.body.classList.remove('animation-loading');
         document.documentElement.style.overflow = '';
         collapseHeroFrame();
+        try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (_) {}
       }, 350); // slight delay after hero completes
     };
 
