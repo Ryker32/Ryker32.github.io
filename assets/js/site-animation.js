@@ -178,7 +178,6 @@
   const REVEAL_SELECTORS = [
     '.project-card',
     '.portfolio-header',
-    '.about-blurb__inner',
     '.site-footer > *',
     '.contact-tile',
     '.contact-header',

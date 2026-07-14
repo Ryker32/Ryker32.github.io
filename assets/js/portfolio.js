@@ -97,15 +97,15 @@
     {
       id: 1,
       title: "Hybrid/Modular UAV-UGV Research",
-      date: "August 2025 - October 2025", // Optional: Add date here (e.g., "Summer 2025", "Jan 2024 - Mar 2024", "2024")
-      keyPoints: "Hybrid drone/rover · ROS2 + PX4 · URTC poster",
+      date: "July 2025 - October 2025",
+      keyPoints: "MIT Lincoln Laboratory · ROS2 + PX4 · IEEE-URTC poster",
       repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
-      description: "Built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain, re-docks in flight, and ships data back over ROS2 + PX4.",
+      description: "As an Autonomous Systems Researcher with MIT Lincoln Laboratory, built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain and re-docks in flight. Presented as a peer-reviewed poster at IEEE URTC at the MIT STATA Center.",
       badge: "IEEE-URTC",
       highlights: [
+        "Autonomous Systems Researcher, MIT Lincoln Laboratory",
         "Custom dock + battery rails keep the UGV stable in flight",
-        "Flight controller + rover share ROS2/PX4 telemetry for hand-offs",
-        "Demoed live at MIT URTC & Beaver Works Summer Institute"
+        "Peer-reviewed poster at IEEE URTC, MIT STATA Center"
       ],
       descriptionHtml: `
       <H3>At a glance</H3>
@@ -113,7 +113,7 @@
         <li><strong class="list-label">Team:</strong> 5 high school students</li>
         <li><strong class="list-label">Mentors:</strong> Two Cambridge-area researchers from the BWSI network</li>
         <li><strong class="list-label">Goal:</strong> Design a hybrid UAV-UGV system where a quadcopter ferries a small rover over terrain it can't traverse (tall grass, stairs, rubble), then re-docks and extracts it</li>
-        <li><strong class="list-label">My role:</strong> Research project organizer, hardware, data analysis, CAD, materials sourcing, and documentation</li>
+        <li><strong class="list-label">My role:</strong> Autonomous Systems Researcher (MIT Lincoln Laboratory); research project organizer, hardware, data analysis, CAD, materials sourcing, and documentation</li>
         <li><strong class="list-label">Stack:</strong> Fusion 360, ROS2, PX4, Python, 3D printing.</li>
         <li><strong class="list-label">Outcome:</strong> Working prototype demonstrated at Beaver Works Summer Institute (BWSI) in the Zesiger Center MIT; presented as a peer-reviewed poster at the IEEE MIT Undergraduate Research and Technology Conference (URTC).</li>
         </ul>
@@ -209,15 +209,15 @@
     },
     {
       id: 2,
-      title: "Trust-Based fault tolerance for multi-agent systems research",
-      date: "April 2025 - March 2026",
-      keyPoints: "Multi Agent Systems · Governance Policy · Research",
-      description: "Designed a governance layer that lets drone teams impeach hallucinating leaders and elect new ones mid-mission while staying within 0.7% of baseline coverage.",
-      badge: "Research",
+      title: "REIP: Trust-Based Fault Tolerance for Multi-Agent Systems",
+      date: "March 2025 - February 2026",
+      keyPoints: "WSSEF 1st in Robotics · AIAA Symposium · Multi-agent research",
+      description: "Designed a democratic governance framework that lets robot teams detect, impeach, and replace faulty leaders — 3.1x more reliable than the standard heartbeat baseline. 1st place in Robotics and Top 20 overall out of 1,200 at the Washington State Science & Engineering Fair 2026.",
+      badge: "WSSEF 1st",
       highlights: [
-        "3.1x more reliable than RAFT at coverage thresholds; 98% vs 22% final coverage under adversarial faults (76 pp gain).",
-        "Fully custom sim env & ablation tests across packet loss + hallucination faults",
-        "Paper draft + hardware port; targeting Washington State Science & Engineering Fair '26"
+        "1st in Robotics + Top 20 overall of 1,200 @ WSSEF 2026",
+        "3.1x more reliable than baseline; 98% vs 22% coverage under adversarial faults",
+        "Presented at AIAA Technical Symposium; hardware port with custom PCBs + 3D-printed robots"
       ],
       descriptionHtml: `
       <h3>At a glance</h3>
@@ -225,9 +225,10 @@
         <li><strong class="list-label">Solo project</strong> with mentorship from Avi Soval, a masters student in aerospace and multi agent systems research.</li>
         <li><strong class="list-label">My role:</strong> Conducted literature review, developed the novel REIP governance policy, built a full multi-agent simulation environment, ran controlled experiments/ablations, wrote a technical analysis report paper and a software system description document.</li>
         <li><strong class="list-label">Goal:</strong> Develop a governance policy for leader-follower drone systems so teams can maintain coverage even when AI based leaders "hallucinate" or adversarial attacks occur.</li>
-        <li><strong class="list-label">Key tools:</strong> Python, NumPy, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas.</li>
-        <li><strong class="list-label">Outcome:</strong>In faulted environments with hallucinating leaders and packet loss, REIP m98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain).</li>      
-        <li><strong class="list-label">Status:</strong> Simulation framework and experimental results complete; research paper draft in progress for Washington State Science and Engineering Fair 2025. Working on Hardware implementation of REIP on two Holybro X500 drones courtesy of South Puget Sound Community College, and five Micromouse robots using Raspberry Pi 5s.</li>
+        <li><strong class="list-label">Key tools:</strong> Python & C++, MATLAB, NumPy, R, custom Grid-World environment, multiprocessing library for parallel agent processing, Matplotlib, LaTeX, Pandas, CAD + PCB design for the hardware port.</li>
+        <li><strong class="list-label">Outcome:</strong> In faulted environments with hallucinating leaders and packet loss, REIP reached 98% final coverage vs 22% for a leader-follower baseline under identical adversarial faults (76 pp resilience gain); 3.1x more reliable than the standard heartbeat-based baseline.</li>
+        <li><strong class="list-label">Results:</strong> <strong class="list-label">1st place in Robotics</strong> and <strong class="list-label">Top 20 overall out of 1,200</strong> at the Washington State Science & Engineering Fair 2026; presented at the AIAA Technical Symposium.</li>
+        <li><strong class="list-label">Status:</strong> Hardware implementation in progress on two Holybro X500 drones courtesy of South Puget Sound Community College, and five Micromouse robots using Raspberry Pi 5s with custom PCBs and 3D-printed chassis.</li>
       </ul>
       <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
         <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
@@ -240,7 +241,7 @@
       
       <h3>Project Overview</h3>
       <p>
-      Resilient Election & Impeachment Policy (REIP) is my ongoing research submission for the Washington State Science Fair 2026. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+      Resilient Election & Impeachment Policy (REIP) is my research project that won 1st place in Robotics (Top 20 overall out of 1,200) at the Washington State Science & Engineering Fair 2026 and was presented at the AIAA Technical Symposium. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
       </p>
       <hr>
       <h3>Custom Simulation Environment</h3>
@@ -328,6 +329,38 @@
       files: []
     },
     {
+      id: 10,
+      title: "Flight Lab Educational Kits",
+      date: "December 2025 - Present",
+      keyPoints: "Founder & product lead · K-5 aerospace kits · Launching Aug 2026",
+      description: "Founded Flight Lab: K-5 aerospace teaching kits built around project-based learning, with a custom manufacturing method for cheap, scalable production. Piloting with 100+ students ahead of the August 2026 launch.",
+      badge: "Founder",
+      highlights: [
+        "Designed K-5 aerospace kits teaching concepts through project-based learning",
+        "Custom manufacturing method for cheap and scalable kit production",
+        "Pilot production with 100+ students before initial launch in Aug 2026"
+      ],
+      descriptionHtml: `
+        <h3>At a glance</h3>
+        <ul>
+          <li><strong class="list-label">Role:</strong> Founder and product lead</li>
+          <li><strong class="list-label">Product:</strong> Aerospace teaching kits that introduce K-5 students to flight and engineering concepts through project-based learning</li>
+          <li><strong class="list-label">Manufacturing:</strong> Custom manufacturing method designed for cheap and scalable kit production</li>
+          <li><strong class="list-label">Status:</strong> Pilot production with over 100 young students for research and refinement ahead of the initial launch in August 2026</li>
+        </ul>
+        <hr>
+        <h3>Project Overview</h3>
+        <p>
+        Flight Lab grew out of years of aerospace outreach: after teaching rocketry and flight fundamentals to thousands of K-5 students, I kept seeing the same gap — there was no affordable, hands-on kit that let young students actually build and understand something that flies. Flight Lab kits are designed to fill that gap with project-based lessons that a classroom teacher can run without an aerospace background.
+        </p>
+        <p>
+        I designed the kits, developed a custom manufacturing method to keep per-unit costs low at scale, and am currently running pilot production with more than 100 students to refine the product before launch in August 2026.
+        </p>
+      `,
+      image: "/assets/img/logo.png",
+      files: []
+    },
+    {
       id: 3,
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
@@ -399,6 +432,9 @@
       who are not able to see the object themselves. We used the HuggingFace API to train the robot to pick up specific colored objects as well.
       This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
+      </p>
+      <p>
+      Since then I've stayed in the Y-Combinator orbit: I completed YC Startup School '26 and presented at the YC Startup Internship Expo '26.
       </p>
       <div class="clear-float"></div>
       <hr>
@@ -537,21 +573,22 @@
     },
     {
       id: 7,
-      title: "Windsurfing & Sailing Interface",
-      date: "6/2025 - Present",
-      keyPoints: "ESP32 interface · Arduino firmware · Selling Units",
-      description: "Shipping ESP32-based windsurf dashboards that pull marine weather APIs + local radio data into a rugged TFT interface sold to local clubs.",
+      title: "Weather Brick for Windsurfers & Sailors",
+      date: "January 2025 - Present",
+      keyPoints: "ESP32 interface · Waterproof product · Selling units",
+      description: "Designing and selling \"Weather Bricks\": waterproof, low-power ESP32 weather devices for sailors and windsurfers that pull marine weather APIs + local radio data into a rugged TFT interface — $35 profit per unit.",
       badge: "Product",
       highlights: [
         "ESP32 firmware w/ Wi-Fi + radio ingest",
-        "Weather + tide data rendered on TFT UI",
-        "Sold units at $50 with $15 BOM"
+        "Waterproof chassis designed and fabricated in Fusion 360",
+        "Selling at $50 with a $15 BOM ($35 profit per unit)"
       ],
       descriptionHtml: `
         <h3>Description</h3>
-        <p>This uses an ESP WROOM-32 microcontroller and a TFT display to create a simple interface for local windsurfers and sailors to use.
-        This is programmed in Arduino and uses API keys and the home Wi-Fi for a constant connection, it can also receive constant radio data from the local weather station for constant updates.
-        This was created for sailors and windsurfers at the local clubs. It has been sold for $50 per unit and costs only $15 to produce.
+        <p>The "Weather Brick" uses an ESP WROOM-32 microcontroller and a TFT display to create a simple, rugged interface for local windsurfers and sailors.
+        It is programmed in Arduino and uses API keys and home Wi-Fi for a constant connection; it can also receive continuous radio data from the local weather station for live updates.
+        I designed and fabricated the waterproof chassis and mapped the circuits in Autodesk Fusion before soldering each device together.
+        Units sell for $50 and cost only $15 to produce — $35 profit per unit — and are currently selling to sailors and windsurfers at local clubs.
         </p>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
           <img src="/assets/img/windsurfing/windsurfing.png" alt="Interface">
@@ -567,16 +604,15 @@
     },
     {
       id: 8,
-      title: "Solar-Powered E-Writer for Yalobi School, Fiji",
-      date: "2023 - Present",
-      keyPoints: "Sustainable Design · CAD Prototyping · Community Engineering",
-      description: "Designed and prototyped a solar-powered e-writer to replace expensive, battery-dependent devices for students in remote Fijian communities, addressing sustainability and cost barriers.",
-      badge: "Community",
+      title: "Fiji Education Fund & Solar-Powered E-Writer",
+      date: "August 2023 - Present",
+      keyPoints: "Chairman & founder · $4,000+ raised · Sustainable design",
+      description: "Chairman and founder of the Fiji Education Fund: raised $4,000+ for low-cost e-writers, supplies, laptops, and Starlink Wi-Fi for students at Yalobi School in Nalauwaki, Fiji — including a sub-$3 solar-powered e-writer I designed and prototyped.",
+      badge: "Founder",
       highlights: [
+        "Chairman & founder; raised $4,000+ for school supplies, laptops, and Starlink Wi-Fi",
         "Solar-powered circuit design eliminates need for expensive coin cell batteries",
-        "Under $3 total cost (PLA filament + electronics)",
-        "Iterative prototyping with middle school students before deployment",
-        "Raised $4,000+ for school supplies, laptops, and Starlink Wi-Fi"
+        "Under $3 total cost (PLA filament + electronics); piloting with students before deployment"
       ],
       descriptionHtml: `
         <h3>At a glance</h3>
@@ -584,8 +620,9 @@
           <li><strong class="list-label">Context:</strong> It is difficult for children in the Yalobi school, Fiji to constantly buy paper from the mainland due to expensive boat gas.</li>
           <li><strong class="list-label">Problem:</strong> The Yalobi school lacks government support; battery-powered devices are unsustainable due to expensive, hard-to-source coin cells</li>
           <li><strong class="list-label">Solution:</strong> Prototyped a solar-powered e-writer that combines a Boogie Board writing device with a small solar-powered circuit</li>
-          <li><strong class="list-label">My role:</strong> Founder and engineer for the initiative: CAD design, local business outreach, electronics prototyping, and community testing.</li>
+          <li><strong class="list-label">My role:</strong> Chairman and founder of the Fiji Education Fund: CAD design, local business outreach, electronics prototyping, fundraising, and community testing.</li>
           <li><strong class="list-label">Tools:</strong> Fusion 360, 3D printing, circuit design</li>
+          <li><strong class="list-label">Fundraising:</strong> Raised $4,000+ to develop low-cost e-writers and provide school supplies, laptops, and Starlink Wi-Fi for the Yalobi school.</li>
           <li><strong class="list-label">Outcome:</strong> Functional prototype under $3 total cost; currently testing with middle school students before sending units to Fiji.</li>
         </ul>
         
@@ -641,23 +678,27 @@
     },
     {
       id: 9,
-      title: "American Rocketry Challenge",
-      date: "2024 - Present",
-      keyPoints: "ARC team · dual-deploy · telemetry & sims",
-      description: "Building and flight-testing an ARC vehicle with dual-deploy recovery, ground tests, and telemetry-driven iterations.",
-      badge: "Rocketry",
+      title: "Olympia Aerospace Club & American Rocketry Challenge",
+      date: "September 2024 - Present",
+      keyPoints: "VP & outreach lead · 18th nationally of 1,000+ teams · 3,000+ students reached",
+      appUrl: "https://www.ohsaerospace.org/home",
+      appLabel: "Club Website",
+      description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams — 130+ launches, 3,000+ K-5 students reached at 9 schools, and $10,000+ raised for the team and outreach.",
+      badge: "Aerospace",
       highlights: [
-        "Dual-deploy recovery with redundant altimeter and charge tests",
-        "Ground fire + flight test videos with thrust/altitude telemetry",
-        "OpenRocket sims + checklists to keep the stack competition ready"
+        "18th national rank (2025) out of 1,000+ TARC teams; 16 teams, 130+ launches",
+        "Led outreach to 3,000+ K-5 students at 9 schools; raised $10,000+",
+        "Sole recipient of the AIAA PNW Young Professional of the Year award (2026)"
       ],
       descriptionHtml: `
         <h3>At a glance</h3>
         <ul>
-          <li><strong class="list-label">Team:</strong> ARC student team (competition entry)</li>
-          <li><strong class="list-label">Vehicle:</strong> Dual-deploy airframe, redundant altimeter, competition mass budget</li>
-          <li><strong class="list-label">My role:</strong> Avionics + recovery setup, ground test instrumentation, sims + checklists</li>
-          <li><strong class="list-label">Goal:</strong> Consistent, safe flights to hit target altitude with clean data for scoring</li>
+          <li><strong class="list-label">Role:</strong> Vice President and Leader of Outreach, <a href="https://www.ohsaerospace.org/home" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace Club</a></li>
+          <li><strong class="list-label">Scale:</strong> 16 TARC teams, 130+ total launches, 2,000+ students reached through the club; ranked 18th nationally out of 1,000+ teams in 2025</li>
+          <li><strong class="list-label">Outreach:</strong> Led aerospace outreach events to 3,000+ K-5 students at 9 schools; founded and instructed Aerospace Summer Camps at Hands On Children's Museum</li>
+          <li><strong class="list-label">Fundraising:</strong> Raised over $10,000 for the rocketry team and outreach events</li>
+          <li><strong class="list-label">Recognition:</strong> Sole recipient of the AIAA PNW Young Professional of the Year award (2026), recognizing highly technical and outstanding community-building professionals under the age of 35</li>
+          <li><strong class="list-label">Competition:</strong> Engineered dual-deploy ARC vehicles with redundant altimeters, telemetry-driven iteration, and OpenRocket/ANSYS-optimized frames and fin cans</li>
         </ul>
 
         <hr>
@@ -866,12 +907,20 @@
     glow.className = 'project-card__glow';
     article.appendChild(glow);
 
+    // Soft center sheen on hover
+    const sheen = document.createElement('div');
+    sheen.className = 'project-card__sheen';
+    article.appendChild(sheen);
+
     const inner = document.createElement('div');
     inner.className = 'project-card__inner';
 
-    // Media sits in a subtle framed inset with corner ticks
+    // Media sits in a sharp-edged inset with corner-fading frame lines + ticks
     const media = document.createElement('div');
     media.className = 'project-card__media';
+
+    const mediaBox = document.createElement('div');
+    mediaBox.className = 'project-card__mediaBox';
 
     const thumbnail = document.createElement('img');
     thumbnail.src = project.image || '/assets/img/logo.png';
@@ -880,11 +929,13 @@
     thumbnail.onerror = function() {
       this.src = '/assets/img/logo.png';
     };
-    media.appendChild(thumbnail);
+    mediaBox.appendChild(thumbnail);
+    media.appendChild(mediaBox);
 
+    // 8 edge halves + 8 outward corner ticks
     const frame = document.createElement('div');
     frame.className = 'project-card__frame';
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 16; i++) {
       frame.appendChild(document.createElement('span'));
     }
     media.appendChild(frame);
@@ -1034,7 +1085,10 @@
     }
     if (modalAppLink) {
       modalAppLink.style.display = hasApp ? 'inline-flex' : 'none';
-      if (hasApp) modalAppLink.href = project.appUrl;
+      if (hasApp) {
+        modalAppLink.href = project.appUrl;
+        modalAppLink.textContent = project.appLabel || 'Open App';
+      }
     }
     if (modalMeta) {
       modalMeta.style.display = (hasKeyPoints || hasDate) ? 'flex' : 'none';
