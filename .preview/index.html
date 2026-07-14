@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview — Ryker Kollmyer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="/.preview/style.css?v=20">
+    <script type="module" src="/assets/js/hero3d.js?v=20"></script>
+  </head>
+  <body id="top" data-theme="dark" class="animation-loading">
+    <script>
+      document.documentElement.style.overflow = 'hidden';
+    </script>
+    <div class="glass-nav-wrapper">
+      <header class="glass-surface glass-surface--svg" data-glass data-glass-background-opacity="0.35" data-glass-saturation="1.8" data-glass-border-radius="50" data-glass-border-width="0.07" data-glass-brightness="45" data-glass-opacity="0.93" data-glass-blur="11" data-glass-displace="1.5" data-glass-distortion-scale="-180" data-glass-red-offset="0" data-glass-green-offset="10" data-glass-blue-offset="20">
+        <div class="glass-surface__content">
+          <a class="glass-nav__icon" href="#top" aria-label="Back to top" data-cursor-target>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+              <path d="M12 3l9 9h-3v9h-12v-9h-3z" />
+            </svg>
+          </a>
+          <span class="glass-nav__divider" aria-hidden="true"></span>
+          <nav class="glass-nav__links" aria-label="Site sections">
+            <a href="#portfolio" data-cursor-target>portfolio</a>
+            <a href="#" data-cursor-target>resume</a>
+            <a href="#" data-cursor-target>about</a>
+            <a href="#" data-cursor-target>contact</a>
+          </nav>
+          <span class="glass-nav__divider" aria-hidden="true"></span>
+          <button type="button" class="glass-nav__toggle" id="navThemeToggle" aria-label="Toggle theme" aria-pressed="false" data-cursor-target>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+              <path d="M12 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm0 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-5a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1zm-13 0a1 1 0 0 1 1 1v0a1 1 0 1 1-2 0v0a1 1 0 0 1 1-1z" />
+            </svg>
+            <span class="sr-only">Toggle color theme</span>
+          </button>
+        </div>
+      </header>
+    </div>
+    <main class="site-main">
+      <section class="hero hero-shell" id="home">
+        <div class="hero-frame" aria-hidden="true">
+          <div class="hero-frame__inner">
+            <span class="hero-frame__bar bar-top"></span>
+            <span class="hero-frame__bar bar-bottom"></span>
+            <span class="hero-frame__bar bar-left"></span>
+            <span class="hero-frame__bar bar-right"></span>
+          </div>
+        </div>
+        <div class="hero__canvas" aria-hidden="true">
+          <canvas id="heroCanvas"></canvas>
+        </div>
+        <div class="hero__content">
+          <p class="hero__eyebrow">Autonomy · Multi-agent systems · CAD</p>
+          <h1>Ryker Kollmyer</h1>
+          <p class="hero__lede">
+            Mechatronics and distributed-systems student researcher focused on robust hardware and software systems.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-split" id="portfolio" aria-label="Portfolio layout">
+        <aside class="profile-panel" id="about" aria-labelledby="profileHeading">
+          <div class="profile-panel__card">
+            <div class="profile-panel__image">
+              <img src="/assets/img/ryker.jpg" alt="Ryker Kollmyer portrait">
+            </div>
+            <div class="profile-panel__meta">
+              <p class="profile-panel__eyebrow">Ryker Kollmyer</p>
+              <h2 id="profileHeading">Youth Researcher</h2>
+              <p class="profile-panel__summary">
+                I develop and build robots, research, and am founder of a education access initiative in Fiji.
+                Outside of engineering I hike, boat, and cycle.
+              </p>
+            </div>
+            <dl class="profile-panel__stats">
+              <div>
+                <dt>Focus</dt>
+                <dd>Mechatronics, Distributed Systems</dd>
+              </div>
+              <div>
+                <dt>Current</dt>
+                <dd>Olympia High School CO '27</dd>
+              </div>
+            </dl>
+            <div class="profile-panel__actions">
+              <a href="#" class="pill-link" data-cursor-target>GitHub</a>
+              <a href="#" class="pill-link pill-link--ghost" data-cursor-target>LinkedIn</a>
+            </div>
+          </div>
+        </aside>
+
+        <div class="portfolio-column">
+          <header class="portfolio-header">
+            <p class="portfolio-kicker">"What if?" started everything in my</p>
+            <h2>Engineering Portfolio</h2>
+            <p>
+              Software systems, hackathons, rockets, and apps. Click any card to see an expanded view of the project including interactive CAD files,
+              data, figures, high-def videos, and documentation.
+            </p>
+          </header>
+          <div class="project-stack" id="portfolioGrid">
+            <!-- Cards injected by portfolio.js -->
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer" id="contact">
+        <p class="site-footer__kicker">Get in touch</p>
+        <h2 class="site-footer__title">Let’s build something.</h2>
+        <p class="site-footer__lede">
+          I love connecting with fellow builders, researchers, and curious minds.
+          Reach me anytime at <a href="mailto:rykerkollmyer@gmail.com" data-cursor-target>rykerkollmyer@gmail.com</a>.
+        </p>
+        <div class="site-footer__links">
+          <a href="#" class="pill-link pill-link--ghost" data-cursor-target>GitHub</a>
+          <a href="#" class="pill-link pill-link--ghost" data-cursor-target>LinkedIn</a>
+          <a href="#" class="pill-link pill-link--ghost" data-cursor-target>All contact options</a>
+        </div>
+        <p class="site-footer__copyright">© 2025 Ryker Kollmyer. All rights reserved.</p>
+      </footer>
+    </main>
+
+    <div class="project-modal" id="projectModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close project details">&times;</button>
+        <div class="modal-thumbnail" id="modalThumbnail">
+          <img src="/assets/img/logo.png" data-placeholder="/assets/img/logo.png" alt="Project thumbnail" id="modalThumbnailImg" />
+        </div>
+        <div class="modal-title-section">
+          <div class="modal-title-row">
+            <h2 id="modalTitle">Project Title</h2>
+            <div class="modal-title-actions">
+              <a href="javascript:void(0);" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
+              <a href="javascript:void(0);" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
+            </div>
+          </div>
+          <div class="modal-meta" id="modalMeta">
+            <div class="modal-keypoints" id="modalKeyPoints"></div>
+            <div class="modal-date" id="modalDate"></div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="modal-description" id="modalDescription"><p>Project description goes here...</p></div>
+          <div class="modal-files" id="modalFiles">
+            <h3>Project Files</h3>
+            <div class="files-grid" id="filesGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="target-cursor" aria-hidden="true">
+      <div class="target-cursor__dot"></div>
+      <div class="target-cursor__corner corner-tl"></div>
+      <div class="target-cursor__corner corner-tr"></div>
+      <div class="target-cursor__corner corner-br"></div>
+      <div class="target-cursor__corner corner-bl"></div>
+    </div>
+
+    <script src="/assets/js/scale.fix.js?v=20"></script>
+    <script src="/assets/js/portfolio.js?v=20"></script>
+    <script src="/assets/js/glass-filter.js?v=20"></script>
+    <script src="/assets/js/target-cursor.js?v=20"></script>
+    <script src="/assets/js/site-animation.js?v=20"></script>
+  </body>
+</html>
+
+
+
+
+

@@ -1,694 +1,442 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+// Hero particle swarm — a starfield of tiny square particles whose light is
+// gravitationally lensed around the cursor, like the distortion of a black hole:
+// stars are deflected outward (point-lens equation), smeared into tangential
+// arcs near the Einstein ring, and nothing renders inside the shadow.
+// Palette sampled from qtzx.dev's hero canvas (whites, periwinkle blues, dark teals).
 
-console.log('hero3d.js module loaded');
+const DARK_PALETTE = [
+  { color: '#f2f2f2', weight: 3 },   // bright white
+  { color: '#b9bec9', weight: 5 },   // dim gray
+  { color: '#7878c0', weight: 4 },   // periwinkle
+  { color: '#7890c0', weight: 3 },   // steel blue
+  { color: '#9caee6', weight: 2 },   // pale blue
+  { color: '#5c8a86', weight: 3 },   // teal
+  { color: '#3f6b66', weight: 2 }    // deep green-teal
+];
+
+const LIGHT_PALETTE = [
+  { color: '#20242e', weight: 4 },
+  { color: '#3a4256', weight: 4 },
+  { color: '#3c4a86', weight: 4 },
+  { color: '#33508c', weight: 3 },
+  { color: '#2e5f5a', weight: 3 },
+  { color: '#1e4a45', weight: 2 }
+];
+
+// Galaxy colors: warm core fading to cool blue arms
+const GALAXY_DARK = {
+  core: ['#f5e8cf', '#eadbb8', '#e8e4dc'],
+  arm: ['#8d9dd6', '#7890c0', '#a9b6e2', '#6f86b8', '#5c8a86']
+};
+const GALAXY_LIGHT = {
+  core: ['#4a4438', '#565040', '#3e3a30'],
+  arm: ['#3c4a86', '#33508c', '#3a4256', '#2e5f5a']
+};
 
 function getThemeMode() {
   return document.body?.dataset?.theme === 'light' ? 'light' : 'dark';
 }
 
-function getHeroPalette(mode = getThemeMode()) {
-  if (mode === 'light') {
-    return {
-      near: [0.12, 0.22, 0.36],
-      far: [0.32, 0.48, 0.68],
-      line: [0.22, 0.33, 0.46]
-    };
-  }
-  return {
-    near: [0.35, 0.65, 1.0],
-    far: [1.0, 0.55, 0.9],
-    line: [0.55, 0.8, 1.0]
-  };
+function buildColorPool(palette) {
+  const pool = [];
+  palette.forEach(({ color, weight }) => {
+    for (let i = 0; i < weight; i++) pool.push(color);
+  });
+  return pool;
 }
 
-const sharedVertexTransform = /* glsl */ `
-  uniform float uTime;
-  attribute float aOffset;
-  attribute float aExplode;  // per-particle explosion distance
-  varying float vDepth;
-  varying vec3 vPos;
-
-  vec3 mod289(vec3 x) {
-    return x - floor(x * (1.0 / 289.0)) * 289.0;
-  }
-
-  vec4 mod289(vec4 x) {
-    return x - floor(x * (1.0 / 289.0)) * 289.0;
-  }
-
-  vec4 permute(vec4 x) {
-    return mod289(((x * 34.0) + 1.0) * x);
-  }
-
-  vec4 taylorInvSqrt(vec4 r) {
-    return 1.79284291400159 - 0.85373472095314 * r;
-  }
-
-  float snoise(vec3 v) {
-    const vec2  C = vec2(1.0 / 6.0, 1.0 / 3.0);
-    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-
-    vec3 i  = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
-
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
-
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy;
-    vec3 x3 = x0 - D.yyy;
-
-    i = mod289(i);
-    vec4 p = permute(
-      permute(
-        permute(i.z + vec4(0.0, i1.z, i2.z, 1.0))
-        + i.y + vec4(0.0, i1.y, i2.y, 1.0)
-      )
-      + i.x + vec4(0.0, i1.x, i2.x, 1.0)
-    );
-
-    vec4 j = p - 49.0 * floor(p * 0.02040816326530612);
-    vec4 x_ = floor(j * 0.14285714285714285);
-    vec4 y_ = floor(j - 7.0 * x_);
-    vec4 x = x_ * 0.14285714285714285 + 0.07142857142857142;
-    vec4 y = y_ * 0.14285714285714285 + 0.07142857142857142;
-    vec4 h = 1.0 - abs(x) - abs(y);
-
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
-
-    vec4 s0 = floor(b0) * 2.0 + 1.0;
-    vec4 s1 = floor(b1) * 2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-
-    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-
-    vec3 g0 = vec3(a0.xy, h.x);
-    vec3 g1 = vec3(a0.zw, h.y);
-    vec3 g2 = vec3(a1.xy, h.z);
-    vec3 g3 = vec3(a1.zw, h.w);
-
-    vec4 norm = taylorInvSqrt(vec4(dot(g0, g0), dot(g1, g1), dot(g2, g2), dot(g3, g3)));
-    g0 *= norm.x;
-    g1 *= norm.y;
-    g2 *= norm.z;
-    g3 *= norm.w;
-
-    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m * m, vec4(dot(g0, x0), dot(g1, x1), dot(g2, x2), dot(g3, x3)));
-  }
-
-  vec3 curlNoise(vec3 p) {
-    const float e = 0.1;
-    vec3 dx = vec3(e, 0.0, 0.0);
-    vec3 dy = vec3(0.0, e, 0.0);
-    vec3 dz = vec3(0.0, 0.0, e);
-
-    float p_x = snoise(p + dy) - snoise(p - dy);
-    float p_y = snoise(p + dz) - snoise(p - dz);
-    float p_z = snoise(p + dx) - snoise(p - dx);
-
-    return normalize(vec3(p_x, p_y, p_z));
-  }
-`;
-
-const vertexShader = /* glsl */ `
-${sharedVertexTransform}
-
-  attribute vec3 aStart;
-  attribute vec3 aTarget;
-  uniform float uReveal;
-
-  void main() {
-    float t = uTime * 0.12;
-
-    // Phases:
-    // 0.0–0.2: static orb
-    // 0.2–0.5: radial explosion
-    // 0.5–1.0: settle into final layout
-    float explodePhase = smoothstep(0.2, 0.5, uReveal);
-    float settlePhase  = smoothstep(0.5, 1.0, uReveal);
-
-    // Start as perfect sphere
-    vec3 dir = normalize(aStart);
-    vec3 pos = aStart;
-
-    // Blast straight out from the center, random length per particle
-    pos += dir * aExplode * explodePhase;
-
-    // Then pull everything into the final jumbled network
-    pos = mix(pos, aTarget, settlePhase);
-
-    // Curl only once we're mostly done exploding
-    float curlWeight = smoothstep(0.55, 1.0, uReveal);
-    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
-    pos += curl;
-
-    // Compress vertically to give breathing room
-    pos.y *= 0.75;
-
-    // Little extra breathing as it settles
-    float spread = mix(1.0, 1.15, settlePhase);
-    pos *= spread;
-
-    float angle = t + aOffset;
-    float s = sin(angle);
-    float c = cos(angle);
-    pos.xz = mat2(c, -s, s, c) * pos.xz;
-
-    // Raise the swarm upward for better visual balance
-    vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
-    vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
-    vPos = pos + vec3(0.0, 0.6, 0.0);
-    float size = (vDepth * 4.5 + 2.5) * (1.0 / -mvPosition.z) * 70.0;
-    gl_PointSize = clamp(size, 2.0, 14.0);
-    gl_Position = projectionMatrix * mvPosition;
-  }
-`;
-
-const lineVertexShader = /* glsl */ `
-${sharedVertexTransform}
-
-  attribute vec3 aStart;
-  attribute vec3 aTarget;
-  uniform float uReveal;
-
-  void main() {
-    float t = uTime * 0.12;
-
-    float explodePhase = smoothstep(0.2, 0.5, uReveal);
-    float settlePhase  = smoothstep(0.5, 1.0, uReveal);
-
-    vec3 dir = normalize(aStart);
-    vec3 pos = aStart;
-    pos += dir * aExplode * explodePhase;
-    pos = mix(pos, aTarget, settlePhase);
-
-    float curlWeight = smoothstep(0.55, 1.0, uReveal);
-    vec3 curl = curlNoise(pos * 0.75 + t) * (0.35 * curlWeight);
-    pos += curl;
-
-    // Compress vertically to give breathing room
-    pos.y *= 0.75;
-
-    float spread = mix(1.0, 1.15, settlePhase);
-    pos *= spread;
-
-    float angle = t + aOffset;
-    float s = sin(angle);
-    float c = cos(angle);
-    pos.xz = mat2(c, -s, s, c) * pos.xz;
-
-    vec4 mvPosition = modelViewMatrix * vec4(pos.x, pos.y + 0.6, pos.z, 1.0);
-    vDepth = clamp(1.0 - (-mvPosition.z - 1.0) / 6.0, 0.0, 1.0);
-    vPos = pos + vec3(0.0, 0.6, 0.0);
-    gl_Position = projectionMatrix * mvPosition;
-  }
-`;
-
-const fragmentShader = /* glsl */ `
-  uniform vec3 uColorNear;
-  uniform vec3 uColorFar;
-  uniform vec3 uPulseOrigin;
-  uniform float uPulseStart;
-  uniform float uPulseSpeed;
-  uniform float uPulseWidth;
-  uniform float uPulseBoost;
-  uniform float uTime;
-  varying float vDepth;
-  varying vec3 vPos;
-  void main() {
-    vec2 uv = gl_PointCoord - 0.5;
-    float dist = dot(uv, uv);
-    if (dist > 0.25) discard;
-    float alpha = smoothstep(0.25, 0.0, dist);
-    vec3 base = mix(uColorNear, uColorFar, vDepth);
-    float pulse = 0.0;
-    float phase = uTime - uPulseStart;
-    if (phase > 0.0) {
-      float r = phase * uPulseSpeed;
-      float d = length(vPos - uPulseOrigin);
-      float band = smoothstep(uPulseWidth, 0.0, abs(d - r));
-      pulse = band;
-    }
-    float intensity = 1.0 + pulse * uPulseBoost;
-    gl_FragColor = vec4(base * intensity, alpha * (0.25 + vDepth * 0.75) * (1.0 + pulse * 0.6));
-  }
-`;
-
-const lineFragmentShader = /* glsl */ `
-  varying float vDepth;
-  uniform vec3 uLineColor;
-  uniform float uReveal;
-  uniform vec3 uPulseOrigin;
-  uniform float uPulseStart;
-  uniform float uPulseSpeed;
-  uniform float uPulseWidth;
-  uniform float uPulseBoost;
-  uniform float uTime;
-  varying vec3 vPos;
-  void main() {
-    float baseAlpha = mix(0.03, 0.22, vDepth);
-    float fade = smoothstep(0.7, 0.95, uReveal); // lines fade in later, after the blast
-    float pulse = 0.0;
-    float phase = uTime - uPulseStart;
-    if (phase > 0.0) {
-      float r = phase * uPulseSpeed;
-      float d = length(vPos - uPulseOrigin);
-      float band = smoothstep(uPulseWidth, 0.0, abs(d - r));
-      pulse = band;
-    }
-    float alpha = baseAlpha * fade * (1.0 + pulse * 0.8);
-    vec3 color = uLineColor * (1.0 + pulse * uPulseBoost * 0.5);
-    gl_FragColor = vec4(color, alpha);
-  }
-`;
-
-function initHero3D() {
-  console.log('initHero3D called');
+function initHeroSwarm() {
   const canvas = document.getElementById('heroCanvas');
-  if (!canvas) {
-    console.warn('heroCanvas not found');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    canvas.classList.add('hero-fallback');
+    if (canvas.parentElement) canvas.parentElement.classList.add('hero-fallback');
+    document.dispatchEvent(new Event('hero-ready'));
+    document.dispatchEvent(new Event('hero-reveal-complete'));
     return;
   }
-  console.log('heroCanvas found:', canvas);
 
   const prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const animationAlreadyShown = false; // always play
 
-  function supportsWebGL() {
-    try {
-      const gl = document.createElement('canvas').getContext('webgl');
-      return !!gl;
-    } catch (e) {
-      return false;
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let colorPool = buildColorPool(getThemeMode() === 'light' ? LIGHT_PALETTE : DARK_PALETTE);
+
+  const particles = [];
+
+  // Black-hole lens tuning
+  const EINSTEIN_RADIUS = 92;              // px — radius of the ring / shadow
+  const LENS_RANGE_MULT = 3.6;             // influence extends this many Einstein radii
+  const MAX_STRETCH = 14;                  // cap on tangential arc smearing
+  const STRETCH_GAIN = 1.9;                // exaggerate arcs so they read on screen
+
+  // Lens position eases toward the pointer so the distortion glides
+  const lens = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false, strength: 0 };
+
+  // Ambient drift tuning
+  const HOME_SPRING = 0.01;
+  const DAMPING = 0.9;
+  const DRIFT = 0.018;
+
+  // 0 → hidden, 1 → fully revealed
+  let reveal = 0;
+  let revealTarget = 0;
+
+  function pickColor() {
+    return colorPool[(Math.random() * colorPool.length) | 0];
+  }
+
+  function makeParticle(px, py) {
+    return {
+      hx: px, hy: py,          // home
+      x: px, y: py,            // current
+      vx: 0, vy: 0,
+      size: Math.random() < 0.82 ? (0.7 + Math.random() * 1.3) : (1.8 + Math.random() * 1.4),
+      color: pickColor(),
+      baseAlpha: 0.35 + Math.random() * 0.65,
+      twinklePhase: Math.random() * Math.PI * 2,
+      twinkleSpeed: 0.3 + Math.random() * 1.2,
+      driftPhase: Math.random() * Math.PI * 2
+    };
+  }
+
+  function populate() {
+    particles.length = 0;
+    const density = prefersMotion ? 1500 : 2600;
+    const count = Math.max(420, Math.min(1500, Math.round((width * height) / density)));
+    for (let i = 0; i < count; i++) {
+      particles.push(makeParticle(Math.random() * width, Math.random() * height));
     }
   }
 
-  let renderer;
-  if (!supportsWebGL()) {
-    console.warn('WebGL not supported; using hero fallback');
-    canvas.classList.add('hero-fallback');
-    if (canvas.parentElement) canvas.parentElement.classList.add('hero-fallback');
-    document.dispatchEvent(new Event('hero-ready'));
-    return;
-  }
-
-  try {
-    renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
-    renderer.setClearColor(0x000000, 0); // Transparent background
-    console.log('WebGL renderer created successfully');
-  } catch (error) {
-    console.error('WebGL unavailable, showing fallback.', error);
-    canvas.classList.add('hero-fallback');
-    if (canvas.parentElement) canvas.parentElement.classList.add('hero-fallback');
-    document.dispatchEvent(new Event('hero-ready'));
-    return;
-  }
-
-  const PARTICLE_COUNT = prefersMotion ? 320 : 180;
-  const LINK_DISTANCE = prefersMotion ? 0.75 : 0.65; // slightly longer to guarantee links
-  const MAX_CONNECTIONS = 3;                          // aim for 2-3 closest connections
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 0, 6);
-  const group = new THREE.Group();
-  group.scale.setScalar(0.8); // shrink overall footprint
-  scene.add(group);
-  // Store reference for external access
-  canvas.__heroGroup = group;
-
-  const positions = new Float32Array(PARTICLE_COUNT * 3);
-  const offsets = new Float32Array(PARTICLE_COUNT);
-  const explodeDistances = new Float32Array(PARTICLE_COUNT);
-  const startPositions = new Float32Array(PARTICLE_COUNT * 3);
-  const finalPositions = new Float32Array(PARTICLE_COUNT * 3);
-  const palette = getHeroPalette();
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const radius = 1.1 + Math.random() * 1.3; // tighter final spread radius
-    const theta = Math.random() * Math.PI * 2;
-    const v = Math.random() * 2 - 1;
-    const phi = Math.acos(v);
-    const sinPhi = Math.sin(phi);
-    const x = radius * sinPhi * Math.cos(theta);
-    const y = radius * Math.cos(phi);
-    const z = radius * sinPhi * Math.sin(theta);
-
-    positions[i * 3] = x;
-    positions[i * 3 + 1] = y;
-    positions[i * 3 + 2] = z;
-
-    finalPositions[i * 3] = x;
-    finalPositions[i * 3 + 1] = y;
-    finalPositions[i * 3 + 2] = z;
-
-    // Clustered start on a small sphere
-    const len = Math.max(Math.hypot(x, y, z), 1e-4);
-    const rStart = 0.45; // smaller starting orb
-    startPositions[i * 3] = (x / len) * rStart;
-    startPositions[i * 3 + 1] = (y / len) * rStart;
-    startPositions[i * 3 + 2] = (z / len) * rStart;
-
-    offsets[i] = Math.random() * Math.PI * 2;
-    explodeDistances[i] = 0.9 + Math.random() * 1.6; // per-particle blast length
-  }
-
-  const connectionCounts = new Array(PARTICLE_COUNT).fill(0);
-  const linkPositions = [];
-  const linkStartPositions = [];
-  const linkTargetPositions = [];
-  const linkOffsets = [];
-  const linkExplodes = [];
-  const linkDistanceSq = LINK_DISTANCE * LINK_DISTANCE;
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const baseIndex = i * 3;
-    for (let j = i + 1; j < PARTICLE_COUNT; j++) {
-      if (connectionCounts[i] >= MAX_CONNECTIONS) break;
-      if (connectionCounts[j] >= MAX_CONNECTIONS) continue;
-      const otherIndex = j * 3;
-      const dx = positions[baseIndex] - positions[otherIndex];
-      const dy = positions[baseIndex + 1] - positions[otherIndex + 1];
-      const dz = positions[baseIndex + 2] - positions[otherIndex + 2];
-      const distSq = dx * dx + dy * dy + dz * dz;
-      if (distSq <= linkDistanceSq) {
-        // line positions (final)
-        linkPositions.push(
-          positions[baseIndex],
-          positions[baseIndex + 1],
-          positions[baseIndex + 2],
-          positions[otherIndex],
-          positions[otherIndex + 1],
-          positions[otherIndex + 2]
-        );
-        // line start positions (clustered)
-        linkStartPositions.push(
-          startPositions[baseIndex],
-          startPositions[baseIndex + 1],
-          startPositions[baseIndex + 2],
-          startPositions[otherIndex],
-          startPositions[otherIndex + 1],
-          startPositions[otherIndex + 2]
-        );
-        // line target positions (same as final)
-        linkTargetPositions.push(
-          finalPositions[baseIndex],
-          finalPositions[baseIndex + 1],
-          finalPositions[baseIndex + 2],
-          finalPositions[otherIndex],
-          finalPositions[otherIndex + 1],
-          finalPositions[otherIndex + 2]
-        );
-        linkOffsets.push(offsets[i], offsets[j]);
-        linkExplodes.push(explodeDistances[i], explodeDistances[j]);
-        connectionCounts[i]++;
-        connectionCounts[j]++;
-      }
-    }
-  }
-
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
-  geometry.setAttribute('aExplode', new THREE.BufferAttribute(explodeDistances, 1));
-  geometry.setAttribute('aStart', new THREE.BufferAttribute(startPositions, 3));
-  geometry.setAttribute('aTarget', new THREE.BufferAttribute(finalPositions, 3));
-
-  const uniforms = {
-    uTime: { value: 0 },
-    uReveal: { value: 0 },
-    uColorNear: { value: new THREE.Color().fromArray(palette.near) },
-    uColorFar: { value: new THREE.Color().fromArray(palette.far) },
-    uPulseOrigin: { value: new THREE.Vector3(0, 0, 0) },
-    uPulseStart: { value: 0 },
-    uPulseSpeed: { value: 1.4 },
-    uPulseWidth: { value: 0.28 },
-    uPulseBoost: { value: 1.2 }
+  // --- Background spiral galaxy (point cloud) ---
+  // Stored in galaxy-local polar coords so it can slowly rotate; tilted into
+  // a 3/4 view when projected to the screen.
+  const galaxy = {
+    x: 0, y: 0,               // screen center
+    points: [],               // { r, theta, size, alpha, color, isCore }
+    tilt: 0.42,               // squash factor (edge-on < 1 < face-on)
+    lean: -0.55,              // rotation of the whole disc on screen
+    radius: 0,
+    cosLean: Math.cos(-0.55),
+    sinLean: Math.sin(-0.55)
   };
 
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader,
-    fragmentShader,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    opacity: 1.0
-  });
-
-  const points = new THREE.Points(geometry, material);
-  group.add(points);
-  
-  console.log('Particle group created - scale:', group.scale.x, 'particles:', PARTICLE_COUNT, 'initial opacity:', material.opacity);
-
-  let lineMaterial = null;
-
-  if (linkPositions.length > 0) {
-    const linkGeometry = new THREE.BufferGeometry();
-    linkGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linkPositions), 3));
-    linkGeometry.setAttribute('aStart', new THREE.BufferAttribute(new Float32Array(linkStartPositions), 3));
-    linkGeometry.setAttribute('aTarget', new THREE.BufferAttribute(new Float32Array(linkTargetPositions), 3));
-    linkGeometry.setAttribute('aOffset', new THREE.BufferAttribute(new Float32Array(linkOffsets), 1));
-    linkGeometry.setAttribute('aExplode', new THREE.BufferAttribute(new Float32Array(linkExplodes), 1));
-
-    lineMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: uniforms.uTime,
-        uReveal: uniforms.uReveal,
-        uLineColor: { value: new THREE.Color().fromArray(palette.line) },
-        uPulseOrigin: uniforms.uPulseOrigin,
-        uPulseStart: uniforms.uPulseStart,
-        uPulseSpeed: uniforms.uPulseSpeed,
-        uPulseWidth: uniforms.uPulseWidth,
-        uPulseBoost: uniforms.uPulseBoost
-      },
-      vertexShader: lineVertexShader,
-      fragmentShader: lineFragmentShader,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      opacity: 0.8 // Start visible so we can see the orb
-    });
-
-    const links = new THREE.LineSegments(linkGeometry, lineMaterial);
-    group.add(links);
+  function gaussian() {
+    return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   }
 
-  function applyThemePalette(mode = getThemeMode()) {
-    const next = getHeroPalette(mode);
-    uniforms.uColorNear.value.setRGB(next.near[0], next.near[1], next.near[2]);
-    uniforms.uColorFar.value.setRGB(next.far[0], next.far[1], next.far[2]);
-    if (lineMaterial) {
-      lineMaterial.uniforms.uLineColor.value.setRGB(next.line[0], next.line[1], next.line[2]);
+  function populateGalaxy() {
+    galaxy.points.length = 0;
+    const light = getThemeMode() === 'light';
+    const colors = light ? GALAXY_LIGHT : GALAXY_DARK;
+
+    galaxy.x = width * 0.76;
+    galaxy.y = height * 0.24;
+    galaxy.radius = Math.min(width, height) * 0.17;
+
+    const R = galaxy.radius;
+    const ARMS = 2;
+    const TWIST = 2.6;                       // how tightly the arms wind
+    const armCount = prefersMotion ? 640 : 400;
+    const bulgeCount = Math.round(armCount * 0.3);
+    const haloCount = Math.round(armCount * 0.22);
+
+    for (let i = 0; i < armCount; i++) {
+      const t = Math.pow(Math.random(), 0.72);   // denser toward the core
+      const r = R * (0.12 + 0.88 * t);
+      const arm = (i % ARMS) * (Math.PI * 2 / ARMS);
+      // Log-spiral arm angle plus scatter that widens with radius
+      const theta = arm + TWIST * Math.log(1 + 4 * t) + gaussian() * (0.14 + 0.3 * t);
+      const nearCore = t < 0.3;
+      const pool = nearCore ? colors.core : colors.arm;
+      galaxy.points.push({
+        r,
+        theta,
+        size: nearCore ? (0.6 + Math.random() * 0.9) : (0.5 + Math.random() * 0.8),
+        alpha: (nearCore ? 0.5 : 0.3) + Math.random() * 0.3,
+        color: pool[(Math.random() * pool.length) | 0]
+      });
+    }
+
+    // Central bulge: tight gaussian blob, warmer and brighter
+    for (let i = 0; i < bulgeCount; i++) {
+      const r = Math.abs(gaussian()) * R * 0.18;
+      galaxy.points.push({
+        r,
+        theta: Math.random() * Math.PI * 2,
+        size: 0.6 + Math.random() * 1.1,
+        alpha: 0.45 + Math.random() * 0.45,
+        color: colors.core[(Math.random() * colors.core.length) | 0]
+      });
+    }
+
+    // Diffuse halo: very dim scattered points that soften the whole disc
+    for (let i = 0; i < haloCount; i++) {
+      const r = Math.abs(gaussian()) * R * 0.75;
+      const pool = r < R * 0.25 ? colors.core : colors.arm;
+      galaxy.points.push({
+        r,
+        theta: Math.random() * Math.PI * 2,
+        size: 0.5 + Math.random() * 0.6,
+        alpha: 0.08 + Math.random() * 0.16,
+        color: pool[(Math.random() * pool.length) | 0]
+      });
     }
   }
-
-  applyThemePalette();
-
-  const themeObserver = new MutationObserver(() => applyThemePalette());
-  themeObserver.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
-
-  const pointer = new THREE.Vector2(0, 0);
-  window.addEventListener('pointermove', (event) => {
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  });
 
   function handleResize() {
     const fullscreenPhase = document.body.classList.contains('animation-loading') ||
       document.body.classList.contains('animation-ready');
 
-    const width = fullscreenPhase
+    const w = fullscreenPhase
       ? window.innerWidth
       : (canvas.clientWidth || canvas.offsetWidth || window.innerWidth);
-    const height = fullscreenPhase
+    const h = fullscreenPhase
       ? window.innerHeight
       : (canvas.clientHeight || canvas.offsetHeight || window.innerHeight);
 
-    console.log('handleResize - canvas size:', width, 'x', height, 'fullscreenPhase:', fullscreenPhase);
-    if (width === 0 || height === 0) {
-      console.warn('Canvas has zero size!', { 
-        clientWidth: canvas.clientWidth, 
-        offsetWidth: canvas.offsetWidth, 
-        clientHeight: canvas.clientHeight, 
-        offsetHeight: canvas.offsetHeight,
-        parentWidth: canvas.parentElement?.clientWidth,
-        parentHeight: canvas.parentElement?.clientHeight
-      });
-      return;
-    }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    console.log('Canvas resized successfully');
+    if (w === 0 || h === 0) return;
+
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = w;
+    height = h;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    populate();
+    populateGalaxy();
   }
 
   handleResize();
   window.addEventListener('resize', handleResize);
 
-  // Signal that hero scene is ready for the controller
+  const lensRange = EINSTEIN_RADIUS * LENS_RANGE_MULT;
+
+  window.addEventListener('pointermove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    lens.tx = event.clientX - rect.left;
+    lens.ty = event.clientY - rect.top;
+    lens.active = lens.tx >= -lensRange && lens.tx <= rect.width + lensRange &&
+      lens.ty >= -lensRange && lens.ty <= rect.height + lensRange;
+  });
+  window.addEventListener('pointerleave', () => { lens.active = false; });
+
+  function applyThemePalette() {
+    colorPool = buildColorPool(getThemeMode() === 'light' ? LIGHT_PALETTE : DARK_PALETTE);
+    particles.forEach(p => { p.color = pickColor(); });
+    populateGalaxy();
+  }
+
+  const themeObserver = new MutationObserver(applyThemePalette);
+  themeObserver.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // Draws a star as a small rectangle stretched tangentially around the lens
+  function drawLensedImage(p, alpha, imgX, imgY, tangentialStretch, radialSquash, angle) {
+    ctx.globalAlpha = Math.min(alpha, 1);
+    ctx.fillStyle = p.color;
+    const s = p.size;
+    const w = s * Math.min(tangentialStretch, MAX_STRETCH);
+    const h = Math.max(s * radialSquash, 0.5);
+    ctx.translate(imgX, imgY);
+    ctx.rotate(angle + Math.PI / 2);
+    ctx.fillRect(-w / 2, -h / 2, w, h);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function step(t) {
+    // Ease reveal toward its target so particles fade in smoothly
+    reveal += (revealTarget - reveal) * 0.035;
+
+    // Lens glides after the pointer and fades in/out smoothly
+    if (prefersMotion) {
+      if (lens.active && lens.tx > -9000) {
+        if (lens.x < -9000) { lens.x = lens.tx; lens.y = lens.ty; }
+        lens.x += (lens.tx - lens.x) * 0.16;
+        lens.y += (lens.ty - lens.y) * 0.16;
+      }
+      lens.strength += ((lens.active ? 1 : 0) - lens.strength) * 0.07;
+    }
+
+    const thetaE = EINSTEIN_RADIUS * lens.strength;
+    const thetaESq = thetaE * thetaE;
+    const range = lensRange;
+    const lensOn = thetaE > 1;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const time = t * 0.001;
+
+    // --- Galaxy layer (behind the stars) ---
+    // Differential rotation: inner points orbit faster than outer ones.
+    const gR = galaxy.radius || 1;
+    for (let i = 0; i < galaxy.points.length; i++) {
+      const gp = galaxy.points[i];
+      const omega = prefersMotion ? 0.05 / (0.35 + gp.r / gR) : 0;
+      const theta = gp.theta + time * omega;
+
+      // Disc coords -> tilted, leaned screen position
+      const px = Math.cos(theta) * gp.r;
+      const py = Math.sin(theta) * gp.r * galaxy.tilt;
+      const gx = galaxy.x + px * galaxy.cosLean - py * galaxy.sinLean;
+      const gy = galaxy.y + px * galaxy.sinLean + py * galaxy.cosLean;
+
+      const alpha = gp.alpha * reveal;
+      if (alpha < 0.01) continue;
+
+      // The lens bends galaxy light too (primary image only)
+      if (lensOn) {
+        const dx = gx - lens.x;
+        const dy = gy - lens.y;
+        const bSq = dx * dx + dy * dy;
+        if (bSq < range * range) {
+          const b = Math.max(Math.sqrt(bSq), 0.75);
+          const edge = Math.min(Math.max((range - b) / (range * 0.45), 0), 1);
+          const w = edge * edge * (3 - 2 * edge);
+          const root = Math.sqrt(bSq + 4 * thetaESq);
+          const r1 = b + ((b + root) / 2 - b) * w;
+          const stretch1 = 1 + ((b + root) / (2 * b) - 1) * STRETCH_GAIN * w;
+          const squash1 = 1 - (0.5 - b / (2 * root)) * w;
+          drawLensedImage(
+            gp, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2),
+            lens.x + (dx / b) * r1, lens.y + (dy / b) * r1,
+            stretch1, squash1, Math.atan2(dy, dx)
+          );
+          continue;
+        }
+      }
+
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = gp.color;
+      ctx.fillRect(gx - gp.size / 2, gy - gp.size / 2, gp.size, gp.size);
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+
+      if (prefersMotion) {
+        // Gentle ambient drift, like slow current
+        p.vx += Math.cos(time * 0.4 + p.driftPhase) * DRIFT;
+        p.vy += Math.sin(time * 0.3 + p.driftPhase * 1.7) * DRIFT;
+
+        // Spring back toward home
+        p.vx += (p.hx - p.x) * HOME_SPRING;
+        p.vy += (p.hy - p.y) * HOME_SPRING;
+
+        p.vx *= DAMPING;
+        p.vy *= DAMPING;
+        p.x += p.vx;
+        p.y += p.vy;
+      }
+
+      const twinkle = 0.75 + 0.25 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+      const alpha = p.baseAlpha * twinkle * reveal;
+      if (alpha < 0.01) continue;
+
+      // Gravitational lensing: bend the star's light around the cursor.
+      // Point-lens mapping: a source at distance b from the lens appears at
+      // r = (b + sqrt(b^2 + 4*thetaE^2)) / 2, always outside the Einstein ring.
+      if (lensOn) {
+        const dx = p.x - lens.x;
+        const dy = p.y - lens.y;
+        const bSq = dx * dx + dy * dy;
+        if (bSq < range * range) {
+          const b = Math.max(Math.sqrt(bSq), 0.75);
+
+          // Fade the lens influence to zero at the edge of its range so
+          // distant stars are untouched (no seam at the boundary)
+          const edge = Math.min(Math.max((range - b) / (range * 0.45), 0), 1);
+          const w = edge * edge * (3 - 2 * edge); // smoothstep
+
+          const root = Math.sqrt(bSq + 4 * thetaESq);
+          const angle = Math.atan2(dy, dx);
+          const ux = dx / b;
+          const uy = dy / b;
+
+          // Primary image: pushed outside the ring, stretched into an arc.
+          // Magnification brightens it near the ring — that pile-up of bent
+          // starlight is what forms the visible ring.
+          const r1 = b + ((b + root) / 2 - b) * w;
+          const stretch1 = 1 + ((b + root) / (2 * b) - 1) * STRETCH_GAIN * w;
+          const squash1 = 1 - (0.5 - b / (2 * root)) * w;
+          drawLensedImage(
+            p, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2.4),
+            lens.x + ux * r1, lens.y + uy * r1,
+            stretch1, squash1, angle
+          );
+
+          // Secondary image: faint inverted counter-arc hugging the inside of
+          // the ring. Only exists close to the lens; images that fall too deep
+          // are "captured" — that darkness is the shadow.
+          const r2 = (root - b) / 2;
+          if (b < thetaE * 2.4 && r2 > thetaE * 0.45) {
+            const stretch2 = 1 + (r2 / b - 1) * STRETCH_GAIN;
+            const squash2 = 0.5 * (1 - b / root);
+            const mu2 = stretch2 * squash2;
+            if (mu2 > 0.01) {
+              drawLensedImage(
+                p, alpha * Math.min(mu2, 1) * w,
+                lens.x - ux * r2, lens.y - uy * r2,
+                stretch2, Math.max(squash2, 0.25), angle
+              );
+            }
+          }
+          continue;
+        }
+      }
+
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = p.color;
+      const s = p.size;
+      ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+    }
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+
+  // Make canvas container visible
+  if (canvas.parentElement) {
+    canvas.parentElement.style.opacity = '1';
+  }
+
   document.dispatchEvent(new Event('hero-ready'));
 
-  let rotationX = 0;
-  let rotationY = 0;
-
-  let renderCallCount = 0;
-  let nextPulseAt = 0;
-  function render(time) {
-    uniforms.uTime.value = time * 0.001;
-    const easing = prefersMotion ? 0.08 : 0;
-    rotationX += ((prefersMotion ? pointer.y * 0.7 : 0) - rotationX) * easing;
-    rotationY += ((prefersMotion ? -pointer.x * 0.7 : 0) - rotationY) * easing;
-    group.rotation.x = rotationX;
-    group.rotation.y = rotationY;
-    if (uniforms.uTime.value >= nextPulseAt && prefersMotion) {
-      const idx = Math.floor(Math.random() * (finalPositions.length / 3));
-      const base = idx * 3;
-      uniforms.uPulseOrigin.value.set(
-        finalPositions[base],
-        finalPositions[base + 1],
-        finalPositions[base + 2]
-      );
-      uniforms.uPulseStart.value = uniforms.uTime.value;
-      nextPulseAt = uniforms.uTime.value + 2.8; // seconds until next pulse
-    }
-
-    renderer.render(scene, camera);
-    renderCallCount++;
-    if (renderCallCount === 1) {
-      console.log('First render call completed - canvas size:', renderer.domElement.width, 'x', renderer.domElement.height);
-      console.log('Scene children:', scene.children.length, 'Group children:', group.children.length);
-      console.log('Group scale:', group.scale.x, 'Material opacity:', material.opacity);
-    }
-    if (renderCallCount === 10) {
-      console.log('10 frames rendered - checking if particles are visible');
-    }
-    requestAnimationFrame(render);
-  }
-  
-  console.log('Render function created, starting render loop');
-
-  // Make canvas visible immediately
-  const canvasElement = document.getElementById('heroCanvas');
-  if (canvasElement && canvasElement.parentElement) {
-    canvasElement.parentElement.style.opacity = '1';
-    console.log('Canvas parent opacity set to 1');
-  } else {
-    console.warn('Canvas or parent not found for opacity setting');
-  }
-
-  // Reveal animation - lerp positions from clustered start to full layout
-  function animateReveal() {
-    console.log('Starting reveal animation');
-    const startTime = performance.now();
-    const duration = 3200; // hold orb phase longer before blast
-    let settleStarted = false;
-
-    function update() {
-      const elapsed = performance.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = progress; // keep linear to honor shader phase thresholds
-
-      uniforms.uReveal.value = eased;
-      if (lineMaterial) {
-        lineMaterial.uniforms.uReveal.value = eased;
-      }
-
-      if (Math.floor(progress * 5) !== Math.floor((progress - 0.01) * 5)) {
-        console.log(`Reveal progress: ${Math.floor(progress * 100)}% - uReveal: ${uniforms.uReveal.value.toFixed(3)}`);
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        uniforms.uReveal.value = 1.0;
-        if (lineMaterial) {
-          lineMaterial.uniforms.uReveal.value = 1.0;
-        }
-        console.log('Reveal animation complete');
-        document.dispatchEvent(new Event('hero-reveal-complete'));
-        if (!settleStarted) {
-          settleStarted = true;
-          settleIntoBand();
-        }
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
-
-  // After reveal, gently move the swarm toward its final band position
-  function settleIntoBand() {
-    const startY = group.position.y;
-    const endY = -0.6; // tweak to position the swarm toward the hero band
-    const duration = 900;
-    const startTime = performance.now();
-
-    function tick() {
-      const elapsed = performance.now() - startTime;
-      const t = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3); // ease-out
-      group.position.y = startY + (endY - startY) * eased;
-      if (t < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // Start render loop - particles start as visible orb
-  console.log('Starting render loop - orb should be visible at scale', group.scale.x, 'opacity:', material.opacity);
-  console.log('Scene has', scene.children.length, 'children');
-  console.log('Group has', group.children.length, 'children');
-  requestAnimationFrame(render);
-  
-  // Start reveal when the page signals readiness (unless session says it's already shown)
-  const introShown = (() => { try { return sessionStorage.getItem('siteIntroShown') === '1'; } catch (_) { return false; } })();
-  const startRevealOnce = () => {
+  function startReveal() {
     if (window.__heroRevealStarted) return;
     window.__heroRevealStarted = true;
-    animateReveal();
-  };
+    revealTarget = 1;
+    // Give the fade-in a moment, then let the page continue
+    setTimeout(() => {
+      document.dispatchEvent(new Event('hero-reveal-complete'));
+    }, prefersMotion ? 1400 : 200);
+  }
 
-  if (introShown) {
-    // Skip animation; show final state immediately and notify controller
-    uniforms.uReveal.value = 1.0;
-    if (lineMaterial) lineMaterial.uniforms.uReveal.value = 1.0;
+  const introShown = (() => {
+    try { return sessionStorage.getItem('siteIntroShown') === '1'; } catch (_) { return false; }
+  })();
+
+  if (introShown || !prefersMotion) {
+    reveal = 1;
+    revealTarget = 1;
+    window.__heroRevealStarted = true;
     document.dispatchEvent(new Event('hero-reveal-complete'));
   } else if (document.body.classList.contains('animation-ready')) {
-    startRevealOnce();
+    startReveal();
   } else {
-    document.addEventListener('animation-ready', startRevealOnce, { once: true });
+    document.addEventListener('animation-ready', startReveal, { once: true });
   }
 }
 
-  // Signal that hero is ready (scene built)
-  document.dispatchEvent(new Event('hero-ready'));
-
-// Initialize once DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    try {
-      initHero3D();
-    } catch (error) {
-      console.error('Error initializing hero3d:', error);
-    }
+    try { initHeroSwarm(); } catch (error) { console.error('Error initializing hero swarm:', error); }
   });
 } else {
-  try {
-    initHero3D();
-  } catch (error) {
-    console.error('Error initializing hero3d:', error);
-  }
+  try { initHeroSwarm(); } catch (error) { console.error('Error initializing hero swarm:', error); }
 }
-

@@ -226,10 +226,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: radial-gradient(circle at 20% 20%, rgba(118, 167, 255, 0.25), transparent 55%),
-      radial-gradient(circle at 80% 30%, rgba(255, 137, 205, 0.15), transparent 60%),
-      radial-gradient(circle at 50% 80%, rgba(79, 213, 255, 0.12), transparent 65%);
-    opacity: 0.8;
+    background: transparent;
     pointer-events: none;
   }
 
@@ -332,24 +329,14 @@
   }
 
   &__media-smear {
-    position: absolute;
-    inset: 0;
-    filter: blur(10px) saturate(120%);
-    mix-blend-mode: screen;
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 2;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(118,167,255,0.18), transparent 55%),
-      radial-gradient(circle at 80% 30%, rgba(255,137,205,0.12), transparent 60%),
-      radial-gradient(circle at 50% 80%, rgba(79,213,255,0.10), transparent 65%);
+    display: none;
   }
 
   &__media-mask {
     position: absolute;
     inset: 0;
     border-radius: 12px;
-    box-shadow: 0 0 0 9999px var(--bg, #07020d);
+    box-shadow: 0 0 0 9999px var(--bg, #0a0a0a);
     pointer-events: none;
     z-index: 3;
   }
@@ -480,7 +467,7 @@
   padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  background: rgba(255, 255, 255, 0.02);
   color: color-mix(in srgb, var(--ink) 80%, transparent);
   font-size: 0.95rem;
 }
@@ -521,7 +508,7 @@
   padding: 10px 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+  background: rgba(255, 255, 255, 0.04);
   color: var(--ink);
   text-decoration: none;
   font-weight: 600;
@@ -544,9 +531,7 @@
   overflow: hidden;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.06), transparent 45%),
-    radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.04), transparent 55%),
-    rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
@@ -580,7 +565,7 @@
 .about-panel {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: rgba(255, 255, 255, 0.03);
   padding: 20px 24px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   color: var(--ink);
