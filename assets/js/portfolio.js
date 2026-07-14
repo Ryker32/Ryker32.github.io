@@ -335,6 +335,7 @@
       keyPoints: "Founder & product lead · K-5 aerospace kits · Launching Aug 2026",
       description: "Founded Flight Lab: K-5 aerospace teaching kits built around project-based learning, with a custom manufacturing method for cheap, scalable production. Piloting with 100+ students ahead of the August 2026 launch.",
       badge: "Founder",
+      orgLogo: "/assets/img/logos/flight-lab.png",
       highlights: [
         "Designed K-5 aerospace kits teaching concepts through project-based learning",
         "Custom manufacturing method for cheap and scalable kit production",
@@ -373,7 +374,7 @@
         </div>
         <div class="clear-float"></div>
       `,
-      image: "/assets/img/logo.png",
+      image: "/assets/img/logos/flight-lab.png",
       files: []
     },
     {
@@ -802,10 +803,19 @@
       const row = document.createElement('div');
       row.className = 'project-row';
 
-      if (project.badge) {
+      if (project.badge || project.orgLogo) {
         const org = document.createElement('span');
         org.className = 'project-row__org';
-        org.textContent = project.badge;
+        if (project.orgLogo) {
+          org.classList.add('project-row__org--logo');
+          const img = document.createElement('img');
+          img.src = project.orgLogo;
+          img.alt = '';
+          img.loading = 'lazy';
+          org.appendChild(img);
+        } else {
+          org.textContent = project.badge;
+        }
         org.setAttribute('aria-hidden', 'true');
         row.appendChild(org);
       }

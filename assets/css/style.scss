@@ -782,6 +782,19 @@ body[data-theme='light'] .pill-link--ghost {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
+/* Logo variant: image fills the chip */
+.project-row__org--logo {
+  padding: 0;
+}
+
+.project-row__org--logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
 /* =======================
    Project Cards
    ======================= */
