@@ -215,6 +215,7 @@
       keyPoints: "WSSEF 1st in Robotics · AIAA Symposium · Multi-agent research",
       description: "Designed a democratic governance framework that lets robot teams detect, impeach, and replace faulty leaders — 3.1x more reliable than the standard heartbeat baseline. 1st place in Robotics and Top 20 overall out of 1,200 at the Washington State Science & Engineering Fair 2026.",
       badge: "WSSEF 1st",
+      orgLogo: "/assets/img/logos/wssef.png",
       highlights: [
         "1st in Robotics + Top 20 overall of 1,200 @ WSSEF 2026",
         "3.1x more reliable than baseline; 98% vs 22% coverage under adversarial faults",
@@ -478,6 +479,7 @@
       appUrl: "https://play.google.com/store/apps/details?id=com.mycompany.womenshealth",
       description: "Co-invented LifeFlo, a monitored GPT + FlutterFlow women's health app that's live on Google Play and covered by US provisional patent 63/873,509.",
       badge: "Patent",
+      orgLogo: "/assets/img/logos/lifeflo.png",
       highlights: [
         "GPT-based menstrual insights with human-in-the-loop review",
         "Firebase backend w/ logging + push-ready symptom tracking",
@@ -705,6 +707,7 @@
       appLabel: "Club Website",
       description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams — 130+ launches, 3,000+ K-5 students reached at 9 schools, and $10,000+ raised for the team and outreach.",
       badge: "Aerospace",
+      orgLogo: "/assets/img/logos/arc.png",
       highlights: [
         "18th national rank (2025) out of 1,000+ TARC teams; 16 teams, 130+ launches",
         "Led outreach to 3,000+ K-5 students at 9 schools; raised $10,000+",
