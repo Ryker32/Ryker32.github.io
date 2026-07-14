@@ -76,13 +76,15 @@ function initHeroSwarm() {
   // Lens position eases toward the pointer so the distortion glides
   const lens = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false, strength: 0 };
 
-  // Intro warp burst: a singularity pinned at (x, y) that evaporates over
-  // `duration` ms — the starfield's lensing runs in reverse-collapse as the
-  // title materializes out of it. Triggered by the intro sequence.
-  let warpBurst = null;
-  window.__heroWarpBurst = (x, y, duration = 2000) => {
-    warpBurst = { x, y, duration, start: performance.now() };
+  // Intro ripple: a liquid wave expanding from (x, y). Stars near the
+  // wavefront are displaced radially by a damped push-pull wave (like water)
+  // and glint as the crest passes. Radius follows the same easing as the DOM
+  // ripple ring so both stay in sync. Triggered by the intro sequence.
+  let introRipple = null;
+  window.__heroRipple = (x, y, maxR, duration) => {
+    introRipple = { x, y, maxR, duration, start: performance.now() };
   };
+  const RIPPLE_BAND = 130;   // width of the wave band in px
 
   // Ambient drift tuning
   const HOME_SPRING = 0.01;
@@ -268,30 +270,41 @@ function initHeroSwarm() {
       lens.strength += ((lens.active ? 1 : 0) - lens.strength) * 0.07;
     }
 
-    let lensX = lens.x;
-    let lensY = lens.y;
-    let thetaE = EINSTEIN_RADIUS * lens.strength;
-
-    // While a warp burst is live, an evaporating singularity at the title's
-    // emergence point dominates the lensing — strong at first, then gone.
-    if (warpBurst) {
-      const bt = (t - warpBurst.start) / warpBurst.duration;
-      if (bt >= 1) {
-        warpBurst = null;
-      } else if (bt >= 0) {
-        const decay = Math.pow(1 - bt, 1.8);
-        const burstTheta = EINSTEIN_RADIUS * 1.5 * decay;
-        if (burstTheta > thetaE) {
-          thetaE = burstTheta;
-          lensX = warpBurst.x;
-          lensY = warpBurst.y;
-        }
-      }
-    }
-
+    const lensX = lens.x;
+    const lensY = lens.y;
+    const thetaE = EINSTEIN_RADIUS * lens.strength;
     const thetaESq = thetaE * thetaE;
     const range = lensRange;
     const lensOn = thetaE > 1;
+
+    // Intro ripple state for this frame: current wavefront radius and how
+    // much energy the wave still carries (it decays as it spreads out)
+    let ripR = -1;
+    let ripAmp = 0;
+    if (introRipple) {
+      const rt = (t - introRipple.start) / introRipple.duration;
+      if (rt >= 1) {
+        introRipple = null;
+      } else if (rt > 0) {
+        const p = 1 - Math.pow(1 - rt, 3);   // easeOutCubic, matches DOM ring
+        ripR = introRipple.maxR * p;
+        ripAmp = 30 * (1 - rt * 0.75);
+      }
+    }
+
+    // Water-wave displacement for a point at (x, y): a push ahead of the
+    // crest and a pull behind it, fading at the band's edges. Returns
+    // [offsetX, offsetY, glint] where glint brightens the crest.
+    const rippleOffset = (x, y) => {
+      const dx = x - introRipple.x;
+      const dy = y - introRipple.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const u = (d - ripR) / RIPPLE_BAND;
+      if (u < -1 || u > 1) return null;
+      const envelope = Math.cos(u * Math.PI / 2);   // 1 at crest, 0 at edges
+      const push = Math.sin(u * Math.PI) * ripAmp * envelope;
+      return [(dx / d) * push, (dy / d) * push, envelope * envelope];
+    };
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
@@ -309,11 +322,21 @@ function initHeroSwarm() {
       // Disc coords -> tilted, leaned screen position
       const px = Math.cos(theta) * gp.r;
       const py = Math.sin(theta) * gp.r * galaxy.tilt;
-      const gx = galaxy.x + px * galaxy.cosLean - py * galaxy.sinLean;
-      const gy = galaxy.y + px * galaxy.sinLean + py * galaxy.cosLean;
+      let gx = galaxy.x + px * galaxy.cosLean - py * galaxy.sinLean;
+      let gy = galaxy.y + px * galaxy.sinLean + py * galaxy.cosLean;
 
-      const alpha = gp.alpha * reveal;
+      let alpha = gp.alpha * reveal;
       if (alpha < 0.01) continue;
+
+      // Liquid ripple: displace with the passing wave and glint at the crest
+      if (ripAmp > 0.4) {
+        const off = rippleOffset(gx, gy);
+        if (off) {
+          gx += off[0];
+          gy += off[1];
+          alpha = Math.min(alpha * (1 + 1.2 * off[2]), 1);
+        }
+      }
 
       // The lens bends galaxy light too (primary image only)
       if (lensOn) {
@@ -361,15 +384,28 @@ function initHeroSwarm() {
       }
 
       const twinkle = 0.75 + 0.25 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
-      const alpha = p.baseAlpha * twinkle * reveal;
+      let alpha = p.baseAlpha * twinkle * reveal;
       if (alpha < 0.01) continue;
+
+      // Liquid ripple: the passing wave physically displaces the star's
+      // drawn position and makes it glint at the crest
+      let sx = p.x;
+      let sy = p.y;
+      if (ripAmp > 0.4) {
+        const off = rippleOffset(sx, sy);
+        if (off) {
+          sx += off[0];
+          sy += off[1];
+          alpha = Math.min(alpha * (1 + 1.4 * off[2]), 1);
+        }
+      }
 
       // Gravitational lensing: bend the star's light around the cursor.
       // Point-lens mapping: a source at distance b from the lens appears at
       // r = (b + sqrt(b^2 + 4*thetaE^2)) / 2, always outside the Einstein ring.
       if (lensOn) {
-        const dx = p.x - lensX;
-        const dy = p.y - lensY;
+        const dx = sx - lensX;
+        const dy = sy - lensY;
         const bSq = dx * dx + dy * dy;
         if (bSq < range * range) {
           const b = Math.max(Math.sqrt(bSq), 0.75);
@@ -419,7 +455,7 @@ function initHeroSwarm() {
       ctx.globalAlpha = alpha;
       ctx.fillStyle = p.color;
       const s = p.size;
-      ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+      ctx.fillRect(sx - s / 2, sy - s / 2, s, s);
     }
 
     ctx.globalAlpha = 1;

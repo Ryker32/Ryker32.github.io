@@ -99,159 +99,130 @@
     setTimeout(() => triggerAnimation(), 50);
   }
 
-  // "Warp-in" for the hero title, Celestial-style (Eternals): the title's
-  // light is wrapped into a gravitational swirl around a point — space
-  // visibly folded — and as the singularity evaporates, reality unwinds and
-  // the whole image smoothly de-lenses into place. Built on a custom
-  // radial+swirl displacement field (not noise), so the distortion genuinely
-  // curls around the emergence point like light around a black hole.
-  function warpInHero(heroContent) {
-    if (!heroContent) return;
+  // Liquid ripple intro: the page opens as bare starfield. A dot of light
+  // pulses at the center of the viewport, then releases a single radial
+  // ripple — the starfield physically waves (handled in hero3d.js) and a
+  // refractive glass ring sweeps outward over the page. Each page element
+  // (hero eyebrow / title / lede, glass nav) loads in the moment the
+  // wavefront passes over its position. Calls `onDone` when finished.
+  function rippleIntro(onDone) {
+    const heroContent = document.querySelector('.hero__content');
+    const nav = document.querySelector('.glass-nav-wrapper');
 
-    const rect = heroContent.getBoundingClientRect();
-    const W = Math.max(rect.width, 1);
-    const H = Math.max(rect.height, 1);
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
 
-    // --- Displacement field: at each pixel, a vector that pulls the sample
-    // point toward the center and curls it around it (swirl). Encoded in
-    // R (x-offset) and G (y-offset) around 128 = zero, for feDisplacementMap.
-    const MAP = 160;
-    const mapCanvas = document.createElement('canvas');
-    mapCanvas.width = MAP;
-    mapCanvas.height = MAP;
-    const mctx = mapCanvas.getContext('2d');
-    const img = mctx.createImageData(MAP, MAP);
-    for (let y = 0; y < MAP; y++) {
-      for (let x = 0; x < MAP; x++) {
-        const nx = (x / (MAP - 1)) * 2 - 1;   // -1 .. 1, center at 0
-        const ny = (y / (MAP - 1)) * 2 - 1;
-        const r = Math.min(Math.hypot(nx, ny), 1);
-        // Strong near the point, fading smoothly to zero at the edge so the
-        // outer region of the field never tears
-        const fall = Math.pow(1 - r, 1.6);
-        const pull = 0.5 * fall;              // radial: light dragged inward
-        const curl = 0.85 * fall;             // tangential: frame-dragging swirl
-        let dx = nx * pull + (-ny) * curl;
-        let dy = ny * pull + (nx) * curl;
-        dx = Math.max(-1, Math.min(1, dx));
-        dy = Math.max(-1, Math.min(1, dy));
-        const i = (y * MAP + x) * 4;
-        img.data[i] = Math.round(128 + dx * 127);
-        img.data[i + 1] = Math.round(128 + dy * 127);
-        img.data[i + 2] = 128;
-        img.data[i + 3] = 255;
-      }
+    // Elements that reveal as the wavefront reaches them
+    const revealTargets = [];
+    if (heroContent) {
+      heroContent.style.opacity = '1';   // children handle their own reveal
+      revealTargets.push(...heroContent.children);
     }
-    mctx.putImageData(img, 0, 0);
-    const mapURL = mapCanvas.toDataURL();
+    if (nav) revealTargets.push(nav);
 
-    // Filter region: generous margins so heavily-displaced light isn't clipped
-    const MX = 0.6 * W;
-    const MY = 1.0 * H;
+    const items = revealTargets.map((el) => {
+      const r = el.getBoundingClientRect();
+      const ex = r.left + r.width / 2;
+      const ey = r.top + r.height / 2;
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.filter = 'blur(10px)';
+      el.style.transform = 'scale(1.04)';
+      return { el, dist: Math.hypot(ex - cx, ey - cy), shown: false };
+    });
 
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('width', '0');
-    svg.setAttribute('height', '0');
-    svg.style.position = 'absolute';
-    svg.innerHTML = `
-      <defs>
-        <filter id="heroWarpFilter" x="${-MX}" y="${-MY}" width="${W + 2 * MX}" height="${H + 2 * MY}"
-                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feImage href="${mapURL}" x="${-MX}" y="${-MY}" width="${W + 2 * MX}" height="${H + 2 * MY}"
-                   preserveAspectRatio="none" result="field"/>
-          <feDisplacementMap id="heroWarpDisp" in="SourceGraphic" in2="field" scale="0"
-                             xChannelSelector="R" yChannelSelector="G" result="disp"/>
-          <feColorMatrix in="disp" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rr"/>
-          <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gg"/>
-          <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bb"/>
-          <feOffset id="heroWarpROff" in="rr" dx="-8" dy="0" result="rOff"/>
-          <feOffset id="heroWarpBOff" in="bb" dx="8" dy="0" result="bOff"/>
-          <feBlend in="rOff" in2="gg" mode="screen" result="rg"/>
-          <feBlend in="rg" in2="bOff" mode="screen"/>
-        </filter>
-      </defs>`;
-    document.body.appendChild(svg);
+    const reveal = (item) => {
+      item.shown = true;
+      const el = item.el;
+      // Two-step so the transition applies after the initial styles commit
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.6s ease, filter 0.7s ease, transform 0.7s ease';
+        el.style.opacity = '';
+        el.style.filter = '';
+        el.style.transform = '';
+        setTimeout(() => {
+          el.style.transition = '';
+        }, 750);
+      });
+    };
 
-    const disp = svg.querySelector('#heroWarpDisp');
-    const rOff = svg.querySelector('#heroWarpROff');
-    const bOff = svg.querySelector('#heroWarpBOff');
+    // The emitting dot
+    const dot = document.createElement('div');
+    dot.className = 'intro-ripple-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    dot.style.left = `${cx}px`;
+    dot.style.top = `${cy}px`;
+    document.body.appendChild(dot);
 
-    // Light burst layer behind the content
-    const hero = heroContent.closest('.hero') || heroContent.parentElement;
-    const flash = document.createElement('div');
-    flash.className = 'hero-warp-flash';
-    flash.setAttribute('aria-hidden', 'true');
-    hero.insertBefore(flash, heroContent);
+    // The refractive glass ring
+    const ring = document.createElement('div');
+    ring.className = 'intro-ripple-ring';
+    ring.setAttribute('aria-hidden', 'true');
+    ring.style.left = `${cx}px`;
+    ring.style.top = `${cy}px`;
+    document.body.appendChild(ring);
 
-    const DURATION = 2600;
-    // Peak lens strength (px of displacement at the field's hottest point).
-    // At the peak the title's light is fully wound around the singularity.
-    const LENS_MAX = Math.max(W, H) * 0.9;
+    const DOT_MS = 650;        // dot pulse before the wave releases
+    const RIPPLE_MS = 1900;    // wavefront travel time
+    // Reach past the farthest corner so the band fully exits the viewport
+    const maxR = Math.hypot(
+      Math.max(cx, window.innerWidth - cx),
+      Math.max(cy, window.innerHeight - cy)
+    ) + 180;
 
-    // Tell the starfield a singularity is evaporating at the title's center:
-    // background stars lens hard around the point, then relax as it decays.
-    const canvas = document.getElementById('heroCanvas');
-    const cx = rect.left + W / 2;
-    const cy = rect.top + H / 2;
-    if (typeof window.__heroWarpBurst === 'function' && canvas) {
-      const cRect = canvas.getBoundingClientRect();
-      window.__heroWarpBurst(cx - cRect.left, cy - cRect.top, DURATION + 400);
-    }
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
-    const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
-    const easeInOut = (t) => t * t * (3 - 2 * t);
-
-    heroContent.style.opacity = '0';
-    heroContent.style.willChange = 'transform, opacity, filter';
-
-    const start = performance.now();
-
-    const frame = (now) => {
-      const T = Math.min(1, (now - start) / DURATION);
-      const e = easeOutQuint(T);
-      const inv = 1 - e;
-
-      // The fold: displacement starts at full strength (light wound around
-      // the point), and space unwinds as the singularity evaporates
-      disp.setAttribute('scale', String(LENS_MAX * Math.pow(inv, 1.35)));
-
-      // Chromatic shear from the lensed light, collapsing with it
-      const split = 8 * Math.pow(inv, 1.1);
-      rOff.setAttribute('dx', String(-split));
-      bOff.setAttribute('dx', String(split));
-
-      // The object itself grows out of the point while its wound-up rotation
-      // unwinds — reality visibly rotating outward from the singularity
-      const grow = 0.1 + 0.9 * e;
-      const rot = -110 * inv * inv;
-      heroContent.style.transform = `rotate(${rot.toFixed(2)}deg) scale(${grow.toFixed(4)})`;
-
-      // White-hot while deep in the fold, cooling as it arrives
-      const heat = 1 + 2.2 * Math.pow(inv, 1.8);
-      heroContent.style.filter = `url(#heroWarpFilter) brightness(${heat.toFixed(3)})`;
-
-      heroContent.style.opacity = String(Math.min(1, T / 0.12));
-
-      // Flash: hot point of light at the singularity that blooms and dies
-      const flashT = T < 0.14 ? easeInOut(T / 0.14) : Math.max(0, 1 - (T - 0.14) / 0.5);
-      flash.style.opacity = String(0.95 * flashT);
-      flash.style.transform = `scale(${(0.15 + 1.25 * e).toFixed(3)})`;
-
-      if (T < 1) {
-        requestAnimationFrame(frame);
+    // Phase 1: dot swells like surface tension about to break
+    const dotStart = performance.now();
+    const dotFrame = (now) => {
+      const t = Math.min(1, (now - dotStart) / DOT_MS);
+      const s = t < 0.75 ? 0.2 + 1.3 * easeOutCubic(t / 0.75) : 1.5 - 1.5 * ((t - 0.75) / 0.25);
+      dot.style.transform = `translate(-50%, -50%) scale(${Math.max(s, 0).toFixed(3)})`;
+      dot.style.opacity = String(Math.min(1, t / 0.2));
+      if (t < 1) {
+        requestAnimationFrame(dotFrame);
       } else {
-        // Settle: drop the filter so the text renders crisp
-        heroContent.style.filter = '';
-        heroContent.style.transform = '';
-        heroContent.style.opacity = '1';
-        heroContent.style.willChange = '';
-        flash.remove();
-        svg.remove();
+        dot.remove();
+        startWave();
       }
     };
 
-    requestAnimationFrame(frame);
+    // Phase 2: the ripple radiates out
+    function startWave() {
+      // Drive the starfield's liquid wave from the same origin
+      const canvas = document.getElementById('heroCanvas');
+      if (typeof window.__heroRipple === 'function' && canvas) {
+        const cRect = canvas.getBoundingClientRect();
+        window.__heroRipple(cx - cRect.left, cy - cRect.top, maxR, RIPPLE_MS);
+      }
+
+      const start = performance.now();
+      const frame = (now) => {
+        const t = Math.min(1, (now - start) / RIPPLE_MS);
+        const R = maxR * easeOutCubic(t);
+
+        ring.style.width = `${(R * 2).toFixed(1)}px`;
+        ring.style.height = `${(R * 2).toFixed(1)}px`;
+        // The glass band thins out and fades as the wave loses energy
+        ring.style.opacity = String(Math.max(0, 1 - Math.pow(t, 2.2)));
+
+        for (let i = 0; i < items.length; i++) {
+          if (!items[i].shown && R >= items[i].dist) reveal(items[i]);
+        }
+
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          // Anything the geometry missed still reveals
+          items.forEach((item) => { if (!item.shown) reveal(item); });
+          ring.remove();
+          if (onDone) onDone();
+        }
+      };
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(dotFrame);
   }
 
   function startAnimationSequence() {
@@ -283,26 +254,24 @@
       if (revealDone) return;
       revealDone = true;
       setTimeout(() => {
-        if (nav) {
-          nav.style.transition = 'opacity 0.5s ease';
-          nav.style.opacity = '1';
-        }
-        // Warp the title card into existence
-        warpInHero(heroContent);
-        nonHeroSections.forEach((el) => {
-          el.style.transition = 'opacity 0.5s ease';
-          el.style.opacity = '1';
+        // The ripple sweeps outward and loads the hero + nav as it passes;
+        // everything below the fold fades in once the wave has left the page
+        rippleIntro(() => {
+          nonHeroSections.forEach((el) => {
+            el.style.transition = 'opacity 0.5s ease';
+            el.style.opacity = '1';
+          });
+          contentBlocks.forEach((el) => {
+            el.style.transition = 'opacity 0.5s ease';
+            el.style.opacity = '1';
+          });
+          document.body.classList.add('animation-complete');
+          document.body.classList.remove('animation-loading');
+          document.documentElement.style.overflow = '';
+          collapseHeroFrame();
+          try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (_) {}
         });
-        contentBlocks.forEach((el) => {
-          el.style.transition = 'opacity 0.5s ease';
-          el.style.opacity = '1';
-        });
-        document.body.classList.add('animation-complete');
-        document.body.classList.remove('animation-loading');
-        document.documentElement.style.overflow = '';
-        collapseHeroFrame();
-        try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (_) {}
-      }, 350); // slight delay after hero completes
+      }, 300); // slight beat after the starfield settles
     };
 
     document.addEventListener('hero-reveal-complete', onHeroDone, { once: true });

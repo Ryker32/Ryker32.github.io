@@ -475,18 +475,51 @@ body.animation-complete .hero__content {
   opacity: 1;
 }
 
-/* Light burst behind the content during the warp-in */
-.hero-warp-flash {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Intro ripple: the emitting dot at the center of the viewport */
+.intro-ripple-dot {
+  position: fixed;
+  z-index: 90;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(
-    ellipse 55% 38% at 50% 52%,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(170, 185, 255, 0.3) 38%,
-    transparent 72%
+  transform: translate(-50%, -50%) scale(0);
+  background: #fff;
+  box-shadow:
+    0 0 16px 4px rgba(255, 255, 255, 0.75),
+    0 0 60px 14px rgba(170, 185, 255, 0.35);
+}
+
+/* Intro ripple: the expanding liquid-glass wavefront. Only an annular band
+   at the edge refracts, so it reads as a wave, not a growing bubble. */
+.intro-ripple-ring {
+  position: fixed;
+  z-index: 85;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(3px) brightness(1.5) saturate(1.3);
+  -webkit-backdrop-filter: blur(3px) brightness(1.5) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    inset 0 0 24px rgba(200, 215, 255, 0.18),
+    0 0 20px rgba(170, 185, 255, 0.12);
+  -webkit-mask: radial-gradient(
+    circle closest-side,
+    transparent calc(100% - 110px),
+    #000 calc(100% - 60px),
+    #000 calc(100% - 8px),
+    transparent 100%
+  );
+  mask: radial-gradient(
+    circle closest-side,
+    transparent calc(100% - 110px),
+    #000 calc(100% - 60px),
+    #000 calc(100% - 8px),
+    transparent 100%
   );
 }
 
