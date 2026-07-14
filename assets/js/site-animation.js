@@ -102,9 +102,10 @@
   // Liquid ripple intro: the page opens as bare starfield. A dot of light
   // pulses at the center of the viewport, then releases a single radial
   // ripple — the starfield physically waves (handled in hero3d.js) and a
-  // refractive glass ring sweeps outward over the page. Each page element
-  // (hero eyebrow / title / lede, glass nav) loads in the moment the
-  // wavefront passes over its position. Calls `onDone` when finished.
+  // refractive glass ring sweeps outward over the page. Page elements (hero
+  // content, glass nav) are wiped into view by the wavefront itself: an
+  // expanding radial mask synced to the ripple radius uncovers their pixels
+  // exactly where the wave has already passed. Calls `onDone` when finished.
   function rippleIntro(onDone) {
     const heroContent = document.querySelector('.hero__content');
     const nav = document.querySelector('.glass-nav-wrapper');
@@ -112,38 +113,51 @@
     const cx = window.innerWidth / 2;
     const cy = window.innerHeight / 2;
 
-    // Elements that reveal as the wavefront reaches them
+    // Feathered trailing edge of the reveal, roughly matching the glass band
+    const EDGE = 90;
+
+    // Elements the wavefront wipes over. Each carries the ripple center in
+    // its own local coordinates (masks are positioned relative to the
+    // element's box) and the distance at which it's fully uncovered.
     const revealTargets = [];
     if (heroContent) {
-      heroContent.style.opacity = '1';   // children handle their own reveal
-      revealTargets.push(...heroContent.children);
+      heroContent.style.opacity = '1';   // reveal is handled by the mask
+      revealTargets.push(heroContent);
     }
-    if (nav) revealTargets.push(nav);
+    if (nav) {
+      nav.style.opacity = '1';
+      revealTargets.push(nav);
+    }
 
     const items = revealTargets.map((el) => {
       const r = el.getBoundingClientRect();
-      const ex = r.left + r.width / 2;
-      const ey = r.top + r.height / 2;
-      el.style.transition = 'none';
-      el.style.opacity = '0';
-      el.style.filter = 'blur(10px)';
-      el.style.transform = 'scale(1.04)';
-      return { el, dist: Math.hypot(ex - cx, ey - cy), shown: false };
+      const lx = cx - r.left;
+      const ly = cy - r.top;
+      // Farthest corner of the element from the ripple center
+      const far = Math.max(
+        Math.hypot(lx, ly),
+        Math.hypot(r.width - lx, ly),
+        Math.hypot(lx, r.height - ly),
+        Math.hypot(r.width - lx, r.height - ly)
+      );
+      return { el, lx, ly, far, done: false };
     });
 
-    const reveal = (item) => {
-      item.shown = true;
-      const el = item.el;
-      // Two-step so the transition applies after the initial styles commit
-      requestAnimationFrame(() => {
-        el.style.transition = 'opacity 0.6s ease, filter 0.7s ease, transform 0.7s ease';
-        el.style.opacity = '';
-        el.style.filter = '';
-        el.style.transform = '';
-        setTimeout(() => {
-          el.style.transition = '';
-        }, 750);
-      });
+    const setMask = (item, R) => {
+      const inner = Math.max(0, R - EDGE);
+      const img = `radial-gradient(circle at ${item.lx.toFixed(1)}px ${item.ly.toFixed(1)}px, ` +
+        `#000 ${inner.toFixed(1)}px, transparent ${Math.max(R, 0.1).toFixed(1)}px)`;
+      item.el.style.webkitMaskImage = img;
+      item.el.style.maskImage = img;
+    };
+
+    // Hide everything until the wave uncovers it
+    items.forEach((item) => setMask(item, 0));
+
+    const clearMask = (item) => {
+      item.done = true;
+      item.el.style.webkitMaskImage = '';
+      item.el.style.maskImage = '';
     };
 
     // The emitting dot
@@ -206,15 +220,22 @@
         // The glass band thins out and fades as the wave loses energy
         ring.style.opacity = String(Math.max(0, 1 - Math.pow(t, 2.2)));
 
+        // Sweep the reveal mask with the wavefront; once an element is
+        // fully behind the wave, drop its mask entirely
         for (let i = 0; i < items.length; i++) {
-          if (!items[i].shown && R >= items[i].dist) reveal(items[i]);
+          const item = items[i];
+          if (item.done) continue;
+          if (R >= item.far + EDGE) {
+            clearMask(item);
+          } else {
+            setMask(item, R);
+          }
         }
 
         if (t < 1) {
           requestAnimationFrame(frame);
         } else {
-          // Anything the geometry missed still reveals
-          items.forEach((item) => { if (!item.shown) reveal(item); });
+          items.forEach((item) => { if (!item.done) clearMask(item); });
           ring.remove();
           if (onDone) onDone();
         }
