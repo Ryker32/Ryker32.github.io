@@ -18,7 +18,7 @@ layout: default
     <p class="hero__eyebrow">Aerospace Robotics · Distributed Systems · CAD</p>
     <h1>Ryker Kollmyer</h1>
     <p class="hero__lede">
-      Robotics Researcher & Vice President @ Olympia Aerospace
+      Robotics Researcher & Vice President @ <a href="https://www.ohsaerospace.org" class="hero__lede-link" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace</a>
     </p>
   </div>
 </section>

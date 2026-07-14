@@ -114,6 +114,15 @@
     );
   };
 
+  // Corners have a 0.3s CSS transition for the lock/release glide, but while
+  // locked their transforms are rewritten every frame — a lingering transition
+  // makes them trail and scatter. Glide in, then pin them hard.
+  let cornerPinTimeout = null;
+
+  const setCornerTransition = (value) => {
+    corners.forEach((c) => { c.style.transition = value; });
+  };
+
   const handleEnter = (target) => {
     if (spinResumeTimeout) {
       clearTimeout(spinResumeTimeout);
@@ -123,25 +132,35 @@
     setRotation(0); // ensure brackets orient upright on lock
     isLocked = true;
     lockedTarget = target;
+
+    clearTimeout(cornerPinTimeout);
+    setCornerTransition(''); // allow the 0.3s glide onto the target
+    cornerPinTimeout = setTimeout(() => setCornerTransition('none'), 320);
+  };
+
+  const releaseLock = () => {
+    lockedTarget = null;
+    isLocked = false;
+    clearTimeout(cornerPinTimeout);
+    setCornerTransition(''); // animate the release
+    releaseCorners();
+    // delay spin restart slightly
+    spinResumeTimeout = setTimeout(() => startSpin(), 100);
   };
 
   const handleLeave = () => {
     if (!isLocked) return;
-    lockedTarget = null;
-    isLocked = false;
 
     // If the pointer is still over another target (e.g. left a nested
     // button but is still on its parent card), re-acquire it immediately.
     const el = document.elementFromPoint(cursorPos.x, cursorPos.y);
     const next = el && el.closest ? el.closest(TARGET_SELECTOR) : null;
-    if (next) {
+    if (next && next !== lockedTarget) {
       handleEnter(next);
       return;
     }
 
-    releaseCorners();
-    // delay spin restart slightly
-    spinResumeTimeout = setTimeout(() => startSpin(), 100);
+    releaseLock();
   };
 
   const bindTargets = () => {
@@ -175,12 +194,7 @@
 
   // Release when the pointer leaves the window entirely
   document.documentElement.addEventListener('mouseleave', () => {
-    if (isLocked) {
-      lockedTarget = null;
-      isLocked = false;
-      releaseCorners();
-      spinResumeTimeout = setTimeout(() => startSpin(), 100);
-    }
+    if (isLocked) releaseLock();
   });
 
   window.addEventListener('pointerdown', () => {
