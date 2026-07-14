@@ -451,34 +451,21 @@ body[data-theme=light].animation-complete .hero__canvas {
   padding: clamp(24px, 3vw, 48px);
   margin: clamp(120px, 14vh, 200px) auto 0; /* reintroduce spacing without shrinking canvas */
   color: var(--ink);
-  opacity: 0; /* hidden until intro completes */
-  -webkit-clip-path: inset(0 50% 0 50%);
-  clip-path: inset(0 50% 0 50%);
+  opacity: 0; /* hidden until intro completes; warp-in is driven by JS */
 }
 
-/* Run the center-out reveal after the swarm finishes */
 body.animation-complete .hero__content {
   opacity: 1;
-  animation: expandContent 1s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
 
-@keyframes expandContent {
-  0% {
-    -webkit-clip-path: inset(0 50% 0 50%);
-    clip-path: inset(0 50% 0 50%);
-  }
-  100% {
-    -webkit-clip-path: inset(0 0% 0 0%);
-    clip-path: inset(0 0% 0 0%);
-  }
-}
-.hero__content > * {
+/* Light burst behind the content during the warp-in */
+.hero-warp-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease 0.5s;
-}
-
-body.animation-complete .hero__content > * {
-  opacity: 1;
+  background: radial-gradient(ellipse 55% 38% at 50% 52%, rgba(255, 255, 255, 0.85) 0%, rgba(170, 185, 255, 0.3) 38%, transparent 72%);
 }
 
 body[data-theme=light] .hero h1,

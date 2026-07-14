@@ -76,6 +76,14 @@ function initHeroSwarm() {
   // Lens position eases toward the pointer so the distortion glides
   const lens = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false, strength: 0 };
 
+  // Intro warp burst: a singularity pinned at (x, y) that evaporates over
+  // `duration` ms — the starfield's lensing runs in reverse-collapse as the
+  // title materializes out of it. Triggered by the intro sequence.
+  let warpBurst = null;
+  window.__heroWarpBurst = (x, y, duration = 2000) => {
+    warpBurst = { x, y, duration, start: performance.now() };
+  };
+
   // Ambient drift tuning
   const HOME_SPRING = 0.01;
   const DAMPING = 0.9;
