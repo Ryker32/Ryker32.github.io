@@ -4,12 +4,6 @@ title: about
 permalink: /about/
 ---
 
-{% assign resume_pdf    = site.static_files | where: "path", "/assets/img/resume/RykerKollmyer_Resume (4).pdf" | first %}
-{% assign resume_img0   = site.static_files | where: "path", "/assets/img/resume/RykerKollmyer_Resume (4) (1)_page-0001.jpg" | first %}
-{% assign resume_img1   = site.static_files | where: "path", "/assets/img/resume/resume.png" | first %}
-{% assign resume_img2   = site.static_files | where: "path", "/assets/img/resume/resume.jpg" | first %}
-{% assign resume_img3   = site.static_files | where: "path", "/assets/img/resume.png" | first %}
-{% assign resume_img4   = site.static_files | where: "path", "/assets/img/resume.jpg" | first %}
 {% assign about_loop      = site.static_files | where: "path", "/assets/video/about-loop.mp4" | first %}
 {% assign aboutme_files   = site.static_files | where_exp: "f", "f.path contains '/assets/img/aboutme/'" %}
 {% assign aboutme_videos  = aboutme_files | where: "extname", ".mp4" %}
@@ -17,20 +11,6 @@ permalink: /about/
 {% assign about_video     = aboutme_videos[0] | default: about_loop %}
 {% assign about_poster_raw = aboutme_images[0].path | default: "/assets/img/ryker.jpg" %}
 {% assign about_poster    = about_poster_raw | relative_url %}
-
-{% if resume_img0 %}
-  {% assign resume_src = resume_img0.path | relative_url %}
-{% elsif resume_img1 %}
-  {% assign resume_src = resume_img1.path | relative_url %}
-{% elsif resume_img2 %}
-  {% assign resume_src = resume_img2.path | relative_url %}
-{% elsif resume_img3 %}
-  {% assign resume_src = resume_img3.path | relative_url %}
-{% elsif resume_img4 %}
-  {% assign resume_src = resume_img4.path | relative_url %}
-{% else %}
-  {% assign resume_src = "/assets/img/ryker.jpg" | relative_url %}
-{% endif %}
 
 <link rel="stylesheet" href="{{ '/assets/css/about.css' | relative_url }}">
 <section id="about" class="about">
@@ -54,9 +34,7 @@ permalink: /about/
       <div class="about__links">
         <a class="pill" href="mailto:rykerkollmyer@gmail.com">Email</a>
         <a class="pill" href="https://www.linkedin.com/in/rykerkollmyer/" target="_blank" rel="noopener" data-proofer-ignore>LinkedIn</a>
-        {% if resume_pdf %}
-        <a class="pill" href="{{ resume_pdf.path | relative_url }}" target="_blank" rel="noopener">Resume PDF</a>
-        {% endif %}
+        <a class="pill" href="{{ '/resume/' | relative_url }}">Resume</a>
       </div>
     </div>
     <div class="about__media">

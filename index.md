@@ -15,10 +15,10 @@ layout: default
     <canvas id="heroCanvas"></canvas>
   </div>
   <div class="hero__content">
-    <p class="hero__eyebrow">Autonomy · Multi-agent systems · CAD</p>
+    <p class="hero__eyebrow">Aerospace Robotics · Distributed Systems · CAD</p>
     <h1>Ryker Kollmyer</h1>
     <p class="hero__lede">
-      Mechatronics and distributed-systems student researcher focused on robust hardware and software systems.
+      Robotics Researcher & Vice President @ Olympia Aerospace
     </p>
   </div>
 </section>
@@ -28,7 +28,7 @@ layout: default
     <header class="portfolio-header">
       <h2 id="worksHeading">selected works...</h2>
       <p>
-        software systems, hackathons, rockets, and apps. click any card for the full write-up &mdash;
+        software systems, hackathons, rockets, and apps. click any card for the full write-up.
         interactive cad, data, figures, and documentation.
       </p>
     </header>
