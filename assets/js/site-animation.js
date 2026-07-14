@@ -99,16 +99,56 @@
     setTimeout(() => triggerAnimation(), 50);
   }
 
-  // "Warp-in" for the hero title: an accretion spiral run in reverse.
-  // The text is shattered into characters that all begin at the singularity
-  // point, then stream outward along decaying orbital spirals — innermost
-  // material escapes first, each fragment unwinding its orbit and cooling
-  // from white-hot as it settles into place. A displacement filter distorts
-  // reality around the emergence and the starfield lenses around the point.
+  // "Warp-in" for the hero title, Celestial-style (Eternals): the title's
+  // light is wrapped into a gravitational swirl around a point — space
+  // visibly folded — and as the singularity evaporates, reality unwinds and
+  // the whole image smoothly de-lenses into place. Built on a custom
+  // radial+swirl displacement field (not noise), so the distortion genuinely
+  // curls around the emergence point like light around a black hole.
   function warpInHero(heroContent) {
     if (!heroContent) return;
 
-    // Build the SVG filter once (spacetime shimmer + global RGB shear)
+    const rect = heroContent.getBoundingClientRect();
+    const W = Math.max(rect.width, 1);
+    const H = Math.max(rect.height, 1);
+
+    // --- Displacement field: at each pixel, a vector that pulls the sample
+    // point toward the center and curls it around it (swirl). Encoded in
+    // R (x-offset) and G (y-offset) around 128 = zero, for feDisplacementMap.
+    const MAP = 160;
+    const mapCanvas = document.createElement('canvas');
+    mapCanvas.width = MAP;
+    mapCanvas.height = MAP;
+    const mctx = mapCanvas.getContext('2d');
+    const img = mctx.createImageData(MAP, MAP);
+    for (let y = 0; y < MAP; y++) {
+      for (let x = 0; x < MAP; x++) {
+        const nx = (x / (MAP - 1)) * 2 - 1;   // -1 .. 1, center at 0
+        const ny = (y / (MAP - 1)) * 2 - 1;
+        const r = Math.min(Math.hypot(nx, ny), 1);
+        // Strong near the point, fading smoothly to zero at the edge so the
+        // outer region of the field never tears
+        const fall = Math.pow(1 - r, 1.6);
+        const pull = 0.5 * fall;              // radial: light dragged inward
+        const curl = 0.85 * fall;             // tangential: frame-dragging swirl
+        let dx = nx * pull + (-ny) * curl;
+        let dy = ny * pull + (nx) * curl;
+        dx = Math.max(-1, Math.min(1, dx));
+        dy = Math.max(-1, Math.min(1, dy));
+        const i = (y * MAP + x) * 4;
+        img.data[i] = Math.round(128 + dx * 127);
+        img.data[i + 1] = Math.round(128 + dy * 127);
+        img.data[i + 2] = 128;
+        img.data[i + 3] = 255;
+      }
+    }
+    mctx.putImageData(img, 0, 0);
+    const mapURL = mapCanvas.toDataURL();
+
+    // Filter region: generous margins so heavily-displaced light isn't clipped
+    const MX = 0.6 * W;
+    const MY = 1.0 * H;
+
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('width', '0');
@@ -116,14 +156,17 @@
     svg.style.position = 'absolute';
     svg.innerHTML = `
       <defs>
-        <filter id="heroWarpFilter" x="-40%" y="-60%" width="180%" height="220%" color-interpolation-filters="sRGB">
-          <feTurbulence id="heroWarpNoise" type="fractalNoise" baseFrequency="0.012 0.045" numOctaves="2" seed="7" result="noise"/>
-          <feDisplacementMap id="heroWarpDisp" in="SourceGraphic" in2="noise" scale="220" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+        <filter id="heroWarpFilter" x="${-MX}" y="${-MY}" width="${W + 2 * MX}" height="${H + 2 * MY}"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feImage href="${mapURL}" x="${-MX}" y="${-MY}" width="${W + 2 * MX}" height="${H + 2 * MY}"
+                   preserveAspectRatio="none" result="field"/>
+          <feDisplacementMap id="heroWarpDisp" in="SourceGraphic" in2="field" scale="0"
+                             xChannelSelector="R" yChannelSelector="G" result="disp"/>
           <feColorMatrix in="disp" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rr"/>
           <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gg"/>
           <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bb"/>
-          <feOffset id="heroWarpROff" in="rr" dx="-10" dy="0" result="rOff"/>
-          <feOffset id="heroWarpBOff" in="bb" dx="10" dy="0" result="bOff"/>
+          <feOffset id="heroWarpROff" in="rr" dx="-8" dy="0" result="rOff"/>
+          <feOffset id="heroWarpBOff" in="bb" dx="8" dy="0" result="bOff"/>
           <feBlend in="rOff" in2="gg" mode="screen" result="rg"/>
           <feBlend in="rg" in2="bOff" mode="screen"/>
         </filter>
@@ -131,7 +174,6 @@
     document.body.appendChild(svg);
 
     const disp = svg.querySelector('#heroWarpDisp');
-    const noise = svg.querySelector('#heroWarpNoise');
     const rOff = svg.querySelector('#heroWarpROff');
     const bOff = svg.querySelector('#heroWarpBOff');
 
@@ -142,149 +184,68 @@
     flash.setAttribute('aria-hidden', 'true');
     hero.insertBefore(flash, heroContent);
 
-    const DURATION = 2400;
-    // How far each fragment's orbit is wound up at birth (radians). Every
-    // character sweeps this arc as it spirals out, so early on the whole
-    // title is a rotating disc of matter around the point.
-    const SWIRL = -3.4;
-    // Fraction of the timeline each fragment spends in flight
-    const TRAVEL = 0.55;
+    const DURATION = 2600;
+    // Peak lens strength (px of displacement at the field's hottest point).
+    // At the peak the title's light is fully wound around the singularity.
+    const LENS_MAX = Math.max(W, H) * 0.9;
 
     // Tell the starfield a singularity is evaporating at the title's center:
     // background stars lens hard around the point, then relax as it decays.
     const canvas = document.getElementById('heroCanvas');
-    const heroRect = heroContent.getBoundingClientRect();
-    const cx = heroRect.left + heroRect.width / 2;
-    const cy = heroRect.top + heroRect.height / 2;
+    const cx = rect.left + W / 2;
+    const cy = rect.top + H / 2;
     if (typeof window.__heroWarpBurst === 'function' && canvas) {
       const cRect = canvas.getBoundingClientRect();
-      window.__heroWarpBurst(cx - cRect.left, cy - cRect.top, DURATION + 500);
+      window.__heroWarpBurst(cx - cRect.left, cy - cRect.top, DURATION + 400);
     }
 
-    // --- Shatter the text into per-character fragments ---
-    // Each word goes inside a no-break wrapper so the character spans can't
-    // change where lines wrap (otherwise the settled text would jump).
-    const originalHTML = heroContent.innerHTML;
-    const wrapChars = (root) => {
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      const spans = [];
-      nodes.forEach((node) => {
-        const frag = document.createDocumentFragment();
-        let word = null;
-        for (const ch of node.textContent) {
-          if (/\s/.test(ch)) {
-            word = null;
-            frag.appendChild(document.createTextNode(ch));
-            continue;
-          }
-          if (!word) {
-            word = document.createElement('span');
-            word.style.display = 'inline-block';
-            word.style.whiteSpace = 'nowrap';
-            frag.appendChild(word);
-          }
-          const s = document.createElement('span');
-          s.textContent = ch;
-          s.style.display = 'inline-block';
-          s.style.willChange = 'transform, opacity';
-          word.appendChild(s);
-          spans.push(s);
-        }
-        node.parentNode.replaceChild(frag, node);
-      });
-      return spans;
-    };
-    const chars = wrapChars(heroContent);
+    const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+    const easeInOut = (t) => t * t * (3 - 2 * t);
 
-    // Measure each fragment's resting position relative to the singularity
-    let rMax = 1;
-    const parts = chars.map((el) => {
-      const r = el.getBoundingClientRect();
-      const dx = r.left + r.width / 2 - cx;
-      const dy = r.top + r.height / 2 - cy;
-      const rad = Math.hypot(dx, dy);
-      if (rad > rMax) rMax = rad;
-      return { el, dx, dy, rad, ang: Math.atan2(dy, dx), jit: Math.random() };
-    });
-    // Inner material escapes the point first; outer streams out after —
-    // the spiral visibly grows outward from the center.
-    parts.forEach((p) => {
-      p.delay = Math.min(0.03 + 0.32 * (p.rad / rMax) + 0.08 * p.jit, 1 - TRAVEL);
-      // Start hidden at the singularity
-      p.el.style.opacity = '0';
-      p.el.style.transform = `translate(${-p.dx}px, ${-p.dy}px) scale(0.05)`;
-    });
-
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
-
-    heroContent.style.opacity = '1';
-    heroContent.style.willChange = 'filter';
-    heroContent.classList.add('is-warping');
+    heroContent.style.opacity = '0';
+    heroContent.style.willChange = 'transform, opacity, filter';
 
     const start = performance.now();
 
     const frame = (now) => {
       const T = Math.min(1, (now - start) / DURATION);
-      const gInv = 1 - easeOutQuart(T);
+      const e = easeOutQuint(T);
+      const inv = 1 - e;
 
-      // Reality distortion + global chromatic shear die off with the singularity
-      disp.setAttribute('scale', String(220 * Math.pow(gInv, 1.5)));
-      noise.setAttribute('baseFrequency', `${0.012 + 0.02 * gInv} ${0.045 * gInv + 0.008}`);
-      const split = 10 * Math.pow(gInv, 1.2);
+      // The fold: displacement starts at full strength (light wound around
+      // the point), and space unwinds as the singularity evaporates
+      disp.setAttribute('scale', String(LENS_MAX * Math.pow(inv, 1.35)));
+
+      // Chromatic shear from the lensed light, collapsing with it
+      const split = 8 * Math.pow(inv, 1.1);
       rOff.setAttribute('dx', String(-split));
       bOff.setAttribute('dx', String(split));
-      const heat = 1 + 1.6 * gInv * gInv;
+
+      // The object itself grows out of the point while its wound-up rotation
+      // unwinds — reality visibly rotating outward from the singularity
+      const grow = 0.1 + 0.9 * e;
+      const rot = -110 * inv * inv;
+      heroContent.style.transform = `rotate(${rot.toFixed(2)}deg) scale(${grow.toFixed(4)})`;
+
+      // White-hot while deep in the fold, cooling as it arrives
+      const heat = 1 + 2.2 * Math.pow(inv, 1.8);
       heroContent.style.filter = `url(#heroWarpFilter) brightness(${heat.toFixed(3)})`;
 
-      for (let i = 0; i < parts.length; i++) {
-        const p = parts[i];
-        const lt = Math.min(Math.max((T - p.delay) / TRAVEL, 0), 1);
-        if (lt <= 0) continue;
-
-        // Orbit: radius grows out from the point while the wound-up angle
-        // unwinds — a decaying spiral, i.e. accretion in reverse
-        const g = easeOutCubic(lt);
-        const r = p.rad * g;
-        const a = p.ang + SWIRL * (1 - g);
-        const x = Math.cos(a) * r - p.dx;
-        const y = Math.sin(a) * r - p.dy;
-        // The fragment tumbles with its orbital sweep and grows as it cools
-        const spin = (SWIRL * (1 - g) * 180) / Math.PI;
-        const sc = 0.2 + 0.8 * g;
-        p.el.style.transform =
-          `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${spin.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
-        p.el.style.opacity = String(Math.min(1, lt / 0.2));
-
-        // Per-fragment chromatic shear + white-hot glow while in flight
-        const hot = 1 - g;
-        p.el.style.textShadow = hot > 0.02
-          ? `${(-7 * hot).toFixed(2)}px 0 rgba(255,70,70,${(0.85 * hot).toFixed(3)}), ` +
-            `${(7 * hot).toFixed(2)}px 0 rgba(80,140,255,${(0.85 * hot).toFixed(3)}), ` +
-            `0 0 ${(16 * hot).toFixed(2)}px rgba(255,255,255,${(0.9 * hot).toFixed(3)})`
-          : '';
-      }
+      heroContent.style.opacity = String(Math.min(1, T / 0.12));
 
       // Flash: hot point of light at the singularity that blooms and dies
-      const flashT = T < 0.12 ? T / 0.12 : Math.max(0, 1 - (T - 0.12) / 0.5);
+      const flashT = T < 0.14 ? easeInOut(T / 0.14) : Math.max(0, 1 - (T - 0.14) / 0.5);
       flash.style.opacity = String(0.95 * flashT);
-      flash.style.transform = `scale(${(0.15 + 1.3 * easeOutQuart(T)).toFixed(3)})`;
+      flash.style.transform = `scale(${(0.15 + 1.25 * e).toFixed(3)})`;
 
       if (T < 1) {
         requestAnimationFrame(frame);
       } else {
-        // Settle: restore the original markup so text renders crisp
+        // Settle: drop the filter so the text renders crisp
         heroContent.style.filter = '';
+        heroContent.style.transform = '';
         heroContent.style.opacity = '1';
         heroContent.style.willChange = '';
-        heroContent.classList.remove('is-warping');
-        heroContent.innerHTML = originalHTML;
-        // Let the custom cursor rebind targets recreated by the restore
-        heroContent.querySelectorAll('[data-cursor-bound]').forEach((el) => {
-          delete el.dataset.cursorBound;
-        });
         flash.remove();
         svg.remove();
       }
