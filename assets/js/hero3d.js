@@ -2,7 +2,7 @@
 // gravitationally lensed around the cursor, like the distortion of a black hole:
 // stars are deflected outward (point-lens equation), smeared into tangential
 // arcs near the Einstein ring, and nothing renders inside the shadow.
-// Palette sampled from qtzx.dev's hero canvas (whites, periwinkle blues, dark teals).
+// Palette: whites, periwinkle blues, and dark teals against near-black.
 
 const DARK_PALETTE = [
   { color: '#f2f2f2', weight: 3 },   // bright white

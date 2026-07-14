@@ -19,11 +19,7 @@
     return;
   }
   
-  // Always play; no skip path
-
-  const collapseHeroFrame = () => {};
-
-  const prepHeroCanvasSmall = () => {
+  const prepHeroCanvas = () => {
     if (!heroCanvas) return;
     heroCanvas.style.opacity = '1';
     heroCanvas.style.transform = 'none';
@@ -39,7 +35,6 @@
       heroCanvas.style.opacity = '0.9';
       heroCanvas.style.transform = 'scale(1)';
     }
-    collapseHeroFrame();
     return;
   }
 
@@ -65,8 +60,8 @@
 
     let animationTriggered = false;
 
-    // Make sure the hero is visible in its small state immediately
-    prepHeroCanvasSmall();
+    // Make sure the starfield is visible immediately
+    prepHeroCanvas();
 
     // Hide main/nav until after hero expands
     const siteMain = document.querySelector('.site-main');
@@ -82,16 +77,8 @@
       if (animationTriggered) return;
       animationTriggered = true;
 
-      const canvas = document.getElementById('heroCanvas');
-      console.log('Triggering hero reveal', {
-        canvasExists: !!canvas,
-        canvasSize: canvas ? `${canvas.width}x${canvas.height}` : 'N/A',
-        bodyClasses: document.body.className
-      });
-
       document.body.classList.add('animation-ready');
       document.dispatchEvent(new Event('animation-ready'));
-      collapseHeroFrame();
       startAnimationSequence();
     }
 
@@ -247,21 +234,13 @@
   }
 
   function startAnimationSequence() {
-    const canvas = document.getElementById('heroCanvas');
-    const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
     const contentBlocks = document.querySelectorAll('.content-section, .site-footer');
     const nonHeroSections = document.querySelectorAll('.site-main > *:not(.hero)');
-    const heroContent = document.querySelector('.hero__content');
 
-    // Ensure hero is visible; no canvas scaling
-    if (canvas) {
-      canvas.style.opacity = '1';
-      canvas.style.transform = 'none';
-      canvas.style.transition = 'opacity 0.8s ease';
-    }
+    prepHeroCanvas();
 
-    // Hide nav/content until swarm reveal finishes; keep canvas and hero card visible
+    // Hide nav/content until the starfield fades in; the ripple reveals them
     if (nav) nav.style.opacity = '0';
     nonHeroSections.forEach((el) => {
       el.style.opacity = '0';
@@ -289,7 +268,6 @@
           document.body.classList.add('animation-complete');
           document.body.classList.remove('animation-loading');
           document.documentElement.style.overflow = '';
-          collapseHeroFrame();
           try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (_) {}
         });
       }, 300); // slight beat after the starfield settles
@@ -320,7 +298,6 @@
     '.site-footer > *',
     '.contact-tile',
     '.contact-header',
-    '.rocketry__card',
     '.about-panel',
     '.about-hero__text',
     '.about-hero__media'

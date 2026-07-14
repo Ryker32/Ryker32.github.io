@@ -866,8 +866,7 @@
     const readStoredTheme = () => {
       try {
         return localStorage.getItem(storageKey);
-      } catch (err) {
-        console.debug('Theme storage unavailable:', err);
+      } catch (_) {
         return null;
       }
     };
@@ -875,9 +874,7 @@
     const writeStoredTheme = (theme) => {
       try {
         localStorage.setItem(storageKey, theme);
-      } catch (err) {
-        console.debug('Theme storage unavailable:', err);
-      }
+      } catch (_) {}
     };
 
     const applyTheme = (theme, persist = false) => {
@@ -1289,8 +1286,7 @@
       throw new Error('All providers failed');
     };
 
-    tryProviders().catch((err) => {
-      console.warn('View counter unavailable:', err);
+    tryProviders().catch(() => {
       valueEl.textContent = '—';
       container.title = 'View counter unavailable right now.';
     });

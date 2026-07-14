@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 {% seo %}
-    <link rel="icon" type="image/png" href="{{ "/assets/img/sadasdasd.png" | relative_url }}">
+    <link rel="icon" type="image/png" href="{{ "/assets/img/favicon.png" | relative_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -62,7 +62,7 @@
         </div>
         <div class="modal-title-section">
           <div class="modal-title-row">
-            <h2 id="modalTitle">Project Title</h2>
+            <h2 id="modalTitle"></h2>
             <div class="modal-title-actions">
               <a href="javascript:void(0);" class="modal-action-link modal-app-link" id="modalAppLink" target="_blank" rel="noopener">Open App</a>
               <a href="javascript:void(0);" class="modal-action-link modal-repo-link" id="modalRepoLink" target="_blank" rel="noopener">View Repository</a>
@@ -74,14 +74,10 @@
           </div>
         </div>
         <div class="modal-body">
-          <div class="modal-description" id="modalDescription">
-            <p>Project description goes here...</p>
-          </div>
-          <div class="modal-files" id="modalFiles">
-            <h3>Project Files</h3>
-            <div class="files-grid" id="filesGrid">
-              <!-- Files will be dynamically added here -->
-            </div>
+          <div class="modal-description" id="modalDescription"></div>
+        <div class="modal-files" id="modalFiles">
+          <h3>Project Files</h3>
+          <div class="files-grid" id="filesGrid"></div>
           </div>
         </div>
       </div>
