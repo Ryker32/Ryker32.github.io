@@ -70,9 +70,16 @@ layout: default
 </section>
 
 <footer class="site-footer" id="contact">
-  <div>
-    <h3>Let’s build something</h3>
-    <p>rykerkollmyer@gmail.com · @Ryker32</p>
+  <p class="site-footer__kicker">Get in touch</p>
+  <h2 class="site-footer__title">Let’s build something.</h2>
+  <p class="site-footer__lede">
+    I love connecting with fellow builders, researchers, and curious minds.
+    Reach me anytime at <a href="mailto:rykerkollmyer@gmail.com" data-cursor-target>rykerkollmyer@gmail.com</a>.
+  </p>
+  <div class="site-footer__links">
+    <a href="https://github.com/Ryker32" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target>GitHub</a>
+    <a href="https://www.linkedin.com/in/rykerkollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target data-proofer-ignore>LinkedIn</a>
+    <a href="{{ '/contact/' | relative_url }}" class="pill-link pill-link--ghost" data-cursor-target>All contact options</a>
   </div>
-  <p>© 2025 Ryker Kollmyer. All rights reserved.</p>
+  <p class="site-footer__copyright">© 2025 Ryker Kollmyer. All rights reserved.</p>
 </footer>

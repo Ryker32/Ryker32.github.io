@@ -170,3 +170,53 @@
     setTimeout(initAnimation, 50);
   }
 })();
+
+// Scroll-reveal: elements rise in as they enter the viewport
+(() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const REVEAL_SELECTORS = [
+    '.project-card',
+    '.portfolio-header',
+    '.profile-panel__card',
+    '.site-footer > *',
+    '.contact-tile',
+    '.contact-header',
+    '.rocketry__card',
+    '.about-panel',
+    '.about-hero__text',
+    '.about-hero__media'
+  ].join(', ');
+
+  function initReveal() {
+    const elements = document.querySelectorAll(REVEAL_SELECTORS);
+    if (!elements.length) return;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      elements.forEach(el => el.classList.add('is-revealed'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    elements.forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+  }
+
+  // portfolio.js injects cards on DOMContentLoaded and is loaded first,
+  // so by the time this runs the cards exist.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReveal);
+  } else {
+    initReveal();
+  }
+})();
