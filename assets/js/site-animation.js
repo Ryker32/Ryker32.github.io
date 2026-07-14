@@ -99,13 +99,16 @@
     setTimeout(() => triggerAnimation(), 50);
   }
 
-  // "Warp-in" for the hero title: space-fold distortion (SVG displacement),
-  // chromatic aberration that collapses to zero, a stretched-space snap, and
-  // a light burst — like a jump-ship materializing.
+  // "Warp-in" for the hero title: an accretion spiral run in reverse.
+  // The text is shattered into characters that all begin at the singularity
+  // point, then stream outward along decaying orbital spirals — innermost
+  // material escapes first, each fragment unwinding its orbit and cooling
+  // from white-hot as it settles into place. A displacement filter distorts
+  // reality around the emergence and the starfield lenses around the point.
   function warpInHero(heroContent) {
     if (!heroContent) return;
 
-    // Build the SVG filter once
+    // Build the SVG filter once (spacetime shimmer + global RGB shear)
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('width', '0');
@@ -115,12 +118,12 @@
       <defs>
         <filter id="heroWarpFilter" x="-40%" y="-60%" width="180%" height="220%" color-interpolation-filters="sRGB">
           <feTurbulence id="heroWarpNoise" type="fractalNoise" baseFrequency="0.012 0.045" numOctaves="2" seed="7" result="noise"/>
-          <feDisplacementMap id="heroWarpDisp" in="SourceGraphic" in2="noise" scale="420" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+          <feDisplacementMap id="heroWarpDisp" in="SourceGraphic" in2="noise" scale="220" xChannelSelector="R" yChannelSelector="G" result="disp"/>
           <feColorMatrix in="disp" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rr"/>
           <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gg"/>
           <feColorMatrix in="disp" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bb"/>
-          <feOffset id="heroWarpROff" in="rr" dx="-14" dy="0" result="rOff"/>
-          <feOffset id="heroWarpBOff" in="bb" dx="14" dy="0" result="bOff"/>
+          <feOffset id="heroWarpROff" in="rr" dx="-10" dy="0" result="rOff"/>
+          <feOffset id="heroWarpBOff" in="bb" dx="10" dy="0" result="bOff"/>
           <feBlend in="rOff" in2="gg" mode="screen" result="rg"/>
           <feBlend in="rg" in2="bOff" mode="screen"/>
         </filter>
@@ -139,47 +142,149 @@
     flash.setAttribute('aria-hidden', 'true');
     hero.insertBefore(flash, heroContent);
 
-    const DURATION = 1500;
-    const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+    const DURATION = 2400;
+    // How far each fragment's orbit is wound up at birth (radians). Every
+    // character sweeps this arc as it spirals out, so early on the whole
+    // title is a rotating disc of matter around the point.
+    const SWIRL = -3.4;
+    // Fraction of the timeline each fragment spends in flight
+    const TRAVEL = 0.55;
 
-    heroContent.style.opacity = '0';
-    heroContent.style.filter = 'url(#heroWarpFilter)';
-    heroContent.style.transform = 'scale(1.45, 0.55)';
-    heroContent.style.willChange = 'transform, opacity, filter';
+    // Tell the starfield a singularity is evaporating at the title's center:
+    // background stars lens hard around the point, then relax as it decays.
+    const canvas = document.getElementById('heroCanvas');
+    const heroRect = heroContent.getBoundingClientRect();
+    const cx = heroRect.left + heroRect.width / 2;
+    const cy = heroRect.top + heroRect.height / 2;
+    if (typeof window.__heroWarpBurst === 'function' && canvas) {
+      const cRect = canvas.getBoundingClientRect();
+      window.__heroWarpBurst(cx - cRect.left, cy - cRect.top, DURATION + 500);
+    }
+
+    // --- Shatter the text into per-character fragments ---
+    // Each word goes inside a no-break wrapper so the character spans can't
+    // change where lines wrap (otherwise the settled text would jump).
+    const originalHTML = heroContent.innerHTML;
+    const wrapChars = (root) => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      const spans = [];
+      nodes.forEach((node) => {
+        const frag = document.createDocumentFragment();
+        let word = null;
+        for (const ch of node.textContent) {
+          if (/\s/.test(ch)) {
+            word = null;
+            frag.appendChild(document.createTextNode(ch));
+            continue;
+          }
+          if (!word) {
+            word = document.createElement('span');
+            word.style.display = 'inline-block';
+            word.style.whiteSpace = 'nowrap';
+            frag.appendChild(word);
+          }
+          const s = document.createElement('span');
+          s.textContent = ch;
+          s.style.display = 'inline-block';
+          s.style.willChange = 'transform, opacity';
+          word.appendChild(s);
+          spans.push(s);
+        }
+        node.parentNode.replaceChild(frag, node);
+      });
+      return spans;
+    };
+    const chars = wrapChars(heroContent);
+
+    // Measure each fragment's resting position relative to the singularity
+    let rMax = 1;
+    const parts = chars.map((el) => {
+      const r = el.getBoundingClientRect();
+      const dx = r.left + r.width / 2 - cx;
+      const dy = r.top + r.height / 2 - cy;
+      const rad = Math.hypot(dx, dy);
+      if (rad > rMax) rMax = rad;
+      return { el, dx, dy, rad, ang: Math.atan2(dy, dx), jit: Math.random() };
+    });
+    // Inner material escapes the point first; outer streams out after —
+    // the spiral visibly grows outward from the center.
+    parts.forEach((p) => {
+      p.delay = Math.min(0.03 + 0.32 * (p.rad / rMax) + 0.08 * p.jit, 1 - TRAVEL);
+      // Start hidden at the singularity
+      p.el.style.opacity = '0';
+      p.el.style.transform = `translate(${-p.dx}px, ${-p.dy}px) scale(0.05)`;
+    });
+
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+    heroContent.style.opacity = '1';
+    heroContent.style.willChange = 'filter';
+    heroContent.classList.add('is-warping');
 
     const start = performance.now();
 
     const frame = (now) => {
-      const t = Math.min(1, (now - start) / DURATION);
-      const e = easeOutQuint(t);
+      const T = Math.min(1, (now - start) / DURATION);
+      const gInv = 1 - easeOutQuart(T);
 
-      // Distortion collapses as reality "settles"
-      disp.setAttribute('scale', String(420 * (1 - e)));
-      noise.setAttribute('baseFrequency', `${0.012 + 0.02 * (1 - e)} ${0.045 * (1 - e) + 0.008}`);
-      const split = 14 * (1 - e);
+      // Reality distortion + global chromatic shear die off with the singularity
+      disp.setAttribute('scale', String(220 * Math.pow(gInv, 1.5)));
+      noise.setAttribute('baseFrequency', `${0.012 + 0.02 * gInv} ${0.045 * gInv + 0.008}`);
+      const split = 10 * Math.pow(gInv, 1.2);
       rOff.setAttribute('dx', String(-split));
       bOff.setAttribute('dx', String(split));
+      const heat = 1 + 1.6 * gInv * gInv;
+      heroContent.style.filter = `url(#heroWarpFilter) brightness(${heat.toFixed(3)})`;
 
-      // Emerge stretched through the fold, snap to true scale
-      const sx = 1.45 - 0.45 * e;
-      const sy = 0.55 + 0.45 * e;
-      heroContent.style.transform = `scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        const lt = Math.min(Math.max((T - p.delay) / TRAVEL, 0), 1);
+        if (lt <= 0) continue;
 
-      // Fade in fast at the front of the warp
-      heroContent.style.opacity = String(Math.min(1, t / 0.25));
+        // Orbit: radius grows out from the point while the wound-up angle
+        // unwinds — a decaying spiral, i.e. accretion in reverse
+        const g = easeOutCubic(lt);
+        const r = p.rad * g;
+        const a = p.ang + SWIRL * (1 - g);
+        const x = Math.cos(a) * r - p.dx;
+        const y = Math.sin(a) * r - p.dy;
+        // The fragment tumbles with its orbital sweep and grows as it cools
+        const spin = (SWIRL * (1 - g) * 180) / Math.PI;
+        const sc = 0.2 + 0.8 * g;
+        p.el.style.transform =
+          `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${spin.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+        p.el.style.opacity = String(Math.min(1, lt / 0.2));
 
-      // Flash: spike early, decay by ~60%
-      const flashT = t < 0.16 ? t / 0.16 : Math.max(0, 1 - (t - 0.16) / 0.45);
-      flash.style.opacity = String(0.9 * flashT);
+        // Per-fragment chromatic shear + white-hot glow while in flight
+        const hot = 1 - g;
+        p.el.style.textShadow = hot > 0.02
+          ? `${(-7 * hot).toFixed(2)}px 0 rgba(255,70,70,${(0.85 * hot).toFixed(3)}), ` +
+            `${(7 * hot).toFixed(2)}px 0 rgba(80,140,255,${(0.85 * hot).toFixed(3)}), ` +
+            `0 0 ${(16 * hot).toFixed(2)}px rgba(255,255,255,${(0.9 * hot).toFixed(3)})`
+          : '';
+      }
 
-      if (t < 1) {
+      // Flash: hot point of light at the singularity that blooms and dies
+      const flashT = T < 0.12 ? T / 0.12 : Math.max(0, 1 - (T - 0.12) / 0.5);
+      flash.style.opacity = String(0.95 * flashT);
+      flash.style.transform = `scale(${(0.15 + 1.3 * easeOutQuart(T)).toFixed(3)})`;
+
+      if (T < 1) {
         requestAnimationFrame(frame);
       } else {
-        // Settle: remove the filter so text renders crisp
+        // Settle: restore the original markup so text renders crisp
         heroContent.style.filter = '';
-        heroContent.style.transform = '';
         heroContent.style.opacity = '1';
         heroContent.style.willChange = '';
+        heroContent.classList.remove('is-warping');
+        heroContent.innerHTML = originalHTML;
+        // Let the custom cursor rebind targets recreated by the restore
+        heroContent.querySelectorAll('[data-cursor-bound]').forEach((el) => {
+          delete el.dataset.cursorBound;
+        });
         flash.remove();
         svg.remove();
       }

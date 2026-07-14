@@ -476,6 +476,12 @@ body.animation-complete .hero__content {
   opacity: 1;
 }
 
+/* While fragments are spiraling out of the singularity, suppress static
+   decoration (link underline) that would otherwise sit at its final spot */
+.hero__content.is-warping .hero__lede-link {
+  border-bottom-color: transparent;
+}
+
 /* Light burst behind the content during the warp-in */
 .hero-warp-flash {
   position: absolute;

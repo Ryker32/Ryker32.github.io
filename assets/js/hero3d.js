@@ -268,7 +268,27 @@ function initHeroSwarm() {
       lens.strength += ((lens.active ? 1 : 0) - lens.strength) * 0.07;
     }
 
-    const thetaE = EINSTEIN_RADIUS * lens.strength;
+    let lensX = lens.x;
+    let lensY = lens.y;
+    let thetaE = EINSTEIN_RADIUS * lens.strength;
+
+    // While a warp burst is live, an evaporating singularity at the title's
+    // emergence point dominates the lensing — strong at first, then gone.
+    if (warpBurst) {
+      const bt = (t - warpBurst.start) / warpBurst.duration;
+      if (bt >= 1) {
+        warpBurst = null;
+      } else if (bt >= 0) {
+        const decay = Math.pow(1 - bt, 1.8);
+        const burstTheta = EINSTEIN_RADIUS * 1.5 * decay;
+        if (burstTheta > thetaE) {
+          thetaE = burstTheta;
+          lensX = warpBurst.x;
+          lensY = warpBurst.y;
+        }
+      }
+    }
+
     const thetaESq = thetaE * thetaE;
     const range = lensRange;
     const lensOn = thetaE > 1;
@@ -297,8 +317,8 @@ function initHeroSwarm() {
 
       // The lens bends galaxy light too (primary image only)
       if (lensOn) {
-        const dx = gx - lens.x;
-        const dy = gy - lens.y;
+        const dx = gx - lensX;
+        const dy = gy - lensY;
         const bSq = dx * dx + dy * dy;
         if (bSq < range * range) {
           const b = Math.max(Math.sqrt(bSq), 0.75);
@@ -310,7 +330,7 @@ function initHeroSwarm() {
           const squash1 = 1 - (0.5 - b / (2 * root)) * w;
           drawLensedImage(
             gp, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2),
-            lens.x + (dx / b) * r1, lens.y + (dy / b) * r1,
+            lensX + (dx / b) * r1, lensY + (dy / b) * r1,
             stretch1, squash1, Math.atan2(dy, dx)
           );
           continue;
@@ -348,8 +368,8 @@ function initHeroSwarm() {
       // Point-lens mapping: a source at distance b from the lens appears at
       // r = (b + sqrt(b^2 + 4*thetaE^2)) / 2, always outside the Einstein ring.
       if (lensOn) {
-        const dx = p.x - lens.x;
-        const dy = p.y - lens.y;
+        const dx = p.x - lensX;
+        const dy = p.y - lensY;
         const bSq = dx * dx + dy * dy;
         if (bSq < range * range) {
           const b = Math.max(Math.sqrt(bSq), 0.75);
@@ -372,7 +392,7 @@ function initHeroSwarm() {
           const squash1 = 1 - (0.5 - b / (2 * root)) * w;
           drawLensedImage(
             p, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2.4),
-            lens.x + ux * r1, lens.y + uy * r1,
+            lensX + ux * r1, lensY + uy * r1,
             stretch1, squash1, angle
           );
 
@@ -387,7 +407,7 @@ function initHeroSwarm() {
             if (mu2 > 0.01) {
               drawLensedImage(
                 p, alpha * Math.min(mu2, 1) * w,
-                lens.x - ux * r2, lens.y - uy * r2,
+                lensX - ux * r2, lensY - uy * r2,
                 stretch2, Math.max(squash2, 0.25), angle
               );
             }
