@@ -782,9 +782,11 @@ body[data-theme='light'] .pill-link--ghost {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
-/* Logo variant: image fills the chip */
+/* Logo variant: image fills the chip. White backing so dark logos and
+   transparent PNGs stay readable against the dark theme. */
 .project-row__org--logo {
   padding: 0;
+  background: #f4f4f2;
 }
 
 .project-row__org--logo img {

@@ -102,6 +102,7 @@
       repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
       description: "As an Autonomous Systems Researcher with MIT Lincoln Laboratory, built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain and re-docks in flight. Presented as a peer-reviewed poster at IEEE URTC at the MIT STATA Center.",
       badge: "IEEE-URTC",
+      orgLogo: "/assets/img/logos/mit.png",
       highlights: [
         "Autonomous Systems Researcher, MIT Lincoln Laboratory",
         "Custom dock + battery rails keep the UGV stable in flight",
@@ -385,6 +386,7 @@
       repoUrl: "https://github.com/amzoeee/line_follower_v2",
       description: "Led sensing + electronics for the MIT BWSI UAV racing team, integrating OpenCV line tracking on a Pi 5 with PX4 autopilot to win by over a minute.",
       badge: "BWSI",
+      orgLogo: "/assets/img/logos/bwsi.png",
       highlights: [
         "Custom MAVLink + OpenCV stack on Raspberry Pi 5",
         "Custom landing gear/rPi Enclosure",
@@ -428,6 +430,7 @@
       repoUrl: "https://github.com/ZakHussain/dodo-cli-agent",
       description: "Built a safety-aware teleop stack for a KiwiBot/LeRobot platform at YC Agent Jam ’25, blending HuggingFace LLM cues with real-time manipulation.",
       badge: "YC",
+      orgLogo: "/assets/img/logos/yc.png",
       highlights: [
         "LLM watches for hazards & triggers alerts in teleop mode",
         "Robot grips color-coded objects via custom HF training loop",
