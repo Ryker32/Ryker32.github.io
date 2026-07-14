@@ -356,6 +356,22 @@
         <p>
         I designed the kits, developed a custom manufacturing method to keep per-unit costs low at scale, and am currently running pilot production with more than 100 students to refine the product before launch in August 2026.
         </p>
+        <hr>
+        <h3>Custom Foam Needle Cutter — Interactive CAD</h3>
+        <p>
+        The heart of the manufacturing method: a custom CNC foam needle cutter I designed to cut kit parts cheaply and repeatably at scale.
+        </p>
+        <div class="article-image fusion-360-embed">
+          <iframe
+            src="https://students99370.autodesk360.com/shares/public/SH28cd1QT2badd0ea72b8faab487f339da5e?mode=embed"
+            allowfullscreen="true"
+            webkitallowfullscreen="true"
+            mozallowfullscreen="true"
+            frameborder="0">
+          </iframe>
+          <div class="image-caption">Interactive Fusion 360 model of the foam needle cutter. Click and drag to rotate, scroll to zoom.</div>
+        </div>
+        <div class="clear-float"></div>
       `,
       image: "/assets/img/logo.png",
       files: []
