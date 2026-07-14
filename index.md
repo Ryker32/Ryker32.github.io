@@ -23,47 +23,46 @@ layout: default
   </div>
 </section>
 
-<section class="content-split" id="portfolio" aria-label="Portfolio layout">
-  <aside class="profile-panel" id="about" aria-labelledby="profileHeading">
-    <div class="profile-panel__card">
-      <div class="profile-panel__image">
-        <img src="{{ '/assets/img/ryker.jpg' | relative_url }}" alt="Ryker Kollmyer portrait">
-      </div>
-      <div class="profile-panel__meta">
-        <p class="profile-panel__eyebrow">Ryker Kollmyer</p>
-        <h2 id="profileHeading">Youth Researcher</h2>
-        <p class="profile-panel__summary">
-          I develop and build robots, research, and am founder of a education access initiative in Fiji.
-          Outside of engineering I hike, boat, and cycle.
+<section class="content-section about-blurb" id="about" aria-labelledby="aboutHeading">
+  <div class="about-blurb__inner">
+    <h2 id="aboutHeading">hello, world...</h2>
+    <div class="about-blurb__body">
+      <div class="about-blurb__text">
+        <p>
+          hey, i'm ryker. mechatronics and distributed-systems student researcher at olympia high school
+          (class of '27). i spend most of my time building robust hardware and software systems &mdash;
+          hybrid uav-ugv platforms, fault-tolerant multi-agent governance, rocket engines, and the
+          occasional shipped product.
+        </p>
+        <p>
+          i've presented peer-reviewed research at <a href="https://urtc.mit.edu/" target="_blank" rel="noopener" data-cursor-target>ieee urtc</a> at mit,
+          won the bwsi autonomous uav race, co-invented a patent-pending health app, and founded an
+          education-access initiative for the yalobi school in fiji.
+        </p>
+        <p>
+          outside of engineering i hike, boat, cycle, and windsurf. if you're building something
+          interesting, reach out &mdash; i'm on
+          <a href="{{ site.github.owner_url }}" target="_blank" rel="noopener" data-cursor-target>github</a> and
+          <a href="https://www.linkedin.com/in/rykerkollmyer/" target="_blank" rel="noopener" data-cursor-target data-proofer-ignore>linkedin</a>.
         </p>
       </div>
-      <dl class="profile-panel__stats">
-        <div>
-          <dt>Focus</dt>
-          <dd>Mechatronics, Distributed Systems</dd>
-        </div>
-        <div>
-          <dt>Current</dt>
-          <dd>Olympia High School CO '27</dd>
-        </div>
-      </dl>
-      <div class="profile-panel__actions">
-        <a href="{{ site.github.owner_url }}" class="pill-link" target="_blank" rel="noopener" data-cursor-target>GitHub</a>
-        <a href="https://www.linkedin.com/in/rykerkollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target data-proofer-ignore>LinkedIn</a>
-      </div>
+      <figure class="about-blurb__photo" aria-hidden="false">
+        <img src="{{ '/assets/img/ryker.jpg' | relative_url }}" alt="Ryker Kollmyer portrait">
+      </figure>
     </div>
-  </aside>
+  </div>
+</section>
 
-  <div class="portfolio-column">
+<section class="content-section works-section" id="portfolio" aria-labelledby="worksHeading">
+  <div class="works-section__inner">
     <header class="portfolio-header">
-      <p class="portfolio-kicker">"What if?" started everything in my</p>
-      <h2>Engineering Portfolio</h2>
+      <h2 id="worksHeading">selected works...</h2>
       <p>
-        Software systems, hackathons, rockets, and apps. Click any card to see an expanded view of the project including interactive CAD files,
-        data, figures, high-def videos, and documentation.
+        software systems, hackathons, rockets, and apps. click any card for the full write-up &mdash;
+        interactive cad, data, figures, and documentation.
       </p>
     </header>
-    <div class="project-stack" id="portfolioGrid">
+    <div class="project-columns" id="portfolioGrid">
       <!-- Cards injected by portfolio.js -->
     </div>
   </div>

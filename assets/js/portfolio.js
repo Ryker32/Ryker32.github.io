@@ -730,17 +730,42 @@
   const filesGrid = document.getElementById('filesGrid');
   const modalBody = document.querySelector('.modal-body');
 
-  // Initialize portfolio grid
+  // Initialize portfolio grid: two columns, org chips on the outer edges
   function initPortfolio() {
     if (!portfolioGrid) return;
 
     portfolioGrid.innerHTML = '';
 
-    portfolioData.forEach(project => {
+    const colLeft = document.createElement('div');
+    colLeft.className = 'project-col project-col--left';
+    const colRight = document.createElement('div');
+    colRight.className = 'project-col project-col--right';
+
+    portfolioData.forEach((project, index) => {
+      const row = document.createElement('div');
+      row.className = 'project-row';
+
+      if (project.badge) {
+        const org = document.createElement('span');
+        org.className = 'project-row__org';
+        org.textContent = project.badge;
+        org.setAttribute('aria-hidden', 'true');
+        row.appendChild(org);
+      }
+
       const card = createProjectCard(project);
       card.setAttribute('data-cursor-target', 'true');
-      portfolioGrid.appendChild(card);
+
+      const cardWrap = document.createElement('div');
+      cardWrap.className = 'project-row__card';
+      cardWrap.appendChild(card);
+      row.appendChild(cardWrap);
+
+      (index % 2 === 0 ? colLeft : colRight).appendChild(row);
     });
+
+    portfolioGrid.appendChild(colLeft);
+    portfolioGrid.appendChild(colRight);
   }
 
   function activateModalMedia() {
@@ -836,14 +861,15 @@
     article.className = 'project-card';
     article.setAttribute('data-project-id', project.id);
 
-    if (project.badge) {
-      const org = document.createElement('span');
-      org.className = 'project-card__org';
-      org.textContent = project.badge;
-      org.setAttribute('aria-hidden', 'true');
-      article.appendChild(org);
-    }
+    // Cursor-following border glow (masked ring, lights up near the pointer)
+    const glow = document.createElement('div');
+    glow.className = 'project-card__glow';
+    article.appendChild(glow);
 
+    const inner = document.createElement('div');
+    inner.className = 'project-card__inner';
+
+    // Media sits in a subtle framed inset with corner ticks
     const media = document.createElement('div');
     media.className = 'project-card__media';
 
@@ -866,58 +892,41 @@
     const body = document.createElement('div');
     body.className = 'project-card__body';
 
-    const titleRow = document.createElement('div');
-    titleRow.className = 'project-card__titleRow';
-
-    const titleGroup = document.createElement('div');
-    titleGroup.className = 'project-card__titleGroup';
-
     const title = document.createElement('h3');
+    title.className = 'project-card__title';
     title.textContent = project.title;
-    titleGroup.appendChild(title);
-
-    if (project.keyPoints) {
-      const subtitle = document.createElement('p');
-      subtitle.textContent = project.keyPoints;
-      titleGroup.appendChild(subtitle);
-    }
+    body.appendChild(title);
 
     if (project.date) {
       const meta = document.createElement('p');
       meta.className = 'project-card__meta';
       meta.textContent = project.date;
-      titleGroup.appendChild(meta);
+      body.appendChild(meta);
     }
 
-    titleRow.appendChild(titleGroup);
+    if (project.description) {
+      const summary = document.createElement('p');
+      summary.className = 'project-card__summary';
+      summary.textContent = project.description;
+      body.appendChild(summary);
+    }
 
-    const overview = document.createElement('div');
-    overview.className = 'project-card__overview';
-
-    const atGlanceHeading = document.createElement('h4');
-    atGlanceHeading.className = 'project-card__glanceHeading';
-    atGlanceHeading.textContent = 'At a glance';
-    overview.appendChild(atGlanceHeading);
-    const highlights = document.createElement('ul');
-    highlights.className = 'project-card__list';
-    const highlightItems = Array.isArray(project.highlights)
-      ? project.highlights
-      : (project.keyPoints || '').split('·').map(item => item.trim()).filter(Boolean);
-
-    highlightItems.slice(0, 3).forEach(text => {
+    const chips = document.createElement('ul');
+    chips.className = 'project-card__list';
+    (project.keyPoints || '').split('·').map(s => s.trim()).filter(Boolean).slice(0, 3).forEach(text => {
       const li = document.createElement('li');
-      li.textContent = text;
-      highlights.appendChild(li);
+      li.textContent = text.toLowerCase();
+      chips.appendChild(li);
     });
-    if (highlights.children.length) {
-      overview.appendChild(highlights);
+    if (chips.children.length) {
+      body.appendChild(chips);
     }
 
-    body.appendChild(titleRow);
-    body.appendChild(overview);
+    inner.appendChild(media);
+    inner.appendChild(body);
+    article.appendChild(inner);
 
-    article.appendChild(media);
-    article.appendChild(body);
+    attachCardPointerFX(article, glow);
 
     article.addEventListener('click', (evt) => {
       if (evt.target.closest('a, button')) return;
@@ -926,6 +935,60 @@
     });
 
     return article;
+  }
+
+  // "Reactive but static" hover: card drifts a few px toward the cursor,
+  // and the border glow tracks the pointer position.
+  const prefersReducedMotion = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function attachCardPointerFX(card, glow) {
+    if (prefersReducedMotion) return;
+
+    let raf = null;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let hovering = false;
+
+    const tick = () => {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      card.style.transform = `translate(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px)`;
+      if (hovering || Math.abs(currentX) > 0.05 || Math.abs(currentY) > 0.05) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        card.style.transform = '';
+        raf = null;
+      }
+    };
+
+    const start = () => {
+      // The scroll-reveal transition eases `transform`; take over with an
+      // instant inline transition so pointer tracking isn't laggy.
+      card.style.transition = 'opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease';
+      if (raf === null) raf = requestAnimationFrame(tick);
+    };
+
+    card.addEventListener('pointermove', (evt) => {
+      const rect = card.getBoundingClientRect();
+      const px = (evt.clientX - rect.left) / rect.width;
+      const py = (evt.clientY - rect.top) / rect.height;
+      targetX = (px - 0.5) * 8;
+      targetY = (py - 0.5) * 8;
+      hovering = true;
+      glow.style.setProperty('--glow-x', `${(px * 100).toFixed(2)}%`);
+      glow.style.setProperty('--glow-y', `${(py * 100).toFixed(2)}%`);
+      start();
+    });
+
+    card.addEventListener('pointerleave', () => {
+      hovering = false;
+      targetX = 0;
+      targetY = 0;
+      start();
+    });
   }
 
   function openModal(project) {

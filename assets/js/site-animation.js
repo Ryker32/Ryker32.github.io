@@ -49,7 +49,7 @@
     document.body.classList.remove('animation-loading');
     document.documentElement.style.overflow = '';
     const nav = document.querySelector('.glass-nav-wrapper');
-    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
+    const contentBlocks = document.querySelectorAll('.content-section, .site-footer');
     if (nav) nav.style.opacity = '1';
     contentBlocks.forEach((el) => { el.style.opacity = '1'; });
     // Let downstream listeners proceed as if reveal completed
@@ -71,7 +71,7 @@
     // Hide main/nav until after hero expands
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
-    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
+    const contentBlocks = document.querySelectorAll('.content-section, .site-footer');
     if (nav) nav.style.opacity = '0';
     // Keep hero visible; only hide content after the hero
     contentBlocks.forEach((el) => {
@@ -103,7 +103,7 @@
     const canvas = document.getElementById('heroCanvas');
     const siteMain = document.querySelector('.site-main');
     const nav = document.querySelector('.glass-nav-wrapper');
-    const contentBlocks = document.querySelectorAll('.content-split, .site-footer');
+    const contentBlocks = document.querySelectorAll('.content-section, .site-footer');
     const nonHeroSections = document.querySelectorAll('.site-main > *:not(.hero)');
     const heroContent = document.querySelector('.hero__content');
 
@@ -178,7 +178,7 @@
   const REVEAL_SELECTORS = [
     '.project-card',
     '.portfolio-header',
-    '.profile-panel__card',
+    '.about-blurb__inner',
     '.site-footer > *',
     '.contact-tile',
     '.contact-header',

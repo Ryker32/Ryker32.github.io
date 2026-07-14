@@ -118,7 +118,7 @@ function initHeroSwarm() {
   const galaxy = {
     x: 0, y: 0,               // screen center
     points: [],               // { r, theta, size, alpha, color, isCore }
-    tilt: 0.42,               // squash factor (edge-on < 1 < face-on)
+    tilt: 0.52,               // squash factor (edge-on < 1 < face-on)
     lean: -0.55,              // rotation of the whole disc on screen
     radius: 0,
     cosLean: Math.cos(-0.55),
@@ -150,7 +150,7 @@ function initHeroSwarm() {
       const r = R * (0.12 + 0.88 * t);
       const arm = (i % ARMS) * (Math.PI * 2 / ARMS);
       // Log-spiral arm angle plus scatter that widens with radius
-      const theta = arm + TWIST * Math.log(1 + 4 * t) + gaussian() * (0.14 + 0.3 * t);
+      const theta = arm + TWIST * Math.log(1 + 4 * t) + gaussian() * (0.1 + 0.22 * t);
       const nearCore = t < 0.3;
       const pool = nearCore ? colors.core : colors.arm;
       galaxy.points.push({
@@ -271,12 +271,12 @@ function initHeroSwarm() {
     const time = t * 0.001;
 
     // --- Galaxy layer (behind the stars) ---
-    // Differential rotation: inner points orbit faster than outer ones.
-    const gR = galaxy.radius || 1;
+    // The spiral pattern rotates rigidly (like a density wave), so the arms
+    // never wind up or shear apart. Negative direction = arms trail.
+    const galaxyTheta = prefersMotion ? -time * 0.018 : 0;
     for (let i = 0; i < galaxy.points.length; i++) {
       const gp = galaxy.points[i];
-      const omega = prefersMotion ? 0.05 / (0.35 + gp.r / gR) : 0;
-      const theta = gp.theta + time * omega;
+      const theta = gp.theta + galaxyTheta;
 
       // Disc coords -> tilted, leaned screen position
       const px = Math.cos(theta) * gp.r;
