@@ -50,5 +50,5 @@ layout: default
     <a href="https://www.linkedin.com/in/rykerkollmyer/" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target data-proofer-ignore>LinkedIn</a>
     <a href="{{ '/contact/' | relative_url }}" class="pill-link pill-link--ghost" data-cursor-target>All contact options</a>
   </div>
-  <p class="site-footer__copyright">© 2025 Ryker Kollmyer. All rights reserved.</p>
+  <p class="site-footer__copyright">© 2026 Ryker Kollmyer. All rights reserved.</p>
 </footer>
