@@ -80,7 +80,7 @@ h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-/* Technical labels: eyebrows, kickers, meta — monospace for an engineered feel */
+/* Technical labels (eyebrows, kickers, meta) use monospace for an engineered feel */
 .hero__eyebrow,
 .portfolio-kicker,
 .profile-panel__eyebrow,
@@ -101,7 +101,7 @@ code, pre, kbd, samp {
   font-family: var(--font-mono);
 }
 
-/* Preserve nav bar rounding — the liquid-glass element */
+/* Preserve nav bar rounding (the liquid-glass element) */
 .glass-nav-wrapper,
 .glass-nav-wrapper * {
   border-radius: 999px !important;

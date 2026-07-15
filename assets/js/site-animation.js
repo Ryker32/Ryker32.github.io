@@ -88,7 +88,7 @@
 
   // Liquid ripple intro: the page opens as bare starfield. A dot of light
   // pulses at the center of the viewport, then releases a single radial
-  // ripple — the starfield physically waves (handled in hero3d.js) and a
+  // ripple: the starfield physically waves (handled in hero3d.js) and a
   // refractive glass ring sweeps outward over the page. Page elements (hero
   // content, glass nav) are wiped into view by the wavefront itself: an
   // expanding radial mask synced to the ripple radius uncovers their pixels

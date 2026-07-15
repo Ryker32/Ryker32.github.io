@@ -1,4 +1,4 @@
-# Ryker Kollmyer — Engineering Portfolio
+# Ryker Kollmyer: Engineering Portfolio
 
 Personal engineering portfolio: aerospace robotics, distributed systems, and CAD.
 

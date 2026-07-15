@@ -1,4 +1,4 @@
-// Hero particle swarm — a starfield of tiny square particles whose light is
+// Hero particle swarm: a starfield of tiny square particles whose light is
 // gravitationally lensed around the cursor, like the distortion of a black hole:
 // stars are deflected outward (point-lens equation), smeared into tangential
 // arcs near the Einstein ring, and nothing renders inside the shadow.
@@ -68,7 +68,7 @@ function initHeroSwarm() {
   const particles = [];
 
   // Black-hole lens tuning
-  const EINSTEIN_RADIUS = 92;              // px — radius of the ring / shadow
+  const EINSTEIN_RADIUS = 92;              // px, radius of the ring / shadow
   const LENS_RANGE_MULT = 3.6;             // influence extends this many Einstein radii
   const MAX_STRETCH = 14;                  // cap on tangential arc smearing
   const STRETCH_GAIN = 1.9;                // exaggerate arcs so they read on screen
@@ -421,7 +421,7 @@ function initHeroSwarm() {
           const uy = dy / b;
 
           // Primary image: pushed outside the ring, stretched into an arc.
-          // Magnification brightens it near the ring — that pile-up of bent
+          // Magnification brightens it near the ring: that pile-up of bent
           // starlight is what forms the visible ring.
           const r1 = b + ((b + root) / 2 - b) * w;
           const stretch1 = 1 + ((b + root) / (2 * b) - 1) * STRETCH_GAIN * w;
@@ -434,7 +434,7 @@ function initHeroSwarm() {
 
           // Secondary image: faint inverted counter-arc hugging the inside of
           // the ring. Only exists close to the lens; images that fall too deep
-          // are "captured" — that darkness is the shadow.
+          // are "captured"; that darkness is the shadow.
           const r2 = (root - b) / 2;
           if (b < thetaE * 2.4 && r2 > thetaE * 0.45) {
             const stretch2 = 1 + (r2 / b - 1) * STRETCH_GAIN;

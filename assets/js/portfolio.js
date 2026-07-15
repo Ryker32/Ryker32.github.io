@@ -213,7 +213,7 @@
       title: "REIP: Trust-Based Fault Tolerance for Multi-Agent Systems",
       date: "March 2025 - February 2026",
       keyPoints: "WSSEF 1st in Robotics · AIAA Symposium · Multi-agent research",
-      description: "Designed a democratic governance framework that lets robot teams detect, impeach, and replace faulty leaders — 3.1x more reliable than the standard heartbeat baseline. 1st place in Robotics and Top 20 overall out of 1,200 at the Washington State Science & Engineering Fair 2026.",
+      description: "Designed a democratic governance framework that lets robot teams detect, impeach, and replace faulty leaders, making teams 3.1x more reliable than the standard heartbeat baseline. 1st place in Robotics and Top 20 overall out of 1,200 at the Washington State Science & Engineering Fair 2026.",
       badge: "WSSEF 1st",
       orgLogo: "/assets/img/logos/wssef.png",
       highlights: [
@@ -289,7 +289,7 @@
       A round-robin leader-follower baseline and REIP both reach similar final coverage (baseline 92.6%, REIP 91.2%), showing that the governance layer doesn't significantly hurt performance when the leader is healthy.
       </p>
       <p> <strong class="list-label">Adversarial conditions (hallucinations + packet / command loss):</strong>
-      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid—a 76 pp advantage. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median 399.6 steps), whereas REIP succeeds in 100% of runs with median time-to-95% of 273.5 steps (~32% faster). REIP is 3.1× more reliable than RAFT at hitting coverage thresholds in this benchmark.
+      The fixed leader-follower baseline's final coverage collapses to 22.0%, while REIP still maps 98.0% of the grid, a 76 pp advantage. Across 2,000 trials, the baseline reaches 95% coverage in 47.9% of runs (median 399.6 steps), whereas REIP succeeds in 100% of runs with median time-to-95% of 273.5 steps (~32% faster). REIP is 3.1× more reliable than RAFT at hitting coverage thresholds in this benchmark.
       </p>
       <figure class="project-figure" style="width: 80%; max-width: 500px; margin: 24px 0;">
         <img src="/assets/img/reip/reipbarchartfinal.png" alt="Bar chart comparison" style="width: 100%; height: auto; display: block;">
@@ -354,13 +354,13 @@
         <hr>
         <h3>Project Overview</h3>
         <p>
-        Flight Lab grew out of years of aerospace outreach: after teaching rocketry and flight fundamentals to thousands of K-5 students, I kept seeing the same gap — there was no affordable, hands-on kit that let young students actually build and understand something that flies. Flight Lab kits are designed to fill that gap with project-based lessons that a classroom teacher can run without an aerospace background.
+        Flight Lab grew out of years of aerospace outreach: after teaching rocketry and flight fundamentals to thousands of K-5 students, I kept seeing the same gap: there was no affordable, hands-on kit that let young students actually build and understand something that flies. Flight Lab kits are designed to fill that gap with project-based lessons that a classroom teacher can run without an aerospace background.
         </p>
         <p>
         I designed the kits, developed a custom manufacturing method to keep per-unit costs low at scale, and am currently running pilot production with more than 100 students to refine the product before launch in August 2026.
         </p>
         <hr>
-        <h3>Custom Foam Needle Cutter — Interactive CAD</h3>
+        <h3>Custom Foam Needle Cutter: Interactive CAD</h3>
         <p>
         The heart of the manufacturing method: a custom CNC foam needle cutter I designed to cut kit parts cheaply and repeatably at scale.
         </p>
@@ -598,7 +598,7 @@
       title: "Weather Brick for Windsurfers & Sailors",
       date: "January 2025 - Present",
       keyPoints: "ESP32 interface · Waterproof product · Selling units",
-      description: "Designing and selling \"Weather Bricks\": waterproof, low-power ESP32 weather devices for sailors and windsurfers that pull marine weather APIs + local radio data into a rugged TFT interface — $35 profit per unit.",
+      description: "Designing and selling \"Weather Bricks\": waterproof, low-power ESP32 weather devices for sailors and windsurfers that pull marine weather APIs + local radio data into a rugged TFT interface, at $35 profit per unit.",
       badge: "Product",
       highlights: [
         "ESP32 firmware w/ Wi-Fi + radio ingest",
@@ -610,7 +610,7 @@
         <p>The "Weather Brick" uses an ESP WROOM-32 microcontroller and a TFT display to create a simple, rugged interface for local windsurfers and sailors.
         It is programmed in Arduino and uses API keys and home Wi-Fi for a constant connection; it can also receive continuous radio data from the local weather station for live updates.
         I designed and fabricated the waterproof chassis and mapped the circuits in Autodesk Fusion before soldering each device together.
-        Units sell for $50 and cost only $15 to produce — $35 profit per unit — and are currently selling to sailors and windsurfers at local clubs.
+        Units sell for $50 and cost only $15 to produce ($35 profit per unit), and are currently selling to sailors and windsurfers at local clubs.
         </p>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
           <img src="/assets/img/windsurfing/windsurfing.png" alt="Interface">
@@ -629,7 +629,7 @@
       title: "Fiji Education Fund & Solar-Powered E-Writer",
       date: "August 2023 - Present",
       keyPoints: "Chairman & founder · $4,000+ raised · Sustainable design",
-      description: "Chairman and founder of the Fiji Education Fund: raised $4,000+ for low-cost e-writers, supplies, laptops, and Starlink Wi-Fi for students at Yalobi School in Nalauwaki, Fiji — including a sub-$3 solar-powered e-writer I designed and prototyped.",
+      description: "Chairman and founder of the Fiji Education Fund: raised $4,000+ for low-cost e-writers, supplies, laptops, and Starlink Wi-Fi for students at Yalobi School in Nalauwaki, Fiji, including a sub-$3 solar-powered e-writer I designed and prototyped.",
       badge: "Founder",
       highlights: [
         "Chairman & founder; raised $4,000+ for school supplies, laptops, and Starlink Wi-Fi",
@@ -671,7 +671,7 @@
         </figure>
         
         <h3>Engineering the Solution</h3>
-        <p>My design combines the writing device with a small solar-powered circuit. The total cost is under $3: less than a dollar in PLA filament for the housing, and less than $2 for the electronics. The device doesn't require a special stylus—students can write with their finger if the pen is lost, making it ideal for resource-constrained environments.</p>
+        <p>My design combines the writing device with a small solar-powered circuit. The total cost is under $3: less than a dollar in PLA filament for the housing, and less than $2 for the electronics. The device doesn't require a special stylus; students can write with their finger if the pen is lost, making it ideal for resource-constrained environments.</p>
         
         <p>I'm currently iterating on a more robust design and ensuring long-term functionality by giving demos to students in my old middle school before sending units abroad. The goal is to engineer a sustainable tool that fits their environment, rather than one that seems promising but proves unsustainable.</p>
         
@@ -705,7 +705,7 @@
       keyPoints: "VP & outreach lead · 18th nationally of 1,000+ teams · 3,000+ students reached",
       appUrl: "https://www.ohsaerospace.org/home",
       appLabel: "Club Website",
-      description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams — 130+ launches, 3,000+ K-5 students reached at 9 schools, and $10,000+ raised for the team and outreach.",
+      description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams: 130+ launches, 3,000+ K-5 students reached at 9 schools, and $10,000+ raised for the team and outreach.",
       badge: "Aerospace",
       orgLogo: "/assets/img/logos/arc.png",
       highlights: [
@@ -1303,7 +1303,7 @@
     };
 
     tryProviders().catch(() => {
-      valueEl.textContent = '—';
+      valueEl.textContent = '-';
       container.title = 'View counter unavailable right now.';
     });
   }

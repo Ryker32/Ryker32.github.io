@@ -16,7 +16,7 @@
   const STICKY_PAD = 18;
   // How strongly the cursor is pulled toward the locked target's center
   // (0 = follows pointer exactly, 1 = pinned to center). Only applied to
-  // small targets (buttons, pills, links) — large cards get no pull, since
+  // small targets (buttons, pills, links); large cards get no pull, since
   // the visible dot must stay near the real pointer for in-card clicks.
   const MAGNET_PULL = 0.45;
   const MAGNET_MAX_SIZE = 180;
@@ -115,7 +115,7 @@
   };
 
   // Corners have a 0.3s CSS transition for the lock/release glide, but while
-  // locked their transforms are rewritten every frame — a lingering transition
+  // locked their transforms are rewritten every frame; a lingering transition
   // makes them trail and scatter. Glide in, then pin them hard.
   let cornerPinTimeout = null;
 
