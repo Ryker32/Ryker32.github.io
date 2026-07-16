@@ -349,9 +349,9 @@ function initHeroSwarm() {
     }
   }
 
-  // Scatter varied deep-sky objects down the page: an irregular nebula plus
-  // a mix of galaxy shapes, alternating margins so they peek out around the
-  // content instead of hiding behind it.
+  // Scatter deep-sky objects down the page the way the real universe hangs
+  // together: a few large foreground objects near the margins, small galaxy
+  // clusters huddled in groups, and faint lone dwarfs sprinkled everywhere.
   function populateBodies() {
     bodies.length = 0;
     const deepH = worldH - height;
@@ -361,59 +361,106 @@ function initHeroSwarm() {
     const colors = light ? GALAXY_LIGHT : GALAXY_DARK;
     const neb = light ? NEBULA_LIGHT : NEBULA_DARK;
     const base = Math.min(width, height);
+    const n = prefersMotion ? 1 : 0.6;
 
-    // Nebula first so it always makes the cut, then varied galaxies
-    const types = ['nebula', 'spiral', 'edgeOn', 'globular', 'ring', 'elliptical', 'barred'];
-
-    let y = height * 1.3;
-    let side = Math.random() < 0.5 ? 0 : 1;
-    let ti = 0;
-    while (y < worldH - 300) {
-      const type = types[ti % types.length];
-      ti++;
-      const R = base * (type === 'nebula' ? (0.2 + Math.random() * 0.08) : (0.08 + Math.random() * 0.06));
-      const n = prefersMotion ? 1 : 0.6;
+    // Builds one body of the given type and pushes it. `detail` scales point
+    // count and `alphaMul` dims distant/background objects.
+    function addBody(type, x, y, R, detail, alphaMul) {
       let points;
       let rotSpeed = 0;
       let tilt = 1;
       if (type === 'nebula') {
-        points = makeNebulaPoints(R, neb, Math.round(560 * n));
+        points = makeNebulaPoints(R, neb, Math.round(560 * detail));
       } else if (type === 'spiral') {
-        points = makeSpiralPoints(R, colors, 3, 3.1, Math.round(320 * n));
+        points = makeSpiralPoints(R, colors, 3, 3.1, Math.round(320 * detail));
         rotSpeed = -0.014 - Math.random() * 0.008;
         tilt = 0.8 + Math.random() * 0.15;
       } else if (type === 'barred') {
-        points = makeSpiralPoints(R, colors, 2, 2.2, Math.round(300 * n));
+        points = makeSpiralPoints(R, colors, 2, 2.2, Math.round(300 * detail));
         rotSpeed = 0.012 + Math.random() * 0.008;
         tilt = 0.55 + Math.random() * 0.2;
       } else if (type === 'edgeOn') {
-        points = makeEdgeOnPoints(R, colors, Math.round(300 * n));
+        points = makeEdgeOnPoints(R, colors, Math.round(300 * detail));
       } else if (type === 'ring') {
-        points = makeRingPoints(R, colors, Math.round(260 * n));
+        points = makeRingPoints(R, colors, Math.round(260 * detail));
         rotSpeed = -0.01;
         tilt = 0.55 + Math.random() * 0.25;
       } else if (type === 'globular') {
-        points = makeGlobularPoints(R * 0.7, colors, Math.round(300 * n));
+        points = makeGlobularPoints(R * 0.7, colors, Math.round(300 * detail));
       } else {
-        points = makeEllipticalPoints(R, colors, Math.round(280 * n));
+        points = makeEllipticalPoints(R, colors, Math.round(280 * detail));
         tilt = 0.6 + Math.random() * 0.3;
+      }
+
+      if (alphaMul !== 1) {
+        for (let i = 0; i < points.length; i++) points[i].alpha *= alphaMul;
       }
 
       const lean = (Math.random() * 2 - 1) * 1.2;
       bodies.push({
-        x: width * (side ? (0.76 + Math.random() * 0.16) : (0.08 + Math.random() * 0.16)),
-        y: y + Math.random() * 220,
-        R,
-        points,
+        x, y, R, points,
         rotSpeed: prefersMotion ? rotSpeed : 0,
         tilt,
         cosLean: Math.cos(lean),
         sinLean: Math.sin(lean),
         shimmer: type === 'nebula'
       });
+    }
 
+    // --- Featured foreground objects: nebula first so it always makes the
+    // cut, then varied galaxies, alternating margins around the content
+    const featured = ['nebula', 'spiral', 'edgeOn', 'globular', 'ring', 'elliptical', 'barred'];
+    let y = height * 1.3;
+    let side = Math.random() < 0.5 ? 0 : 1;
+    let ti = 0;
+    while (y < worldH - 300) {
+      const type = featured[ti % featured.length];
+      ti++;
+      const R = base * (type === 'nebula' ? (0.2 + Math.random() * 0.08) : (0.08 + Math.random() * 0.06));
+      addBody(
+        type,
+        width * (side ? (0.76 + Math.random() * 0.16) : (0.08 + Math.random() * 0.16)),
+        y + Math.random() * 220,
+        R, n, 1
+      );
       side = 1 - side;
-      y += 750 + Math.random() * 650;
+      y += 550 + Math.random() * 450;
+    }
+
+    // --- Galaxy clusters: gravitationally bound groups of 3-6 small
+    // galaxies huddled together, mostly ellipticals like real clusters
+    const clusterTypes = ['elliptical', 'elliptical', 'spiral', 'edgeOn', 'barred', 'globular'];
+    const clusterCount = Math.max(2, Math.round(deepH / 1300));
+    for (let c = 0; c < clusterCount; c++) {
+      const cxr = Math.random() * width;
+      const cyr = height * 1.2 + Math.random() * (deepH - height * 0.4);
+      const members = 3 + ((Math.random() * 4) | 0);
+      const spread = base * (0.1 + Math.random() * 0.07);
+      for (let m = 0; m < members; m++) {
+        addBody(
+          clusterTypes[(Math.random() * clusterTypes.length) | 0],
+          cxr + gaussian() * spread,
+          cyr + gaussian() * spread * 0.75,
+          base * (0.022 + Math.random() * 0.028),
+          0.32 * n,
+          0.85
+        );
+      }
+    }
+
+    // --- Lone background dwarfs: tiny, faint, everywhere, like the little
+    // smudges that fill every patch of a deep-field image
+    const dwarfTypes = ['elliptical', 'spiral', 'edgeOn', 'globular', 'ring', 'barred'];
+    const dwarfCount = Math.round(deepH / 380);
+    for (let d = 0; d < dwarfCount; d++) {
+      addBody(
+        dwarfTypes[(Math.random() * dwarfTypes.length) | 0],
+        Math.random() * width,
+        height * 1.1 + Math.random() * (deepH - height * 0.2),
+        base * (0.016 + Math.random() * 0.024),
+        0.24 * n,
+        0.7
+      );
     }
   }
 
