@@ -33,6 +33,17 @@ const GALAXY_LIGHT = {
   arm: ['#3c4a86', '#33508c', '#3a4256', '#2e5f5a']
 };
 
+// Nebula gas hues: periwinkles and teals with a violet streak, plus bright
+// embedded stars
+const NEBULA_DARK = {
+  gas: ['#7878c0', '#6f86b8', '#8a6fb8', '#5c8a86', '#a9b6e2', '#3f6b66'],
+  star: ['#f2f2f2', '#e8e4dc']
+};
+const NEBULA_LIGHT = {
+  gas: ['#3c4a86', '#33508c', '#5a4a86', '#2e5f5a', '#3a4256'],
+  star: ['#20242e', '#3a4256']
+};
+
 function getThemeMode() {
   return document.body?.dataset?.theme === 'light' ? 'light' : 'dark';
 }
@@ -43,6 +54,194 @@ function buildColorPool(palette) {
     for (let i = 0; i < weight; i++) pool.push(color);
   });
   return pool;
+}
+
+function gaussian() {
+  return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+}
+
+function pick(arr) {
+  return arr[(Math.random() * arr.length) | 0];
+}
+
+// --- Deep-sky point-cloud generators ---------------------------------------
+// Each returns points in body-local polar coords { r, theta, size, alpha,
+// color } so spirals can rotate rigidly like the hero galaxy. Irregular
+// shapes are generated in cartesian space and converted.
+
+function makeSpiralPoints(R, colors, arms, twist, n) {
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const t = Math.pow(Math.random(), 0.72);
+    const r = R * (0.12 + 0.88 * t);
+    const arm = (i % arms) * (Math.PI * 2 / arms);
+    const theta = arm + twist * Math.log(1 + 4 * t) + gaussian() * (0.1 + 0.22 * t);
+    const nearCore = t < 0.3;
+    pts.push({
+      r, theta,
+      size: 0.5 + Math.random() * (nearCore ? 0.9 : 0.7),
+      alpha: (nearCore ? 0.5 : 0.28) + Math.random() * 0.3,
+      color: pick(nearCore ? colors.core : colors.arm)
+    });
+  }
+  const bulge = Math.round(n * 0.28);
+  for (let i = 0; i < bulge; i++) {
+    pts.push({
+      r: Math.abs(gaussian()) * R * 0.16,
+      theta: Math.random() * Math.PI * 2,
+      size: 0.6 + Math.random() * 1.0,
+      alpha: 0.4 + Math.random() * 0.45,
+      color: pick(colors.core)
+    });
+  }
+  return pts;
+}
+
+function makeRingPoints(R, colors, n) {
+  // Collisional ring galaxy: a bright annulus around a sparse nucleus
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    pts.push({
+      r: R * (0.82 + gaussian() * 0.07),
+      theta: Math.random() * Math.PI * 2,
+      size: 0.5 + Math.random() * 0.8,
+      alpha: 0.25 + Math.random() * 0.35,
+      color: pick(colors.arm)
+    });
+  }
+  const core = Math.round(n * 0.2);
+  for (let i = 0; i < core; i++) {
+    pts.push({
+      r: Math.abs(gaussian()) * R * 0.1,
+      theta: Math.random() * Math.PI * 2,
+      size: 0.6 + Math.random() * 0.9,
+      alpha: 0.4 + Math.random() * 0.4,
+      color: pick(colors.core)
+    });
+  }
+  return pts;
+}
+
+function makeEllipticalPoints(R, colors, n) {
+  // Smooth gaussian blob whose light falls off with radius
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const r = Math.abs(gaussian()) * R * 0.55;
+    pts.push({
+      r,
+      theta: Math.random() * Math.PI * 2,
+      size: 0.5 + Math.random() * 0.8,
+      alpha: Math.max(0.06, 0.55 * Math.exp(-(r / R) * 2.4)) + Math.random() * 0.12,
+      color: pick(Math.random() < 0.7 ? colors.core : colors.arm)
+    });
+  }
+  return pts;
+}
+
+function makeGlobularPoints(R, colors, n) {
+  // Dense star cluster: steep central concentration, no structure
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const r = Math.pow(Math.random(), 2.4) * R;
+    pts.push({
+      r,
+      theta: Math.random() * Math.PI * 2,
+      size: 0.5 + Math.random() * 0.8,
+      alpha: 0.25 + 0.5 * (1 - r / R) + Math.random() * 0.15,
+      color: pick(Math.random() < 0.6 ? colors.core : colors.arm)
+    });
+  }
+  return pts;
+}
+
+function makeEdgeOnPoints(R, colors, n) {
+  // A disc seen from the side: a long thin streak with a bright bulge
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const u = gaussian() * 0.55;
+    const x = u * R * 1.6;
+    const thin = 0.045 + 0.11 * Math.exp(-Math.pow(u * 2.6, 2));
+    const y = gaussian() * R * thin;
+    const nearCore = Math.abs(u) < 0.18;
+    pts.push({
+      r: Math.hypot(x, y),
+      theta: Math.atan2(y, x),
+      size: 0.5 + Math.random() * (nearCore ? 1.0 : 0.7),
+      alpha: (nearCore ? 0.45 : 0.24) + Math.random() * 0.3,
+      color: pick(nearCore ? colors.core : colors.arm)
+    });
+  }
+  return pts;
+}
+
+function makeNebulaPoints(R, neb, n) {
+  // Irregular emission nebula: a random walk lays down a few gas clumps,
+  // faint filaments bridge the gaps, and a handful of newborn stars glow
+  // inside the cloud.
+  const pts = [];
+  const clumpCount = 3 + ((Math.random() * 3) | 0);
+  const clumps = [];
+  let cx = 0;
+  let cy = 0;
+  for (let i = 0; i < clumpCount; i++) {
+    clumps.push([cx, cy, pick(neb.gas), pick(neb.gas)]);
+    cx += gaussian() * R * 0.75;
+    cy += gaussian() * R * 0.5;
+  }
+  const mx = clumps.reduce((s, c) => s + c[0], 0) / clumpCount;
+  const my = clumps.reduce((s, c) => s + c[1], 0) / clumpCount;
+  clumps.forEach((c) => { c[0] -= mx; c[1] -= my; });
+
+  const perClump = Math.round(n / clumpCount);
+  clumps.forEach(([qx, qy, hueA, hueB]) => {
+    const sx = R * (0.2 + Math.random() * 0.16);
+    const sy = R * (0.14 + Math.random() * 0.16);
+    for (let i = 0; i < perClump; i++) {
+      const x = qx + gaussian() * sx;
+      const y = qy + gaussian() * sy;
+      pts.push({
+        r: Math.hypot(x, y),
+        theta: Math.atan2(y, x),
+        size: 0.6 + Math.random() * 1.3,
+        alpha: 0.09 + Math.random() * 0.3,
+        color: Math.random() < 0.6 ? hueA : hueB
+      });
+    }
+  });
+
+  for (let i = 0; i < clumpCount - 1; i++) {
+    const [ax, ay] = clumps[i];
+    const [bx, by] = clumps[i + 1];
+    const fil = 30 + ((Math.random() * 25) | 0);
+    const hue = pick(neb.gas);
+    for (let j = 0; j < fil; j++) {
+      const t = Math.random();
+      const x = ax + (bx - ax) * t + gaussian() * R * 0.06;
+      const y = ay + (by - ay) * t + gaussian() * R * 0.06;
+      pts.push({
+        r: Math.hypot(x, y),
+        theta: Math.atan2(y, x),
+        size: 0.5 + Math.random() * 0.9,
+        alpha: 0.06 + Math.random() * 0.16,
+        color: hue
+      });
+    }
+  }
+
+  const starCount = 5 + ((Math.random() * 5) | 0);
+  for (let i = 0; i < starCount; i++) {
+    const [qx, qy] = clumps[(Math.random() * clumpCount) | 0];
+    const x = qx + gaussian() * R * 0.14;
+    const y = qy + gaussian() * R * 0.1;
+    pts.push({
+      r: Math.hypot(x, y),
+      theta: Math.atan2(y, x),
+      size: 1.2 + Math.random() * 1.2,
+      alpha: 0.65 + Math.random() * 0.35,
+      color: pick(neb.star)
+    });
+  }
+  return pts;
 }
 
 function initHeroSwarm() {
@@ -122,6 +321,110 @@ function initHeroSwarm() {
     }
   }
 
+  // --- Deep field: stars and celestial bodies below the first viewport ---
+  // The canvas is a fixed backdrop, but everything here lives in page
+  // coordinates (y measured from the top of the document) and is drawn
+  // offset by the scroll position, so the sky scrolls with the content.
+  let worldH = 0;
+  const deepStars = [];
+  const bodies = [];
+
+  function populateDeepStars() {
+    deepStars.length = 0;
+    const deepH = worldH - height;
+    if (deepH <= 0) return;
+    const density = prefersMotion ? 2100 : 3400;
+    const count = Math.min(4200, Math.round((width * deepH) / density));
+    for (let i = 0; i < count; i++) {
+      deepStars.push({
+        x: Math.random() * width,
+        y: height + Math.random() * deepH,
+        size: Math.random() < 0.85 ? (0.6 + Math.random() * 1.2) : (1.7 + Math.random() * 1.3),
+        color: pickColor(),
+        baseAlpha: 0.3 + Math.random() * 0.6,
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.3 + Math.random() * 1.1,
+        driftPhase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  // Scatter varied deep-sky objects down the page: an irregular nebula plus
+  // a mix of galaxy shapes, alternating margins so they peek out around the
+  // content instead of hiding behind it.
+  function populateBodies() {
+    bodies.length = 0;
+    const deepH = worldH - height;
+    if (deepH < 500) return;
+
+    const light = getThemeMode() === 'light';
+    const colors = light ? GALAXY_LIGHT : GALAXY_DARK;
+    const neb = light ? NEBULA_LIGHT : NEBULA_DARK;
+    const base = Math.min(width, height);
+
+    // Nebula first so it always makes the cut, then varied galaxies
+    const types = ['nebula', 'spiral', 'edgeOn', 'globular', 'ring', 'elliptical', 'barred'];
+
+    let y = height * 1.3;
+    let side = Math.random() < 0.5 ? 0 : 1;
+    let ti = 0;
+    while (y < worldH - 300) {
+      const type = types[ti % types.length];
+      ti++;
+      const R = base * (type === 'nebula' ? (0.2 + Math.random() * 0.08) : (0.08 + Math.random() * 0.06));
+      const n = prefersMotion ? 1 : 0.6;
+      let points;
+      let rotSpeed = 0;
+      let tilt = 1;
+      if (type === 'nebula') {
+        points = makeNebulaPoints(R, neb, Math.round(560 * n));
+      } else if (type === 'spiral') {
+        points = makeSpiralPoints(R, colors, 3, 3.1, Math.round(320 * n));
+        rotSpeed = -0.014 - Math.random() * 0.008;
+        tilt = 0.8 + Math.random() * 0.15;
+      } else if (type === 'barred') {
+        points = makeSpiralPoints(R, colors, 2, 2.2, Math.round(300 * n));
+        rotSpeed = 0.012 + Math.random() * 0.008;
+        tilt = 0.55 + Math.random() * 0.2;
+      } else if (type === 'edgeOn') {
+        points = makeEdgeOnPoints(R, colors, Math.round(300 * n));
+      } else if (type === 'ring') {
+        points = makeRingPoints(R, colors, Math.round(260 * n));
+        rotSpeed = -0.01;
+        tilt = 0.55 + Math.random() * 0.25;
+      } else if (type === 'globular') {
+        points = makeGlobularPoints(R * 0.7, colors, Math.round(300 * n));
+      } else {
+        points = makeEllipticalPoints(R, colors, Math.round(280 * n));
+        tilt = 0.6 + Math.random() * 0.3;
+      }
+
+      const lean = (Math.random() * 2 - 1) * 1.2;
+      bodies.push({
+        x: width * (side ? (0.76 + Math.random() * 0.16) : (0.08 + Math.random() * 0.16)),
+        y: y + Math.random() * 220,
+        R,
+        points,
+        rotSpeed: prefersMotion ? rotSpeed : 0,
+        tilt,
+        cosLean: Math.cos(lean),
+        sinLean: Math.sin(lean),
+        shimmer: type === 'nebula'
+      });
+
+      side = 1 - side;
+      y += 750 + Math.random() * 650;
+    }
+  }
+
+  function refreshWorld() {
+    const h = Math.max(document.documentElement.scrollHeight, height);
+    if (Math.abs(h - worldH) < 150 && deepStars.length) return;
+    worldH = h;
+    populateDeepStars();
+    populateBodies();
+  }
+
   // --- Background spiral galaxy (point cloud) ---
   // Stored in galaxy-local polar coords so it can slowly rotate; tilted into
   // a 3/4 view when projected to the screen.
@@ -134,10 +437,6 @@ function initHeroSwarm() {
     cosLean: Math.cos(-0.55),
     sinLean: Math.sin(-0.55)
   };
-
-  function gaussian() {
-    return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
-  }
 
   function populateGalaxy() {
     galaxy.points.length = 0;
@@ -199,16 +498,8 @@ function initHeroSwarm() {
   }
 
   function handleResize() {
-    const fullscreenPhase = document.body.classList.contains('animation-loading') ||
-      document.body.classList.contains('animation-ready');
-
-    const w = fullscreenPhase
-      ? window.innerWidth
-      : (canvas.clientWidth || canvas.offsetWidth || window.innerWidth);
-    const h = fullscreenPhase
-      ? window.innerHeight
-      : (canvas.clientHeight || canvas.offsetHeight || window.innerHeight);
-
+    const w = window.innerWidth;
+    const h = window.innerHeight;
     if (w === 0 || h === 0) return;
 
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -218,10 +509,21 @@ function initHeroSwarm() {
     canvas.height = Math.round(h * dpr);
     populate();
     populateGalaxy();
+    worldH = 0;   // force the deep field to rebuild for the new viewport
+    refreshWorld();
   }
 
   handleResize();
   window.addEventListener('resize', handleResize);
+
+  // Rebuild the deep field when the page grows or shrinks (cards are
+  // injected after load, images settle, etc.)
+  if (typeof ResizeObserver === 'function') {
+    const worldObserver = new ResizeObserver(() => refreshWorld());
+    worldObserver.observe(document.body);
+  } else {
+    window.addEventListener('load', refreshWorld);
+  }
 
   const lensRange = EINSTEIN_RADIUS * LENS_RANGE_MULT;
 
@@ -237,7 +539,9 @@ function initHeroSwarm() {
   function applyThemePalette() {
     colorPool = buildColorPool(getThemeMode() === 'light' ? LIGHT_PALETTE : DARK_PALETTE);
     particles.forEach(p => { p.color = pickColor(); });
+    deepStars.forEach(p => { p.color = pickColor(); });
     populateGalaxy();
+    populateBodies();
   }
 
   const themeObserver = new MutationObserver(applyThemePalette);
@@ -310,38 +614,25 @@ function initHeroSwarm() {
     ctx.clearRect(0, 0, width, height);
 
     const time = t * 0.001;
+    const scroll = window.scrollY || 0;
 
-    // --- Galaxy layer (behind the stars) ---
-    // The spiral pattern rotates rigidly (like a density wave), so the arms
-    // never wind up or shear apart. Negative direction = arms trail.
-    const galaxyTheta = prefersMotion ? -time * 0.018 : 0;
-    for (let i = 0; i < galaxy.points.length; i++) {
-      const gp = galaxy.points[i];
-      const theta = gp.theta + galaxyTheta;
+    // Draws a deep-sky cloud point at screen coords, applying the intro
+    // ripple and the cursor lens (primary image only) on the way.
+    const drawCloud = (pt, sx, sy, alpha) => {
+      if (sx < -40 || sx > width + 40 || sy < -40 || sy > height + 40) return;
 
-      // Disc coords -> tilted, leaned screen position
-      const px = Math.cos(theta) * gp.r;
-      const py = Math.sin(theta) * gp.r * galaxy.tilt;
-      let gx = galaxy.x + px * galaxy.cosLean - py * galaxy.sinLean;
-      let gy = galaxy.y + px * galaxy.sinLean + py * galaxy.cosLean;
-
-      let alpha = gp.alpha * reveal;
-      if (alpha < 0.01) continue;
-
-      // Liquid ripple: displace with the passing wave and glint at the crest
       if (ripAmp > 0.4) {
-        const off = rippleOffset(gx, gy);
+        const off = rippleOffset(sx, sy);
         if (off) {
-          gx += off[0];
-          gy += off[1];
+          sx += off[0];
+          sy += off[1];
           alpha = Math.min(alpha * (1 + 1.2 * off[2]), 1);
         }
       }
 
-      // The lens bends galaxy light too (primary image only)
       if (lensOn) {
-        const dx = gx - lensX;
-        const dy = gy - lensY;
+        const dx = sx - lensX;
+        const dy = sy - lensY;
         const bSq = dx * dx + dy * dy;
         if (bSq < range * range) {
           const b = Math.max(Math.sqrt(bSq), 0.75);
@@ -352,21 +643,86 @@ function initHeroSwarm() {
           const stretch1 = 1 + ((b + root) / (2 * b) - 1) * STRETCH_GAIN * w;
           const squash1 = 1 - (0.5 - b / (2 * root)) * w;
           drawLensedImage(
-            gp, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2),
+            pt, alpha * Math.min(1 + (stretch1 * squash1 - 1) * w, 2),
             lensX + (dx / b) * r1, lensY + (dy / b) * r1,
             stretch1, squash1, Math.atan2(dy, dx)
           );
-          continue;
+          return;
         }
       }
 
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = gp.color;
-      ctx.fillRect(gx - gp.size / 2, gy - gp.size / 2, gp.size, gp.size);
+      ctx.fillStyle = pt.color;
+      ctx.fillRect(sx - pt.size / 2, sy - pt.size / 2, pt.size, pt.size);
+    };
+
+    // --- Galaxy layer (behind the stars) ---
+    // The spiral pattern rotates rigidly (like a density wave), so the arms
+    // never wind up or shear apart. Negative direction = arms trail.
+    const galaxyOnScreen = (galaxy.y + galaxy.radius * 1.7) - scroll > -60;
+    if (galaxyOnScreen) {
+      const galaxyTheta = prefersMotion ? -time * 0.018 : 0;
+      for (let i = 0; i < galaxy.points.length; i++) {
+        const gp = galaxy.points[i];
+        const theta = gp.theta + galaxyTheta;
+
+        // Disc coords -> tilted, leaned page position
+        const px = Math.cos(theta) * gp.r;
+        const py = Math.sin(theta) * gp.r * galaxy.tilt;
+        const gx = galaxy.x + px * galaxy.cosLean - py * galaxy.sinLean;
+        const gy = galaxy.y + px * galaxy.sinLean + py * galaxy.cosLean;
+
+        const alpha = gp.alpha * reveal;
+        if (alpha < 0.01) continue;
+        drawCloud(gp, gx, gy - scroll, alpha);
+      }
+    }
+
+    // --- Deep-sky bodies scattered down the page ---
+    for (let bi = 0; bi < bodies.length; bi++) {
+      const body = bodies[bi];
+      const syC = body.y - scroll;
+      const cull = body.R * 2.2;
+      if (syC < -cull || syC > height + cull) continue;
+
+      const rot = body.rotSpeed ? time * body.rotSpeed : 0;
+      // Nebulae breathe slightly; galaxies hold steady
+      const shimmer = body.shimmer ? 0.85 + 0.15 * Math.sin(time * 0.45 + body.y) : 1;
+      for (let i = 0; i < body.points.length; i++) {
+        const pt = body.points[i];
+        const theta = pt.theta + rot;
+        const px = Math.cos(theta) * pt.r;
+        const py = Math.sin(theta) * pt.r * body.tilt;
+        const wx = body.x + px * body.cosLean - py * body.sinLean;
+        const wy = body.y + px * body.sinLean + py * body.cosLean;
+
+        const alpha = pt.alpha * reveal * shimmer;
+        if (alpha < 0.01) continue;
+        drawCloud(pt, wx, wy - scroll, alpha);
+      }
+    }
+
+    // --- Deep-field stars (below the first viewport) ---
+    // No spring physics down here: just twinkle and a slow sideways sway.
+    for (let i = 0; i < deepStars.length; i++) {
+      const p = deepStars[i];
+      const sy = p.y - scroll;
+      if (sy < -40 || sy > height + 40) continue;
+
+      const twinkle = 0.75 + 0.25 * Math.sin(time * p.twinkleSpeed + p.twinklePhase);
+      const alpha = p.baseAlpha * twinkle * reveal;
+      if (alpha < 0.01) continue;
+
+      const sway = prefersMotion ? Math.sin(time * 0.25 + p.driftPhase) * 2.5 : 0;
+      drawCloud(p, p.x + sway, sy, alpha);
     }
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
+
+      // Hero-field stars live at the top of the page; once they scroll
+      // away there's nothing to draw or simulate
+      if (p.y - scroll > height + 60) continue;
 
       if (prefersMotion) {
         // Gentle ambient drift, like slow current
@@ -390,7 +746,7 @@ function initHeroSwarm() {
       // Liquid ripple: the passing wave physically displaces the star's
       // drawn position and makes it glint at the crest
       let sx = p.x;
-      let sy = p.y;
+      let sy = p.y - scroll;
       if (ripAmp > 0.4) {
         const off = rippleOffset(sx, sy);
         if (off) {
