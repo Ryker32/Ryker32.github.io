@@ -714,6 +714,10 @@
         "Sole recipient of the AIAA PNW Young Professional of the Year award (2026)"
       ],
       descriptionHtml: `
+        <div class="article-intro">
+          <p><a href="https://www.ohsaerospace.org/home" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace Club</a> is a team of 6th-12th grade students from Olympia, Washington with a mission to empower and inspire students to pursue careers in STEM: designing, building, and flying high-performing model rockets, hosting guest speakers from NASA and the University of Washington, and competing in The American Rocketry Challenge, the largest model rocketry competition in the world. For many students, the club is their first exposure to rocketry and the fundamentals of aerospace engineering.</p>
+        </div>
+
         <h3>At a glance</h3>
         <ul>
           <li><strong class="list-label">Role:</strong> Vice President and Leader of Outreach, <a href="https://www.ohsaerospace.org/home" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace Club</a></li>
@@ -726,54 +730,52 @@
 
         <hr>
 
-        <h3>Flight & test clips</h3>
+        <h3>Competition & club life</h3>
         <div class="project-media-grid">
+          <figure class="project-figure">
+            <img src="/assets/img/aerospace/tarc-launch.png" alt="TARC rocket lifting off the pad" loading="lazy">
+            <figcaption>TARC qualification flight leaving the pad. (Photo: Jim Wilkerson)</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <img src="/assets/img/aerospace/club-meeting.png" alt="Packed classroom during a club meeting" loading="lazy">
+            <figcaption>A packed club meeting: 16 competition teams plus a free recreational build program.</figcaption>
+          </figure>
+          <figure class="project-figure">
+            <img src="/assets/img/aerospace/team-sign.png" alt="Club members holding an Olympia Aerospace sign" loading="lazy">
+            <figcaption>Representing Olympia Aerospace.</figcaption>
+          </figure>
           <figure class="project-figure">
             <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 6px;">
               <source src="/assets/img/rocket/rockettest2.mp4" type="video/mp4">
             </video>
             <figcaption>Flight test clip</figcaption>
           </figure>
-          <figure class="project-figure">
-            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 6px;">
-              <source src="/assets/img/rocket/rde-density.mp4" type="video/mp4">
-            </video>
-            <figcaption>Static fire / flow visualization</figcaption>
-          </figure>
         </div>
 
         <hr>
 
-        <h3>Gallery</h3>
+        <h3>Outreach & community</h3>
+        <p>As outreach lead I run the club's community program: free launch events and hands-on aerospace lessons for elementary schools across the district, plus a recurring event series at the Hands On Children's Museum in Olympia, where we teach parachute design, rocket fundamentals, and flight to museum visitors all summer.</p>
         <div class="project-media-grid">
           <figure class="project-figure">
-            <img src="/assets/img/rocket/rocketmk3.png" alt="ARC airframe build">
-            <figcaption>Airframe build</figcaption>
+            <img src="/assets/img/aerospace/community-launch.png" alt="Rocket on the pad in front of a crowd of elementary students" loading="lazy">
+            <figcaption>Community launch at a local elementary school: hundreds of K-5 students watching the pad.</figcaption>
           </figure>
           <figure class="project-figure">
-            <img src="/assets/img/rocket/mk4picture.jpg" alt="Stack assembly">
-            <figcaption>Stack assembly</figcaption>
+            <img src="/assets/img/aerospace/centennial-booth.png" alt="Students at an Olympia Aerospace outreach booth" loading="lazy">
+            <figcaption>Hands-on booth at a school event: straw rockets and parachute builds.</figcaption>
           </figure>
           <figure class="project-figure">
-            <img src="/assets/img/rocket/buildingrocket.jpg" alt="Static fire prep">
-            <figcaption>Static fire prep</figcaption>
+            <img src="/assets/img/aerospace/museum-parachute.png" alt="Parachute demonstration at Hands On Children's Museum" loading="lazy">
+            <figcaption>Parachute drop demo at Hands On Children's Museum.</figcaption>
           </figure>
           <figure class="project-figure">
-            <img src="/assets/img/rocket/rocketbackfire.png" alt="Exhaust during test">
-            <figcaption>Exhaust during testing</figcaption>
+            <img src="/assets/img/aerospace/museum-events.png" alt="OHS Aerospace event series flyer at Hands On Children's Museum" loading="lazy">
+            <figcaption>Our summer event series at the museum: parachutes, rockets, and flight lessons.</figcaption>
           </figure>
         </div>
-
-        <hr>
-
-        <h3>Notes</h3>
-        <ul>
-          <li>Dual-deploy charge testing and checklists in progress</li>
-          <li>Telemetry review after each flight to tune sims and recovery</li>
-          <li>OpenRocket sims kept in sync with hardware mass changes</li>
-        </ul>
       `,
-      image: "/assets/img/rocket/rocketmk3.png",
+      image: "/assets/img/aerospace/tarc-launch.png",
       files: []
     },
   ];
