@@ -1071,7 +1071,9 @@
     });
   }
 
-  function openModal(project) {
+  // `fromHistory` marks open/close calls driven by browser navigation, so
+  // we don't push duplicate history entries for them.
+  function openModal(project, fromHistory) {
     if (!projectModal || !modalTitle || !modalDescription || !filesGrid) return;
 
     const placeholderSrc = modalThumbnailImg?.dataset?.placeholder || modalThumbnailImg?.getAttribute('src') || '';
@@ -1165,13 +1167,44 @@
 
     projectModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Opening a card is a navigation: push a history entry so the browser
+    // back button returns to the portfolio (the modal just closes; the page
+    // doesn't reload, so the intro never replays)
+    if (!fromHistory) {
+      try {
+        history.pushState({ projectId: project.id }, '', `#project-${project.id}`);
+      } catch (_) {}
+    }
   }
 
-  function closeModal() {
+  function dismissModal() {
     if (!projectModal) return;
     projectModal.classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  // UI-driven close (X button, overlay click, Escape): step back through
+  // history so the modal entry is consumed; popstate does the actual close
+  function closeModal() {
+    if (history.state && typeof history.state.projectId !== 'undefined') {
+      history.back();
+    } else {
+      dismissModal();
+    }
+  }
+
+  // Browser-driven navigation: back closes the modal, forward reopens it.
+  // A bare #project-N hash (in-page link, manually edited URL) also opens.
+  window.addEventListener('popstate', (e) => {
+    const projectId = e.state && e.state.projectId;
+    if (typeof projectId !== 'undefined' && projectId !== null) {
+      const project = portfolioData.find(p => p.id === projectId);
+      if (project) openModal(project, true);
+    } else if (!openFromHash()) {
+      dismissModal();
+    }
+  });
 
   if (modalClose) {
     modalClose.addEventListener('click', closeModal);
@@ -1189,6 +1222,22 @@
         closeModal();
       }
     });
+  }
+
+  // Deep link: /#project-N opens that card directly. Rewrite history so the
+  // portfolio page sits under the modal entry and back closes the card
+  // instead of leaving the site.
+  function openFromHash() {
+    const match = /^#project-(\d+)$/.exec(window.location.hash || '');
+    if (!match) return false;
+    const project = portfolioData.find(p => p.id === Number(match[1]));
+    if (!project) return false;
+    try {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      history.pushState({ projectId: project.id }, '', `#project-${project.id}`);
+    } catch (_) {}
+    openModal(project, true);
+    return true;
   }
 
   // Initialize YouTube click-to-play embeds
@@ -1322,6 +1371,7 @@
     initThemeToggle();
     initYouTubeEmbeds();
     initGeoPing();
+    openFromHash();
   }
 
   // Initialize when DOM is ready
