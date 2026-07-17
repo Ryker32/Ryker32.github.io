@@ -575,6 +575,31 @@ body[data-theme='light'] .hero__lede {
   border-bottom-color: rgba(255, 255, 255, 0.8);
 }
 
+/* Small live view counter under the lede */
+.hero__views {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 4px auto 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+
+.hero__views svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.75;
+}
+
+body[data-theme='light'] .hero__views {
+  text-shadow: 0 1px 10px rgba(246, 240, 228, 0.9);
+}
+
 .hero__actions {
   display: flex;
   justify-content: center;

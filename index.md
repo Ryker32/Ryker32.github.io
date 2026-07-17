@@ -20,6 +20,13 @@ layout: default
     <p class="hero__lede">
       Robotics Researcher & Vice President @ <a href="https://www.ohsaerospace.org" class="hero__lede-link" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace</a>
     </p>
+    <p class="hero__views" id="siteViewCounter" title="Total site views">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+      <span id="siteViewCounterValue">&hellip;</span>&nbsp;views
+    </p>
   </div>
 </section>
 

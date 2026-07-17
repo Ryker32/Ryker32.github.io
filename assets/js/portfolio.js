@@ -1272,17 +1272,19 @@
     });
   }
 
-  // Lightweight view counter using countapi.xyz
+  // Live view counter backed by Abacus (abacus.jasoncameron.dev). Each
+  // browser increments at most once per session (and once per 12 hours);
+  // other loads just read the current total.
   function initViewCounter() {
     const valueEl = document.getElementById('siteViewCounterValue');
     const container = document.getElementById('siteViewCounter');
     if (!valueEl || !container) return;
 
-    const namespace = 'ryker-portfolio';
-    const key = 'site-views';
-    const providers = ['https://api.countapi.xyz', 'https://api.countapi.dev'];
-    const hitUrls = providers.map((base) => `${base}/hit/${namespace}/${key}`);
-    const getUrls = providers.map((base) => `${base}/get/${namespace}/${key}`);
+    // Views accumulated on the previous counter before it was removed
+    const OFFSET = 591;
+
+    const namespace = 'ryker-portfolio-site';
+    const key = 'views';
     const storageKey = 'ryker-view-hit-ts';
     const sessionKey = 'ryker-view-hit-session';
 
@@ -1293,68 +1295,32 @@
         shouldHit = false;
       }
       const lastHit = Number(localStorage.getItem(storageKey));
-      // Only increment once per 12 hours per browser to avoid noisy counts
       shouldHit = shouldHit && (Number.isNaN(lastHit) || now - lastHit > 12 * 60 * 60 * 1000);
-    } catch (e) {
-      // Ignore storage issues and default to hitting
+    } catch (_) {
+      // Ignore storage issues and default to counting the view
     }
 
-    valueEl.textContent = '...';
+    const url = `https://abacus.jasoncameron.dev/${shouldHit ? 'hit' : 'get'}/${namespace}/${key}`;
 
-    const updateValue = (data) => {
-      if (typeof data?.value === 'number') {
-        valueEl.textContent = data.value.toLocaleString();
-        try {
-          localStorage.setItem(storageKey, String(now));
-        } catch (e) {}
-        return true;
-      }
-      return false;
-    };
-
-    const fetchCount = (url) =>
-      fetch(url, { mode: 'cors' })
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then((data) => {
-          if (!updateValue(data)) throw new Error('Unexpected payload');
-        });
-
-    const tryProviders = async () => {
-      // Pick the first provider; if it fails, try the next; fall back to GET if HIT blocked.
-      const urls = shouldHit ? hitUrls : getUrls;
-      for (let i = 0; i < urls.length; i += 1) {
-        try {
-          await fetchCount(urls[i]);
+    fetch(url, { mode: 'cors' })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (typeof data?.value !== 'number') throw new Error('Unexpected payload');
+        valueEl.textContent = (data.value + OFFSET).toLocaleString();
+        if (shouldHit) {
           try {
+            localStorage.setItem(storageKey, String(now));
             sessionStorage.setItem(sessionKey, '1');
-          } catch (e) {}
-          return;
-        } catch (_) {
-          // try next
+          } catch (_) {}
         }
-      }
-      // If all HIT attempts fail, try GET across providers
-      for (let i = 0; i < getUrls.length; i += 1) {
-        try {
-          await fetchCount(getUrls[i]);
-          try {
-            sessionStorage.setItem(sessionKey, '1');
-          } catch (e) {}
-          return;
-        } catch (_) {
-          // try next
-        }
-      }
-      throw new Error('All providers failed');
-    };
-
-    tryProviders().catch(() => {
-      valueEl.textContent = '-';
-      container.title = 'View counter unavailable right now.';
-    });
+      })
+      .catch(() => {
+        valueEl.textContent = '-';
+        container.title = 'View counter unavailable right now.';
+      });
   }
 
   // Silent geo ping to Cloudflare Worker (once per session)
@@ -1370,6 +1336,7 @@
     initPortfolio();
     initThemeToggle();
     initYouTubeEmbeds();
+    initViewCounter();
     initGeoPing();
     openFromHash();
   }
