@@ -331,6 +331,50 @@
       files: []
     },
     {
+      id: 11,
+      title: "Corgi: A Home-Helper Robot You Text",
+      date: "July 2026",
+      keyPoints: "2nd place hackathon win · LeRobot SO-101 · iMessage robot concierge",
+      repoUrl: "https://github.com/jerryli08/corgi-hackathon",
+      description: "Won 2nd place at a robotics hackathon with Corgi: an in-home helper robot you text in plain English through iMessage. It fetches items, delivers them in a basket, and offers a paced \"walk with me\" escort mode, all hosted on a single Mac.",
+      badge: "2nd Place",
+      highlights: [
+        "2nd place finish; built end-to-end in one hackathon weekend",
+        "iMessage in/out via Photon; LLM router turns free text into typed intents",
+        "Visual-servo fetch & deliver on a LeRobot SO-101 arm + Arduino drive base"
+      ],
+      descriptionHtml: `
+        <h3>At a glance</h3>
+        <ul>
+          <li><strong class="list-label">Result:</strong> 2nd place at the hackathon (July 2026)</li>
+          <li><strong class="list-label">Product:</strong> Corgi, an in-home helper robot for elderly users; you text it in the Messages app you already use ("bring me my water bottle", "walk with me") and it does the errand</li>
+          <li><strong class="list-label">Stack:</strong> Photon iMessage bridge, LLM intent router (Merge Gateway with keyword fallback), FastAPI host, OpenCV/VLM perception, LeRobot SO-101 arm, Arduino differential drive base</li>
+          <li><strong class="list-label">Safety-first design:</strong> LLMs only output typed intents (never raw motor commands), "stop"/"help" always override the model, and dual watchdogs (host + firmware) halt the base if anything goes quiet</li>
+          <li><strong class="list-label">Honest failure handling:</strong> missed grasps are detected from gripper travel, retried once, then escalated with a "needs help" text instead of pretending it succeeded</li>
+        </ul>
+        <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
+          <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
+            <source src="/assets/video/corgi-text-sim-screen.mp4" type="video/mp4">
+          </video>
+          <figcaption>Text-to-robot demo: a message routed to an intent, executed as fetch &rarr; grasp &rarr; stow &rarr; deliver, with milestone texts back.</figcaption>
+        </figure>
+        <hr>
+        <h3>Project Overview</h3>
+        <p>
+        Getting up for a water bottle or pacing to the kitchen shouldn't require a caregiver standing by. Corgi is an in-home helper you text in plain English: it finds an item, puts it in its basket, drives back, and hands it over. In "walk with me" mode it comes to you and keeps pace beside you as a steadying reference, using a dead-man control loop so the wheels stop within milliseconds if hold-to-drive input goes silent.
+        </p>
+        <p>
+        Inbound iMessages arrive through a Photon bridge, an LLM router converts free text into one typed intent (a fast model handles short messages, a deeper model only runs when confidence is low, and everything degrades to an offline keyword router), and a deterministic skill state machine drives the arm, wheels, and camera. The reply policy is deliberately minimal: two texts per errand, an acknowledgement and then arrival/delivery/help, so an elderly user never gets nine updates about one water bottle.
+        </p>
+        <p>
+        The whole robot runs as one FastAPI process on a single Mac, with a mock world so the full loop demos with no hardware plugged in, plus an ops console with live camera, phase log, router decisions, manual jog, and e-stop.
+        </p>
+        <div class="clear-float"></div>
+      `,
+      image: "/assets/img/corgi/text-sim-demo.jpg",
+      files: []
+    },
+    {
       id: 10,
       title: "Flight Lab Educational Kits",
       date: "December 2025 - Present",
