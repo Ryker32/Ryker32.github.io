@@ -375,6 +375,63 @@
       files: []
     },
     {
+      id: 12,
+      title: "Linqbot: AR & iMessage Robot Takeover",
+      date: "July 2026",
+      keyPoints: "AR hand-tracking teleop · LLM-planned SO-101 arm · iMessage robot agent",
+      repoUrl: "https://github.com/amzoeee/soma-hackathon",
+      description: "Hackathon build that makes a human the remote exception-handler for autonomous robots: an LLM plans and executes arm actions from plain-English iMessages, and when a step fails, an operator takes over with their bare hands through Xreal AR glasses.",
+      badge: "Hackathon",
+      highlights: [
+        "Xreal One Pro Eye camera + MediaPipe hand tracking drives the arm in real time",
+        "iMessage requests planned by an LLM into ordered, deterministic tool calls",
+        "Failures stop execution and escalate to a human instead of guessing"
+      ],
+      descriptionHtml: `
+        <h3>At a glance</h3>
+        <ul>
+          <li><strong class="list-label">Concept:</strong> Autonomy still fails on the messy last 5% (a missed grasp, an ambiguous object), so Linqbot makes the human a remote exception-handler: the robot runs on its own until it can't, then hands off; one person can oversee many robots and only touch the moments that need a human</li>
+          <li><strong class="list-label">iMessage agent:</strong> a plain-language request arrives via a Linq webhook, an LLM planner (Runware GPT-5.6 Luna + LangGraph) turns it into an ordered tool sequence, and the arm executes step-by-step with a deterministic result reply</li>
+          <li><strong class="list-label">AR takeover:</strong> spatial hand tracking from the Xreal One Pro Eye camera (21 MediaPipe landmarks) maps hand motion and wrist roll straight into the arm's workspace through an IK solver, with a closed-fist "clutch" gesture to freeze the arm and reposition without snap motions</li>
+          <li><strong class="list-label">Stack:</strong> FastAPI, Linq (iMessage), Runware GPT-5.6 Luna, LangGraph, MediaPipe, ikpy, OpenCV, LeRobot SO-101, Xreal One Pro + Eye camera</li>
+          <li><strong class="list-label">Safety:</strong> LLMs only plan typed tool calls (never freeform motor commands or outbound text), execution stops on the first failure, and workspace clamps bound every move</li>
+        </ul>
+        <hr>
+        <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; align-items: stretch;">
+          <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">
+            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
+              <source src="/assets/video/linqbot-automated-arm.mp4" type="video/mp4">
+            </video>
+            <figcaption>Automated arm: the LLM-planned tool sequence executing end-to-end.</figcaption>
+          </figure>
+          <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">
+            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
+              <source src="/assets/video/linqbot-failure-demo.mp4" type="video/mp4">
+            </video>
+            <figcaption>Failure &amp; recovery: execution stops, reports over iMessage, and a human takes over.</figcaption>
+          </figure>
+          <figure class="project-figure object-cover" style="flex: 1 1 300px; height: 480px; max-height: 480px; margin: 0;">
+            <img src="/assets/img/linqbot/imessage-agent-demo.jpg" alt="iMessage conversation with the robot agent">
+            <figcaption>The iMessage agent: natural-language requests in, deterministic result replies out.</figcaption>
+          </figure>
+        </div>
+        <hr>
+        <h3>Project Overview</h3>
+        <p>
+        As autonomous robots move onto production lines and into warehouses, a single failure (a crushed part, a missed grasp) can stall a whole line, and today the fix is a technician babysitting each robot. Linqbot flips that: an operator texts the robot in plain English, an LLM plans the actions as an ordered sequence of typed tool calls (Cartesian moves, wrist moves, gripper state), and the SO-101 arm executes deterministically, stopping on the first failure instead of improvising.
+        </p>
+        <p>
+        When something does fail, the human takes over directly with their hands. The Xreal One Pro's Eye camera feed runs MediaPipe hand tracking in real time, mapping X/Y/Z motion and wrist roll into the arm's workspace via inverse kinematics, with a live status HUD on the glasses. A pinch closes the gripper, and a closed-fist clutch freezes the arm so you can reposition your hand comfortably and resume relative tracking, the same way a mouse lifts off a desk.
+        </p>
+        <p>
+        Built in one hackathon weekend on a LeRobot SO-101 arm, including reverse-engineering the Eye camera stream, plus a calibrated leader/driver arm teleop mode for recording demos and datasets.
+        </p>
+        <div class="clear-float"></div>
+      `,
+      image: "/assets/img/linqbot/imessage-agent-demo.jpg",
+      files: []
+    },
+    {
       id: 10,
       title: "Flight Lab Educational Kits",
       date: "December 2025 - Present",
