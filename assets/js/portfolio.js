@@ -399,15 +399,11 @@
         <hr>
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; align-items: stretch;">
           <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">
-            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
-              <source src="/assets/video/linqbot-automated-arm.mp4" type="video/mp4">
-            </video>
+            <img src="/assets/img/linqbot/automated-arm-demo.gif" alt="Automated arm demo" style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
             <figcaption>Automated arm: the LLM-planned tool sequence executing end-to-end.</figcaption>
           </figure>
           <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">
-            <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
-              <source src="/assets/video/linqbot-failure-demo.mp4" type="video/mp4">
-            </video>
+            <img src="/assets/img/linqbot/failure-demo.gif" alt="Failure and recovery demo" style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
             <figcaption>Failure &amp; recovery: execution stops, reports over iMessage, and a human takes over.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="flex: 1 1 300px; height: 480px; max-height: 480px; margin: 0;">
