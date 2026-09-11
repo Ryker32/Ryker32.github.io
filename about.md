@@ -26,7 +26,7 @@ permalink: /about/
         i have loved stem ever since i watched mark rober for the first time when i was eight. i have a focus in mechatronics because i like to develop, program, and build robots for researching and personal projects.
       </p>
       <p class="about__para">
-        i've presented at the <strong class="list-label">IEEE-MIT Undergraduate Research and Technology Conference</strong>, a Y-Combinator hackathon, and i am a Beaver Works Summer Institute scholar. i founded and run the STEM column for my school's newspaper, <strong class="list-label">The Olympus</strong>, and i founded and run a fundraising effort for education access in Nalauwaki Fiji.
+        i've presented at the <strong class="list-label">IEEE-MIT Undergraduate Research and Technology Conference</strong>, a Y-Combinator hackathon, and i am a Beaver Works Summer Institute scholar. my work on trust between robots was accepted for oral presentation at <strong class="list-label">AIAA SciTech 2027</strong>. i founded and run the STEM column for my school's newspaper, <strong class="list-label">The Olympus</strong>, and i founded and run a fundraising effort for education access in Nalauwaki Fiji.
       </p>
       <p class="about__para">
         outside of academics i often work on my fish tanks or windsurf in a windy bay. i am a ferrari fan even though they have had a terrible performance recently.

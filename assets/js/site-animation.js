@@ -1,5 +1,4 @@
 (() => {
-  // Skip animation only if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const INTRO_KEY = 'siteIntroShown';
   const hasSeenAnimation = (() => {
@@ -7,7 +6,7 @@
   })();
   const heroCanvas = document.getElementById('heroCanvas');
   
-  // If there's no hero section on this page, skip all animation logic
+  // No hero on this page: nothing to reveal
   if (!heroCanvas) {
     document.body.classList.add('animation-complete');
     document.body.classList.remove('animation-loading');
@@ -52,7 +51,6 @@
     return;
   }
 
-  // Initialize animation sequence
   function initAnimation() {
     if (window.__siteIntroStarted) return;
     window.__siteIntroStarted = true;
@@ -60,7 +58,6 @@
 
     let animationTriggered = false;
 
-    // Make sure the starfield is visible immediately
     prepHeroCanvas();
 
     // Hide main/nav until after hero expands
@@ -278,7 +275,6 @@
     setTimeout(onHeroDone, 3000);
   }
 
-  // Start animation initialization promptly
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(initAnimation, 50);
@@ -297,10 +293,7 @@
     '.portfolio-header',
     '.site-footer > *',
     '.contact-tile',
-    '.contact-header',
-    '.about-panel',
-    '.about-hero__text',
-    '.about-hero__media'
+    '.contact-header'
   ].join(', ');
 
   function initReveal() {

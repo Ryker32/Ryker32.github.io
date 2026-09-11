@@ -1,106 +1,12 @@
 (() => {
-  // Portfolio data structure
-  // You can modify this to load from a JSON file or API
-  // 
-  // For article-style layouts with images and text wrapping, use descriptionHtml:
-  // 
-  // Example with images, videos, and interactive CAD:
-  // {
-  //   id: 1,
-  //   title: "My Project",
-  //   descriptionHtml: `
-  //     <div class="article-intro">
-  //       <p>This is an introductory paragraph that spans the full width.</p>
-  //       <p>You can have multiple intro paragraphs here.</p>
-  //     </div>
-  //     <div class="article-image">
-  //       <img src="/assets/img/project-image1.jpg" alt="Description" />
-  //       <div class="image-caption">Caption text here. (Photo Credit)</div>
-  //     </div>
-  //     <p>This text will wrap around the image on the left. The image floats left by default.</p>
-  //     <p>More text continues here, wrapping naturally around the image.</p>
-  //     <div class="clear-float"></div>
-  //     <h3>CAD</h3>
-  //     <div class="article-image width-large height-tall">
-  //       <model-viewer 
-  //         src="/assets/models/cad-model.glb" 
-  //         alt="3D CAD Model"
-  //         camera-controls 
-  //         auto-rotate 
-  //         ar
-  //         shadow-intensity="1"
-  //         exposure="1">
-  //       </model-viewer>
-  //       <div class="image-caption">Interactive 3D CAD model. Drag to rotate, scroll to zoom.</div>
-  //     </div>
-  //     <p>You can embed interactive 3D CAD files using model-viewer. Convert your CAD files to glTF/GLB format.</p>
-  //     <div class="clear-float"></div>
-  //     <div class="article-image">
-  //       <video controls>
-  //         <source src="/assets/video/demo.mp4" type="video/mp4">
-  //       </video>
-  //       <div class="image-caption">Video caption here.</div>
-  //     </div>
-  //     <p>Videos can also be embedded and wrapped with text.</p>
-  //     <div class="clear-float"></div>
-  //     <h3>YouTube Video</h3>
-  //     <div class="article-image youtube-embed">
-  //       <div class="youtube-thumbnail" data-video-id="VIDEO_ID">
-  //         <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Video thumbnail">
-  //       </div>
-  //       <div class="image-caption">Click the thumbnail to play the video.</div>
-  //     </div>
-  //     <div class="clear-float"></div>
-  //   `,
-  //   image: "/assets/img/project1.jpg",
-  //   files: [
-  //     { type: "image", url: "/assets/img/detail1.jpg", name: "Demo 1" },
-  //     { type: "video", url: "/assets/video/demo.mp4", name: "Demo Video", poster: "/assets/img/video-thumb.jpg" },
-  //     { type: "youtube", url: "https://www.youtube.com/embed/VIDEO_ID", name: "YouTube Video" }
-  //   ]
-  // }
-  //
-  // For interactive CAD files, you have two options:
-  //
-  // OPTION 1: Fusion 360 Native Embed (Recommended - easiest)
-  // 1. In Fusion 360, open your design
-  // 2. Click "Share" > "Share Public Link" or "Get link"
-  // 3. Copy the share link (looks like: https://a360.co/XXXXX)
-  // 4. Use an iframe in your descriptionHtml:
-  //    <h3>CAD</h3>
-  //    <div class="article-image fusion-360-embed">
-  //      <iframe 
-  //        src="https://a360.co/XXXXX" 
-  //        allowfullscreen="true" 
-  //        webkitallowfullscreen="true" 
-  //        mozallowfullscreen="true" 
-  //        frameborder="0">
-  //      </iframe>
-  //      <div class="image-caption">Interactive Fusion 360 model. Click and drag to rotate, scroll to zoom.</div>
-  //    </div>
-  //    <div class="clear-float"></div>
-  //
-  // OPTION 2: model-viewer (for offline/self-hosted models)
-  // 1. Export your Fusion 360 model to glTF (.gltf) or GLB (.glb) format
-  //    - Fusion 360: File > Export > glTF (if available)
-  //    - Or: File > Export > 3MF, then convert using online converter
-  //    - Online converters: https://products.aspose.app/3d/conversion
-  // 2. Place the .glb or .gltf file in your assets folder (e.g., /assets/models/)
-  // 3. Use <model-viewer> tag in your descriptionHtml with:
-  //    - src: path to your .glb/.gltf file
-  //    - camera-controls: enables mouse/touch controls
-  //    - auto-rotate: automatically rotates the model
-  //    - ar: enables AR viewing on mobile devices
-  //    - Other attributes: exposure, shadow-intensity, etc.
-  //
   const portfolioData = [
     {
       id: 1,
       title: "Hybrid/Modular UAV-UGV Research",
       date: "July 2025 - October 2025",
-      keyPoints: "MIT Lincoln Laboratory · ROS2 + PX4 · IEEE-URTC poster",
-      repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV", // Example repository
-      description: "As an Autonomous Systems Researcher with MIT Lincoln Laboratory, built a detachable rover + quadcopter system that ferries a ground robot over hostile terrain and re-docks in flight. Presented as a peer-reviewed poster at IEEE URTC at the MIT STATA Center.",
+      keyPoints: "MIT Lincoln Laboratory · IEEE-URTC poster",
+      repoUrl: "https://github.com/Ryker32/Hybrid-UAV-UGV",
+      description: "A detachable rover + quadcopter system that ferries a ground robot over hostile terrain and re-docks in flight. Presented as a peer-reviewed poster at IEEE URTC at the MIT STATA Center.",
       badge: "IEEE-URTC",
       orgLogo: "/assets/img/logos/mit.png",
       highlights: [
@@ -109,7 +15,7 @@
         "Peer-reviewed poster at IEEE URTC, MIT STATA Center"
       ],
       descriptionHtml: `
-      <H3>At a glance</H3>
+      <h3>At a glance</h3>
       <ul>
         <li><strong class="list-label">Team:</strong> 5 high school students</li>
         <li><strong class="list-label">Mentors:</strong> Two Cambridge-area researchers from the BWSI network</li>
@@ -120,15 +26,15 @@
         </ul>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 24px 0; clear: both; align-items: stretch; width: 100%;">
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
-            <img src="/assets/img/bwsicars/cardrone.png" alt="Soldering">
+            <img src="/assets/img/bwsicars/cardrone.png" alt="Quadcopter with the rover docked underneath">
             <figcaption>This is the drone with the car attached.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
-            <img src="/assets/img/bwsicars/car.png" alt="Soldering">
+            <img src="/assets/img/bwsicars/car.png" alt="The standalone rover">
             <figcaption>This is the standalone car.</figcaption>
           </figure>
           <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 100%; max-width: none;">
-            <img src="/assets/img/bwsicars/presentationposter.png" alt="Deconstruction">
+            <img src="/assets/img/bwsicars/presentationposter.png" alt="Conference poster with the demo drone mounted on it">
             <figcaption>Poster with demo drone on it.</figcaption>
           </figure>
         </div>
@@ -186,7 +92,7 @@
           <figcaption>Battery Holder modeled in Fusion 360. (Photo Cred: Ryker Kollmyer)</figcaption>
         </figure>
         <h3>Landing Gear & Battery Holder Modification</h3>
-        <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while being funcitonal to a hybrid system.</p>
+        <p>We realized that we could use the carbon pipes from the old landing gear to create "rails" for the UGV to attach onto the UAV. Through experimental trials we discovered that the new landing gear was more stable than the standard landing gear while still being functional in a hybrid system.</p>
         <p>The new landing gear presented another problem, the battery was too large to fit as the UGV is designed to snugly fit onto the bottom of the UAV. We designed a new battery mount that mitigates instability while allowing for easy battery access.</p>
         <div class="clear-float"></div>
 
@@ -211,8 +117,8 @@
     {
       id: 2,
       title: "REIP: Trust-Based Fault Tolerance for Multi-Agent Systems",
-      date: "March 2025 - February 2026",
-      keyPoints: "WSSEF 1st in Robotics · AIAA Symposium · Multi-agent research",
+      date: "March 2025 - July 2026",
+      keyPoints: "WSSEF 1st in Robotics · Multi-agent research",
       description: "Designed a democratic governance framework that lets robot teams detect, impeach, and replace faulty leaders, making teams 3.1x more reliable than the standard heartbeat baseline. 1st place in Robotics and Top 20 overall out of 1,200 at the Washington State Science & Engineering Fair 2026.",
       badge: "WSSEF 1st",
       orgLogo: "/assets/img/logos/wssef.png",
@@ -243,7 +149,7 @@
       
       <h3>Project Overview</h3>
       <p>
-      Resilient Election & Impeachment Policy (REIP) is my research project that won 1st place in Robotics (Top 20 overall out of 1,200) at the Washington State Science & Engineering Fair 2026 and was presented at the AIAA Technical Symposium. The project tackles a hard robotics question: how do we keep multi-agent teams coordinated when leaders fail, misbehave, or face adversarial interference? Traditional leader-follower strategies crumble when the designated leader hallucinates or loses communication, so I designed a trust-based governance layer that lets the team continuously evaluate leadership, call elections when trust drops, and impeach compromised leaders in real time. This governance sits above standard exploration behaviors and treats leadership as a revocable privilege rather than a fixed role.
+      Resilient Election & Impeachment Policy (REIP) is my research project that won 1st place in Robotics (Top 20 overall out of 1,200) at the Washington State Science & Engineering Fair 2026 and was presented at the AIAA Technical Symposium. The question behind it: how does a robot team stay coordinated when its leader fails, misbehaves, or is interfered with? A standard leader-follower setup has no answer once the designated leader hallucinates or drops off the network. I built a trust-based governance layer that sits on top of the usual exploration behavior: the team scores its leader continuously, calls an election when trust falls, and impeaches a compromised leader mid-run. Leadership becomes a revocable role instead of a fixed one.
       </p>
       <hr>
       <h3>Custom Simulation Environment</h3>
@@ -251,7 +157,7 @@
       I built this custom simulation environment in Python that allows me to live monitor the behavior of the agents in the environment.
       This environment is a grid-world with a start and end point, and a number of obstacles. The drones can move around the grid-world and collect rewards.
       The agents each have a local view of the environment and a shared "Simultaneous Localization And Mapping" (SLAM) view of the environment through a custom communication protocol.
-      The simulation can be ran under .YAML configuration files that define which agent policy is to be ran within the environment for comparison and ablation tests.
+      The simulation runs from .YAML configuration files that define which agent policy is used for comparison and ablation tests.
       </p>
       <div class="reip-section">
         <figure class="project-figure" style="height: 550px; max-height: 550px; width: 500px; max-width: 500px;">
@@ -331,10 +237,43 @@
       files: []
     },
     {
+      id: 13,
+      title: "STATA: Learned-Trust Framework for Multi-Robot Teams",
+      date: "March 2026 - Present",
+      keyPoints: "AIAA SciTech 2027 · Learned trust · Follow-on to REIP",
+      description: "Follow-on to REIP. Instead of scoring leaders with a hand-tuned trust metric, agents learn how much to trust each other from incomplete and conflicting observations. Accepted for oral presentation and publication in the proceedings of AIAA SciTech Forum 2027 in Orlando.",
+      badge: "AIAA SciTech",
+      highlights: [
+        "Accepted for oral presentation and proceedings at AIAA SciTech Forum 2027 (Orlando, FL)",
+        "Learned trust models between robots holding incomplete data",
+        "Builds directly on the REIP election and impeachment policy"
+      ],
+      descriptionHtml: `
+      <h3>At a glance</h3>
+      <ul>
+        <li><strong class="list-label">Status:</strong> In progress. Accepted for oral presentation and publication in the proceedings of the AIAA SciTech Forum 2027 (Orlando, FL), AIAA's flagship aerospace conference.</li>
+        <li><strong class="list-label">Goal:</strong> Let each robot learn how much to trust its teammates instead of relying on the hand-tuned trust metric REIP uses today.</li>
+        <li><strong class="list-label">Setting:</strong> Teams where no robot sees the whole map, so agents have to weigh reports that partly disagree with what they observed themselves.</li>
+        <li><strong class="list-label">Relationship to REIP:</strong> Same election and impeachment machinery; the trust signal that drives it is learned rather than specified.</li>
+      </ul>
+      <hr>
+      <h3>Project Overview</h3>
+      <p>
+      REIP showed that a team can recover from a bad leader if it has a reliable way to tell that the leader has gone bad. That signal was a trust score I tuned by hand against a specific fault profile, which is fine for a benchmark and brittle everywhere else. STATA replaces it: agents build trust models of each other from the observations they actually have, which are partial and often in conflict, and those learned models decide when leadership should change hands.
+      </p>
+      <p>
+      The work is ongoing and the results will be presented at AIAA SciTech 2027. Write-up, figures, and code to follow here once the paper is final.
+      </p>
+      <div class="clear-float"></div>
+      `,
+      image: "/assets/img/reip/demoimage.png",
+      files: []
+    },
+    {
       id: 11,
-      title: "Corgi: A Home-Helper Robot You Text",
+      title: "Corgi: A Robotic Walker for Paraplegic Users",
       date: "July 2026",
-      keyPoints: "2nd place hackathon win · LeRobot SO-101 · iMessage robot concierge",
+      keyPoints: "2nd place out of 250+ teams, LeRobot SO-101, Arduino differential drive base",
       repoUrl: "https://github.com/jerryli08/corgi-hackathon",
       description: "Won 2nd place at a robotics hackathon with Corgi: an in-home helper robot you text in plain English through iMessage. It fetches items, delivers them in a basket, and offers a paced \"walk with me\" escort mode, all hosted on a single Mac.",
       badge: "2nd Place",
@@ -349,8 +288,8 @@
           <li><strong class="list-label">Result:</strong> 2nd place at the hackathon (July 2026)</li>
           <li><strong class="list-label">Product:</strong> Corgi, an in-home helper robot for elderly users; you text it in the Messages app you already use ("bring me my water bottle", "walk with me") and it does the errand</li>
           <li><strong class="list-label">Stack:</strong> Photon iMessage bridge, LLM intent router (Merge Gateway with keyword fallback), FastAPI host, OpenCV/VLM perception, LeRobot SO-101 arm, Arduino differential drive base</li>
-          <li><strong class="list-label">Safety-first design:</strong> LLMs only output typed intents (never raw motor commands), "stop"/"help" always override the model, and dual watchdogs (host + firmware) halt the base if anything goes quiet</li>
-          <li><strong class="list-label">Honest failure handling:</strong> missed grasps are detected from gripper travel, retried once, then escalated with a "needs help" text instead of pretending it succeeded</li>
+          <li><strong class="list-label">Safety:</strong> the LLM only outputs typed intents, never raw motor commands; "stop" and "help" override the model; dual watchdogs (host + firmware) halt the base if anything goes quiet</li>
+          <li><strong class="list-label">Failure handling:</strong> a missed grasp is caught from gripper travel, retried once, then reported back as a "needs help" text</li>
         </ul>
         <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
           <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
@@ -361,10 +300,10 @@
         <hr>
         <h3>Project Overview</h3>
         <p>
-        Getting up for a water bottle or pacing to the kitchen shouldn't require a caregiver standing by. Corgi is an in-home helper you text in plain English: it finds an item, puts it in its basket, drives back, and hands it over. In "walk with me" mode it comes to you and keeps pace beside you as a steadying reference, using a dead-man control loop so the wheels stop within milliseconds if hold-to-drive input goes silent.
+        Corgi is an in-home helper robot you text in plain English. It finds an item, puts it in its basket, drives back, and hands it over. In "walk with me" mode it comes to you and keeps pace beside you as something to steady against, on a dead-man control loop that stops the wheels within milliseconds if the hold-to-drive input goes silent.
         </p>
         <p>
-        Inbound iMessages arrive through a Photon bridge, an LLM router converts free text into one typed intent (a fast model handles short messages, a deeper model only runs when confidence is low, and everything degrades to an offline keyword router), and a deterministic skill state machine drives the arm, wheels, and camera. The reply policy is deliberately minimal: two texts per errand, an acknowledgement and then arrival/delivery/help, so an elderly user never gets nine updates about one water bottle.
+        Inbound iMessages arrive through a Photon bridge, an LLM router converts free text into one typed intent (a fast model handles short messages, a deeper model only runs when confidence is low, and everything degrades to an offline keyword router), and a deterministic skill state machine drives the arm, wheels, and camera. It sends two texts per errand, an acknowledgement and then arrival, delivery, or a request for help, so one water bottle doesn't turn into nine notifications.
         </p>
         <p>
         The whole robot runs as one FastAPI process on a single Mac, with a mock world so the full loop demos with no hardware plugged in, plus an ops console with live camera, phase log, router decisions, manual jog, and e-stop.
@@ -376,7 +315,7 @@
     },
     {
       id: 12,
-      title: "Linqbot: AR & iMessage Robot Takeover",
+      title: "Linqbot: AR & iMessage Robot",
       date: "July 2026",
       keyPoints: "AR hand-tracking teleop · LLM-planned SO-101 arm · iMessage robot agent",
       repoUrl: "https://github.com/amzoeee/soma-hackathon",
@@ -385,12 +324,12 @@
       highlights: [
         "Xreal One Pro Eye camera + MediaPipe hand tracking drives the arm in real time",
         "iMessage requests planned by an LLM into ordered, deterministic tool calls",
-        "Failures stop execution and escalate to a human instead of guessing"
+        "Failures stop execution and hand control to a human operator"
       ],
       descriptionHtml: `
         <h3>At a glance</h3>
         <ul>
-          <li><strong class="list-label">Concept:</strong> Autonomy still fails on the messy last 5% (a missed grasp, an ambiguous object), so Linqbot makes the human a remote exception-handler: the robot runs on its own until it can't, then hands off; one person can oversee many robots and only touch the moments that need a human</li>
+          <li><strong class="list-label">Concept:</strong> the robot runs on its own until it hits something it can't handle (a missed grasp, an ambiguous object) and then hands control to a remote operator, so one person can watch several robots and only step in for the moments that need a human</li>
           <li><strong class="list-label">iMessage agent:</strong> a plain-language request arrives via a Linq webhook, an LLM planner (Runware GPT-5.6 Luna + LangGraph) turns it into an ordered tool sequence, and the arm executes step-by-step with a deterministic result reply</li>
           <li><strong class="list-label">AR takeover:</strong> spatial hand tracking from the Xreal One Pro Eye camera (21 MediaPipe landmarks) maps hand motion and wrist roll straight into the arm's workspace through an IK solver, with a closed-fist "clutch" gesture to freeze the arm and reposition without snap motions</li>
           <li><strong class="list-label">Stack:</strong> FastAPI, Linq (iMessage), Runware GPT-5.6 Luna, LangGraph, MediaPipe, ikpy, OpenCV, LeRobot SO-101, Xreal One Pro + Eye camera</li>
@@ -414,10 +353,10 @@
         <hr>
         <h3>Project Overview</h3>
         <p>
-        As autonomous robots move onto production lines and into warehouses, a single failure (a crushed part, a missed grasp) can stall a whole line, and today the fix is a technician babysitting each robot. Linqbot flips that: an operator texts the robot in plain English, an LLM plans the actions as an ordered sequence of typed tool calls (Cartesian moves, wrist moves, gripper state), and the SO-101 arm executes deterministically, stopping on the first failure instead of improvising.
+        On a production line, one failure (a crushed part, a missed grasp) can stall everything, and the usual fix is a technician standing next to each robot. Linqbot replaces that with remote takeover. An operator texts the robot in plain English, an LLM plans the actions as an ordered sequence of typed tool calls (Cartesian moves, wrist moves, gripper state), and the SO-101 arm executes deterministically, stopping on the first failure instead of improvising.
         </p>
         <p>
-        When something does fail, the human takes over directly with their hands. The Xreal One Pro's Eye camera feed runs MediaPipe hand tracking in real time, mapping X/Y/Z motion and wrist roll into the arm's workspace via inverse kinematics, with a live status HUD on the glasses. A pinch closes the gripper, and a closed-fist clutch freezes the arm so you can reposition your hand comfortably and resume relative tracking, the same way a mouse lifts off a desk.
+        When something does fail, the human takes over directly with their hands. The Xreal One Pro's Eye camera feed runs MediaPipe hand tracking in real time, mapping X/Y/Z motion and wrist roll into the arm's workspace via inverse kinematics, with a live status HUD on the glasses. A pinch closes the gripper, and a closed-fist clutch freezes the arm so you can reposition your hand comfortably and resume relative tracking, the way you lift a mouse off the desk to recenter it.
         </p>
         <p>
         Built in one hackathon weekend on a LeRobot SO-101 arm, including reverse-engineering the Eye camera stream, plus a calibrated leader/driver arm teleop mode for recording demos and datasets.
@@ -431,7 +370,7 @@
       id: 10,
       title: "Flight Lab Educational Kits",
       date: "December 2025 - Present",
-      keyPoints: "Founder & product lead · K-5 aerospace kits · Launching Aug 2026",
+      keyPoints: "Founder & product lead · K-5 aerospace kits",
       description: "Founded Flight Lab: K-5 aerospace teaching kits built around project-based learning, with a custom manufacturing method for cheap, scalable production. Piloting with 100+ students ahead of the August 2026 launch.",
       badge: "Founder",
       orgLogo: "/assets/img/logos/flight-lab.png",
@@ -451,7 +390,7 @@
         <hr>
         <h3>Project Overview</h3>
         <p>
-        Flight Lab grew out of years of aerospace outreach: after teaching rocketry and flight fundamentals to thousands of K-5 students, I kept seeing the same gap: there was no affordable, hands-on kit that let young students actually build and understand something that flies. Flight Lab kits are designed to fill that gap with project-based lessons that a classroom teacher can run without an aerospace background.
+        Flight Lab came out of the outreach I run with Olympia Aerospace. After teaching rocketry and flight fundamentals in K-5 classrooms, the missing piece was always the same: there was no affordable kit that let students build and fly something themselves. Flight Lab kits are project-based lessons a classroom teacher can run without an aerospace background.
         </p>
         <p>
         I designed the kits, developed a custom manufacturing method to keep per-unit costs low at scale, and am currently running pilot production with more than 100 students to refine the product before launch in August 2026.
@@ -459,7 +398,7 @@
         <hr>
         <h3>Custom Foam Needle Cutter: Interactive CAD</h3>
         <p>
-        The heart of the manufacturing method: a custom CNC foam needle cutter I designed to cut kit parts cheaply and repeatably at scale.
+        The manufacturing method is built around a custom CNC foam needle cutter I designed to cut kit parts cheaply and repeatably at scale.
         </p>
         <div class="article-image fusion-360-embed">
           <iframe
@@ -480,7 +419,7 @@
       id: 3,
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
-      keyPoints: "Autonomous UAV · OpenCV line tracking · BWSI champion",
+      keyPoints: "OpenCV, PX4, Autonomous UAV",
       repoUrl: "https://github.com/amzoeee/line_follower_v2",
       description: "Led sensing + electronics for the MIT BWSI UAV racing team, integrating OpenCV line tracking on a Pi 5 with PX4 autopilot to win by over a minute.",
       badge: "BWSI",
@@ -511,8 +450,8 @@
             <figcaption>Flying UAV</figcaption>
           </figure>
           <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Deconstruction">
-            <figcaption>Drone parts layed out for visualization.</figcaption>
+            <img src="/assets/img/bwsi/deconstructdrone.jpg" alt="Drone components laid out">
+            <figcaption>Drone parts laid out for visualization.</figcaption>
           </figure>
         </div>
         <div class="clear-float"></div>
@@ -545,10 +484,10 @@
       <p> I competed in this hackathon hosted by Y-Combinator and Metorial AI to embed an LLM into a custom LeRobot/KiwiBot robot.
       The robot can do tasks such as picking up objects placed in front of it, be teleoperated, and navigate to a location.
       The LLM allows the robot to have "feelings" and interact with the environment based on its observations; this is important
-      because it shows how LLMS can be used to detect danger, and when embedded, act to prevent or set of an alert of said danger.
+      because it shows how LLMS can be used to detect danger, and when embedded, act to prevent it or raise an alert.
       When a sharp object was "seen" by the robot, it would set off an alert that there was a sharp object in the way which can help people 
       who are not able to see the object themselves. We used the HuggingFace API to train the robot to pick up specific colored objects as well.
-      This was completed on a team of three comprising of a professor and a grad student who were experts in the field. We then went through the 
+      This was completed on a team of three with a professor and a grad student who were experts in the field. We then went through the 
       startup process of pitching a business idea to a panel of investors and mentors.
       </p>
       <p>
@@ -590,19 +529,19 @@
         </p>
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/cycle.jpg" alt="Soldering">
-            <figcaption>GPT Based Menstrual Cycle Assesment Feature.</figcaption>
+            <img src="/assets/img/lifeflo/cycle.jpg" alt="Cycle assessment screen in the LifeFlo app">
+            <figcaption>GPT-based menstrual cycle assessment feature.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/ffff.jpg" alt="Soldering">
+            <img src="/assets/img/lifeflo/ffff.jpg" alt="Daily symptom logging screen">
             <figcaption>Daily logging function for Menstrual Health Tracker.</figcaption>
           </figure>
           <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/calendar.jpg" alt="Soldering">
+            <img src="/assets/img/lifeflo/calendar.jpg" alt="Calendar screen with personal notes">
             <figcaption>Personal notes can also be left for logging purposes.</figcaption>
           </figure>
           <figure class="project-figure--right object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-            <img src="/assets/img/lifeflo/menu.jpg" alt="Deconstruction">
+            <img src="/assets/img/lifeflo/menu.jpg" alt="Sidebar navigation menu">
             <figcaption>Sidebar menu for navigation.</figcaption>
           </figure>
         </div>
@@ -634,7 +573,7 @@
       <hr>
       <h3>Project Overview</h3>
       <p>
-      This project aimed to design and hot-fire a small LOX-propane rocket engine using a constrained set of materials (truck muffler shell + scrap tubing). I led the design of the combustion chamber and regenerative cooling channels, ran CFD in ANSYS Fluent to size the flow paths, and coordinated fabrication and test. Early hot-fires reached ~43 s of stable burn, but later tests failed when thermal expansion in the cooling channels over-injected fuel into the chamber. Using simulation and mentor feedback, I diagnosed the failure, iterated the design, and wrote an informal research-style report in LaTeX documenting the process and lessons learned.      </p>
+      This project aimed to design and hot-fire a small LOX-propane rocket engine using a constrained set of materials (truck muffler shell + scrap tubing). I led the design of the combustion chamber and regenerative cooling channels, ran CFD in ANSYS Fluent to size the flow paths, and coordinated fabrication and test. Early hot-fires reached ~32 s of stable burn, but later tests failed when thermal expansion in the cooling channels over-injected fuel into the chamber. Using simulation and mentor feedback, I diagnosed the failure, iterated the design, and wrote an informal research-style report in LaTeX documenting the process and lessons learned.
       </p>
       <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; justify-content: space-between; align-items: stretch; width: 100%;">
       <figure class="project-figure project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
@@ -650,18 +589,19 @@
         <figcaption>Second successful combustion test with better optimized combustion chamber.</figcaption>
       </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/rocket/buildingrocket.jpg" alt="Soldering">
+          <img src="/assets/img/rocket/buildingrocket.jpg" alt="Building the second version of the engine">
           <figcaption>Building version two of the rocket engine.</figcaption>
         </figure>
         <figure class="project-figure object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px; flex: 0 0 300px;">
-          <img src="/assets/img/rocket/mk3picture.jpg" alt="Soldering">
+          <img src="/assets/img/rocket/mk3picture.jpg" alt="Hot-firing the third version of the engine">
           <figcaption>Firing up the third version of the rocket engine.</figcaption>
         </figure>
       </div>
       <hr>
       <h3>Failure Analysis</h3>
       <p>
-      After early hot-fire tests (~43 s average runtime) the engine began to fail prematurely, with unstable combustion and flooding. We logged chamber pressure, mass flow rate, and injector temperatures, then built a simplified thermal-expansion model of the regen channels.
+      After early hot-fire tests (~32 s average runtime) the engine began to fail prematurely, with unstable combustion and flooding. We logged chamber pressure, mass flow rate, and injector temperatures, then built a simplified thermal-expansion model of the regen channels.
+      </p>
       <p>
       Comparing CFD results and test data, we found that as the engine heated up, the thin cooling tubes expanded more than the chamber wall, increasing their flow area and over-injecting fuel into the chamber. That mixture shift explained both the pressure traces and the visible flame behavior.
       </p>
@@ -683,7 +623,7 @@
       </figure>
       <h3>RDE Concept Analysis - Simulation Only</h3>
       <p> 
-      As a follow-on to the LOX-propane engine, I designed a conceptual rotating-detonation combustor (RDE) in Fusion 360 and ran ANSYS Fluent CFD to study flow, density, and wall heat transfer. Using the same performance targets and cooling-channel layout as our baseline engine, I explored how an RDE variant would behave and compared its fields to the conventional design. This work stayed entirely in simulation for safety-no hardware was built. 
+      As a follow-on to the LOX-propane engine, I designed a conceptual rotating-detonation combustor (RDE) in Fusion 360 and ran ANSYS Fluent CFD to study flow, density, and wall heat transfer. Using the same performance targets and cooling-channel layout as our baseline engine, I explored how an RDE variant would behave and compared its fields to the conventional design. This work stayed entirely in simulation for safety; no hardware was built. 
       </p>
       <div class="clear-float"></div>
    `,
@@ -710,11 +650,11 @@
         Units sell for $50 and cost only $15 to produce ($35 profit per unit), and are currently selling to sailors and windsurfers at local clubs.
         </p>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-          <img src="/assets/img/windsurfing/windsurfing.png" alt="Interface">
+          <img src="/assets/img/windsurfing/windsurfing.png" alt="Weather Brick display showing marine units">
           <figcaption>Interface with marine units.</figcaption>
         </figure>
         <figure class="project-figure project-figure--left object-cover" style="height: 400px; max-height: 400px; width: 300px; max-width: 300px;">
-          <img src="/assets/img/windsurfing/wires.jpg" alt="Custom Battery">
+          <img src="/assets/img/windsurfing/wires.jpg" alt="Microcontroller wiring inside the Weather Brick">
           <figcaption>Custom wiring for the microcontroller.</figcaption>
         </figure>
       `,
@@ -756,7 +696,7 @@
         This is very unsustainable because everything has to be paid out of pocket due to the lack of government support.
         I initially started by raising funds for basic supplies and new cubbies for the students to store their supplies.
         Then, I considered a more permanent solution for the students. 
-        Instead of buying new supplies, the students could use an e-writer that doesnt need paper or even a pencil to work, it just needs a small coin cell battery.
+        Instead of buying new supplies, the students could use an e-writer that doesn't need paper or even a pencil to work, it just needs a small coin cell battery.
         However, I realized that coin cell batteries are very hard to source on the island of Nalauwaki so I decided to prototype a solar-powered solution that would be sustainable in the sunny climate.
         </p>
 
@@ -770,7 +710,7 @@
         <h3>Engineering the Solution</h3>
         <p>My design combines the writing device with a small solar-powered circuit. The total cost is under $3: less than a dollar in PLA filament for the housing, and less than $2 for the electronics. The device doesn't require a special stylus; students can write with their finger if the pen is lost, making it ideal for resource-constrained environments.</p>
         
-        <p>I'm currently iterating on a more robust design and ensuring long-term functionality by giving demos to students in my old middle school before sending units abroad. The goal is to engineer a sustainable tool that fits their environment, rather than one that seems promising but proves unsustainable.</p>
+        <p>I'm currently iterating on a more robust design and ensuring long-term functionality by giving demos to students in my old middle school before sending units abroad. The goal is a tool that keeps working in their environment long after I stop being involved.</p>
         
         <div class="clear-float"></div>
         
@@ -799,15 +739,15 @@
       id: 9,
       title: "Olympia Aerospace Club & American Rocketry Challenge",
       date: "September 2024 - Present",
-      keyPoints: "VP & outreach lead · 18th nationally of 1,000+ teams · 3,000+ students reached",
+      keyPoints: "VP & outreach lead · 18th nationally of 1,000+ teams · 2,000+ students reached",
       appUrl: "https://www.ohsaerospace.org/home",
       appLabel: "Club Website",
-      description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams: 130+ launches, 3,000+ K-5 students reached at 9 schools, and $10,000+ raised for the team and outreach.",
+      description: "Vice president and outreach lead of a 16-team TARC program ranked 18th nationally out of 1,000+ teams: 130+ launches, 2,000+ students reached across seven schools and community organizations, and $10,000+ raised for the team and outreach.",
       badge: "Aerospace",
       orgLogo: "/assets/img/logos/arc.png",
       highlights: [
         "18th national rank (2025) out of 1,000+ TARC teams; 16 teams, 130+ launches",
-        "Led outreach to 3,000+ K-5 students at 9 schools; raised $10,000+",
+        "Led outreach to 2,000+ students across seven schools; raised $10,000+",
         "Sole recipient of the AIAA PNW Young Professional of the Year award (2026)"
       ],
       descriptionHtml: `
@@ -819,7 +759,7 @@
         <ul>
           <li><strong class="list-label">Role:</strong> Vice President and Leader of Outreach, <a href="https://www.ohsaerospace.org/home" target="_blank" rel="noopener" data-cursor-target>Olympia Aerospace Club</a></li>
           <li><strong class="list-label">Scale:</strong> 16 TARC teams, 130+ total launches, 2,000+ students reached through the club; ranked 18th nationally out of 1,000+ teams in 2025</li>
-          <li><strong class="list-label">Outreach:</strong> Led aerospace outreach events to 3,000+ K-5 students at 9 schools; founded and instructed Aerospace Summer Camps at Hands On Children's Museum</li>
+          <li><strong class="list-label">Outreach:</strong> Led aerospace outreach reaching 2,000+ students across seven schools and community organizations; founded and instructed Aerospace Summer Camps at Hands On Children's Museum</li>
           <li><strong class="list-label">Fundraising:</strong> Raised over $10,000 for the rocketry team and outreach events</li>
           <li><strong class="list-label">Recognition:</strong> Sole recipient of the AIAA PNW Young Professional of the Year award (2026), recognizing highly technical and outstanding community-building professionals under the age of 35</li>
           <li><strong class="list-label">Competition:</strong> Engineered dual-deploy ARC vehicles with redundant altimeters, telemetry-driven iteration, and OpenRocket/ANSYS-optimized frames and fin cans</li>
@@ -893,7 +833,7 @@
   const filesGrid = document.getElementById('filesGrid');
   const modalBody = document.querySelector('.modal-body');
 
-  // Initialize portfolio grid: two columns, org chips on the outer edges
+  // Two columns of card rows, org chips on the outer edges
   function initPortfolio() {
     if (!portfolioGrid) return;
 
@@ -1339,7 +1279,6 @@
     return true;
   }
 
-  // Initialize YouTube click-to-play embeds
   function initYouTubeEmbeds() {
     document.addEventListener('click', (e) => {
       const thumbnail = e.target.closest('.youtube-thumbnail');
@@ -1351,7 +1290,6 @@
       const videoId = thumbnail.dataset.videoId;
       if (!videoId) return;
       
-      // Create iframe with autoplay
       const iframe = document.createElement('iframe');
       iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
@@ -1366,7 +1304,6 @@
       iframe.style.background = '#161b22';
       iframe.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
       
-      // Replace thumbnail with iframe
       thumbnail.replaceWith(iframe);
     });
   }
@@ -1440,7 +1377,6 @@
     openFromHash();
   }
 
-  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootstrap);
   } else {

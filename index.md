@@ -46,11 +46,11 @@ layout: default
 </section>
 
 <footer class="site-footer" id="contact">
-  <p class="site-footer__kicker">Get in touch</p>
-  <h2 class="site-footer__title">Let’s build something.</h2>
+  <p class="site-footer__kicker">Contact</p>
+  <h2 class="site-footer__title">Get in touch.</h2>
   <p class="site-footer__lede">
-    I love connecting with fellow builders, researchers, and curious minds.
-    Reach me anytime at <a href="mailto:rykerkollmyer@gmail.com" data-cursor-target>rykerkollmyer@gmail.com</a>.
+    Email is the fastest way to reach me: <a href="mailto:rykerkollmyer@gmail.com" data-cursor-target>rykerkollmyer@gmail.com</a>.
+    Happy to talk about any of the work above.
   </p>
   <div class="site-footer__links">
     <a href="https://github.com/Ryker32" class="pill-link pill-link--ghost" target="_blank" rel="noopener" data-cursor-target>GitHub</a>

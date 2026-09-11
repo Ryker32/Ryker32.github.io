@@ -6,7 +6,7 @@ permalink: /contact/
 
 <section class="contact-page" id="contact-page">
   <header class="contact-header">
-    <p class="contact-kicker">Let's build something</p>
+    <p class="contact-kicker">Contact</p>
     <h1>Get in touch</h1>
     <p class="contact-lede">Reach me on any of the channels below. I reply fastest to email.</p>
   </header>

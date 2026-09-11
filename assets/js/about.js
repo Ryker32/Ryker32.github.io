@@ -191,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(loop, 600);
   }
 
-  // Card swap carousel (vanilla)
   const aboutCards = document.querySelector('.js-card-carousel');
   if (aboutCards) {
     new CardSwap(aboutCards, {
