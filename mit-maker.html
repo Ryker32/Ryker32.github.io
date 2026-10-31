@@ -24,7 +24,12 @@ sitemap: false
       {%- if live_repos.size > 0 %}
       <ul class="mm-repos" aria-label="Repositories">
         {%- for r in live_repos %}
-        <li><a class="pill-link pill-link--ghost" href="{{ r.url }}" target="_blank" rel="noopener">{{ r.label }}</a></li>
+        <li>
+          <a class="mm-repo mm-repo--{{ r.kind | default: 'clean' }}" href="{{ r.url }}" target="_blank" rel="noopener">
+            <span class="mm-repo__kind">{% if r.kind == 'original' %}Original repo{% if r.note %} · {{ r.note }}{% endif %}{% else %}Cleaned-up repo{% endif %}</span>
+            <span class="mm-repo__name">{{ r.label }}</span>
+          </a>
+        </li>
         {%- endfor %}
       </ul>
       {%- endif %}
