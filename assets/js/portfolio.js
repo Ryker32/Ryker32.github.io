@@ -344,7 +344,7 @@
           <div class="lq-demo__stage" data-lq-stage></div>
           <div class="lq-demo__panel" data-lq-panel></div>
         </div>
-        <p class="lq-demo__caption">A simulation on a CAD model of the SO-101, driven live by your webcam; the table and the can are props. Left, right, and reach are mirrored because a webcam faces you while the glasses faced the arm. Also on the <a href="https://www.jerryli.design/projects/linqbot" target="_blank" rel="noopener">LinqBot write-up at jerryli.design</a>.</p>
+        <p class="lq-demo__caption">A simulation on a CAD model of the SO-101, driven live by your webcam; the table and the can are props. Left, right, and reach are mirrored because a webcam faces you while the glasses faced the arm. Demo credit: Jerry Li, from his <a href="https://www.jerryli.design/projects/linqbot" target="_blank" rel="noopener">LinqBot write-up</a>.</p>
         <hr>
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; align-items: stretch;">
           <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">

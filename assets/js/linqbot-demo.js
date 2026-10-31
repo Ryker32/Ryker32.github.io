@@ -1,6 +1,6 @@
 // Host for the LinqBot "try it with your own hand" webcam demo inside the
 // project modal. The demo modules under /assets/js/pages/linqbot/ and the 3D
-// stage in /assets/js/lib/stage.js are copied unchanged from the LinqBot
+// stage in /assets/js/lib/stage.js are copied unchanged from Jerry Li's LinqBot
 // write-up on jerryli.design (github.com/jerryli08/jerryli08.github.io); this
 // file only supplies the small context object their page framework passed in.
 //
