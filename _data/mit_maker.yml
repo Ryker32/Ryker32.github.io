@@ -10,42 +10,45 @@ projects:
 
   - id: reip
     title: "REIP: Multi-Robot Trust & Leader Election"
-    summary: "Trust-based leader election and impeachment for robot teams, including the Raspberry Pi robot node, Pico motor firmware, and simulation harness."
+    summary: "Trust-based leader election and impeachment for robot teams: the code that ran on five robots, and the simulations and trial logs behind the results."
     repos:
-      - { label: "Ryker32/reip-sim-public", url: "https://github.com/Ryker32/reip-sim-public/tree/80c275862c2c2066abd229bb99fa023a0f2191e8" }
+      - { label: "Ryker32/reip-robots", url: "https://github.com/Ryker32/reip-robots/tree/82b8b5c377325e44a7d45989072f6d9a68895aa4" }
+      - { label: "Ryker32/reip-experiments", url: "https://github.com/Ryker32/reip-experiments/tree/ba9f363925140c3506c0e6a790f3b7609989a402" }
     files:
-      - { path: "robot/reip_node.py", url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L1255-L1447" }
-      - { path: "pico/main.py", url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/pico/main.py" }
-    credit: "Solo project, mentored by Avi Soval. Later commits were made with Cursor and Claude Code, as marked in the git history."
+      - { path: "reip-robots/robot/reip_node.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/robot/reip_node.py#L1257-L1449" }
+      - { path: "reip-robots/pico/main.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/pico/main.py" }
+    credit: "Solo project, mentored by Avi Soval. Curated from my full development repo (reip-sim-public); later development commits there were made with Cursor and Claude Code."
 
   - id: golden-retriever
     title: "Golden Retriever Robot Walker"
     summary: "LeRobot demonstration recording and ACT imitation-learning grasp inference for an SO-101 arm mounted on a walker."
     repos:
-      - { label: "jerryli08/corgi-hackathon", url: "https://github.com/jerryli08/corgi-hackathon/tree/e683997abcdad08218dbd878d502eb15d7d0c35a" }
+      - { label: "Ryker32/golden-retriever-act-grasp", url: "https://github.com/Ryker32/golden-retriever-act-grasp/tree/f46c841e1ddedf226543a05a1554c290d0e162e9" }
+      - { label: "jerryli08/corgi-hackathon (team)", url: "https://github.com/jerryli08/corgi-hackathon/tree/e683997abcdad08218dbd878d502eb15d7d0c35a" }
     files:
-      - { path: "scripts/record_40.ps1", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/record_40.ps1" }
-      - { path: "scripts/run_grasp_policy.py", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/run_grasp_policy.py#L278-L382" }
-    credit: "Team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
+      - { path: "scripts/record_40.ps1", url: "https://github.com/Ryker32/golden-retriever-act-grasp/blob/f46c841e1ddedf226543a05a1554c290d0e162e9/scripts/record_40.ps1" }
+      - { path: "scripts/run_grasp_policy.py", url: "https://github.com/Ryker32/golden-retriever-act-grasp/blob/f46c841e1ddedf226543a05a1554c290d0e162e9/scripts/run_grasp_policy.py#L278-L382" }
+    credit: "My files from a team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
 
   - id: xr-teleop
     title: "XR-Glasses Robotic Arm Teleoperation"
     summary: "Hand tracking from XREAL glasses drives an SO-101 arm, with a fist-controlled clutch, gesture debouncing, and inverse kinematics."
     repos:
-      - { label: "amzoeee/soma-hackathon", url: "https://github.com/amzoeee/soma-hackathon/tree/db5ccf77e2f756501d059279d0aedb0f62beab97" }
+      - { label: "Ryker32/linqbot-hand-teleop", url: "https://github.com/Ryker32/linqbot-hand-teleop/tree/dbc98d7806a182d85915cb5158356681f9ec39e1" }
+      - { label: "amzoeee/soma-hackathon (team)", url: "https://github.com/amzoeee/soma-hackathon/tree/db5ccf77e2f756501d059279d0aedb0f62beab97" }
     files:
-      - { path: "robot/src/mapping/relative_teleop.py", url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/mapping/relative_teleop.py#L154-L232" }
-      - { path: "robot/src/camera/xreal_eye.py", url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/camera/xreal_eye.py#L110-L116" }
-    credit: "Team repository; teammates built the iMessage agent. Uses an open-source XREAL Eye streaming tool, MediaPipe, and ikpy; some of my commits used Cursor."
+      - { path: "src/mapping/relative_teleop.py", url: "https://github.com/Ryker32/linqbot-hand-teleop/blob/dbc98d7806a182d85915cb5158356681f9ec39e1/src/mapping/relative_teleop.py#L154-L232" }
+      - { path: "src/camera/xreal_eye.py", url: "https://github.com/Ryker32/linqbot-hand-teleop/blob/dbc98d7806a182d85915cb5158356681f9ec39e1/src/camera/xreal_eye.py#L110-L116" }
+    credit: "My files from the team repository; teammates built the iMessage agent. Uses an open-source XREAL Eye streaming tool, MediaPipe, and ikpy; some of my commits used Cursor."
 
   - id: bwsi-drone
     title: "BWSI Autonomous Racing Drone"
     summary: "OpenCV line detection for a racing drone's downward camera: my experiment notebook and the team's flight node."
     repos:
-      - { label: "Ryker32/CVrykerstuff", url: "https://github.com/Ryker32/CVrykerstuff/tree/43ce2fe7e393b2216c07e60ee5c3bf76941d7230" }
+      - { label: "Ryker32/bwsi-line-detection", url: "https://github.com/Ryker32/bwsi-line-detection/tree/2cfb5f0472879aaf58092ea821125a85c5ccb104" }
       - { label: "amzoeee/line_follower_v2", url: "https://github.com/amzoeee/line_follower_v2/tree/d535b6a33bc5628687f761fc2c7a24259a9e0e11" }
     files:
-      - { path: "CVrykerstuff/testingtet.ipynb", url: "https://github.com/Ryker32/CVrykerstuff/blob/43ce2fe7e393b2216c07e60ee5c3bf76941d7230/testingtet.ipynb" }
+      - { path: "notebooks/testingtet.ipynb", url: "https://github.com/Ryker32/bwsi-line-detection/blob/2cfb5f0472879aaf58092ea821125a85c5ccb104/notebooks/testingtet.ipynb" }
       - { path: "line_follower_v2/offb_node.py", url: "https://github.com/amzoeee/line_follower_v2/blob/d535b6a33bc5628687f761fc2c7a24259a9e0e11/line_follower_v2/offb_node.py#L185-L265" }
     credit: "Flight code is the team repository, maintained by Zoe; team included Mihika Sakharpe, Jerry, and Katherine."
 
@@ -53,6 +56,7 @@ projects:
     title: "Soil-Moisture Monitor (work in progress)"
     summary: "ESP32 firmware that calibrates a capacitive soil sensor, powers it only while reading, and shows moisture on an e-paper display."
     repos:
-      - { label: "Ryker32/plantmonitor", url: "https://github.com/Ryker32/plantmonitor/tree/8e0afba849431e46b30d5976ad7b057483ce0d46" }
+      - { label: "Ryker32/soil-moisture-monitor", url: "https://github.com/Ryker32/soil-moisture-monitor/tree/9af95ca537f4863b1e9504d500d64f88a8722a45" }
     files:
-      - { path: "plantmonitor/plantmonitor.ino", url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L13-L69" }
+      - { path: "firmware/plantmonitor/plantmonitor.ino", url: "https://github.com/Ryker32/soil-moisture-monitor/blob/9af95ca537f4863b1e9504d500d64f88a8722a45/firmware/plantmonitor/plantmonitor.ino#L13-L69" }
+    credit: "E-paper driver from the display maker's sample code; fonts © STMicroelectronics."
