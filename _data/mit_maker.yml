@@ -9,6 +9,7 @@ intro: "Code supporting the projects in my Maker Portfolio."
 projects:
 
   - id: reip
+    demo: reip
     title: "REIP: Multi-Robot Trust & Leader Election"
     summary: "Trust-based leader election and impeachment for robot teams: the code that ran on five robots, and the simulations and trial logs behind the results."
     repos:
@@ -31,6 +32,7 @@ projects:
     credit: "My files from a team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
 
   - id: xr-teleop
+    demo: linqbot
     title: "XR-Glasses Robotic Arm Teleoperation"
     summary: "Hand tracking from XREAL glasses drives an SO-101 arm, with a fist-controlled clutch, gesture debouncing, and inverse kinematics."
     repos:

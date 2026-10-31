@@ -139,3 +139,24 @@
     display: none;
   }
 }
+
+/* ---------- Inline demos ---------- */
+
+.mm-demo-btn {
+  margin-top: 12px;
+}
+
+.mm-demo {
+  margin-top: 14px;
+}
+
+.mm-demo[hidden] {
+  display: none;
+}
+
+.mm-demo__note {
+  margin: 0 0 10px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+}

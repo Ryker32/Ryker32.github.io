@@ -38,6 +38,22 @@ sitemap: false
       {%- endif %}
 
       {%- if p.credit %}<p class="mm-credit">{{ p.credit }}</p>{% endif %}
+
+      {%- if p.demo %}
+      <button type="button" class="project-card__demo mm-demo-btn" data-demo-toggle="{{ p.id }}-demo" aria-expanded="false" aria-controls="{{ p.id }}-demo"><span aria-hidden="true">&#9654;</span> <span data-demo-label>Run demo</span></button>
+      <div class="mm-demo" id="{{ p.id }}-demo" data-demo-kind="{{ p.demo }}" hidden>
+        {%- if p.demo == 'reip' %}
+        <p class="mm-demo__note">Two recorded hardware trials replayed side by side: a bad-leader fault is injected at 20 s and 40 s. Each side is that controller's median-coverage trial of five, replayed from the robots' own logs.</p>
+        <div data-demo-mount></div>
+        {%- elsif p.demo == 'linqbot' %}
+        <p class="mm-demo__note">Your webcam stands in for the AR glasses: an open hand moves the arm, a pinch closes the claw, a fist is the clutch. The video never leaves your browser. Demo by Jerry Li, from his <a href="https://www.jerryli.design/projects/linqbot" target="_blank" rel="noopener">LinqBot write-up</a>.</p>
+        <div class="lq-demo" data-demo-mount>
+          <div class="lq-demo__stage" data-lq-stage></div>
+          <div class="lq-demo__panel" data-lq-panel></div>
+        </div>
+        {%- endif %}
+      </div>
+      {%- endif %}
     </div>
   </article>
 {%- endfor %}
