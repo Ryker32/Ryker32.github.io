@@ -2,6 +2,7 @@
   const portfolioData = [
     {
       id: 1,
+      demo: { kind: "video", label: "Watch demo", video: "hybrid-vehicle-flight.mp4" },
       title: "Hybrid/Modular UAV-UGV Research",
       date: "July 2025 - October 2025",
       keyPoints: "MIT Lincoln Laboratory · IEEE-URTC poster",
@@ -116,6 +117,7 @@
     },
     {
       id: 2,
+      demo: { kind: "interactive", label: "Run demo" },
       title: "REIP: Trust-Based Fault Tolerance for Multi-Agent Systems",
       date: "March 2025 - July 2026",
       keyPoints: "WSSEF 1st in Robotics · Multi-agent research",
@@ -138,6 +140,12 @@
         <li><strong class="list-label">Results:</strong> <strong class="list-label">1st place in Robotics</strong> and <strong class="list-label">Top 20 overall out of 1,200</strong> at the Washington State Science & Engineering Fair 2026; presented at the AIAA Technical Symposium.</li>
         <li><strong class="list-label">Status:</strong> Hardware implementation in progress on two Holybro X500 drones courtesy of South Puget Sound Community College, and five Micromouse robots using Raspberry Pi 5s with custom PCBs and 3D-printed chassis.</li>
       </ul>
+      <h3 data-demo>Replay: REIP vs Raft on five real robots</h3>
+      <p>
+      Two recorded hardware trials, side by side. In both, a <strong class="list-label">bad-leader</strong> fault is injected at 20 s and again at 40 s: the faulty leader starts sending its followers to the wrong places. With REIP, followers check each command against what they've seen, lose trust in the faulty leader, and elect a new one. Raft elects leaders too, but nothing in it checks what a leader is commanding. Positions are the overhead-camera ArUco positions each robot logged.
+      </p>
+      <div class="reip-replay" data-reip-replay></div>
+      <p class="lq-demo__caption">Each side is the median-coverage trial of five for its controller (REIP 86.9%, Raft 54.1% of the reachable arena at 120 s). Replayed from the robots' own logs; nothing is simulated.</p>
       <figure class="project-figure" style="width: 100%; max-width: 100%; display: block; float: none; margin: 24px 0;">
         <video muted loop playsinline preload="none" data-lazy-video style="width: 100%; height: auto; display: block; border-radius: 4px; object-fit: cover;">
           <source src="/assets/img/reip/Hallucination.mp4" type="video/mp4">
@@ -271,6 +279,7 @@
     },
     {
       id: 11,
+      demo: { kind: "video", label: "Watch demo", video: "corgi-text-sim-screen.mp4" },
       title: "Corgi: A Robotic Walker for Paraplegic Users",
       date: "July 2026",
       keyPoints: "2nd place out of 250+ teams, LeRobot SO-101, Arduino differential drive base",
@@ -315,6 +324,7 @@
     },
     {
       id: 12,
+      demo: { kind: "interactive", label: "Try live demo" },
       title: "Linqbot: AR & iMessage Robot",
       date: "July 2026",
       keyPoints: "AR hand-tracking teleop · LLM-planned SO-101 arm · iMessage robot agent",
@@ -336,7 +346,7 @@
           <li><strong class="list-label">Safety:</strong> LLMs only plan typed tool calls (never freeform motor commands or outbound text), execution stops on the first failure, and workspace clamps bound every move</li>
         </ul>
         <hr>
-        <h3>Try it with your own hand</h3>
+        <h3 data-demo>Try it with your own hand</h3>
         <p>
         Press <strong>Start camera</strong> and your webcam stands in for the camera on the AR glasses. An open hand moves the gripper, a pinch closes the claw, and a fist is the clutch: it freezes the arm so you can move your hand back and carry on without a jump. Try to pick up the can. Everything after the camera follows the hackathon's hand-control code, and the video never leaves your browser.
         </p>
@@ -427,6 +437,7 @@
     },
     {
       id: 3,
+      demo: { kind: "video", label: "Watch demo", video: "droneflights.mp4" },
       title: "MIT-BWSI Autonomous UAV Racing",
       date: "7/2025 - 8/2025",
       keyPoints: "OpenCV, PX4, Autonomous UAV",
@@ -471,6 +482,7 @@
     },
     {
       id: 4,
+      demo: { kind: "video", label: "Watch demo", video: "dodamoving.mp4" },
       title: "Y-Combinator Agent Jam '25 Hackathon",
       date: "11/3/2025",
       keyPoints: "Teleoperated LeRobot · LLM safety agent · YC Agent Jam",
@@ -562,6 +574,7 @@
     },
     {
       id: 6,
+      demo: { kind: "video", label: "Watch hot-fire", video: "rockettest1.mp4" },
       title: "LOX-Propane Rocket Engine",
       date: "December 2023 - January 2025",
       keyPoints: "LOX-Propane Rocket Engine · Finite Element Analysis · ANSYS Fluent",
@@ -1051,6 +1064,20 @@
       body.appendChild(chips);
     }
 
+    if (project.demo) {
+      const demoBtn = document.createElement('button');
+      demoBtn.type = 'button';
+      demoBtn.className = 'project-card__demo';
+      demoBtn.setAttribute('data-cursor-target', '');
+      demoBtn.innerHTML = `<span aria-hidden="true">&#9654;</span> ${project.demo.label || 'Run demo'}`;
+      demoBtn.setAttribute('aria-label', `${project.demo.label || 'Run demo'}: ${project.title}`);
+      demoBtn.addEventListener('click', (evt) => {
+        evt.stopPropagation();
+        runProjectDemo(project);
+      });
+      body.appendChild(demoBtn);
+    }
+
     inner.appendChild(media);
     inner.appendChild(body);
     article.appendChild(inner);
@@ -1122,7 +1149,7 @@
 
   // `fromHistory` marks open/close calls driven by browser navigation, so
   // we don't push duplicate history entries for them.
-  function openModal(project, fromHistory) {
+  function openModal(project, fromHistory, opts = {}) {
     if (!projectModal || !modalTitle || !modalDescription || !filesGrid) return;
 
     const placeholderSrc = modalThumbnailImg?.dataset?.placeholder || modalThumbnailImg?.getAttribute('src') || '';
@@ -1180,7 +1207,7 @@
       if (!img.hasAttribute('loading')) img.loading = 'lazy';
     });
     activateModalMedia();
-    mountModalDemo();
+    mountModalDemo({ autoplay: !!opts.runDemo });
 
     if (modalFiles) {
       filesGrid.innerHTML = '';
@@ -1232,31 +1259,66 @@
   // Interactive demo embedded in a card's write-up (currently the LinqBot
   // webcam teleop demo). Loaded only when that card opens; disposed on close
   // so the camera and WebGL context are always released.
-  let modalDemo = null;
+  const MODAL_DEMOS = [
+    { selector: '[data-linqbot-demo]', module: '/assets/js/linqbot-demo.js' },
+    { selector: '[data-reip-replay]', module: '/assets/js/reip-replay.js' },
+  ];
+  let modalDemos = [];
 
-  function mountModalDemo() {
-    const host = modalDescription && modalDescription.querySelector('[data-linqbot-demo]');
-    if (!host) return;
-    const token = { api: null };
-    modalDemo = token;
-    import('/assets/js/linqbot-demo.js')
-      .then(mod => mod.mount(host))
-      .then(api => {
-        if (modalDemo !== token) { if (api) api.dispose(); return; }
-        token.api = api;
-      })
-      .catch(err => {
-        console.error('LinqBot demo failed to load:', err);
-        host.classList.add('lq-demo--failed');
-      });
+  function mountModalDemo(opts = {}) {
+    if (!modalDescription) return;
+    MODAL_DEMOS.forEach(({ selector, module }) => {
+      const host = modalDescription.querySelector(selector);
+      if (!host) return;
+      const token = { api: null, live: true };
+      modalDemos.push(token);
+      import(module)
+        .then(mod => mod.mount(host, opts))
+        .then(api => {
+          if (!token.live) { if (api) api.dispose(); return; }
+          token.api = api;
+        })
+        .catch(err => {
+          console.error(`Demo ${module} failed to load:`, err);
+          host.classList.add('lq-demo--failed');
+        });
+    });
   }
 
   function disposeModalDemo() {
-    const current = modalDemo;
-    modalDemo = null;
-    if (current && current.api) {
-      try { current.api.dispose(); } catch (err) { console.error(err); }
-    }
+    const current = modalDemos;
+    modalDemos = [];
+    current.forEach(token => {
+      token.live = false;
+      if (token.api) {
+        try { token.api.dispose(); } catch (err) { console.error(err); }
+      }
+    });
+  }
+
+  // Card "demo" button: open the write-up and jump to its demo. Interactive
+  // demos start themselves (REIP replay autoplays; the webcam demo still needs
+  // its own Start camera press). Video demos scroll to and play their video.
+  function runProjectDemo(project) {
+    openModal(project, false, { runDemo: true });
+    const demo = project.demo || {};
+    requestAnimationFrame(() => {
+      let target = null;
+      if (demo.kind === 'video' && demo.video) {
+        target = [...modalDescription.querySelectorAll('video')].find(v =>
+          (v.currentSrc || v.src || '').includes(demo.video) ||
+          [...v.querySelectorAll('source')].some(src => (src.getAttribute('src') || '').includes(demo.video)));
+        if (target) {
+          target.muted = true;
+          const tryPlay = () => target.play().catch(() => {});
+          if (target.readyState >= 2) tryPlay(); else target.addEventListener('loadeddata', tryPlay, { once: true });
+        }
+      } else {
+        target = modalDescription.querySelector('[data-demo]');
+      }
+      const focus = target && (target.closest('figure') || target);
+      if (focus) focus.scrollIntoView({ block: 'start', behavior: 'auto' });
+    });
   }
 
   function dismissModal() {

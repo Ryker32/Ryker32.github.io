@@ -2285,3 +2285,52 @@ header, section, footer {
 .modal-description .lq-demo__caption a {
   color: var(--accent);
 }
+
+/* =======================
+   Card demo button + REIP replay
+   ======================= */
+
+.project-card__demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--accent-soft);
+  color: #e9ecfb;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.project-card__demo:hover {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  border-color: var(--accent);
+}
+
+.project-card__demo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.project-card__demo span {
+  font-size: 0.7rem;
+}
+
+body[data-theme='light'] .project-card__demo {
+  color: #1f2a4d;
+}
+
+.modal-description .reip-replay {
+  margin: 12px 0 6px;
+  clear: both;
+}
+
+.modal-description .reip-replay p {
+  margin: 0;
+}
