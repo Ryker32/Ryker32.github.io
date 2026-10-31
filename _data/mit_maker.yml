@@ -1,410 +1,59 @@
-# Content for the unlisted MIT Maker Portfolio page (mit-maker.html).
-#
-# Rendering rules (so nothing half-finished reaches the public page):
-#   - publish: false        -> project is not rendered at all
-#   - repos/files/design entries without a `url` are not rendered
-#   - empty fields (what, contribution, detail, status, credits.*) are skipped
-#   - image_fit: contain    -> show the whole figure instead of cropping to 16:9
-# Track missing material and open questions in .mit-maker-private/REPORT.md,
-# never here as visible text. All code links are pinned to a commit SHA.
+# Content for the unlisted MIT Maker Portfolio source-code index (mit-maker.html).
+# Only projects with public source files belong here. Links are pinned to commits.
+# Entries without a `url` are not rendered. Missing-code items are tracked in
+# .mit-maker-private/REPORT.md, not on the page.
 
-intro:
-  heading: Code & design files behind my projects
-  body: |
-    This page supports my MIT Maker Portfolio. For each project I've listed what it does, what I personally built, one problem I worked through, and the specific files worth opening first. Code links are pinned to a fixed commit, so you see the version I'm describing.
-
-    Team projects credit my collaborators and the open-source work I built on. Mechanical projects describe the design work instead of linking code.
-
-footer: |
-  **About this page.** I assembled this page with help from Claude Code (Anthropic's coding assistant), which searched my repositories, proposed which files to highlight, and built the page from my existing site styles. I wrote the project descriptions and decided what to include.
+title: "MIT Maker Portfolio — Source Code"
+intro: "Code supporting the projects in my Maker Portfolio."
 
 projects:
 
-  # ---------------------------------------------------------------------------
-  - id: reip-hardware
-    short: "REIP hardware integration"
-    title: "REIP Hardware Integration: Robots for Real-World Trust Experiments"
-    date: "2025 – 2026"
-    index_tag: Code + hardware
-    index_tag_kind: code
-    tags:
-      - { label: Raspberry Pi + Pico, kind: code }
-      - { label: ToF sensing }
-      - { label: ArUco tracking }
-    image: /assets/img/mit-maker/reip-hardware-snapshot.png
-    image_alt: "Overhead view of five REIP robots with ArUco tags in three stages: normal operation, a faulted leader, and the team stabilized under a newly elected leader"
-    caption: "REIP on my robots: normal → faulted leader → stabilized under a new leader. Red arrows are leader commands."
-    what: |
-      I spent a year developing a democratic fault-tolerance policy for robot teams (REIP, next section), and I needed to validate it in the real world. These are the small ground robots I designed and built to run it on: a Raspberry Pi runs the REIP node and talks to a Pico that drives the motors.
-    contribution: |
-      Building the robot was arguably the hardest part. I only had 1:100 N20 motors, which put a hard limit on mass, so I called a friend who taught me how to efficiently pocket 3D designs to cut weight (V6). I used time-of-flight sensors to build a 2D point map for obstacle detection (V1–V2). Mounts that fit my N20s didn't exist, so I designed my own snug-fit mounts. V10–12 iterated on where the battery sits and got the robots ready for experiments: a 2S LiPo with a 5V BEC, and ArUco tags on each robot for position tracking during data collection.
-    detail_title: Problem → fix
-    detail: |
-      By V9 I had finished my second build and realized that with 20+ wires on the robot, it's smarter to use soft-core wire than solid-core, so I rewired with soft-core.
-    status: "Five robots built (V12) and used for physical REIP trials."
+  - id: reip
+    title: "REIP: Multi-Robot Trust & Leader Election"
+    summary: "Trust-based leader election and impeachment for robot teams, including the Raspberry Pi robot node, Pico motor firmware, and simulation harness."
     repos:
-      - { label: Ryker32/reip-sim-public, url: "https://github.com/Ryker32/reip-sim-public/tree/80c275862c2c2066abd229bb99fa023a0f2191e8" }
+      - { label: "Ryker32/reip-sim-public", url: "https://github.com/Ryker32/reip-sim-public/tree/80c275862c2c2066abd229bb99fa023a0f2191e8" }
     files:
-      - path: pico/main.py
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/pico/main.py"
-        why: "MicroPython firmware on the Pico: motor PWM through the DRV8833, encoder interrupts, and the UART command protocol the Pi uses."
-      - path: robot/reip_node.py → Hardware
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L365"
-        why: "The Pi-side hardware layer that talks to the Pico over UART and reads the time-of-flight sensors through an I²C mux."
-      - path: pc/aruco_position_server.py
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/pc/aruco_position_server.py"
-        why: "Overhead-camera ArUco tracking that gives each robot its position during trials."
-      - path: pc/fault_inject.py
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/pc/fault_inject.py"
-        why: "Injects leader faults into the physical team mid-trial, so recovery can be measured on real hardware."
-    credits:
-      team: "Solo build. A friend taught me how to pocket parts for weight reduction."
-      upstream: "OpenCV ArUco, MicroPython, Adafruit VL53L0X driver."
+      - { path: "robot/reip_node.py", url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L1255-L1447" }
+      - { path: "pico/main.py", url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/pico/main.py" }
+    credit: "Solo project, mentored by Avi Soval. Later commits were made with Cursor and Claude Code, as marked in the git history."
 
-  # ---------------------------------------------------------------------------
-  - id: reip-software
-    short: "REIP software architecture"
-    title: "REIP: Resilient Election & Impeachment Policy"
-    date: "2025 – 2026"
-    index_tag: Code
-    index_tag_kind: code
-    tags:
-      - { label: Python, kind: code }
-      - { label: Multi-agent systems }
-      - { label: Fault tolerance }
-    image: /assets/img/mit-maker/reip-three-tier.png
-    image_fit: contain
-    image_alt: "Diagram of REIP's three evidence tiers: personal memory and sensor confirmation are weighted 1.0, peer reports 0.3"
-    caption: "Followers weigh their own memory and sensors above what peers report."
-    what: |
-      A trust-based governance layer for leader–follower robot teams. Every follower checks each leader command against its own evidence and keeps a trust ledger for the leader. A leader whose trust falls too low loses eligibility, and the team elects a replacement, so exploration continues even if the leader hallucinates, freezes, or is compromised.
-    contribution: |
-      Solo research project, mentored by Avi Soval. I did the literature review, designed the REIP policy, wrote the robot node and the simulator harness, and ran the controlled experiments and ablations.
-    detail_title: Implementation detail
-    detail: |
-      A good leader might send a follower toward any frontier, not just the nearest one, so "is this the command I would have chosen?" flags too many good leaders. The direction-consistency check asks a weaker but more robust question: does the command point within 90° of *any* unexplored cell this robot knows about? A command that points away from all of them is strong evidence the leader has gone bad.
-    status: "Evaluated in simulation with injected faults and in physical trials on five robots. Research is ongoing."
-    repos:
-      - { label: Ryker32/reip-sim-public, url: "https://github.com/Ryker32/reip-sim-public/tree/80c275862c2c2066abd229bb99fa023a0f2191e8" }
-    files:
-      - path: robot/reip_node.py → assess_leader_command
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L1255-L1447"
-        why: "The three-tier check every follower runs on a leader command before executing it."
-      - path: robot/reip_node.py → _apply_suspicion_update
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L1460-L1550"
-        why: "The trust ledger, which turns accumulated suspicion into the leader's trust score."
-      - path: robot/reip_node.py → _compute_mpc_direction_error
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L1551-L1616"
-        why: "The direction-consistency check described above."
-      - path: robot/reip_node.py → run_election / check_impeachment
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/robot/reip_node.py#L2121-L2312"
-        why: "Leader election, with the trust-eligibility filter that removes a distrusted leader."
-      - path: test/isef_experiments.py → ExperimentRunner.run_experiment
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/test/isef_experiments.py#L1663"
-        why: "The simulation loop that runs REIP and the Raft baseline under each fault condition."
-      - path: FINDINGS.md
-        url: "https://github.com/Ryker32/reip-sim-public/blob/80c275862c2c2066abd229bb99fa023a0f2191e8/FINDINGS.md"
-        why: "My own audit of the codebase and results, including the corrections I made."
-    credits:
-      team: "Solo project; mentor Avi Soval."
-      ai: "Later commits in this repository were made with Cursor and Claude Code; those commits carry AI co-author trailers in the git history."
-
-  # ---------------------------------------------------------------------------
   - id: golden-retriever
-    short: "Golden Retriever robot walker"
-    title: "“Golden Retriever” Robot Walker"
-    date: "Corgi × YC Hackathon · 2026 · 2nd of 250+ teams"
-    index_tag: Code
-    index_tag_kind: code
-    tags:
-      - { label: SO-101 arm, kind: code }
-      - { label: LeRobot · ACT }
-      - { label: Hackathon }
-    image: /assets/img/corgi/text-sim-demo.jpg
-    image_alt: "Screenshot of the text-message simulation demo from the hackathon"
-    caption: "Simulation demo from the hackathon."
-    what: |
-      My paralyzed uncle joked that his walker needed a "second pair of hands," so I proposed building one with a team at a Y Combinator × Corgi hackathon. The goal: a robot walker that can autonomously "retrieve" low-to-the-ground items for people with limited mobility, using an SO-101 arm with a learned grasp.
-    contribution: |
-      I teleoperated an SO-101 arm (with a Logitech camera mounted at the wrist) to collect joint states, state data, and video for training an ACT imitation-learning model, then trained and retrained the policy. I co-designed the winch that lifts the arm to user height, and collaborated with our CV specialist on an HSV classifier that stops the walker's motors and activates the trained grasp sequence when it detects a pill bottle.
-    detail_title: Problem → fix
-    detail: |
-      My first ACT model was trained on low-variance demonstrations, which made it unusable. I recorded new demonstrations with higher variance and retrained, and the arm finally worked. The hardware had its own problem: the arm had to hand the user an item, so it needed a winch to lift it to user height, and nobody had string for a winch cable. The next best option was soft-core wire.
-    status: "Hackathon prototype."
+    title: "Golden Retriever Robot Walker"
+    summary: "LeRobot demonstration recording and ACT imitation-learning grasp inference for an SO-101 arm mounted on a walker."
     repos:
-      - { label: jerryli08/corgi-hackathon (team repo), url: "https://github.com/jerryli08/corgi-hackathon/tree/e683997abcdad08218dbd878d502eb15d7d0c35a" }
+      - { label: "jerryli08/corgi-hackathon", url: "https://github.com/jerryli08/corgi-hackathon/tree/e683997abcdad08218dbd878d502eb15d7d0c35a" }
     files:
-      - path: scripts/record_40.ps1
-        url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/record_40.ps1"
-        why: "The LeRobot command I used to record the 40-episode teleoperated grasp dataset (leader arm → follower arm, wrist camera at 30 fps)."
-      - path: docs/TRAINING_GRASP.md
-        url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/docs/TRAINING_GRASP.md"
-        why: "My plan for the grasp, with a learned ACT policy for the pick and a scripted motion for the hand-off."
-      - path: outputs/train/walker_pill_grasp_act/…/train_config.json
-        url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/outputs/train/walker_pill_grasp_act/checkpoints/015000/pretrained_model/train_config.json"
-        why: "The saved ACT training configuration. This file shows the configured run; the committed checkpoint is from step 15,000."
-      - path: scripts/run_grasp_policy.py
-        url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/run_grasp_policy.py#L278-L382"
-        why: "Inference loop that runs the trained policy at 30 Hz, detects a grip when the gripper stalls on the bottle, then hands off to the scripted retract."
-    credits:
-      team: "Tarun Malavasan developed the depth-camera controls. Jerry Li built the walker chassis and integrated the motor-control firmware. Andrew Wang was also on the team."
-      upstream: "[LeRobot](https://github.com/huggingface/lerobot) (Hugging Face, Apache-2.0) for recording, ACT training, and inference; ACT (Action Chunking with Transformers) by Zhao et al."
-      ai: "Some of my commits in this repo were made with Cursor's AI assistant (marked by co-author trailers)."
+      - { path: "scripts/record_40.ps1", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/record_40.ps1" }
+      - { path: "scripts/run_grasp_policy.py", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/run_grasp_policy.py#L278-L382" }
+    credit: "Team project with Tarun Malavasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
 
-  # ---------------------------------------------------------------------------
   - id: xr-teleop
-    short: "XR robotic-arm teleoperation"
-    title: "XR-Glasses Teleoperation for SO-101 Arms"
-    date: "Y Combinator × Soma Capital Hackathon · 2026"
-    index_tag: Code
-    index_tag_kind: code
-    tags:
-      - { label: MediaPipe, kind: code }
-      - { label: Inverse kinematics }
-      - { label: XREAL }
-    what: |
-      After rewatching Iron Man, I wanted to turn my XR glasses into a controller for SO-101 robotic arms. Hand tracking from the glasses' camera drives the arm's position and gripper in real time.
-    contribution: |
-      The camera wasn't a normal webcam: it sent 4-bit grayscale frames over TCP. I adapted an open-source decoder, improved contrast, and changed MediaPipe's tracking setup after the hand skeleton kept flickering. For gripper control, I measured 2D thumb–index separation, normalized it by hand size, then smoothed it into a proportional command.
-    detail_title: Problem → fix
-    detail: |
-      The camera's limited field of view meant I kept needing to reposition my hand, and mapping its absolute coordinates to the arm could make the target jump. Borrowing VR's "ratcheting" idea, I made a fist-controlled clutch: hold a fist to freeze the arm's target, move your hand, then release to re-anchor control. I added debouncing against false fist detections, and inverse kinematics to convert relative targets into joint commands.
-    status: "Hackathon prototype."
+    title: "XR-Glasses Robotic Arm Teleoperation"
+    summary: "Hand tracking from XREAL glasses drives an SO-101 arm, with a fist-controlled clutch, gesture debouncing, and inverse kinematics."
     repos:
-      - { label: amzoeee/soma-hackathon (team repo), url: "https://github.com/amzoeee/soma-hackathon/tree/db5ccf77e2f756501d059279d0aedb0f62beab97" }
+      - { label: "amzoeee/soma-hackathon", url: "https://github.com/amzoeee/soma-hackathon/tree/db5ccf77e2f756501d059279d0aedb0f62beab97" }
     files:
-      - path: robot/src/camera/xreal_eye.py → _decode
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/camera/xreal_eye.py#L110-L116"
-        why: "Unpacks the glasses' 4-bit grayscale TCP frames into 8-bit images."
-      - path: robot/src/tracking/enhance.py
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/tracking/enhance.py"
-        why: "Contrast enhancement (CLAHE + gamma) that made the dim grayscale feed trackable."
-      - path: robot/src/tracking/hand_tracker.py → process
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/tracking/hand_tracker.py#L92-L225"
-        why: "My MediaPipe setup changes against skeleton flicker, plus fist detection with hysteresis."
-      - path: robot/src/mapping/relative_teleop.py → update
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/mapping/relative_teleop.py#L154-L232"
-        why: "The fist clutch: freezes the target while clutched and re-anchors relative motion on release so the arm never jumps."
-      - path: robot/src/mapping/relative_teleop.py → _debounce_fist, _pinch01
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/mapping/relative_teleop.py#L249-L290"
-        why: "Asymmetric clutch debouncing and the hand-size-normalized thumb–index gripper command."
-      - path: robot/src/ik/solver.py
-        url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/ik/solver.py"
-        why: "Inverse kinematics that converts the relative hand target into SO-101 joint commands."
-    credits:
-      team: "Team repository. My teammates built the separate iMessage agent."
-      upstream: "An open-source XREAL Eye streaming tool (vendored in the repo under vendor/xreal-eye-grayscale), [MediaPipe Hands](https://developers.google.com/mediapipe) (Google), and [ikpy](https://github.com/Phylliade/ikpy)."
-      ai: "Some of my commits in this repo were made with Cursor's AI assistant (marked by co-author trailers)."
+      - { path: "robot/src/mapping/relative_teleop.py", url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/mapping/relative_teleop.py#L154-L232" }
+      - { path: "robot/src/camera/xreal_eye.py", url: "https://github.com/amzoeee/soma-hackathon/blob/db5ccf77e2f756501d059279d0aedb0f62beab97/robot/src/camera/xreal_eye.py#L110-L116" }
+    credit: "Team repository; teammates built the iMessage agent. Uses an open-source XREAL Eye streaming tool, MediaPipe, and ikpy; some of my commits used Cursor."
 
-  # ---------------------------------------------------------------------------
   - id: bwsi-drone
-    short: "BWSI autonomous racing drone"
-    title: "MIT Beaver Works Autonomous Racing Drone"
-    date: "2025"
-    index_tag: Code
-    index_tag_kind: code
-    tags:
-      - { label: OpenCV, kind: code }
-      - { label: Raspberry Pi }
-      - { label: Team of 5 }
-    image: /assets/img/mit-maker/bwsi-line-detection-frame.png
-    image_fit: contain
-    image_alt: "Downward camera frame from my line-detection experiment: the tape line is boxed in green and magenta segments"
-    caption: "One of the archived downward frames I annotated while developing line detection."
-    what: |
-      An autonomous racing drone that follows a line of tape on the course using a downward-facing PiCam.
-    contribution: |
-      I worked on the line-following algorithm, which uses OpenCV to filter light values in each downward PiCam frame, contour the highest values that are clustered together, and then regress a movement path for the drone to follow.
-    detail_title: Problem → fix
-    detail: |
-      During the brightest times of the day, sunlight reflected off the tape on the course floor (the tape was there to help the optical-flow sensor), and my program misclassified the reflection as the line. I analyzed the characteristics of the line and of reflections in archived data and found a fix: only allow the contours with the longest edge lengths. This greatly reduced interference with detection and helped us place first in the capstone race in 52 seconds.
-    status: "Completed program (summer 2025)."
+    title: "BWSI Autonomous Racing Drone"
+    summary: "OpenCV line detection for a racing drone's downward camera: my experiment notebook and the team's flight node."
     repos:
-      - { label: Ryker32/CVrykerstuff, url: "https://github.com/Ryker32/CVrykerstuff/tree/43ce2fe7e393b2216c07e60ee5c3bf76941d7230" }
-      - { label: amzoeee/line_follower_v2 (team flight code), url: "https://github.com/amzoeee/line_follower_v2/tree/d535b6a33bc5628687f761fc2c7a24259a9e0e11" }
+      - { label: "Ryker32/CVrykerstuff", url: "https://github.com/Ryker32/CVrykerstuff/tree/43ce2fe7e393b2216c07e60ee5c3bf76941d7230" }
+      - { label: "amzoeee/line_follower_v2", url: "https://github.com/amzoeee/line_follower_v2/tree/d535b6a33bc5628687f761fc2c7a24259a9e0e11" }
     files:
-      - path: CVrykerstuff/testingtet.ipynb
-        url: "https://github.com/Ryker32/CVrykerstuff/blob/43ce2fe7e393b2216c07e60ee5c3bf76941d7230/testingtet.ipynb"
-        why: "My line-detection experiment on 71 real downward frames. It thresholds, clusters contours, picks the line band, and fits a regression, with annotated output for every frame."
-      - path: line_follower_v2/offb_node.py → detect_line, run_drone
-        url: "https://github.com/amzoeee/line_follower_v2/blob/d535b6a33bc5628687f761fc2c7a24259a9e0e11/line_follower_v2/offb_node.py#L185-L265"
-        why: "The team's flight node. detect_line keeps the contour with the longest bounding-rectangle side (the reflection filter), and run_drone turns the fitted line into velocity and yaw commands."
-    credits:
-      team: "Built with Mahi Sakharpe, Jerry, Zoe, and Katherine. Jerry designed the Pi enclosure. The flight-code repository is maintained by Zoe."
-      upstream: "OpenCV; PX4 / MAVROS; BWSI course materials."
+      - { path: "CVrykerstuff/testingtet.ipynb", url: "https://github.com/Ryker32/CVrykerstuff/blob/43ce2fe7e393b2216c07e60ee5c3bf76941d7230/testingtet.ipynb" }
+      - { path: "line_follower_v2/offb_node.py", url: "https://github.com/amzoeee/line_follower_v2/blob/d535b6a33bc5628687f761fc2c7a24259a9e0e11/line_follower_v2/offb_node.py#L185-L265" }
+    credit: "Flight code is the team repository, maintained by Zoe; team included Mahi Sakharpe, Jerry, and Katherine."
 
-  # ---------------------------------------------------------------------------
-  - id: hybrid-uav-ugv
-    short: "Hybrid air–ground vehicle"
-    title: "Hybrid Air and Ground Vehicle Research"
-    date: "BWSI / IEEE URTC · 2025"
-    kind: mechanical
-    index_tag: Mechanical
-    tags:
-      - { label: Mechanical design }
-      - { label: Passive docking }
-      - { label: IEEE URTC }
-    image: /assets/img/bwsicars/cardrone.png
-    image_alt: "Quadcopter with the ground rover docked underneath"
-    what: |
-      What if a rescue rover can't traverse a specific stretch of terrain? I co-led a team to develop a hybrid system in which an aerial robot picks up a ground robot, carries it long distances, and deploys it somewhere new.
-    contribution: |
-      Power was a large constraint for us, so active latching mechanisms that need constant power were out of the question. I proposed the V1 concept, a "disk cam with linear sliders" that needs a single servo action when the drone lands on the car, and then suggested the passive V2 latch. The mechanical design took several revisions: I reworked the landing gear and relocated the battery to fit the assembled system.
-    detail_title: Problem → fix
-    detail: |
-      V1 would have put a significant load on two sliders. For V2 I suggested a design inspired by gravity latches: rubber bands hold two "barn doors" shut, and the drone pushes through them as it docks. Docking becomes easy, guided, and passive, with no slider actuation to coordinate.
-    status: "Working prototype; presented as a poster at the IEEE MIT Undergraduate Research and Technology Conference (URTC)."
-    repos: []
-    design: []
-    credits:
-      team: "Co-authors on the URTC poster: Jerry Li, Mihika Sakharpe, Zoe Zhao, Katherine Zhang, Shashwat Pandya, and Chris Rincon."
-
-  # ---------------------------------------------------------------------------
-  - id: whiteboard
-    short: "Whiteboard message extraction"
-    title: "Journalism: Extracting Handwritten Messages with OpenCV"
-    date: "2026"
-    index_tag: Code
-    index_tag_kind: code
-    tags:
-      - { label: OpenCV, kind: code }
-      - { label: Python }
-      - { label: Image processing }
-    what: |
-      At a school assembly I gathered students to write warm wishes for our principal on a whiteboard. Instead of sending them as plain text, I wanted to keep the person behind each message, so I developed an OpenCV pipeline that separates the colored writing from the photographed whiteboard and exports each message as its own PNG. I used the PNGs to design the front page of our school newspaper.
-    contribution: |
-      I specified each stage of the pipeline: HSV thresholding, background estimation, and message extraction through alpha matting and color unmixing. Claude Code implemented the specifications. I diagnosed failures, redesigned the stages that failed, and verified the exports against the original image.
-    detail_title: Problem → fix
-    detail: |
-      Thick marker strokes came out hollow because the background estimates often included stray ink. A "double pass" masks the detected ink, reconstructs the background, and repeats the extraction. In a synthetic test, this raised thick-stroke core fill from 56.6% to 100%.
-    status: "Complete. The exported PNGs were used to design the newspaper's front page."
-    repos: []
-    files: []
-    credits:
-      ai: "Claude Code wrote the implementation to my stage-by-stage specifications. I designed the pipeline, diagnosed failures, redesigned the masking and background reconstruction, and verified the exports."
-
-  # ---------------------------------------------------------------------------
-  - id: cnc-cutter
-    short: "CNC foam needle cutter"
-    title: "CNC Needle Cutter for Foam Gliders"
-    date: "2026"
-    kind: mechanical
-    index_tag: In progress
-    index_tag_kind: wip
-    tags:
-      - { label: Mechanical design }
-      - { label: AltMill }
-      - { label: In progress, kind: wip }
-    what: |
-      I wanted to give away 100 foam gliders at the elementary-school events I host with my aerospace club. I had access to a CNC, so I started from Michael763's open-source needle-cutting tool, with old plywood holding a MIG tip as the needle guide, piano wire as the needle, and a printed chassis.
-    contribution: |
-      His cutter was meant for 0.025" wire, and my thinner 0.019" wire failed from lateral fatigue (V1a–d). To reduce the stress, I modified V1 by raising the flywheel height above the two guide bearings, and I designed a custom mount for an AltMill 4×4 (V2). In V3 I readjusted that distance and added an electronics box with a simple 2S LiPo, ESC, and servo-controller setup.
-    detail_title: Problem → fix
-    detail: |
-      V4, with an optimized flywheel height, made the first successful cut. I cut one plane before the needle broke from stress. The flywheel design isn't suited to longer cuts, so I'm designing a vertically constrained solution (V5+).
-    status: "Under development. One glider cut so far; needle life is the open problem."
-    repos: []
-    design: []
-    credits:
-      upstream: "Based on Michael763's open-source needle cutter."
-
-  # ---------------------------------------------------------------------------
   - id: soil-monitor
-    short: "Soil-moisture monitor"
-    title: "Active Soil-Moisture Monitor"
-    date: "2025 – 2026"
-    index_tag: Work in progress
-    index_tag_kind: wip
-    tags:
-      - { label: ESP32, kind: code }
-      - { label: E-paper }
-      - { label: Low power }
-      - { label: Work in progress, kind: wip }
-    what: |
-      My mom and I love plants, but we forget to water them, so I built a soil-moisture monitor. I calibrated the capacitive sensor by placing it in water for a "high" reading and letting it dry for a "low," and a custom Arduino program on an ESP32 updates an e-paper display with an emoji for the measured moisture level.
-    contribution: |
-      I designed the circuit, calibration, and firmware, and iterated through seven power designs toward one goal: a device that lasts for months on a single battery replacement.
-    detail_title: Problem → fix
-    detail: |
-      V1 sensed continuously through an MT3608 boost converter, whose 0.5–2 mA quiescent draw drained the batteries. In V2 I tried GPIO power gating, but the ESP32's limited current sourcing caused undervoltage and false capacitance readings. V3–6 tested pull-down resistors to stop the quiescent draw (marginal improvement), transistor switching, and RC timing to reduce idle power. V7 combines a MOSFET power gate on the sensor with a TPL5110 timer that cuts power to the entire system between readings.
-    status: "Work in progress. The months-long battery-life target has not been demonstrated yet."
+    title: "Soil-Moisture Monitor (work in progress)"
+    summary: "ESP32 firmware that calibrates a capacitive soil sensor, powers it only while reading, and shows moisture on an e-paper display."
     repos:
-      - { label: Ryker32/plantmonitor, url: "https://github.com/Ryker32/plantmonitor/tree/8e0afba849431e46b30d5976ad7b057483ce0d46" }
+      - { label: "Ryker32/plantmonitor", url: "https://github.com/Ryker32/plantmonitor/tree/8e0afba849431e46b30d5976ad7b057483ce0d46" }
     files:
-      - path: plantmonitor/plantmonitor.ino → calibration
-        url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L13-L48"
-        why: "The dry and wet calibration constants and the linear mapping from raw capacitance to moisture percentage."
-      - path: plantmonitor/plantmonitor.ino → sensor power
-        url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L50-L69"
-        why: "Powers the probe only while reading (the GPIO-gating approach from V2)."
-      - path: plantmonitor/plantmonitor.ino → display
-        url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L73-L164"
-        why: "Maps moisture bands to the face and status text drawn on the e-paper display."
-    credits:
-      team: "Solo project."
-
-  # ---------------------------------------------------------------------------
-  - id: rocket-engines
-    short: "Propane & LOX rocket engines"
-    title: "Propane and LOX Rocket Engines"
-    date: "2024 – 2026"
-    kind: mechanical
-    index_tag: Hardware
-    tags:
-      - { label: Fabrication }
-      - { label: Welding }
-      - { label: Combustion }
-    image: /assets/img/rocket/mk3picture.jpg
-    image_alt: "Rocket engine build"
-    what: |
-      With a group of friends, I built a propane / compressed-air rocket engine (2024–25), and then a custom liquid-oxygen engine burning liquid propane (2025–26). Everything was built from scrap metal and scrap fittings.
-    contribution: |
-      For the propane engine, I used a used truck muffler as the combustion chamber because it can withstand higher temperatures, and I welded most of the pipe fittings (all except the ignition coil's). To approximate the mixture, I used the cross-sectional area and the combustion ratio to calculate the PSI needed for both the propane and the compressed air. For the LOX engine, I acquired the LOX and liquid propane, used a truck muffler as the mixing chamber with a flanged opening for combustion, and cooled the system with a scrap butane tank and dry ice, since we didn't have liquid nitrogen.
-    status: "Experimental builds. I contacted an aerospace engineer from Blue Origin to look over the LOX engine for its initial tests."
-    repos: []
-    design: []
-    credits:
-      team: "Built with a group of friends."
-
-  # ---------------------------------------------------------------------------
-  - id: early-electronics
-    short: "Early electronics"
-    title: "Early Electronics Explorations"
-    date: "2024 – 2026"
-    kind: mechanical
-    index_tag: Breadboards
-    tags:
-      - { label: Logic circuits }
-      - { label: Z80 }
-      - { label: ADC / I²C }
-    what: |
-      These smaller projects trace how I developed my electronics skills before taking on larger robotic systems.
-    contribution: |
-      I started in 2024 building display circuits with my dad, learning how software, microcontrollers, and physical wiring interact and respond to resistors, capacitors, and other components. In 2025 I experimented with 16-bit analog-to-digital conversion and I²C communication, which became the basis for my robotics research. I also worked on sensor-feedback projects with a local professor I met at a hackathon.
-    detail_title: Going below the libraries
-    detail: |
-      A YouTube video inspired me to go beyond software libraries, so I used one of my dad's old circuitry books to learn the display decoding and circuit logic needed to build a 4-bit binary-to-decimal display. I also experimented with a Z80 processor in a free-run configuration, exploring active-low control signals, pull-down resistors, and current limiting.
-    status: "Breadboard work. I haven't made a proper PCB yet, but breadboarding gave me the skills to design circuits for my robots."
-    repos: []
-    design: []
-
-  # ---------------------------------------------------------------------------
-  # Hidden: no description from Ryker yet, and git history shows no commits by
-  # him in the public repo (ZakHussain/dodo-cli-agent). See REPORT.md.
-  - id: doda-bot
-    publish: false
-    short: "Agent Jam · Doda bot"
-    title: "Y Combinator Agent Jam '25: Doda Bot"
-    date: "November 2025"
-    repos: []
-    files: []
-
-  # Hidden: STATA is related follow-on research, kept separate from REIP. Its
-  # repo is private and the paper is pending. See REPORT.md.
-  - id: stata
-    publish: false
-    short: "STATA (related research)"
-    title: "STATA: Learned Trust for Multi-Robot Teams"
-    date: "2026 – present"
-    repos: []
-    files: []
+      - { path: "plantmonitor/plantmonitor.ino", url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L13-L69" }
+    credit: "Some e-paper display fixes were drafted with OpenAI Codex."
