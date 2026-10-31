@@ -1,0 +1,154 @@
+---
+layout: mit-maker
+title: Maker Portfolio · Code & Design Files
+# Unlisted: share this URL directly. Do not link it from nav, index, or robots.txt.
+permalink: /mit-maker-s573pwbyl2/
+sitemap: false
+---
+{%- assign mm = site.data.mit_maker -%}
+{%- assign projects = mm.projects | where_exp: "p", "p.publish != false" -%}
+
+<header class="mm-header">
+  <p class="mm-kicker">MIT Maker Portfolio · Supporting material</p>
+  <h1>{{ mm.intro.heading }}</h1>
+  {{ mm.intro.body | markdownify }}
+  <div class="mm-header__links">
+    <a class="pill-link pill-link--ghost" href="https://github.com/Ryker32" target="_blank" rel="noopener">GitHub · Ryker32</a>
+    <a class="pill-link pill-link--ghost" href="mailto:rykerkollmyer@gmail.com">rykerkollmyer@gmail.com</a>
+    <a class="pill-link pill-link--ghost" href="{{ '/' | relative_url }}">Main portfolio</a>
+  </div>
+</header>
+
+<nav class="mm-index" id="mm-index" aria-labelledby="mmIndexHeading">
+  <h2 id="mmIndexHeading">Projects</h2>
+  <ol class="mm-index__list">
+    {%- for p in projects %}
+    <li>
+      <a href="#{{ p.id }}">
+        <span class="mm-index__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <span class="mm-index__title">{{ p.short | default: p.title }}</span>
+        {%- if p.index_tag %}<span class="mm-tag{% if p.index_tag_kind %} mm-tag--{{ p.index_tag_kind }}{% endif %}">{{ p.index_tag }}</span>{% endif %}
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+</nav>
+
+<div class="mm-projects">
+{%- for p in projects %}
+  <article class="project-card mm-project{% if p.image %} mm-project--has-media{% endif %}" id="{{ p.id }}" aria-labelledby="{{ p.id }}-title">
+    <div class="project-card__inner">
+      <header class="mm-project__head">
+        <div>
+          <h2 class="project-card__title" id="{{ p.id }}-title">{{ p.title }}</h2>
+          {%- if p.date %}<p class="project-card__meta">{{ p.date }}</p>{% endif %}
+        </div>
+        {%- if p.tags %}
+        <ul class="mm-tags" aria-label="Project tags">
+          {%- for t in p.tags %}<li class="mm-tag{% if t.kind %} mm-tag--{{ t.kind }}{% endif %}">{{ t.label }}</li>{% endfor %}
+        </ul>
+        {%- endif %}
+      </header>
+
+      <div class="mm-project__layout">
+        {%- if p.image %}
+        <figure>
+          <div class="project-card__media{% if p.image_fit == 'contain' %} mm-media--contain{% endif %}">
+            <div class="project-card__mediaBox">
+              <img src="{{ p.image | relative_url }}" alt="{{ p.image_alt | escape }}" loading="lazy" decoding="async">
+            </div>
+            <div class="project-card__frame" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          {%- if p.caption %}<figcaption>{{ p.caption }}</figcaption>{% endif %}
+        </figure>
+        {%- endif %}
+
+        <div>
+          {%- if p.what %}
+          <section class="mm-block">
+            <span class="mm-label">What it does</span>
+            {{ p.what | markdownify }}
+          </section>
+          {%- endif %}
+
+          {%- if p.contribution %}
+          <section class="mm-block">
+            <span class="mm-label">My contribution</span>
+            {{ p.contribution | markdownify }}
+          </section>
+          {%- endif %}
+
+          {%- if p.detail %}
+          <section class="mm-block mm-detail">
+            <span class="mm-label">{{ p.detail_title | default: 'Implementation detail' }}</span>
+            {{ p.detail | markdownify }}
+          </section>
+          {%- endif %}
+
+          {%- if p.status %}
+          <section class="mm-block">
+            <span class="mm-label">Status</span>
+            {{ p.status | markdownify }}
+          </section>
+          {%- endif %}
+        </div>
+      </div>
+
+      {%- assign live_repos = p.repos | where_exp: "r", "r.url" -%}
+      {%- assign live_files = p.files | where_exp: "f", "f.url" -%}
+      {%- assign live_design = p.design | where_exp: "d", "d.url" -%}
+      {%- if live_repos.size > 0 or live_files.size > 0 or live_design.size > 0 %}
+      <section class="mm-source" aria-label="Source and files">
+        {%- if live_repos.size > 0 %}
+        <span class="mm-label">{% if p.kind == 'mechanical' %}Project files{% else %}Source{% endif %}</span>
+        <ul class="mm-repos">
+          {%- for r in live_repos %}
+          <li><a class="pill-link pill-link--ghost" href="{{ r.url }}" target="_blank" rel="noopener">{{ r.label }}</a></li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+
+        {%- if live_files.size > 0 %}
+        <span class="mm-label">Start with these files</span>
+        <ul class="mm-files">
+          {%- for f in live_files %}
+          <li class="mm-file">
+            <a class="mm-file__path" href="{{ f.url }}" target="_blank" rel="noopener">{{ f.path }}</a>
+            {%- if f.why %}<p class="mm-file__why">{{ f.why }}</p>{% endif %}
+          </li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+
+        {%- if live_design.size > 0 %}
+        <span class="mm-label" style="margin-top:14px">Design files &amp; documentation</span>
+        <ul class="mm-files">
+          {%- for d in live_design %}
+          <li class="mm-file">
+            <a class="mm-file__path" href="{{ d.url }}" target="_blank" rel="noopener">{{ d.label }}</a>
+            {%- if d.why %}<p class="mm-file__why">{{ d.why }}</p>{% endif %}
+          </li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </section>
+      {%- endif %}
+
+      {%- if p.credits %}
+      <div class="mm-credits">
+        {%- if p.credits.team %}<p><strong>Team:</strong> {{ p.credits.team | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
+        {%- if p.credits.upstream %}<p><strong>Built on:</strong> {{ p.credits.upstream | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
+        {%- if p.credits.ai %}<p><strong>AI assistance:</strong> {{ p.credits.ai | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
+      </div>
+      {%- endif %}
+
+      <a class="mm-back" href="#mm-index">↑ Back to project index</a>
+    </div>
+  </article>
+{%- endfor %}
+</div>
+
+<footer class="mm-footer">
+  {{ mm.footer | markdownify }}
+  <p>© 2026 Ryker Kollmyer.</p>
+</footer>
