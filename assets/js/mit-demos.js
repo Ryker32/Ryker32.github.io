@@ -1,48 +1,45 @@
-// Inline "Run demo" toggles on the MIT source page. Nothing loads until a
-// button is pressed; closing a demo disposes it (stops the camera / replay).
+// Always-visible demos on the MIT source page. Each demo box mounts as it
+// approaches the viewport (so the page itself stays light). The REIP replay
+// starts playing the first time it is mostly on screen; the webcam demo waits
+// for the reader to press Start camera.
 const MODULES = {
   reip: '/assets/js/reip-replay.js',
   linqbot: '/assets/js/linqbot-demo.js',
 };
 
-document.querySelectorAll('[data-demo-toggle]').forEach((btn) => {
-  const panel = document.getElementById(btn.dataset.demoToggle);
-  const mountEl = panel && panel.querySelector('[data-demo-mount]');
-  const label = btn.querySelector('[data-demo-label]');
-  const kind = panel && panel.dataset.demoKind;
-  if (!panel || !mountEl || !MODULES[kind]) return;
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+document.querySelectorAll('.mm-demo[data-demo-kind]').forEach((box) => {
+  const kind = box.dataset.demoKind;
+  const mountEl = box.querySelector('[data-demo-mount]');
+  if (!mountEl || !MODULES[kind]) return;
 
   let api = null;
-  let loading = null;
+  let started = false;
 
-  async function open() {
-    panel.hidden = false;
-    btn.setAttribute('aria-expanded', 'true');
-    label.textContent = 'Close demo';
-    panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    if (api || loading) return;
-    loading = import(MODULES[kind])
-      .then((mod) => mod.mount(mountEl, { autoplay: true }))
-      .then((a) => {
-        api = a;
-        if (panel.hidden) close(); // closed while loading
-      })
+  const load = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    load.disconnect();
+    import(MODULES[kind])
+      .then((mod) => mod.mount(mountEl, {}))
+      .then((a) => { api = a; maybeStart(); })
       .catch((err) => {
         console.error(`Demo ${kind} failed to load:`, err);
         mountEl.classList.add('lq-demo--failed');
-      })
-      .finally(() => { loading = null; });
-  }
+      });
+  }, { rootMargin: '400px 0px' });
+  load.observe(box);
 
-  function close() {
-    panel.hidden = true;
-    btn.setAttribute('aria-expanded', 'false');
-    label.textContent = 'Run demo';
-    if (api) {
-      try { api.dispose(); } catch (err) { console.error(err); }
-      api = null;
-    }
+  let visible = false;
+  function maybeStart() {
+    if (kind !== 'reip' || started || reduced || !api || !visible) return;
+    started = true;
+    api.play();
   }
-
-  btn.addEventListener('click', () => (panel.hidden ? open() : close()));
+  if (kind === 'reip') {
+    new IntersectionObserver((entries) => {
+      visible = entries.some((e) => e.intersectionRatio >= 0.4);
+      maybeStart();
+    }, { threshold: [0, 0.4] }).observe(box);
+  }
 });

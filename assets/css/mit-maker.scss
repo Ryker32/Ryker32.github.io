@@ -2,7 +2,8 @@
 ---
 /* Unlisted MIT Maker Portfolio source-code index. Builds on style.css (theme
    variables, .project-card surface, .pill-link) but stays static: no glow
-   tracking, sheen, card drift, intro sequence, or custom cursor. */
+   tracking, sheen, card drift, intro sequence, or custom cursor.
+   Type is set large on purpose: this page is read by reviewers on any screen. */
 
 .mm-stars {
   position: fixed;
@@ -11,27 +12,31 @@
   pointer-events: none;
 }
 
+.mm-body {
+  font-size: 18px;
+}
+
 .mm-main {
   position: relative;
   z-index: 1;
   gap: 0;
-  padding: clamp(40px, 7vw, 88px) clamp(18px, 5vw, 48px) 72px;
-  max-width: 820px;
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 48px) 80px;
+  max-width: 1180px;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .mm-main a {
-  color: var(--accent);
+  color: #a9b6ef;
   text-underline-offset: 3px;
 }
 
 .mm-main a:hover {
-  color: color-mix(in srgb, var(--accent) 70%, #ffffff);
+  color: #ffffff;
 }
 
 .mm-main a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -44,14 +49,15 @@
 
 .mm-header h1 {
   margin: 0 0 12px;
-  font-size: clamp(2rem, 4.5vw, 2.8rem);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
   color: var(--heading-ink);
 }
 
 .mm-header p {
   margin: 0;
-  line-height: 1.7;
-  color: color-mix(in srgb, var(--ink) 85%, transparent);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #e4e4e4;
 }
 
 /* ---------- Project cards (static) ---------- */
@@ -59,13 +65,13 @@
 .mm-projects {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 24px;
 }
 
 .mm-project.project-card {
   cursor: default;
   will-change: auto;
-  padding: clamp(18px, 2.4vw, 26px);
+  padding: clamp(20px, 3vw, 36px);
 }
 
 .mm-project.project-card:hover {
@@ -74,21 +80,21 @@
 }
 
 .mm-project .project-card__title {
-  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+  font-size: clamp(1.45rem, 2.6vw, 1.8rem);
 }
 
 .mm-summary {
-  margin: 6px 0 14px;
-  font-size: 0.95rem;
+  margin: 8px 0 18px;
+  font-size: 1.15rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--ink) 88%, transparent);
+  color: #e4e4e4;
 }
 
 .mm-repos {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 12px;
+  gap: 10px;
+  margin: 0 0 14px;
   padding: 0;
   list-style: none;
 }
@@ -98,65 +104,87 @@
   transform: none;
 }
 
+.mm-main .pill-link {
+  font-size: 1rem;
+  padding: 10px 20px;
+}
+
 .mm-main .pill-link--ghost {
-  color: color-mix(in srgb, var(--ink) 88%, transparent);
+  color: #ececec;
 }
 
 .mm-files-line {
-  margin: 0 0 10px;
-  line-height: 1.7;
+  margin: 0 0 12px;
+  line-height: 1.8;
 }
 
 .mm-label {
-  margin-right: 8px;
+  display: inline-block;
+  margin-right: 10px;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--accent) 80%, #ffffff);
+  color: #b9c3f2;
 }
 
 .mm-file__path {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 1rem;
   overflow-wrap: anywhere;
 }
 
 .mm-sep {
-  color: color-mix(in srgb, var(--ink) 40%, transparent);
+  color: rgba(230, 230, 230, 0.45);
 }
 
 .mm-credit {
   margin: 0;
-  font-size: 0.84rem;
+  font-size: 1rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--ink) 65%, transparent);
+  color: #c9c9c9;
 }
+
+/* ---------- Demos (always visible) ---------- */
+
+.mm-demo {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--edge);
+}
+
+.mm-demo .mm-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.mm-demo__note {
+  margin: 0 0 14px;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: #e4e4e4;
+}
+
+.mm-demo__fine {
+  margin: 10px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #b8b8b8;
+}
+
+/* Larger replay text on this page */
+.mm-demo .rr-name { font-size: 1.15rem; }
+.mm-demo .rr-cov { font-size: 1rem; }
+.mm-demo .rr-status { font-size: 1rem; }
+.mm-demo .rr-time { font-size: 0.95rem; }
+.mm-demo .rr-legend { font-size: 0.95rem; }
+.mm-demo .rr-btn { font-size: 1rem; padding: 10px 22px; }
+.mm-demo .lq-demo__panel .lq-note { font-size: 1rem; color: #d6d6d6; }
+.mm-demo .lq-btn { font-size: 1rem; }
 
 @media print {
   .mm-stars {
     display: none;
   }
-}
-
-/* ---------- Inline demos ---------- */
-
-.mm-demo-btn {
-  margin-top: 12px;
-}
-
-.mm-demo {
-  margin-top: 14px;
-}
-
-.mm-demo[hidden] {
-  display: none;
-}
-
-.mm-demo__note {
-  margin: 0 0 10px;
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: color-mix(in srgb, var(--ink) 75%, transparent);
 }

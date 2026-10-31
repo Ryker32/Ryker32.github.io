@@ -351,7 +351,10 @@
         Press <strong>Start camera</strong> and your webcam stands in for the camera on the AR glasses. An open hand moves the gripper, a pinch closes the claw, and a fist is the clutch: it freezes the arm so you can move your hand back and carry on without a jump. Try to pick up the can. Everything after the camera follows the hackathon's hand-control code, and the video never leaves your browser.
         </p>
         <div class="lq-demo" data-linqbot-demo>
-          <div class="lq-demo__stage" data-lq-stage></div>
+          <div class="lq-demo__body">
+            <div class="lq-demo__stage" data-lq-stage></div>
+            <div class="lq-demo__side" data-lq-side></div>
+          </div>
           <div class="lq-demo__panel" data-lq-panel></div>
         </div>
         <p class="lq-demo__caption">A simulation on a CAD model of the SO-101, driven live by your webcam; the table and the can are props. Left, right, and reach are mirrored because a webcam faces you while the glasses faced the arm. Demo credit: Jerry Li, from his <a href="https://www.jerryli.design/projects/linqbot" target="_blank" rel="noopener">LinqBot write-up</a>.</p>

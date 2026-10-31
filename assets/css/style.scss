@@ -2221,6 +2221,30 @@ header, section, footer {
   clear: both;
 }
 
+.lq-demo__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+/* Once the camera starts, its preview sits beside the arm instead of over it */
+.lq-demo--has-cam .lq-demo__body {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
+  align-items: start;
+}
+
+.lq-demo__side:empty {
+  display: none;
+}
+
+.lq-demo__side .lq-pip {
+  position: relative;
+  inset: auto;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+}
+
 .lq-demo__stage {
   position: relative;
   height: clamp(420px, 62vh, 600px);
@@ -2277,8 +2301,12 @@ header, section, footer {
     height: clamp(380px, 70vh, 520px);
   }
 
-  .lq-demo__stage .lq-pip {
-    width: 46%;
+  .lq-demo--has-cam .lq-demo__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lq-demo__side .lq-pip {
+    max-width: 320px;
   }
 }
 
