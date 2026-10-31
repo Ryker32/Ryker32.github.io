@@ -26,7 +26,7 @@ projects:
     files:
       - { path: "scripts/record_40.ps1", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/record_40.ps1" }
       - { path: "scripts/run_grasp_policy.py", url: "https://github.com/jerryli08/corgi-hackathon/blob/e683997abcdad08218dbd878d502eb15d7d0c35a/scripts/run_grasp_policy.py#L278-L382" }
-    credit: "Team project with Tarun Malavasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
+    credit: "Team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
 
   - id: xr-teleop
     title: "XR-Glasses Robotic Arm Teleoperation"
@@ -47,7 +47,7 @@ projects:
     files:
       - { path: "CVrykerstuff/testingtet.ipynb", url: "https://github.com/Ryker32/CVrykerstuff/blob/43ce2fe7e393b2216c07e60ee5c3bf76941d7230/testingtet.ipynb" }
       - { path: "line_follower_v2/offb_node.py", url: "https://github.com/amzoeee/line_follower_v2/blob/d535b6a33bc5628687f761fc2c7a24259a9e0e11/line_follower_v2/offb_node.py#L185-L265" }
-    credit: "Flight code is the team repository, maintained by Zoe; team included Mahi Sakharpe, Jerry, and Katherine."
+    credit: "Flight code is the team repository, maintained by Zoe; team included Mihika Sakharpe, Jerry, and Katherine."
 
   - id: soil-monitor
     title: "Soil-Moisture Monitor (work in progress)"
@@ -56,4 +56,3 @@ projects:
       - { label: "Ryker32/plantmonitor", url: "https://github.com/Ryker32/plantmonitor/tree/8e0afba849431e46b30d5976ad7b057483ce0d46" }
     files:
       - { path: "plantmonitor/plantmonitor.ino", url: "https://github.com/Ryker32/plantmonitor/blob/8e0afba849431e46b30d5976ad7b057483ce0d46/plantmonitor/plantmonitor.ino#L13-L69" }
-    credit: "Some e-paper display fixes were drafted with OpenAI Codex."

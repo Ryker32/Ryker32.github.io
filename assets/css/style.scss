@@ -2210,3 +2210,74 @@ header, section, footer {
   color: color-mix(in srgb, var(--ink, #e6e6e6) 80%, transparent);
   font-size: 14px;
 }
+
+/* =======================
+   LinqBot webcam demo (inside the project modal)
+   The demo module injects its own overlay styles (.lq-cam-card, .lq-hud, ...).
+   ======================= */
+
+.lq-demo {
+  margin: 16px 0 8px;
+  clear: both;
+}
+
+.lq-demo__stage {
+  position: relative;
+  height: clamp(420px, 62vh, 600px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #121110;
+  border: 1px solid var(--edge);
+}
+
+.lq-demo__stage canvas {
+  display: block;
+}
+
+.lq-demo__panel .lq-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lq-demo__panel .lq-row:empty {
+  display: none;
+}
+
+.lq-demo__panel .lq-note {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.lq-demo__panel .lq-note:empty {
+  display: none;
+}
+
+.modal-description .lq-demo__caption {
+  margin: 4px 0 16px;
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+}
+
+.lq-demo--failed .lq-demo__stage::after {
+  content: "The interactive demo couldn't load in this browser.";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+}
+
+@media (max-width: 640px) {
+  .lq-demo__stage {
+    height: clamp(380px, 70vh, 520px);
+  }
+
+  .lq-demo__stage .lq-pip {
+    width: 46%;
+  }
+}

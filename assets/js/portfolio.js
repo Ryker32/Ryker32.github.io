@@ -336,6 +336,16 @@
           <li><strong class="list-label">Safety:</strong> LLMs only plan typed tool calls (never freeform motor commands or outbound text), execution stops on the first failure, and workspace clamps bound every move</li>
         </ul>
         <hr>
+        <h3>Try it with your own hand</h3>
+        <p>
+        Press <strong>Start camera</strong> and your webcam stands in for the camera on the AR glasses. An open hand moves the gripper, a pinch closes the claw, and a fist is the clutch: it freezes the arm so you can move your hand back and carry on without a jump. Try to pick up the can. Everything after the camera follows the hackathon's hand-control code, and the video never leaves your browser.
+        </p>
+        <div class="lq-demo" data-linqbot-demo>
+          <div class="lq-demo__stage" data-lq-stage></div>
+          <div class="lq-demo__panel" data-lq-panel></div>
+        </div>
+        <p class="lq-demo__caption">A simulation on a CAD model of the SO-101, driven live by your webcam; the table and the can are props. Left, right, and reach are mirrored because a webcam faces you while the glasses faced the arm. Also on the <a href="https://www.jerryli.design/projects/linqbot" target="_blank" rel="noopener">LinqBot write-up at jerryli.design</a>.</p>
+        <hr>
         <div style="display: flex; gap: 20px; margin: 24px 0; clear: both; flex-wrap: wrap; align-items: stretch;">
           <figure class="project-figure" style="flex: 0 0 260px; margin: 0;">
             <img src="/assets/img/linqbot/automated-arm-demo.gif" alt="Automated arm demo" style="width: 100%; height: auto; display: block; border-radius: 12px 12px 0 0;">
@@ -1164,11 +1174,13 @@
       modalMeta.style.display = (hasKeyPoints || hasDate) ? 'flex' : 'none';
     }
 
+    disposeModalDemo();
     modalDescription.innerHTML = project.descriptionHtml || `<p>${project.description || 'Detailed write-up coming soon.'}</p>`;
     modalDescription.querySelectorAll('img').forEach(img => {
       if (!img.hasAttribute('loading')) img.loading = 'lazy';
     });
     activateModalMedia();
+    mountModalDemo();
 
     if (modalFiles) {
       filesGrid.innerHTML = '';
@@ -1217,8 +1229,39 @@
     }
   }
 
+  // Interactive demo embedded in a card's write-up (currently the LinqBot
+  // webcam teleop demo). Loaded only when that card opens; disposed on close
+  // so the camera and WebGL context are always released.
+  let modalDemo = null;
+
+  function mountModalDemo() {
+    const host = modalDescription && modalDescription.querySelector('[data-linqbot-demo]');
+    if (!host) return;
+    const token = { api: null };
+    modalDemo = token;
+    import('/assets/js/linqbot-demo.js')
+      .then(mod => mod.mount(host))
+      .then(api => {
+        if (modalDemo !== token) { if (api) api.dispose(); return; }
+        token.api = api;
+      })
+      .catch(err => {
+        console.error('LinqBot demo failed to load:', err);
+        host.classList.add('lq-demo--failed');
+      });
+  }
+
+  function disposeModalDemo() {
+    const current = modalDemo;
+    modalDemo = null;
+    if (current && current.api) {
+      try { current.api.dispose(); } catch (err) { console.error(err); }
+    }
+  }
+
   function dismissModal() {
     if (!projectModal) return;
+    disposeModalDemo();
     projectModal.classList.remove('active');
     document.body.style.overflow = '';
   }
