@@ -44,7 +44,7 @@ projects:
     files:
       - { path: "src/mapping/relative_teleop.py", url: "https://github.com/Ryker32/linqbot-hand-teleop/blob/dbc98d7806a182d85915cb5158356681f9ec39e1/src/mapping/relative_teleop.py#L154-L232" }
       - { path: "src/camera/xreal_eye.py", url: "https://github.com/Ryker32/linqbot-hand-teleop/blob/dbc98d7806a182d85915cb5158356681f9ec39e1/src/camera/xreal_eye.py#L110-L116" }
-    credit: "My files from the team repository; teammates built the iMessage agent. Uses an open-source XREAL Eye streaming tool, MediaPipe, and ikpy; some of my commits used Cursor."
+    credit: "Adapted an <a href=\"https://github.com/Aloim/Grayscale-Feed-Xreal-One-Pro-Eye-Windows-Nebula-Beta-needed-\">open-source 4-bit camera decoder</a> and used MediaPipe."
 
   - id: bwsi-drone
     title: "BWSI Autonomous Racing Drone"
@@ -88,7 +88,7 @@ projects:
 
   - id: yc-agent-jam
     title: "Y Combinator Agent Jam '25"
-    summary: "An LLM agent running on a LeKiwi/LeRobot robot: it can be teleoperated, picks up objects, and raises an alert when it sees a hazard like a sharp object."
+    summary: "A mobile robot capable of interpreting its environment, responding to potentially dangerous objects with body language, and manipulating objects with a robotic arm."
     repos:
       - { kind: original, label: "ZakHussain/dodo-cli-agent", note: "team repo", url: "https://github.com/ZakHussain/dodo-cli-agent/tree/ac20612cf9c69976f7364f3e1dff2e59370a1afb" }
-    credit: "Team project of three; the code lives in teammate Zak Hussain's repository."
+    credit: "Built with a local robotics professor and a robotics company owner; the code lives in Zak Hussain's repository. I trained the object classifier on an open source HuggingFace model and used an ACT model to train manipulation tasks."
