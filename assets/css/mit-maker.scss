@@ -239,3 +239,24 @@
     display: none;
   }
 }
+
+/* ---------- Typeface: Times New Roman everywhere on this page ---------- */
+
+.mm-body {
+  --mm-serif: "Times New Roman", Times, "Liberation Serif", "Nimbus Roman", "Nimbus Roman No9 L", "TeX Gyre Termes", serif;
+  --font-display: var(--mm-serif);
+  --font-body: var(--mm-serif);
+  --font-mono: var(--mm-serif);
+  font-family: var(--mm-serif);
+}
+
+/* Override fonts set by shared styles and the injected demo styles */
+.mm-body,
+.mm-body *:not(svg):not(svg *) {
+  font-family: var(--mm-serif) !important;
+}
+
+/* Square project cards */
+.mm-project.project-card {
+  border-radius: 0;
+}

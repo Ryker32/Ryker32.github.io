@@ -192,7 +192,9 @@ function makePanel(run, arena, label) {
     ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
 
     const R = 95 * k;
-    const font = (px, weight = 700) => `${weight} ${Math.max(9, px)}px ui-sans-serif, system-ui, sans-serif`;
+    // Canvas text follows the page's typeface (Times New Roman on the MIT page)
+    const family = getComputedStyle(canvas).fontFamily || 'system-ui, sans-serif';
+    const font = (px, weight = 700) => `${weight} ${Math.max(9, px)}px ${family}`;
     // draw the leader last so its tag sits on top
     const ids = Object.keys(f.r).sort((a, b) => (Number(a) === s.leader) - (Number(b) === s.leader));
     for (const id of ids) {
