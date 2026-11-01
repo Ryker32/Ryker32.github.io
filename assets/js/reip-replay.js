@@ -39,24 +39,18 @@ const CSS = `
 .rr-name { font-weight: 700; font-size: 1rem; color: #f2f2f2; }
 .rr-cov { font-size: 0.82rem; color: ${C.dim}; }
 .rr-cov b { color: #f2f2f2; font-weight: 700; }
-.rr-status { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; padding: 7px 10px; border-radius: 8px;
-  font-size: 0.84rem; font-weight: 600; line-height: 1.35; background: rgba(255,255,255,0.05); color: #e8e8e8; min-height: 2.7em; }
-.rr-status::before { content: ""; flex: 0 0 9px; height: 9px; border-radius: 50%; background: ${C.dim}; }
-.rr-status[data-tone="bad"] { background: rgba(255,93,93,0.14); color: #ffd0d0; }
-.rr-status[data-tone="bad"]::before { background: ${C.fault}; }
-.rr-status[data-tone="warn"] { background: rgba(255,179,71,0.13); color: #ffe2b8; }
-.rr-status[data-tone="warn"]::before { background: ${C.warn}; }
-.rr-status[data-tone="ok"] { background: rgba(79,209,139,0.13); color: #c9f5dc; }
-.rr-status[data-tone="ok"]::before { background: ${C.ok}; }
+.rr-status { margin: 0 0 8px; font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: #e8e8e8; min-height: 2.8em; }
+.rr-status[data-tone="bad"] { color: #ff8a8a; }
+.rr-status[data-tone="warn"] { color: #ffc46b; }
+.rr-status[data-tone="ok"] { color: #6fdc9f; }
 .rr-canvas { display: block; width: 100%; height: auto; border-radius: 8px; }
 .rr-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
-.rr-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--rr-accent);
-  background: var(--rr-accent); color: #0b0d14; font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; }
-.rr-btn:hover { filter: brightness(1.1); }
+.rr-btn { padding: 7px 18px; border: 1px solid rgba(255,255,255,.45); background: transparent; color: #f0f0f0;
+  font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; }
+.rr-btn:hover { border-color: #ffffff; }
 .rr-scrub { flex: 1 1 200px; accent-color: var(--rr-accent); }
 .rr-time { font-family: var(--font-mono, monospace); font-size: .8rem; color: ${C.dim}; white-space: nowrap; }
-.rr-legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 10px 0 0; padding: 0; list-style: none; font-size: .78rem; color: ${C.dim}; }
-.rr-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.rr-legend { margin: 10px 0 0; font-size: .82rem; line-height: 1.5; color: ${C.dim}; }
 .rr-error { padding: 24px; text-align: center; color: ${C.dim}; }
 @media (max-width: 720px) { .rr-panels { grid-template-columns: 1fr; } }
 `;
@@ -117,27 +111,27 @@ function buildTimeline(run) {
     let tone = 'neutral', text;
     const L = leader != null ? `R${leader}` : 'none';
     if (!anyFault) {
-      text = `Normal: ${L} leading`;
+      text = `Normal, ${L} leading`;
     } else if (isReip) {
       const recent = lastChange && t - lastChange.t < 5 && lastChange.t > faults[0].t;
       if (leader != null && faulty.has(leader)) {
         tone = 'bad';
         text = recent
           ? `R${lastChange.from} voted out, but ${L} was also hit by a fault (injected at ${Math.round(faulty.get(leader).since)} s)`
-          : `Fault active: leader ${L} is sending bad commands`;
+          : `Fault active, leader ${L} is sending bad commands`;
       } else {
         tone = 'ok';
-        text = recent ? `Fault resolved: R${lastChange.from} voted out, ${L} now leads` : `Fault resolved: ${L} leading`;
+        text = recent ? `Fault resolved, R${lastChange.from} voted out and ${L} now leads` : `Fault resolved, ${L} leading`;
       }
     } else {
       const bad = [...faulty.keys()];
       if (leader != null && faulty.has(leader)) {
         tone = 'bad';
-        text = `Fault active: faulty ${L} is leading`;
+        text = `Fault active, faulty ${L} is leading`;
       } else {
         tone = 'warn';
-        text = `Fault undetected: faulty R${bad.join(', R')} can lead again` +
-          (raftReelections ? ` (re-elected ${raftReelections}× so far)` : '');
+        text = `Fault undetected, faulty R${bad.join(', R')} can lead again` +
+          (raftReelections ? ` (re-elected ${raftReelections} ${raftReelections === 1 ? 'time' : 'times'} so far)` : '');
       }
     }
     out.push({ leader, faulty: new Set(faulty.keys()), tone, text });
@@ -229,7 +223,7 @@ function makePanel(run, arena, label) {
     }
 
     cov.innerHTML = `explored <b>${f.cov.toFixed(0)}%</b>`;
-    status.textContent = s.text;
+    status.textContent = `Status: ${s.text}`;
     status.dataset.tone = s.tone;
   }
 
@@ -262,7 +256,7 @@ export async function mount(host, { autoplay = false } = {}) {
   panels.append(A.panel, B.panel);
 
   const controls = el('div', 'rr-controls');
-  const play = el('button', 'rr-btn', '▶ Play');
+  const play = el('button', 'rr-btn', 'Play');
   play.type = 'button';
   const scrub = el('input', 'rr-scrub');
   Object.assign(scrub, { type: 'range', min: 0, max: duration, step: STEP, value: 0 });
@@ -270,10 +264,7 @@ export async function mount(host, { autoplay = false } = {}) {
   const time = el('span', 'rr-time');
   controls.append(play, scrub, time);
 
-  const legend = el('ul', 'rr-legend');
-  for (const [c, t] of [[C.leader, 'leader'], [C.fault, 'robot with an injected fault'], ['rgba(125,143,217,0.9)', 'explored area']]) {
-    const li = el('li'); const dot = el('i'); dot.style.background = c; li.append(dot, t); legend.append(li);
-  }
+  const legend = el('p', 'rr-legend', 'Yellow ring: the current leader. Red: a robot with an injected fault. Blue squares: explored area.');
   host.append(panels, controls, legend);
 
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
@@ -281,7 +272,7 @@ export async function mount(host, { autoplay = false } = {}) {
   const render = () => {
     A.draw(t); B.draw(t);
     scrub.value = t;
-    time.textContent = `${fmt(t)} / ${fmt(duration)} · ${SPEED}× speed`;
+    time.textContent = `${fmt(t)} / ${fmt(duration)} (${SPEED}x speed)`;
   };
   const tick = (now) => {
     if (!playing) return;
@@ -294,7 +285,7 @@ export async function mount(host, { autoplay = false } = {}) {
   };
   function setPlaying(on) {
     playing = on;
-    play.textContent = on ? '❚❚ Pause' : (t >= duration ? '↺ Replay' : '▶ Play');
+    play.textContent = on ? 'Pause' : (t >= duration ? 'Replay' : 'Play');
     cancelAnimationFrame(raf);
     if (on) {
       if (t >= duration) t = 0;

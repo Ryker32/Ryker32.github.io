@@ -115,19 +115,11 @@
 
 .mm-files-line {
   margin: 0 0 12px;
+  font-size: 1.05rem;
   line-height: 1.8;
+  color: #d6d6d6;
 }
 
-.mm-label {
-  display: inline-block;
-  margin-right: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #b9c3f2;
-}
 
 .mm-file__path {
   font-family: var(--font-mono);
@@ -135,9 +127,6 @@
   overflow-wrap: anywhere;
 }
 
-.mm-sep {
-  color: rgba(230, 230, 230, 0.45);
-}
 
 .mm-credit {
   margin: 0;
@@ -146,55 +135,28 @@
   color: #c9c9c9;
 }
 
-/* Repo buttons: "Cleaned-up repo" (curated) vs "Original repo" (full history) */
-.mm-repos {
-  gap: 12px;
+/* Repo links: "Cleaned-up repo" (curated) vs "Original repo" (full history) */
+.mm-main a.mm-repo {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #ececec;
+  font-size: 1rem;
+  text-decoration: none;
 }
 
-.mm-main a.mm-repo {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px 18px;
-  border-radius: 0px;
-  text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ececec;
-  transition: border-color 0.2s ease, background 0.2s ease;
+.mm-main a.mm-repo--original {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #c9c9c9;
 }
 
 .mm-main a.mm-repo:hover {
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: #ffffff;
   color: #ffffff;
 }
 
-.mm-main a.mm-repo--clean {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
-}
-
-.mm-main a.mm-repo--clean:hover {
-  background: color-mix(in srgb, var(--accent) 34%, transparent);
-  border-color: var(--accent);
-}
-
-.mm-repo__kind {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #c4ccf3;
-}
-
-.mm-repo--original .mm-repo__kind {
-  color: #bdbdbd;
-}
-
 .mm-repo__name {
-  font-size: 1.02rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* ---------- Demos (always visible) ---------- */
@@ -205,9 +167,10 @@
   border-top: 1px solid var(--edge);
 }
 
-.mm-demo .mm-label {
-  display: block;
-  margin-bottom: 8px;
+.mm-demo__title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: var(--heading-ink);
 }
 
 .mm-demo__note {

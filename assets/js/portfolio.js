@@ -1072,7 +1072,7 @@
       demoBtn.type = 'button';
       demoBtn.className = 'project-card__demo';
       demoBtn.setAttribute('data-cursor-target', '');
-      demoBtn.innerHTML = `<span aria-hidden="true">&#9654;</span> ${project.demo.label || 'Run demo'}`;
+      demoBtn.textContent = project.demo.label || 'Run demo';
       demoBtn.setAttribute('aria-label', `${project.demo.label || 'Run demo'}: ${project.title}`);
       demoBtn.addEventListener('click', (evt) => {
         evt.stopPropagation();

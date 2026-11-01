@@ -1,6 +1,6 @@
 ---
 layout: mit-maker
-title: MIT Maker Portfolio — Source Code
+title: MIT Maker Portfolio, Source Code
 # Unlisted: share this URL directly. Do not link it from nav, index, or robots.txt.
 permalink: /mit-maker-s573pwbyl2/
 sitemap: false
@@ -26,8 +26,7 @@ sitemap: false
         {%- for r in live_repos %}
         <li>
           <a class="mm-repo mm-repo--{{ r.kind | default: 'clean' }}" href="{{ r.url }}" target="_blank" rel="noopener">
-            <span class="mm-repo__kind">{% if r.kind == 'original' %}Original repo{% if r.note %} · {{ r.note }}{% endif %}{% else %}Cleaned-up repo{% endif %}</span>
-            <span class="mm-repo__name">{{ r.label }}</span>
+            {% if r.kind == 'original' %}Original repo{% if r.note %} ({{ r.note }}){% endif %}{% else %}Cleaned-up repo{% endif %}: <span class="mm-repo__name">{{ r.label }}</span>
           </a>
         </li>
         {%- endfor %}
@@ -35,9 +34,9 @@ sitemap: false
       {%- endif %}
 
       {%- if live_files.size > 0 %}
-      <p class="mm-files-line"><span class="mm-label">Open first</span>
+      <p class="mm-files-line">Files to start with:
         {%- for f in live_files %}
-        <a class="mm-file__path" href="{{ f.url }}" target="_blank" rel="noopener">{{ f.path }}</a>{% unless forloop.last %}<span class="mm-sep" aria-hidden="true"> · </span>{% endunless %}
+        <a class="mm-file__path" href="{{ f.url }}" target="_blank" rel="noopener">{{ f.path }}</a>{% unless forloop.last %},{% endunless %}
         {%- endfor %}
       </p>
       {%- endif %}
@@ -46,13 +45,13 @@ sitemap: false
 
       {%- if p.demo %}
       <section class="mm-demo" data-demo-kind="{{ p.demo }}" aria-label="Demo: {{ p.title }}">
-        <span class="mm-label">Live demo</span>
+        <h3 class="mm-demo__title">Demo</h3>
         {%- if p.demo == 'reip' %}
-        <p class="mm-demo__note">Two real hardware trials, side by side. Partway through, the leader robot is given a fault that makes it send its team the wrong way. REIP's robots notice, vote the bad leader out, and keep exploring. The standard Raft method can't tell anything is wrong.</p>
+        <p class="mm-demo__note">This replays two of my hardware trials side by side. In both, the leader robot is given a fault partway through that makes it send the team the wrong way. With REIP, the other robots notice, vote the faulty leader out, and keep exploring. Raft, the standard method I compared against, has no way to notice.</p>
         <div data-demo-mount></div>
-        <p class="mm-demo__fine">Each side is that method's typical (median) run out of five. Replayed from the robots' own logs; nothing is simulated.</p>
+        <p class="mm-demo__fine">Each side is that method's median run out of five, replayed from the robots' own logs.</p>
         {%- elsif p.demo == 'linqbot' %}
-        <p class="mm-demo__note">Your webcam stands in for the AR glasses. Open hand: move the arm. Pinch: close the claw. Fist: freeze the arm so you can reposition your hand. The video never leaves your browser.</p>
+        <p class="mm-demo__note">Your webcam takes the place of the AR glasses. An open hand moves the arm, a pinch closes the claw, and a fist freezes the arm so you can reposition your hand. The video stays in your browser.</p>
         <div class="lq-demo" data-demo-mount>
           <div class="lq-demo__body">
             <div class="lq-demo__stage" data-lq-stage></div>
