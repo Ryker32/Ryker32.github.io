@@ -38,7 +38,7 @@
 .mm-main a:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 /* ---------- Header ---------- */
@@ -156,7 +156,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 10px 18px;
-  border-radius: 14px;
+  border-radius: 0px;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.05);
