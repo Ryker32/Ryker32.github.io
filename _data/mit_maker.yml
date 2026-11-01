@@ -4,7 +4,7 @@
 # .mit-maker-private/REPORT.md, not on the page.
 
 title: "MIT Maker Portfolio — Source Code"
-intro: "Code supporting the projects in my Maker Portfolio."
+intro: "Cleaned up code repos, Original soure repos, and interactive demos for projects (when needed). NOTE: I utilized Claude Code as a tool to curate a set of cleaned up repos (for viewing pleasure and ease), you can see all of the original version histories of projects in their respective source repos which are located on each project card. I devised every piece of logic within my contributions and worked through every problem and proposed solutions independently. I utilized Claude Code as a tool, not a replacement for my own thought process, allowing me to test my ideas from specifications quickly, giving me more time to work through problems on a given project. "
 
 projects:
 
@@ -19,7 +19,7 @@ projects:
     files:
       - { path: "reip-robots/robot/reip_node.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/robot/reip_node.py#L1257-L1449" }
       - { path: "reip-robots/pico/main.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/pico/main.py" }
-    credit: "Solo project, mentored by Avi Soval. Later development commits in the original repo were made with Cursor and Claude Code."
+    credit: "Independent research project, mentored by Avi Soval of USC ISI."
 
   - id: golden-retriever
     title: "Golden Retriever Robot Walker"
