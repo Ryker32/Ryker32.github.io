@@ -220,7 +220,9 @@ function makePanel(run, arena, label) {
         const ty = py - R * 1.6 - th * 0.75;
         const tx = Math.min(Math.max(px, tw / 2 + 2), canvas.width - tw / 2 - 2);
         ctx.fillStyle = C.leader;
-        ctx.beginPath(); ctx.roundRect(tx - tw / 2, Math.max(2, ty - th / 2), tw, th, th / 2); ctx.fill();
+        // square tag where the page asks for sharp corners (MIT page), pill elsewhere
+        const sharp = !!canvas.closest('.mm-body');
+        ctx.beginPath(); ctx.roundRect(tx - tw / 2, Math.max(2, ty - th / 2), tw, th, sharp ? 0 : th / 2); ctx.fill();
         ctx.fillStyle = '#1a1406';
         ctx.fillText(tag, tx, Math.max(2 + th / 2, ty));
       }

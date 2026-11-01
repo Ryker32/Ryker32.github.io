@@ -260,3 +260,16 @@
 .mm-project.project-card {
   border-radius: 0;
 }
+
+/* Sharp corners on everything on this page (buttons, panels, demo frames,
+   status bars, scrollbars of shared components). Round status/legend dots stay round. */
+.mm-body *,
+.mm-body *::before,
+.mm-body *::after {
+  border-radius: 0 !important;
+}
+
+.mm-body .rr-legend i,
+.mm-body .rr-status::before {
+  border-radius: 50% !important;
+}
