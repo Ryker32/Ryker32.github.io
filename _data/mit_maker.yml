@@ -85,3 +85,10 @@ projects:
     repos:
       - { kind: original, label: "Ryker32/whiteboard", note: "full history", url: "https://github.com/Ryker32/Olympus_Whiteboard.git" }
     credit: "All work by me."
+
+  - id: yc-agent-jam
+    title: "Y Combinator Agent Jam '25"
+    summary: "An LLM agent running on a LeKiwi/LeRobot robot: it can be teleoperated, picks up objects, and raises an alert when it sees a hazard like a sharp object."
+    repos:
+      - { kind: original, label: "ZakHussain/dodo-cli-agent", note: "team repo", url: "https://github.com/ZakHussain/dodo-cli-agent/tree/ac20612cf9c69976f7364f3e1dff2e59370a1afb" }
+    credit: "Team project of three; the code lives in teammate Zak Hussain's repository."
