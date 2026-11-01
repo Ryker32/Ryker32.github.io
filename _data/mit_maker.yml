@@ -12,8 +12,8 @@ projects:
 
   - id: reip
     demo: reip
-    title: "REIP: Multi-Robot Trust & Leader Election"
-    summary: "Trust-based leader election and impeachment for robot teams: the code that ran on five robots, and the simulations and trial logs behind the results."
+    title: "Resilient Election & Impeachment Policy (REIP): Software and Hardware"
+    summary: "A fault-tolerance policy for leader-follower robot exploration: followers check the leader's commands against their own evidence, track it in a trust ledger, and vote to impeach a faulty leader. Includes the code that ran on my five physical robots and the simulations and trial logs behind the results."
     repos:
       - { kind: clean, label: "Ryker32/reip-robots", url: "https://github.com/Ryker32/reip-robots/tree/82b8b5c377325e44a7d45989072f6d9a68895aa4" }
       - { kind: clean, label: "Ryker32/reip-experiments", url: "https://github.com/Ryker32/reip-experiments/tree/ba9f363925140c3506c0e6a790f3b7609989a402" }
@@ -24,8 +24,8 @@ projects:
     credit: "Independent research project, mentored by Avi Soval of USC ISI. Claude Code was used to fix unintelligible comments that I left when tired, clean up my documentation files, and sometimes implement quick fixes based off of my own design specifications."
 
   - id: golden-retriever
-    title: "Golden Retriever Robot Walker"
-    summary: "LeRobot demonstration recording and ACT imitation-learning grasp inference for an SO-101 arm mounted on a walker."
+    title: "\u201cGolden Retriever\u201d Robot Walker: Corgi x YC Hackathon"
+    summary: "A robot walker that retrieves low-to-the-ground items: my demonstration recording and ACT imitation-model grasp code for the SO-101 arm."
     repos:
       - { kind: clean, label: "Ryker32/golden-retriever-act-grasp", url: "https://github.com/Ryker32/golden-retriever-act-grasp/tree/f46c841e1ddedf226543a05a1554c290d0e162e9" }
       - { kind: original, label: "jerryli08/corgi-hackathon", note: "team repo", url: "https://github.com/jerryli08/corgi-hackathon/tree/e683997abcdad08218dbd878d502eb15d7d0c35a" }
@@ -36,8 +36,8 @@ projects:
 
   - id: xr-teleop
     demo: linqbot
-    title: "XR-Glasses Robotic Arm Teleoperation"
-    summary: "Hand tracking from XREAL glasses drives an SO-101 arm, with a fist-controlled clutch, gesture debouncing, and inverse kinematics."
+    title: "Y Combinator x Soma Capital Hackathon: XR Hand Teleoperation"
+    summary: "Hand tracking from my XR glasses' 4-bit grayscale camera stream drives an SO-101 arm, with a pinch-controlled gripper, a fist-controlled clutch, debouncing, and inverse kinematics."
     repos:
       - { kind: clean, label: "Ryker32/linqbot-hand-teleop", url: "https://github.com/Ryker32/linqbot-hand-teleop/tree/dbc98d7806a182d85915cb5158356681f9ec39e1" }
       - { kind: original, label: "amzoeee/soma-hackathon", note: "team repo", url: "https://github.com/amzoeee/soma-hackathon/tree/db5ccf77e2f756501d059279d0aedb0f62beab97" }
@@ -47,8 +47,8 @@ projects:
     credit: "Adapted an <a href=\"https://github.com/Aloim/Grayscale-Feed-Xreal-One-Pro-Eye-Windows-Nebula-Beta-needed-\">open-source 4-bit camera decoder</a> and used MediaPipe."
 
   - id: bwsi-drone
-    title: "BWSI Autonomous Racing Drone"
-    summary: "OpenCV line detection for a racing drone's downward camera: my experiment notebook and the team's flight node."
+    title: "MIT Beaver Works Autonomous Drone: Line Following"
+    summary: "OpenCV line following from downward PiCam frames, including the fix that ignores sunlight reflecting off the tape: my experiment notebook and the team's flight node."
     media:
       src: /assets/img/mit-maker/bwsi-line-following.gif
       alt: "Line-following visualization"
@@ -63,8 +63,8 @@ projects:
     credit: "Flight code is the team repository, maintained by Zoe; team included Mihika Sakharpe, Jerry, and Katherine."
 
   - id: soil-monitor
-    title: "Soil-Moisture Monitor (work in progress)"
-    summary: "ESP32 firmware that calibrates a capacitive soil sensor, powers it only while reading, and shows moisture on an e-paper display."
+    title: "Active Soil Moisture Monitor (WIP)"
+    summary: "ESP32 firmware that calibrates a capacitive soil sensor against wet and dry readings, powers it only while reading, and shows the moisture level as an emoji on an e-paper display."
     repos:
       - { kind: clean, label: "Ryker32/soil-moisture-monitor", url: "https://github.com/Ryker32/soil-moisture-monitor/tree/9af95ca537f4863b1e9504d500d64f88a8722a45" }
       - { kind: original, label: "Ryker32/plantmonitor", note: "full history", url: "https://github.com/Ryker32/plantmonitor/tree/8e0afba849431e46b30d5976ad7b057483ce0d46" }
@@ -74,20 +74,20 @@ projects:
 
   - id: weatherbrick
     title: "Weather Brick"
-    summary: "Project to give to a friend as a gift. Connects to WiFi and displays the weather on a TFT display. Connects to Windy API to get the weather data."
+    summary: "An ESP32 and TFT desk gadget for a sailor friend: it pulls weather data from the Windy.com API and shows it in SI units with a wind direction display."
     repos:
       - { kind: original, label: "Ryker32/weatherbrick", note: "full history", url: "https://github.com/Ryker32/weatherbrick.git" }
     credit: "All original work."
 
   - id: whiteboard
-    title: "Journalism Whiteboard Project"
-    summary: "Utilized OpenCV to extract whiteboard marker into PNG images to create a design for our school principal with warm messages from students."
+    title: "Journalism 2026: Whiteboard Messages"
+    summary: "An OpenCV pipeline that separates students' colored marker writing from a photographed whiteboard and exports each message as a PNG for the newspaper's front page."
     repos:
       - { kind: original, label: "Ryker32/whiteboard", note: "full history", url: "https://github.com/Ryker32/Olympus_Whiteboard.git" }
-    credit: "All work by me."
+    credit: "I specified each stage of the pipeline; Claude Code implemented the specifications. I diagnosed failures, redesigned, and verified exports against the original image."
 
   - id: yc-agent-jam
-    title: "Y Combinator Agent Jam '25"
+    title: "Y Combinator Agent Jam"
     summary: "A mobile robot capable of interpreting its environment, responding to potentially dangerous objects with body language, and manipulating objects with a robotic arm."
     repos:
       - { kind: original, label: "ZakHussain/dodo-cli-agent", note: "team repo", url: "https://github.com/ZakHussain/dodo-cli-agent/tree/ac20612cf9c69976f7364f3e1dff2e59370a1afb" }
