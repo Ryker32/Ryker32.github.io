@@ -169,6 +169,25 @@
   font-weight: 700;
 }
 
+/* Embedded GIF / image inside a project card */
+.mm-media {
+  margin: 0 0 18px;
+}
+
+.mm-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--edge);
+  background: #000;
+}
+
+.mm-media figcaption {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #b8b8b8;
+}
+
 /* ---------- Demos (always visible) ---------- */
 
 .mm-demo {

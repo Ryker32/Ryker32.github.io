@@ -49,6 +49,9 @@ projects:
   - id: bwsi-drone
     title: "BWSI Autonomous Racing Drone"
     summary: "OpenCV line detection for a racing drone's downward camera: my experiment notebook and the team's flight node."
+    media:
+      src: /assets/img/mit-maker/bwsi-line-following.gif
+      alt: "Line-following visualization: the detected tape line boxed in blue, the fitted line in green, and the drone's look-ahead target in orange"
     repos:
       - { kind: clean, label: "Ryker32/bwsi-line-detection", url: "https://github.com/Ryker32/bwsi-line-detection/tree/2cfb5f0472879aaf58092ea821125a85c5ccb104" }
       - { kind: original, label: "Ryker32/CVrykerstuff", note: "my original", url: "https://github.com/Ryker32/CVrykerstuff/tree/43ce2fe7e393b2216c07e60ee5c3bf76941d7230" }
@@ -74,3 +77,5 @@ projects:
     repos:
       - { kind: original, label: "Ryker32/weatherbrick", note: "full history", url: "https://github.com/Ryker32/weatherbrick.git" }
     credit: "All original work."
+
+  - id: whiteboard
