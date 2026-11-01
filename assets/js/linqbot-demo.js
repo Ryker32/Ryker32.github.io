@@ -1,7 +1,8 @@
-// Host for the LinqBot "try it with your own hand" webcam demo. The demo
+// Host for the LinqBot "try it with your own hand" webcam demo, which Ryker
+// built with Claude Code for the hackathon demo presentation. The demo
 // modules under /assets/js/pages/linqbot/ and the 3D stage in
-// /assets/js/lib/stage.js are copied unchanged from Jerry Li's LinqBot
-// write-up on jerryli.design (github.com/jerryli08/jerryli08.github.io); this
+// /assets/js/lib/stage.js are copied unchanged from Jerry Li's port on
+// jerryli.design (github.com/jerryli08/jerryli08.github.io); this
 // file only supplies the small context object their page framework passed in,
 // and moves the camera preview into a side column (if the host provides one)
 // so it doesn't cover the arm.
