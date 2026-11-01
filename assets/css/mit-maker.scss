@@ -136,23 +136,33 @@
 }
 
 /* Repo links: "Cleaned-up repo" (curated) vs "Original repo" (full history) */
+/* Cleaned-up repo buttons: solid light fill */
 .mm-main a.mm-repo {
   display: inline-block;
   padding: 8px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  color: #ececec;
+  background: #F3F4F6;
+  border: 1px solid #F3F4F6;
+  color: #111111;
   font-size: 1rem;
   text-decoration: none;
 }
 
+/* Original repo buttons: outline only, so they read as secondary */
 .mm-main a.mm-repo--original {
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #c9c9c9;
+  background: transparent;
+  border-color: #F3F4F6;
+  color: #F3F4F6;
 }
 
 .mm-main a.mm-repo:hover {
+  background: #ffffff;
   border-color: #ffffff;
-  color: #ffffff;
+  color: #000000;
+}
+
+.mm-main a.mm-repo--original:hover {
+  background: #F3F4F6;
+  color: #111111;
 }
 
 .mm-repo__name {
@@ -196,6 +206,11 @@
 .mm-demo .rr-btn { font-size: 1rem; padding: 10px 22px; }
 .mm-demo .lq-demo__panel .lq-note { font-size: 1rem; color: #d6d6d6; }
 .mm-demo .lq-btn { font-size: 1rem; }
+
+/* Replay Play button + arm demo buttons */
+.mm-demo .rr-btn,
+.mm-demo .lq-btn.lq-primary { background: #F3F4F6; border-color: #F3F4F6; color: #111111; }
+.mm-demo .lq-btn { color: #F3F4F6; border-color: #F3F4F6; }
 
 @media print {
   .mm-stars {
