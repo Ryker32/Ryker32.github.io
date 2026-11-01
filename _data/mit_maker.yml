@@ -67,3 +67,10 @@ projects:
     files:
       - { path: "firmware/plantmonitor/plantmonitor.ino", url: "https://github.com/Ryker32/soil-moisture-monitor/blob/9af95ca537f4863b1e9504d500d64f88a8722a45/firmware/plantmonitor/plantmonitor.ino#L13-L69" }
     credit: "E-paper driver from the display maker's sample code; fonts © STMicroelectronics."
+
+  - id: weatherbrick
+    title: "Weather Brick"
+    summary: "Project to give to a friend as a gift. Connects to WiFi and displays the weather on a TFT display. Connects to Windy API to get the weather data."
+    repos:
+      - { kind: original, label: "Ryker32/weatherbrick", note: "full history", url: "https://github.com/Ryker32/weatherbrick.git" }
+    credit: "All original work."
