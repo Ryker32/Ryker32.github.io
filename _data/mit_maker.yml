@@ -76,14 +76,20 @@ projects:
     title: "Weather Brick"
     summary: "An ESP32 and TFT desk gadget for a sailor friend: it pulls weather data from the Windy.com API and shows it in SI units with a wind direction display."
     repos:
-      - { kind: original, label: "Ryker32/weatherbrick", note: "full history", url: "https://github.com/Ryker32/weatherbrick.git" }
+      - { kind: original, label: "Ryker32/weatherbrick", note: "full history", url: "https://github.com/Ryker32/weatherbrick/tree/6d1a2773317de85242c87dbf64d63908ad0f0c88" }
+    files:
+      - { path: "WindsurfingFinal_copy_20261030005129.ino", url: "https://github.com/Ryker32/weatherbrick/blob/6d1a2773317de85242c87dbf64d63908ad0f0c88/WindsurfingFinal_copy_20261030005129.ino" }
     credit: "All original work."
 
   - id: whiteboard
-    title: "Journalism 2026: Whiteboard Messages"
+    title: "Whiteboard-to-Newspaper OpenCV Pipeline"
     summary: "An OpenCV pipeline that separates students' colored marker writing from a photographed whiteboard and exports each message as a PNG for the newspaper's front page."
     repos:
-      - { kind: original, label: "Ryker32/whiteboard", note: "full history", url: "https://github.com/Ryker32/Olympus_Whiteboard.git" }
+      - { kind: original, label: "Ryker32/Olympus_Whiteboard", note: "full history", url: "https://github.com/Ryker32/Olympus_Whiteboard/tree/1321ca870e6d2ba0e55a1e7b2a5629377d442c97" }
+    files:
+      - { path: "src/wbx/pipeline.py", url: "https://github.com/Ryker32/Olympus_Whiteboard/blob/1321ca870e6d2ba0e55a1e7b2a5629377d442c97/src/wbx/pipeline.py#L184-L217" }
+      - { path: "src/wbx/matte.py", url: "https://github.com/Ryker32/Olympus_Whiteboard/blob/1321ca870e6d2ba0e55a1e7b2a5629377d442c97/src/wbx/matte.py" }
+      - { path: "src/wbx/unmix.py", url: "https://github.com/Ryker32/Olympus_Whiteboard/blob/1321ca870e6d2ba0e55a1e7b2a5629377d442c97/src/wbx/unmix.py" }
     credit: "I specified each stage of the pipeline; Claude Code implemented the specifications. I diagnosed failures, redesigned, and verified exports against the original image."
 
   - id: yc-agent-jam
