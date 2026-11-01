@@ -48,8 +48,24 @@ export async function mount(host) {
   }
 
   const api = (await mountWebcam(stage, ctx)) || {};
+
+  // The demo only pauses drawing when the tab is hidden; turn the camera off
+  // as well, so a background tab never keeps the webcam light on. Uses the
+  // demo's own Stop camera button so its UI stays in sync.
+  const stopCamera = () => {
+    const stop = [...(panel?.querySelectorAll('button') || [])]
+      .find((b) => !b.hidden && b.textContent.trim() === 'Stop camera');
+    stop?.click();
+  };
+  const onVisibility = () => { if (document.hidden) stopCamera(); };
+  const onPageHide = () => { try { api.dispose?.(); } catch { /* page is going away */ } };
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('pagehide', onPageHide);
+
   return {
     dispose() {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', onPageHide);
       try { api.dispose?.(); } finally {
         mo?.disconnect();
         side?.replaceChildren();
