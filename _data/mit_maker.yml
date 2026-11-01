@@ -51,7 +51,8 @@ projects:
     summary: "OpenCV line detection for a racing drone's downward camera: my experiment notebook and the team's flight node."
     media:
       src: /assets/img/mit-maker/bwsi-line-following.gif
-      alt: "Line-following visualization: the detected tape line boxed in blue, the fitted line in green, and the drone's look-ahead target in orange"
+      alt: "Line-following visualization"
+      caption: "Line detection demo on a downward camera frame: the tape line is contoured in blue, the fitted path is green, and the gray circle boxed in orange is a 'distraction reflection' that can seen being ignored by the improved program."
     repos:
       - { kind: clean, label: "Ryker32/bwsi-line-detection", url: "https://github.com/Ryker32/bwsi-line-detection/tree/2cfb5f0472879aaf58092ea821125a85c5ccb104" }
       - { kind: original, label: "Ryker32/CVrykerstuff", note: "my original", url: "https://github.com/Ryker32/CVrykerstuff/tree/43ce2fe7e393b2216c07e60ee5c3bf76941d7230" }
@@ -79,3 +80,8 @@ projects:
     credit: "All original work."
 
   - id: whiteboard
+    title: "Journalism Whiteboard Project"
+    summary: "Utilized OpenCV to extract whiteboard marker into PNG images to create a design for our school principal with warm messages from students."
+    repos:
+      - { kind: original, label: "Ryker32/whiteboard", note: "full history", url: "https://github.com/Ryker32/Olympus_Whiteboard.git" }
+    credit: "All work by me."
