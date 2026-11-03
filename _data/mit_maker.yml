@@ -5,8 +5,10 @@
 
 title: "MIT Maker Portfolio: Source Code"
 intro: "Cleaned up code repos, Original source repos, and interactive demos for projects (when needed). NOTE: I utilized Claude Code as a tool to curate a set of cleaned up repos (for viewing pleasure and ease), you can see all of the original version histories of projects in their respective source repos which are located on each project card. I devised every piece of logic within my contributions and worked through every problem and proposed solutions independently. 
+ "
 
- I utilized Claude Code as a tool, not a replacement for my own thought process, allowing me to test my ideas from specifications quickly, giving me more time to work through problems on a given project. "
+press:
+  - { label: "“How to Become a Rocketeer” (Olympia High School Aerospace Club)", outlet: "Let's Go! Aerospace, Summer 2026, Issue No. 15, p. 22", url: "https://viewer.joomag.com/lets-go-aerospace-summer-2026-issue-no-15/0086429001782943506/p22?short=" }
 
 projects:
 
@@ -21,7 +23,7 @@ projects:
     files:
       - { path: "reip-robots/robot/reip_node.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/robot/reip_node.py#L1257-L1449" }
       - { path: "reip-robots/pico/main.py", url: "https://github.com/Ryker32/reip-robots/blob/82b8b5c377325e44a7d45989072f6d9a68895aa4/pico/main.py" }
-    credit: "Independent research project, mentored by Avi Soval of USC ISI. Claude Code was used to fix unintelligible comments that I left when tired, clean up my documentation files, and sometimes implement quick fixes based off of my own design specifications."
+    credit: "Independent research project, mentored by Avi Soval of USC ISI."
 
   - id: golden-retriever
     title: "\u201cGolden Retriever\u201d Robot Walker: Corgi x YC Hackathon"
@@ -32,7 +34,7 @@ projects:
     files:
       - { path: "scripts/record_40.ps1", url: "https://github.com/Ryker32/golden-retriever-act-grasp/blob/f46c841e1ddedf226543a05a1554c290d0e162e9/scripts/record_40.ps1" }
       - { path: "scripts/run_grasp_policy.py", url: "https://github.com/Ryker32/golden-retriever-act-grasp/blob/f46c841e1ddedf226543a05a1554c290d0e162e9/scripts/run_grasp_policy.py#L278-L382" }
-    credit: "My files from a team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot; some of my commits used Cursor."
+    credit: "My files from a team project with Tarun Malarvasan, Jerry Li, and Andrew Wang. Built on Hugging Face LeRobot"
 
   - id: xr-teleop
     demo: linqbot

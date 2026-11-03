@@ -10,6 +10,13 @@ sitemap: false
 <header class="mm-header">
   <h1>{{ mm.title }}</h1>
   <p>{{ mm.intro }}</p>
+  {%- if mm.press %}
+  <ul class="mm-press" aria-label="Published writing">
+    {%- for a in mm.press %}
+    <li>Written by me: <a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.label }}</a>, {{ a.outlet }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
 </header>
 
 <div class="mm-projects">
